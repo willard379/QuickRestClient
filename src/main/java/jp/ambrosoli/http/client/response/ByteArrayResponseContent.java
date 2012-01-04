@@ -19,11 +19,11 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 
-import jp.ambrosoli.http.client.exception.HttpClientException;
+import jp.ambrosoli.http.client.exception.UnsupportedEncodingRuntimeException;
 import jp.ambrosoli.http.client.util.StringUtil;
 
 /**
- * HTTP通信のレスポンスボディを保持する標準的なクラス
+ * HTTP通信のレスポンスボディをバイト配列で保持するクラスです。
  * 
  * @author willard379
  * @since 0.0.1
@@ -99,7 +99,7 @@ public class ByteArrayResponseContent implements ResponseContent {
         try {
             return new String(this.data, encoding);
         } catch (UnsupportedEncodingException e) {
-            throw new HttpClientException(e);
+            throw new UnsupportedEncodingRuntimeException(e);
         }
     }
 }

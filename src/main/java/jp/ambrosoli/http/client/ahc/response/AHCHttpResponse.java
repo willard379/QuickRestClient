@@ -26,6 +26,12 @@ import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.StatusLine;
 
+/**
+ * Apache HttpComponentsのHTTPレスポンスを扱うクラスです。
+ *
+ * @author willard379
+ * @since 0.0.1
+ */
 public class AHCHttpResponse extends AbstractHttpResponse {
 
     /** Apache HttpComponentsのレスポンス */

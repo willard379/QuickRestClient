@@ -17,7 +17,6 @@ package jp.ambrosoli.http.client.params;
 
 import java.util.List;
 
-
 /**
  * それぞれのクライアントに合わせて、POSTパラメータを加工するインタフェースです。
  * 

@@ -19,7 +19,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
-import jp.ambrosoli.http.client.exception.HttpClientException;
+import jp.ambrosoli.http.client.exception.UnsupportedEncodingRuntimeException;
 import jp.ambrosoli.http.client.params.NameValueObject;
 import jp.ambrosoli.http.client.params.RequestParamBuilder;
 
@@ -48,7 +48,7 @@ public class AHCEnclosingParamBuilder implements RequestParamBuilder<UrlEncodedF
             List<NameValuePair> paramList = this.createNameValuePairList(params);
             return new UrlEncodedFormEntity(paramList, charset);
         } catch (UnsupportedEncodingException e) {
-            throw new HttpClientException(e);
+            throw new UnsupportedEncodingRuntimeException(e);
         }
     }
 

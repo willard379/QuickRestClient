@@ -18,6 +18,8 @@ package jp.ambrosoli.http.client.exception;
 import java.net.SocketTimeoutException;
 
 /**
+ * {@link SocketTimeoutException}をラップする例外です。
+ * 
  * @author willard379
  * @since 0.0.1
  */

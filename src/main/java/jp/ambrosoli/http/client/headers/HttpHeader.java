@@ -17,7 +17,6 @@ package jp.ambrosoli.http.client.headers;
 
 import jp.ambrosoli.http.client.params.NameValueObject;
 
-
 /**
  * HTTPヘッダの情報を保持するクラスです。
  * 
@@ -26,16 +25,16 @@ import jp.ambrosoli.http.client.params.NameValueObject;
  */
 public class HttpHeader extends NameValueObject {
 
-    /**
-     * HttpHeaderを生成します。
-     * 
-     * @param name
-     *            名前
-     * @param value
-     *            値
-     */
-    public HttpHeader(final String name, final String value) {
-        super(name, value);
-    }
+	/**
+	 * HttpHeaderを生成します。
+	 * 
+	 * @param name
+	 *            名前
+	 * @param value
+	 *            値
+	 */
+	public HttpHeader(final String name, final String value) {
+		super(name, value);
+	}
 
 }

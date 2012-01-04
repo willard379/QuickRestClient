@@ -22,6 +22,8 @@ import java.util.List;
 import jp.ambrosoli.http.client.headers.HttpHeader;
 
 /**
+ * HTTPレスポンスを扱う抽象クラスです。
+ * 
  * @author willard379
  * @since 0.0.1
  */

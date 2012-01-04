@@ -15,6 +15,12 @@
  */
 package jp.ambrosoli.http.client.enums;
 
+/**
+ * HTTPメソッドを表すEnumです。
+ * 
+ * @author willard379
+ * @since 0.0.1
+ */
 public enum HttpMethod {
 
     /** GETメソッド */
