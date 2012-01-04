@@ -4,13 +4,13 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>jp.ambrosoli</groupId>
-    <artifactId>willard-http-client</artifactId>
+    <artifactId>QuickRestClient</artifactId>
     <version>0.0.1</version>
     <packaging>jar</packaging>
 
     <!-- More Project Information -->
-    <name>willard-http-client</name>
-    <description>"willard-http-client" is Simple RESTful client API for Java.</description>
+    <name>QuickRestClient</name>
+    <description>"QuickRestClient" is Simple RESTful client API for Java.</description>
     <url>http://www.ambrosoli.jp/jenkins/</url>
     <inceptionYear>2011</inceptionYear>
     <licenses>
