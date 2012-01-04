@@ -15,7 +15,7 @@
  */
 package jp.ambrosoli.http.client.exception;
 
-import java.net.SocketTimeoutException;
+import java.io.UnsupportedEncodingException;
 
 /**
  * {@link UnsupportedEncodingException}をラップする例外です。
