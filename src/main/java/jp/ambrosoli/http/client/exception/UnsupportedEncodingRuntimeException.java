@@ -15,23 +15,31 @@
  */
 package jp.ambrosoli.http.client.exception;
 
-public class HttpClientException extends RuntimeException {
+import java.net.SocketTimeoutException;
+
+/**
+ * {@link UnsupportedEncodingException}をラップする例外です。
+ * 
+ * @author willard379
+ * @since 0.0.1
+ */
+public class UnsupportedEncodingRuntimeException extends RuntimeException {
 
     private static final long serialVersionUID = 1L;
 
-    public HttpClientException() {
+    public UnsupportedEncodingRuntimeException() {
         super();
     }
 
-    public HttpClientException(final String arg0, final Throwable arg1) {
+    public UnsupportedEncodingRuntimeException(final String arg0, final Throwable arg1) {
         super(arg0, arg1);
     }
 
-    public HttpClientException(final String arg0) {
+    public UnsupportedEncodingRuntimeException(final String arg0) {
         super(arg0);
     }
 
-    public HttpClientException(final Throwable arg0) {
+    public UnsupportedEncodingRuntimeException(final Throwable arg0) {
         super(arg0);
     }
 

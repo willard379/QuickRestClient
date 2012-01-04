@@ -75,6 +75,8 @@ import org.apache.http.params.HttpParams;
 import org.apache.http.params.HttpProtocolParams;
 
 /**
+ * Apache HttpComponentsを使用したRESTエンドポイントのサービス呼び出しを行うクラスです。
+ * 
  * @author willard379
  * @since 0.0.1
  */

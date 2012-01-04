@@ -19,7 +19,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.List;
 
-import jp.ambrosoli.http.client.exception.HttpClientException;
+import jp.ambrosoli.http.client.exception.UnsupportedEncodingRuntimeException;
 import jp.ambrosoli.http.client.util.StringUtil;
 
 /**
@@ -63,7 +63,7 @@ public class BasicQueryStringBuilder implements RequestParamBuilder<String> {
             }
             return sb.toString();
         } catch (UnsupportedEncodingException e) {
-            throw new HttpClientException(e);
+            throw new UnsupportedEncodingRuntimeException(e);
         }
 
     }

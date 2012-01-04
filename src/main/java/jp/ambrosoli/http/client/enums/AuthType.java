@@ -15,6 +15,12 @@
  */
 package jp.ambrosoli.http.client.enums;
 
+/**
+ * 認証の種類を表すEnumです。
+ * 
+ * @author willard379
+ * @since 0.0.1
+ */
 public enum AuthType {
 
 	/** Basic認証 */

@@ -18,6 +18,12 @@ package jp.ambrosoli.http.client.ahc.service;
 import jp.ambrosoli.http.client.service.HttpService;
 import jp.ambrosoli.http.client.service.HttpServiceFactory;
 
+/**
+ * AHCHttpServiceを生成するファクトリクラスです。
+ * 
+ * @author willard379
+ * @since 0.0.1
+ */
 public class AHCHttpServiceFactory extends HttpServiceFactory {
 
     @Override
