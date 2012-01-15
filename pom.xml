@@ -76,6 +76,13 @@
                 <configuration>
                     <show>package</show>
                     <nohelp>true</nohelp>
+                    <encoding>UTF-8</encoding>
+                    <docencoding>UTF-8</docencoding>
+                    <charset>UTF-8</charset>
+                    <locale>ja</locale>
+                    <links>
+                        <link>http://java.sun.com/j2se/1.5.0/ja/docs/ja/api/</link>
+                    </links>
                 </configuration>
             </plugin>
             <plugin>
