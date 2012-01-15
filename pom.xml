@@ -3,15 +3,15 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>jp.ambrosoli</groupId>
-    <artifactId>QuickRestClient</artifactId>
-    <version>0.0.1</version>
+    <groupId>jp.ambrosoli.quickrestclient</groupId>
+    <artifactId>quick-rest-client</artifactId>
+    <version>0.1.0</version>
     <packaging>jar</packaging>
 
     <!-- More Project Information -->
     <name>QuickRestClient</name>
     <description>"QuickRestClient" is Simple RESTful client API for Java.</description>
-    <url>http://www.ambrosoli.jp/jenkins/</url>
+    <url>https://github.com/willard379/QuickRestClient</url>
     <inceptionYear>2011</inceptionYear>
     <licenses>
         <license>

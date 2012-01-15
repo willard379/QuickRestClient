@@ -27,7 +27,7 @@ import jp.ambrosoli.quickrestclient.request.HttpRequestBuilder;
  * </p>
  * 
  * @author willard379
- * @since 0.0.1
+ * @since 0.1.0
  */
 public final class Operations implements HttpConstants {
 

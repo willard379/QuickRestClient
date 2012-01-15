@@ -24,7 +24,7 @@ import jp.ambrosoli.quickrestclient.ahc.service.AHCHttpServiceFactory;
  * {@link HttpService}のファクトリクラスです。
  * 
  * @author willard379
- * @since 0.0.1
+ * @since 0.1.0
  */
 public abstract class HttpServiceFactory {
 

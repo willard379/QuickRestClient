@@ -22,7 +22,7 @@ import jp.ambrosoli.quickrestclient.service.HttpServiceFactory;
  * AHCHttpServiceを生成するファクトリクラスです。
  * 
  * @author willard379
- * @since 0.0.1
+ * @since 0.1.0
  */
 public class AHCHttpServiceFactory extends HttpServiceFactory {
 

@@ -19,7 +19,7 @@ package jp.ambrosoli.quickrestclient.enums;
  * HTTPメソッドを表すEnumです。
  * 
  * @author willard379
- * @since 0.0.1
+ * @since 0.1.0
  */
 public enum HttpMethod {
 

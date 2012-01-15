@@ -31,7 +31,7 @@ import org.apache.http.util.EntityUtils;
  * Apache HttpComponetsに関するエンティティクラスです。
  * 
  * @author willard379
- * @since 0.0.1
+ * @since 0.1.0
  * 
  */
 public class AHCUtil {

@@ -24,7 +24,7 @@ import java.util.Map.Entry;
  * 名前と値のペアを保持するクラスです。
  * 
  * @author willard379
- * @since 0.0.1
+ * @since 0.1.0
  */
 public class NameValueObject {
 

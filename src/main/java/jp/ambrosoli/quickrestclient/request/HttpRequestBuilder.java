@@ -36,7 +36,7 @@ import org.apache.http.protocol.HTTP;
  * HTTPリクエストの内容を構築するビルダークラスです。
  * 
  * @author willard379
- * @since 0.0.1
+ * @since 0.1.0
  */
 public class HttpRequestBuilder {
 

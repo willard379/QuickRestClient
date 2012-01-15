@@ -19,7 +19,7 @@ package jp.ambrosoli.quickrestclient.enums;
  * 認証の種類を表すEnumです。
  * 
  * @author willard379
- * @since 0.0.1
+ * @since 0.1.0
  */
 public enum AuthType {
 

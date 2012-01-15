@@ -27,7 +27,7 @@ import org.apache.http.client.ResponseHandler;
  * Apache HttpComponents用のHttpResponseを生成するレスポンスハンドラです。
  * 
  * @author willard379
- * @since 0.0.1
+ * @since 0.1.0
  */
 public class AHCResponseHandler implements ResponseHandler<HttpResponse> {
 

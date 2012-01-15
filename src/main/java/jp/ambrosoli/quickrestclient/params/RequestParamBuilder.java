@@ -21,7 +21,7 @@ import java.util.List;
  * それぞれのクライアントに合わせて、POSTパラメータを加工するインタフェースです。
  * 
  * @author willard379
- * @since 0.0.1
+ * @since 0.1.0
  * 
  * @param <T>
  *            呼び出し元へ返すデータ型

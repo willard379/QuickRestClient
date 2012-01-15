@@ -21,7 +21,7 @@ import jp.ambrosoli.quickrestclient.enums.AuthType;
  * HTTP認証の情報を保持するクラスです。
  * 
  * @author willard379
- * @since 0.0.1
+ * @since 0.1.0
  */
 public class AuthInfo {
 

@@ -25,7 +25,7 @@ import jp.ambrosoli.quickrestclient.headers.HttpHeader;
  * HTTPレスポンスを扱う抽象クラスです。
  * 
  * @author willard379
- * @since 0.0.1
+ * @since 0.1.0
  */
 public abstract class AbstractHttpResponse implements HttpResponse {
 

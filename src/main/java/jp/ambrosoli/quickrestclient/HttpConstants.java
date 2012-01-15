@@ -19,7 +19,7 @@ package jp.ambrosoli.quickrestclient;
  * HTTP関連の定数群です。
  * 
  * @author willard379
- * @since 0.0.1
+ * @since 0.1.0
  */
 public interface HttpConstants {
 

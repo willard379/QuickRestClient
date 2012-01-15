@@ -21,7 +21,7 @@ import java.io.UnsupportedEncodingException;
  * {@link UnsupportedEncodingException}をラップする例外です。
  * 
  * @author willard379
- * @since 0.0.1
+ * @since 0.1.0
  */
 public class UnsupportedEncodingRuntimeException extends RuntimeException {
 

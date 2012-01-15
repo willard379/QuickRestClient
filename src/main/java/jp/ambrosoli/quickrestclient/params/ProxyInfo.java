@@ -21,7 +21,7 @@ import org.apache.http.annotation.Immutable;
  * HTTPプロキシの認証情報を保持するクラスです。
  * 
  * @author willard379
- * @since 0.0.1
+ * @since 0.1.0
  */
 @Immutable
 public class ProxyInfo {

@@ -24,7 +24,7 @@ import jp.ambrosoli.quickrestclient.headers.HttpHeader;
  * HTTPレスポンスの情報にアクセスするためのインタフェースです。
  * 
  * @author willard379
- * @since 0.0.1
+ * @since 0.1.0
  */
 public interface HttpResponse {
 

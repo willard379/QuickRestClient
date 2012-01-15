@@ -26,7 +26,7 @@ import jp.ambrosoli.quickrestclient.util.StringUtil;
  * クエリストリングを生成します。
  * 
  * @author willard379
- * @since 0.0.1
+ * @since 0.1.0
  */
 public class BasicQueryStringBuilder implements RequestParamBuilder<String> {
 
