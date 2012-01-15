@@ -29,13 +29,7 @@ import jp.ambrosoli.http.client.request.HttpRequestBuilder;
  * @author willard379
  * @since 0.0.1
  */
-public final class Operations {
-
-    public static final String HTML = "text/html";
-    public static final String XHTML = "application/xhtml+xml";
-    public static final String JSON = "application/json";
-    public static final String XML = "application/xml";
-    public static final String TEXT = "text/plain";
+public final class Operations implements HttpConstants {
 
     /**
      * 名前と値のペアを生成して返します。

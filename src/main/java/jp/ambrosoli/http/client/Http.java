@@ -24,31 +24,7 @@ import jp.ambrosoli.http.client.request.HttpRequestBuilder;
  * @since 0.0.1
  * 
  */
-public final class Http {
-
-    /** HTTPメソッド「GET」を表す定数です。 */
-    public static final String GET = "GET";
-
-    /** HTTPメソッド「POST」を表す定数です。 */
-    public static final String POST = "POST";
-
-    /** HTTPメソッド「PUT」を表す定数です。 */
-    public static final String PUT = "PUT";
-
-    /** HTTPメソッド「DELETE」を表す定数です。 */
-    public static final String DELETE = "DELETE";
-
-    /** HTTPメソッド「HEAD」を表す定数です。 */
-    public static final String HEAD = "HEAD";
-
-    /** HTTPメソッド「OPTIONS」を表す定数です。 */
-    public static final String OPTIONS = "OPTIONS";
-
-    /** プロトコルバージョン 「HTTP/1.0」を表す定数です。 */
-    public static final String HTTP_1_0 = "HTTP/1.0";
-
-    /** プロトコルバージョン 「HTTP/1.1」を表す定数です。 */
-    public static final String HTTP_1_1 = "HTTP/1.1";
+public final class Http implements HttpConstants {
 
     /**
      * URLを設定します。
