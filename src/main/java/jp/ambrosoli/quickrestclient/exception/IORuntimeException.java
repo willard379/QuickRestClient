@@ -21,7 +21,7 @@ import java.io.IOException;
  * {@link IOException}をラップする例外です。
  * 
  * @author willard379
- * @since 0.0.1
+ * @since 0.1.0
  */
 public class IORuntimeException extends RuntimeException {
 

@@ -30,7 +30,7 @@ import jp.ambrosoli.quickrestclient.util.StringUtil;
  * HTTPリクエストの内容を保持するクラスです。
  * 
  * @author willard379
- * @since 0.0.1
+ * @since 0.1.0
  * 
  */
 public class HttpRequest {

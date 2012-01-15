@@ -21,7 +21,7 @@ import jp.ambrosoli.quickrestclient.request.HttpRequestBuilder;
  * HTTP通信処理のユーザインタフェースを提供するクラスです。
  * 
  * @author willard379
- * @since 0.0.1
+ * @since 0.1.0
  * 
  */
 public final class Http implements HttpConstants {

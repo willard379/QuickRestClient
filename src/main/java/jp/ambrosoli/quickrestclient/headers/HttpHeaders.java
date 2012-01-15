@@ -24,7 +24,7 @@ import jp.ambrosoli.quickrestclient.params.NameValueObject;
  * HTTPヘッダーパラメータを扱うクラスです。
  * 
  * @author willard379
- * @since 0.0.1
+ * @since 0.1.0
  */
 public class HttpHeaders {
 

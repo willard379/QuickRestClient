@@ -23,7 +23,7 @@ import jp.ambrosoli.quickrestclient.util.StringUtil;
  * リクエストパラメータを扱うクラスです。
  * 
  * @author willard379
- * @since 0.0.1
+ * @since 0.1.0
  */
 public class RequestParams {
 

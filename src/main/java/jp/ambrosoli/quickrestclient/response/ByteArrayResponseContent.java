@@ -26,7 +26,7 @@ import jp.ambrosoli.quickrestclient.util.StringUtil;
  * HTTP通信のレスポンスボディをバイト配列で保持するクラスです。
  * 
  * @author willard379
- * @since 0.0.1
+ * @since 0.1.0
  */
 public class ByteArrayResponseContent implements ResponseContent {
 

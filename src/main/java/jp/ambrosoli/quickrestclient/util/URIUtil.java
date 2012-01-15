@@ -21,7 +21,7 @@ import java.net.URI;
  * URLに関するユーティリティクラスです。
  * 
  * @author willard379
- * @since 0.0.1
+ * @since 0.1.0
  */
 public final class URIUtil {
 

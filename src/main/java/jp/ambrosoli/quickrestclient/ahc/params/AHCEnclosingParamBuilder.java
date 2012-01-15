@@ -31,7 +31,7 @@ import org.apache.http.message.BasicNameValuePair;
  * Apache HttpComponents用のPOSTリクエストパラメータを生成するクラスです。
  * 
  * @author willard379
- * @since 0.0.1
+ * @since 0.1.0
  */
 public class AHCEnclosingParamBuilder implements RequestParamBuilder<UrlEncodedFormEntity> {
 

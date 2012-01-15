@@ -21,7 +21,7 @@ import jp.ambrosoli.quickrestclient.params.NameValueObject;
  * HTTPヘッダの情報を保持するクラスです。
  * 
  * @author willard379
- * @since 0.0.1
+ * @since 0.1.0
  */
 public class HttpHeader extends NameValueObject {
 

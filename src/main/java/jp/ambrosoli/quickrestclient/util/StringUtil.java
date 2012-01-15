@@ -19,7 +19,7 @@ package jp.ambrosoli.quickrestclient.util;
  * 文字列に対するユーティリティクラスです。
  * 
  * @author willard379
- * @since 0.0.1
+ * @since 0.1.0
  */
 public final class StringUtil {
 

@@ -22,7 +22,7 @@ import jp.ambrosoli.quickrestclient.response.HttpResponse;
  * それぞれのクライアントを使ってHTTP通信処理を行うインタフェースです。
  * 
  * @author willard379
- * @since 0.0.1
+ * @since 0.1.0
  * 
  */
 public interface HttpService {

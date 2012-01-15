@@ -21,7 +21,7 @@ import java.io.InputStream;
  * HTTP通信のレスポンスボディを保持するクラスです。
  * 
  * @author willard379
- * @since 0.0.1
+ * @since 0.1.0
  */
 public interface ResponseContent {
 

@@ -27,7 +27,7 @@ import org.apache.http.message.BasicHeader;
  * Apache HttpComponents用のHTTPヘッダーを生成するクラスです。
  * 
  * @author willard379
- * @since 0.0.1
+ * @since 0.1.0
  * 
  */
 public class AHCHeaderBuilder implements HttpHeaderBuilder<Header[]> {
