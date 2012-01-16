@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>jp.ambrosoli.quickrestclient</groupId>
     <artifactId>quick-rest-client</artifactId>
-    <version>0.1.0</version>
+    <version>0.2.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <!-- More Project Information -->
