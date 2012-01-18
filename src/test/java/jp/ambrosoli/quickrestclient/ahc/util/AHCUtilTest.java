@@ -24,7 +24,6 @@ import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 
-import jp.ambrosoli.quickrestclient.ahc.util.AHCUtil;
 import jp.ambrosoli.quickrestclient.headers.HttpHeader;
 
 import org.apache.http.Header;
@@ -83,7 +82,7 @@ public class AHCUtilTest {
         Header[] headers = new Header[5];
         headers[0] = new BasicHeader("Transfer-Encoding", "chunked");
         headers[1] = new BasicHeader("Upgrade", "HTTP/2.0, SHTTP/1.3");
-        headers[2] = new BasicHeader("Location", "http://ambrosoli.jp/test-server/");
+        headers[2] = new BasicHeader("Location", "http://www.ambrosoli.jp/test-server/");
         headers[3] = new BasicHeader("Set-Cookie", "name=willard379");
         headers[4] = new BasicHeader("Set-Cookie", "age=17");
 

@@ -15,7 +15,7 @@
  */
 package jp.ambrosoli.quickrestclient.request;
 
-import static jp.ambrosoli.quickrestclient.Operations.*;
+import static jp.ambrosoli.quickrestclient.HttpConstants.*;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 
@@ -34,7 +34,6 @@ import jp.ambrosoli.quickrestclient.headers.HttpHeaders;
 import jp.ambrosoli.quickrestclient.params.AuthInfo;
 import jp.ambrosoli.quickrestclient.params.NameValueObject;
 import jp.ambrosoli.quickrestclient.params.ProxyInfo;
-import jp.ambrosoli.quickrestclient.request.HttpRequestBuilder;
 import jp.ambrosoli.quickrestclient.response.HttpResponse;
 
 import org.hamcrest.Matcher;
@@ -65,7 +64,7 @@ public class HttpRequestBuilderTest {
     public void testCharset() {
 
         // Arrange
-        HttpRequestBuilder builder = new HttpRequestBuilder("http://ambrosoli.jp/");
+        HttpRequestBuilder builder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
 
         // Act
         builder.charset("Shift_JIS");
@@ -80,7 +79,7 @@ public class HttpRequestBuilderTest {
     public void testCharset_Null() {
 
         // Arrange
-        HttpRequestBuilder builder = new HttpRequestBuilder("http://ambrosoli.jp/");
+        HttpRequestBuilder builder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
 
         // Act
         builder.charset(null);
@@ -94,7 +93,7 @@ public class HttpRequestBuilderTest {
     public void testHeaders_NameValueObjectArray() {
 
         // Arrange
-        HttpRequestBuilder builder = new HttpRequestBuilder("http://ambrosoli.jp/");
+        HttpRequestBuilder builder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
 
         NameValueObject[] params = new NameValueObject[3];
         params[0] = new NameValueObject("Header1", "Value1");
@@ -119,7 +118,7 @@ public class HttpRequestBuilderTest {
     public void testHeaders_NameValueObjectArray_Null() {
 
         // Arrange
-        HttpRequestBuilder builder = new HttpRequestBuilder("http://ambrosoli.jp/");
+        HttpRequestBuilder builder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
         NameValueObject[] params = null;
 
         // Act
@@ -135,7 +134,7 @@ public class HttpRequestBuilderTest {
     public void testHeaders_Map() {
 
         // Arrange
-        HttpRequestBuilder builder = new HttpRequestBuilder("http://ambrosoli.jp/");
+        HttpRequestBuilder builder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
 
         Map<String, String> params = new HashMap<String, String>();
         params.put("ibaraki", "mito");
@@ -166,7 +165,7 @@ public class HttpRequestBuilderTest {
     public void testHeaders_Map_Null() {
 
         // Arrange
-        HttpRequestBuilder builder = new HttpRequestBuilder("http://ambrosoli.jp/");
+        HttpRequestBuilder builder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
 
         Map<String, String> params = null;
 
@@ -182,7 +181,7 @@ public class HttpRequestBuilderTest {
     public void testMethod() {
 
         // Arrange
-        HttpRequestBuilder builder = new HttpRequestBuilder("http://ambrosoli.jp/");
+        HttpRequestBuilder builder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
 
         // Act
         builder.method(Http.GET);
@@ -220,7 +219,7 @@ public class HttpRequestBuilderTest {
         this.expectedException.expectMessage(is(equalTo("method may not to be null.")));
 
         // Act
-        HttpRequestBuilder builder = new HttpRequestBuilder("http://ambrosoli.jp/");
+        HttpRequestBuilder builder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
         builder.method(null);
 
         // Assert
@@ -231,7 +230,7 @@ public class HttpRequestBuilderTest {
     public void testMethod_Invalid() {
 
         // Arrange
-        HttpRequestBuilder builder = new HttpRequestBuilder("http://ambrosoli.jp/");
+        HttpRequestBuilder builder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
 
         // Act
         builder.method("TRACE");
@@ -244,7 +243,7 @@ public class HttpRequestBuilderTest {
     public void testMethod_LowerCase() {
 
         // Arrange
-        HttpRequestBuilder builder = new HttpRequestBuilder("http://ambrosoli.jp/");
+        HttpRequestBuilder builder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
 
         // Act
         builder.method("get");
@@ -278,7 +277,7 @@ public class HttpRequestBuilderTest {
     public void testParams_NameValueObjectArray() {
 
         // Arrange
-        HttpRequestBuilder builder = new HttpRequestBuilder("http://ambrosoli.jp/");
+        HttpRequestBuilder builder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
 
         NameValueObject[] params = new NameValueObject[1];
         params[0] = new NameValueObject("lettuce", "レタス");
@@ -302,7 +301,7 @@ public class HttpRequestBuilderTest {
     public void testParams_NameValueObjectArray_Null() {
 
         // Arrange
-        HttpRequestBuilder builder = new HttpRequestBuilder("http://ambrosoli.jp/");
+        HttpRequestBuilder builder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
         NameValueObject[] params = null;
 
         // Act
@@ -317,7 +316,7 @@ public class HttpRequestBuilderTest {
     public void testParams_Map() {
 
         // Arrange
-        HttpRequestBuilder builder = new HttpRequestBuilder("http://ambrosoli.jp/");
+        HttpRequestBuilder builder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
 
         Map<String, String> params = new HashMap<String, String>();
         params.put("NISSAN", "Japan");
@@ -344,7 +343,7 @@ public class HttpRequestBuilderTest {
     public void testParams_Map_Null() {
 
         // Arrange
-        HttpRequestBuilder builder = new HttpRequestBuilder("http://ambrosoli.jp/");
+        HttpRequestBuilder builder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
 
         // Act
         builder.params((Map<String, String>) null);
@@ -358,7 +357,7 @@ public class HttpRequestBuilderTest {
     public void testProtocol() {
 
         // Arrange
-        HttpRequestBuilder builder = new HttpRequestBuilder("http://ambrosoli.jp/");
+        HttpRequestBuilder builder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
 
         // Act
         builder.protocol(Http.HTTP_1_0);
@@ -372,7 +371,7 @@ public class HttpRequestBuilderTest {
     public void testProtocol_Null() {
 
         // Arrange
-        HttpRequestBuilder builder = new HttpRequestBuilder("http://ambrosoli.jp/");
+        HttpRequestBuilder builder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
 
         // Act
         builder.protocol(null);
@@ -385,7 +384,7 @@ public class HttpRequestBuilderTest {
     public void testProxy() {
 
         // Arrange
-        HttpRequestBuilder builder = new HttpRequestBuilder("http://ambrosoli.jp/");
+        HttpRequestBuilder builder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
 
         // Act
         builder.proxy("localhost", 8080);
@@ -404,7 +403,7 @@ public class HttpRequestBuilderTest {
         this.expectedException.expectMessage(is(equalTo("hostname may not be null")));
 
         // Act
-        HttpRequestBuilder builder = new HttpRequestBuilder("http://ambrosoli.jp/");
+        HttpRequestBuilder builder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
         builder.proxy(null, 8080);
 
         // Assert
@@ -416,7 +415,7 @@ public class HttpRequestBuilderTest {
     public void testTimeout_PositiveValue() {
 
         // Arrange
-        HttpRequestBuilder builder = new HttpRequestBuilder("http://ambrosoli.jp/");
+        HttpRequestBuilder builder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
 
         // Act
         builder.timeout(15000);
@@ -430,7 +429,7 @@ public class HttpRequestBuilderTest {
     public void testTimeout_ZeroValue() {
 
         // Arrange
-        HttpRequestBuilder builder = new HttpRequestBuilder("http://ambrosoli.jp/");
+        HttpRequestBuilder builder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
 
         // Act
         builder.timeout(0);
@@ -444,7 +443,7 @@ public class HttpRequestBuilderTest {
     public void testTimeout_NegativeValue() {
 
         // Arrange
-        HttpRequestBuilder builder = new HttpRequestBuilder("http://ambrosoli.jp/");
+        HttpRequestBuilder builder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
 
         // Act
         builder.timeout(-15000);
@@ -458,7 +457,7 @@ public class HttpRequestBuilderTest {
     public void testUserAgent() {
 
         // Arrange
-        HttpRequestBuilder builder = new HttpRequestBuilder("http://ambrosoli.jp/");
+        HttpRequestBuilder builder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
 
         // Act
         builder.userAgent("hoge/1.0");
@@ -475,7 +474,7 @@ public class HttpRequestBuilderTest {
 
         // Arrange
         HttpRequestBuilder builder = new HttpRequestBuilder(
-                "http://ambrosoli.jp/test-server/statusCode/ok");
+                "http://www.ambrosoli.jp/test-server/statusCode/ok");
 
         // Act
         HttpResponse response = builder.execute();
@@ -488,7 +487,7 @@ public class HttpRequestBuilderTest {
     public void testSetUserAgent() {
 
         // Arrange
-        HttpRequestBuilder builder = new HttpRequestBuilder("http://ambrosoli.jp/");
+        HttpRequestBuilder builder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
 
         // Act
         builder.userAgent("Mozilla/10.0");
@@ -504,7 +503,7 @@ public class HttpRequestBuilderTest {
     public void testSetUserAgent_Null() {
 
         // Arrange
-        HttpRequestBuilder builder = new HttpRequestBuilder("http://ambrosoli.jp/");
+        HttpRequestBuilder builder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
 
         // Act
         builder.userAgent(null);
@@ -544,7 +543,7 @@ public class HttpRequestBuilderTest {
     public void testAuth_TypeSafe() {
 
         // Arrange
-        HttpRequestBuilder builder = new HttpRequestBuilder("http://ambrosoli.jp/");
+        HttpRequestBuilder builder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
 
         // Act
         AuthInfo auth = Operations.digest("aaa", "bbb");
@@ -562,7 +561,7 @@ public class HttpRequestBuilderTest {
     public void testAuth_String() {
 
         // Arrange
-        HttpRequestBuilder builder = new HttpRequestBuilder("http://ambrosoli.jp/");
+        HttpRequestBuilder builder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
 
         // Act
         builder.auth("BASIC", "pppp", "hhhh");
@@ -579,7 +578,7 @@ public class HttpRequestBuilderTest {
     public void testAuth_Null() {
 
         // Arrange
-        HttpRequestBuilder builder = new HttpRequestBuilder("http://ambrosoli.jp/");
+        HttpRequestBuilder builder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
 
         // Act
         builder.auth(null);
@@ -593,7 +592,7 @@ public class HttpRequestBuilderTest {
     public void testAuth_AuthTypeNull() {
 
         // Arrange
-        HttpRequestBuilder builder = new HttpRequestBuilder("http://ambrosoli.jp/");
+        HttpRequestBuilder builder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
 
         // Act
         String authType = null;
@@ -608,7 +607,7 @@ public class HttpRequestBuilderTest {
     public void testAuth_InvalidAuthType() {
 
         // Arrange
-        HttpRequestBuilder builder = new HttpRequestBuilder("http://ambrosoli.jp/");
+        HttpRequestBuilder builder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
 
         // Act
         builder.auth("hoge", "user", "password");
@@ -621,7 +620,7 @@ public class HttpRequestBuilderTest {
     public void testAuth3() {
 
         // Arrange
-        HttpRequestBuilder builder = new HttpRequestBuilder("http://ambrosoli.jp/");
+        HttpRequestBuilder builder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
 
         // Act
         builder.auth(AuthType.CLIENT_CERT, "abc", "xyz");

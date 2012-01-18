@@ -24,7 +24,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jp.ambrosoli.quickrestclient.Http;
-import jp.ambrosoli.quickrestclient.ahc.service.AHCHttpService;
 import jp.ambrosoli.quickrestclient.enums.AuthType;
 import jp.ambrosoli.quickrestclient.enums.HttpMethod;
 import jp.ambrosoli.quickrestclient.headers.HttpHeaders;
@@ -80,7 +79,7 @@ public class AHCHttpServiceTest {
         // Arrange
         AHCHttpService service = new AHCHttpService();
         HttpRequest request = new HttpRequest(
-                URIUtil.toURI("http://ambrosoli.jp/test-server/statusCode/ok"));
+                URIUtil.toURI("http://www.ambrosoli.jp/test-server/statusCode/ok"));
         HttpResponse response = service.execute(request);
 
         // Act
@@ -104,7 +103,7 @@ public class AHCHttpServiceTest {
         values.add(new NameValueObject("Vary", "Accept-Charset, Accept-Language"));
 
         HttpRequest request = new HttpRequest(
-                URIUtil.toURI("http://ambrosoli.jp/test-server/header/sameAsParams"));
+                URIUtil.toURI("http://www.ambrosoli.jp/test-server/header/sameAsParams"));
         request.setMethod(HttpMethod.POST);
         request.setCharset(StringUtil.DEFAULT_ENCODING);
         request.addHeaders(values);
@@ -294,7 +293,7 @@ public class AHCHttpServiceTest {
         RequestParams params = new RequestParams(nvo);
 
         // Act
-        URI uri = URIUtil.toURI("http://ambrosoli.jp/get");
+        URI uri = URIUtil.toURI("http://www.ambrosoli.jp/get");
         HttpUriRequest request = service.createHttpUriRequest(uri, HttpMethod.GET, params, "UTF-8");
 
         // Assert
@@ -316,7 +315,7 @@ public class AHCHttpServiceTest {
         RequestParams params = new RequestParams(nvo);
 
         // Act
-        URI uri = URIUtil.toURI("http://ambrosoli.jp/delete");
+        URI uri = URIUtil.toURI("http://www.ambrosoli.jp/delete");
         HttpUriRequest request = service.createHttpUriRequest(uri, HttpMethod.DELETE, params,
                 "UTF-8");
 
@@ -339,7 +338,7 @@ public class AHCHttpServiceTest {
         RequestParams params = new RequestParams(nvo);
 
         // Act
-        URI uri = URIUtil.toURI("http://ambrosoli.jp/head");
+        URI uri = URIUtil.toURI("http://www.ambrosoli.jp/head");
         HttpUriRequest request = service
                 .createHttpUriRequest(uri, HttpMethod.HEAD, params, "UTF-8");
 
@@ -362,7 +361,7 @@ public class AHCHttpServiceTest {
         RequestParams params = new RequestParams(nvo);
 
         // Act
-        URI uri = URIUtil.toURI("http://ambrosoli.jp/options");
+        URI uri = URIUtil.toURI("http://www.ambrosoli.jp/options");
         HttpUriRequest request = service.createHttpUriRequest(uri, HttpMethod.OPTIONS, params,
                 "UTF-8");
 
@@ -379,7 +378,7 @@ public class AHCHttpServiceTest {
         AHCHttpService service = new AHCHttpService();
 
         // Act
-        URI uri = URIUtil.toURI("http://ambrosoli.jp/get");
+        URI uri = URIUtil.toURI("http://www.ambrosoli.jp/get");
         HttpUriRequest request = service.createHttpUriRequest(uri, HttpMethod.GET, null, "UTF-8");
 
         // Assert
@@ -401,7 +400,7 @@ public class AHCHttpServiceTest {
         RequestParams params = new RequestParams(nvo);
 
         // Act
-        URI uri = URIUtil.toURI("http://ambrosoli.jp/post");
+        URI uri = URIUtil.toURI("http://www.ambrosoli.jp/post");
         HttpPost httpPost = (HttpPost) service.createHttpUriRequest(uri, HttpMethod.POST, params,
                 "UTF-8");
 
@@ -430,7 +429,7 @@ public class AHCHttpServiceTest {
         RequestParams params = new RequestParams(nvo);
 
         // Act
-        URI uri = URIUtil.toURI("http://ambrosoli.jp/put");
+        URI uri = URIUtil.toURI("http://www.ambrosoli.jp/put");
         HttpPut httpPut = (HttpPut) service.createHttpUriRequest(uri, HttpMethod.PUT, params,
                 "UTF-8");
 
@@ -453,7 +452,7 @@ public class AHCHttpServiceTest {
         AHCHttpService service = new AHCHttpService();
 
         // Act
-        URI uri = URIUtil.toURI("http://ambrosoli.jp/post");
+        URI uri = URIUtil.toURI("http://www.ambrosoli.jp/post");
         HttpPost httpPost2 = (HttpPost) service.createHttpUriRequest(uri, HttpMethod.POST, null,
                 "UTF-8");
 
@@ -469,7 +468,7 @@ public class AHCHttpServiceTest {
         // Arrange
         AHCHttpService service = new AHCHttpService();
 
-        URI uri = URIUtil.toURI("http://ambrosoli.jp/");
+        URI uri = URIUtil.toURI("http://www.ambrosoli.jp/");
         List<NameValueObject> nvo = new ArrayList<NameValueObject>();
         nvo.add(new NameValueObject("a", "A"));
         nvo.add(new NameValueObject("b", "B"));
@@ -480,7 +479,7 @@ public class AHCHttpServiceTest {
         String fullURI = service.addQueryString(uri, params, "UTF-8").toString();
 
         // Assert
-        assertThat(fullURI, is(equalTo("http://ambrosoli.jp/?a=A&b=B&c=C")));
+        assertThat(fullURI, is(equalTo("http://www.ambrosoli.jp/?a=A&b=B&c=C")));
 
     }
 
@@ -489,12 +488,12 @@ public class AHCHttpServiceTest {
 
         // Arrange
         AHCHttpService service = new AHCHttpService();
-        URI uri = URIUtil.toURI("http://ambrosoli.jp/");
+        URI uri = URIUtil.toURI("http://www.ambrosoli.jp/");
 
         // Act
         String fullURI = service.addQueryString(uri, null, "UTF-8").toString();
         // Assert
-        assertThat(fullURI, is(equalTo("http://ambrosoli.jp/")));
+        assertThat(fullURI, is(equalTo("http://www.ambrosoli.jp/")));
 
     }
 
@@ -503,12 +502,12 @@ public class AHCHttpServiceTest {
 
         // Arrange
         AHCHttpService service = new AHCHttpService();
-        URI uri = URIUtil.toURI("http://ambrosoli.jp/");
+        URI uri = URIUtil.toURI("http://www.ambrosoli.jp/");
 
         // Act
         String fullURI = service.addQueryString(uri, new RequestParams(null), "UTF-8").toString();
         // Assert
-        assertThat(fullURI, is(equalTo("http://ambrosoli.jp/")));
+        assertThat(fullURI, is(equalTo("http://www.ambrosoli.jp/")));
 
     }
 
@@ -518,7 +517,7 @@ public class AHCHttpServiceTest {
         // Arrange
         AHCHttpService service = new AHCHttpService();
 
-        URI uri = URIUtil.toURI("http://ambrosoli.jp/");
+        URI uri = URIUtil.toURI("http://www.ambrosoli.jp/");
         List<NameValueObject> nvo = new ArrayList<NameValueObject>();
         nvo.add(new NameValueObject("a", "A"));
         nvo.add(new NameValueObject("b", "B"));
@@ -529,7 +528,7 @@ public class AHCHttpServiceTest {
         String fullURI = service.addQueryString(uri, params, null).toString();
 
         // Assert
-        assertThat(fullURI, is(equalTo("http://ambrosoli.jp/?a=A&b=B&c=C")));
+        assertThat(fullURI, is(equalTo("http://www.ambrosoli.jp/?a=A&b=B&c=C")));
     }
 
     @Test
@@ -778,7 +777,7 @@ public class AHCHttpServiceTest {
         // Arrange
         AHCHttpService service = new AHCHttpService();
 
-        URI uri = URIUtil.toURI("http://ambrosoli.jp");
+        URI uri = URIUtil.toURI("http://www.ambrosoli.jp/");
         AuthInfo authInfo = new AuthInfo(AuthType.BASIC, "username", "password");
         CredentialsProvider provider = new BasicCredentialsProvider();
 
@@ -786,7 +785,7 @@ public class AHCHttpServiceTest {
         service.setCredentialsAuthenticate(uri, authInfo, provider);
 
         // Assert
-        Credentials credentials = provider.getCredentials(new AuthScope("ambrosoli.jp", 80));
+        Credentials credentials = provider.getCredentials(new AuthScope("www.ambrosoli.jp", 80));
         assertThat(credentials, is(notNullValue()));
         assertThat(credentials.getUserPrincipal().getName(), is(equalTo("username")));
         assertThat(credentials.getPassword(), is(equalTo("password")));
@@ -798,7 +797,7 @@ public class AHCHttpServiceTest {
         // Arrange
         AHCHttpService service = new AHCHttpService();
 
-        URI uri = URIUtil.toURI("https://ambrosoli.jp");
+        URI uri = URIUtil.toURI("https://www.ambrosoli.jp/");
         AuthInfo authInfo = new AuthInfo(AuthType.DIGEST, "u1", "p1");
         CredentialsProvider provider = new BasicCredentialsProvider();
 
@@ -806,7 +805,7 @@ public class AHCHttpServiceTest {
         service.setCredentialsAuthenticate(uri, authInfo, provider);
 
         // Assert
-        Credentials credentials = provider.getCredentials(new AuthScope("ambrosoli.jp", 443));
+        Credentials credentials = provider.getCredentials(new AuthScope("www.ambrosoli.jp", 443));
         assertThat(credentials, is(notNullValue()));
         assertThat(credentials.getUserPrincipal().getName(), is(equalTo("u1")));
         assertThat(credentials.getPassword(), is(equalTo("p1")));
@@ -818,7 +817,7 @@ public class AHCHttpServiceTest {
         // Arrange
         AHCHttpService service = new AHCHttpService();
 
-        URI uri = URIUtil.toURI("http://ambrosoli.jp");
+        URI uri = URIUtil.toURI("http://www.ambrosoli.jp");
         AuthInfo authInfo = new AuthInfo(AuthType.CLIENT_CERT, "u1", "p1");
         CredentialsProvider provider = new BasicCredentialsProvider();
 
@@ -826,7 +825,7 @@ public class AHCHttpServiceTest {
         service.setCredentialsAuthenticate(uri, authInfo, provider);
 
         // Assert
-        Credentials credentials = provider.getCredentials(new AuthScope("ambrosoli.jp", 80));
+        Credentials credentials = provider.getCredentials(new AuthScope("www.ambrosoli.jp", 80));
         assertThat(credentials, is(nullValue()));
     }
 
@@ -836,7 +835,7 @@ public class AHCHttpServiceTest {
         // Arrange
         AHCHttpService service = new AHCHttpService();
 
-        URI uri = URIUtil.toURI("http://ambrosoli.jp");
+        URI uri = URIUtil.toURI("http://www.ambrosoli.jp");
         AuthInfo authInfo = null;
         CredentialsProvider provider = new BasicCredentialsProvider();
 
@@ -844,7 +843,7 @@ public class AHCHttpServiceTest {
         service.setCredentialsAuthenticate(uri, authInfo, provider);
 
         // Assert
-        Credentials credentials = provider.getCredentials(new AuthScope("ambrosoli.jp", 80));
+        Credentials credentials = provider.getCredentials(new AuthScope("www.ambrosoli.jp", 80));
         assertThat(credentials, is(nullValue()));
     }
 

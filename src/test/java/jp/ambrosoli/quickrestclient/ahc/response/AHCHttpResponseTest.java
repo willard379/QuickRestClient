@@ -25,7 +25,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.List;
 
-import jp.ambrosoli.quickrestclient.ahc.response.AHCHttpResponse;
 import jp.ambrosoli.quickrestclient.headers.HttpHeader;
 import jp.ambrosoli.quickrestclient.util.StringUtil;
 
@@ -44,7 +43,7 @@ public class AHCHttpResponseTest {
     private Header[] SAMPLE_HEADERS = new Header[] {
             new BasicHeader("Transfer-Encoding", "chunked"),
             new BasicHeader("Upgrade", "HTTP/2.0, SHTTP/1.3"),
-            new BasicHeader("Location", "http://ambrosoli.jp/test-server/"),
+            new BasicHeader("Location", "http://www.ambrosoli.jp/test-server/"),
             new BasicHeader("Set-Cookie", "name=willard379"),
             new BasicHeader("Set-Cookie", "age=17"), };
 

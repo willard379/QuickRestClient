@@ -15,6 +15,7 @@
  */
 package jp.ambrosoli.quickrestclient;
 
+import static jp.ambrosoli.quickrestclient.HttpConstants.*;
 import static jp.ambrosoli.quickrestclient.Operations.*;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
@@ -25,7 +26,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import jp.ambrosoli.quickrestclient.Http;
 import jp.ambrosoli.quickrestclient.exception.SocketTimeoutRuntimeException;
 import jp.ambrosoli.quickrestclient.headers.HttpHeader;
 import jp.ambrosoli.quickrestclient.response.HttpResponse;
@@ -39,7 +39,7 @@ public class HttpTest {
     public void testUrl() {
 
         // Act
-        HttpResponse response = Http.url("http://ambrosoli.jp/test-server/").execute();
+        HttpResponse response = Http.url("http://www.ambrosoli.jp/test-server/").execute();
 
         // Assert
         assertThat(response.isSuccess(), is(true));
@@ -49,7 +49,7 @@ public class HttpTest {
     public void testGetRequest() {
 
         // Act
-        HttpResponse response = Http.url("http://ambrosoli.jp/test-server/method/get")
+        HttpResponse response = Http.url("http://www.ambrosoli.jp/test-server/method/get")
                 .method(Http.GET).execute();
 
         // Assert
@@ -60,7 +60,7 @@ public class HttpTest {
     public void testPostRequest() {
 
         // Act
-        HttpResponse response = Http.url("http://ambrosoli.jp/test-server/method/post")
+        HttpResponse response = Http.url("http://www.ambrosoli.jp/test-server/method/post")
                 .method(Http.POST).execute();
 
         // Assert
@@ -71,7 +71,7 @@ public class HttpTest {
     public void testPutRequest() {
 
         // Act
-        HttpResponse response = Http.url("http://ambrosoli.jp/test-server/method/put")
+        HttpResponse response = Http.url("http://www.ambrosoli.jp/test-server/method/put")
                 .method(Http.PUT).execute();
 
         // Assert
@@ -82,7 +82,7 @@ public class HttpTest {
     public void testDeleteRequest() {
 
         // Act
-        HttpResponse response = Http.url("http://ambrosoli.jp/test-server/method/delete")
+        HttpResponse response = Http.url("http://www.ambrosoli.jp/test-server/method/delete")
                 .method(Http.DELETE).execute();
 
         // Assert
@@ -93,7 +93,7 @@ public class HttpTest {
     public void testHeadRequest() {
 
         // Act
-        HttpResponse response = Http.url("http://ambrosoli.jp/test-server/method/head")
+        HttpResponse response = Http.url("http://www.ambrosoli.jp/test-server/method/head")
                 .method(Http.HEAD).execute();
 
         // Assert
@@ -104,7 +104,7 @@ public class HttpTest {
     public void testOptionsRequest() {
 
         // Act
-        HttpResponse response = Http.url("http://ambrosoli.jp/test-server/method/options")
+        HttpResponse response = Http.url("http://www.ambrosoli.jp/test-server/method/options")
                 .method(Http.OPTIONS).execute();
 
         // Assert
@@ -115,7 +115,7 @@ public class HttpTest {
     public void testGetRequestWithString() {
 
         // Act
-        HttpResponse response = Http.url("http://ambrosoli.jp/test-server/method/get")
+        HttpResponse response = Http.url("http://www.ambrosoli.jp/test-server/method/get")
                 .method("GET").execute();
 
         // Assert
@@ -126,7 +126,7 @@ public class HttpTest {
     public void testPostRequestWithStringLowerCase() {
 
         // Act
-        HttpResponse response = Http.url("http://ambrosoli.jp/test-server/method/post")
+        HttpResponse response = Http.url("http://www.ambrosoli.jp/test-server/method/post")
                 .method("post").execute();
 
         // Assert
@@ -138,7 +138,7 @@ public class HttpTest {
 
         // Arrange
         // HTTP/1.0のリクエストに対して200 OKを返すURL
-        String url = "http://ambrosoli.jp/test-server/httpProtocol/version1_0";
+        String url = "http://www.ambrosoli.jp/test-server/httpProtocol/version1_0";
 
         // Act
         HttpResponse response_1_0 = Http.url(url).protocol(Http.HTTP_1_0).execute();
@@ -155,7 +155,7 @@ public class HttpTest {
 
         // Arrange
         // HTTP/1.1のリクエストに対して200 OKを返すURL
-        String url = "http://ambrosoli.jp/test-server/httpProtocol/version1_1";
+        String url = "http://www.ambrosoli.jp/test-server/httpProtocol/version1_1";
 
         // Act
         HttpResponse response_1_1 = Http.url(url).protocol(Http.HTTP_1_1).execute();
@@ -170,7 +170,7 @@ public class HttpTest {
     public void testUserAgent() {
 
         // Act
-        HttpResponse response = Http.url("http://ambrosoli.jp/test-server/header/userAgent")
+        HttpResponse response = Http.url("http://www.ambrosoli.jp/test-server/header/userAgent")
                 .userAgent("Ambrosoli/X.X").execute();
 
         // Assert
@@ -182,7 +182,7 @@ public class HttpTest {
     public void testGetWithParameter() {
 
         // Act
-        HttpResponse response = Http.url("http://ambrosoli.jp/test-server/helloWorld")
+        HttpResponse response = Http.url("http://www.ambrosoli.jp/test-server/helloWorld")
                 .method(Http.GET).params(add("name", "willard379")).execute();
 
         // Assert
@@ -193,7 +193,7 @@ public class HttpTest {
     public void testPostWithParameter() {
 
         // Act
-        HttpResponse response = Http.url("http://ambrosoli.jp/test-server/helloWorld")
+        HttpResponse response = Http.url("http://www.ambrosoli.jp/test-server/helloWorld")
                 .method(Http.POST).params(add("name", "willard379")).execute();
 
         // Assert
@@ -208,7 +208,7 @@ public class HttpTest {
         params.put("name", "willard379");
 
         // Act
-        HttpResponse response = Http.url("http://ambrosoli.jp/test-server/helloWorld")
+        HttpResponse response = Http.url("http://www.ambrosoli.jp/test-server/helloWorld")
                 .method(Http.POST).params(params).execute();
 
         // Assert
@@ -219,7 +219,7 @@ public class HttpTest {
     public void testCharset() {
 
         // Act
-        HttpResponse response = Http.url("http://ambrosoli.jp/test-server/helloWorld")
+        HttpResponse response = Http.url("http://www.ambrosoli.jp/test-server/helloWorld")
                 .method(Http.GET).params(add("name", "まぐ☆なむ")).charset("UTF-8").execute();
 
         // Assert
@@ -231,7 +231,7 @@ public class HttpTest {
 
         // Act
         HttpResponse res = Http
-                .url("http://ambrosoli.jp/test-server/header/sameAsParams")
+                .url("http://www.ambrosoli.jp/test-server/header/sameAsParams")
                 .method(Http.POST)
                 .headers(add("Accept", "application/xml"), add("Connection", "Keep-Alive"),
                         add("Accept-Language", "ja"), add("Pragma", "no-cache"))
@@ -254,7 +254,7 @@ public class HttpTest {
         map.put("Pragma", "no-cache");
 
         // Act
-        HttpResponse res = Http.url("http://ambrosoli.jp/test-server/header/sameAsParams")
+        HttpResponse res = Http.url("http://www.ambrosoli.jp/test-server/header/sameAsParams")
                 .method(Http.POST).headers(map).params(map).charset("UTF-8").execute();
 
         // Assert
@@ -265,7 +265,7 @@ public class HttpTest {
     public void testGetContentType() {
 
         // Act
-        HttpResponse response = Http.url("http://ambrosoli.jp/test-server/header/setHeaders")
+        HttpResponse response = Http.url("http://www.ambrosoli.jp/test-server/header/setHeaders")
                 .params(add("Content-Type", "text/html;charset=Shift_JIS")).execute();
 
         // Assert
@@ -282,7 +282,7 @@ public class HttpTest {
         params.put("Connection", "close");
 
         // Act
-        HttpResponse response = Http.url("http://ambrosoli.jp/test-server/header/setHeaders")
+        HttpResponse response = Http.url("http://www.ambrosoli.jp/test-server/header/setHeaders")
                 .params(params).execute();
         List<HttpHeader> allHeaders = response.getAllHeaders();
 
@@ -310,7 +310,7 @@ public class HttpTest {
         params.put("Connection", "close");
 
         // Act
-        HttpResponse response = Http.url("http://ambrosoli.jp/test-server/header/setHeaders")
+        HttpResponse response = Http.url("http://www.ambrosoli.jp/test-server/header/setHeaders")
                 .params(params).execute();
 
         // Assert
@@ -334,7 +334,7 @@ public class HttpTest {
         params.put("Connection", "close");
 
         // Act
-        HttpResponse response = Http.url("http://ambrosoli.jp/test-server/header/setHeaders")
+        HttpResponse response = Http.url("http://www.ambrosoli.jp/test-server/header/setHeaders")
                 .params(params).execute();
 
         // Assert
@@ -352,8 +352,8 @@ public class HttpTest {
     public void testTimeout_Success() {
 
         // Act
-        HttpResponse res = Http.url("http://ambrosoli.jp/test-server/timeout/100").timeout(1000)
-                .execute();
+        HttpResponse res = Http.url("http://www.ambrosoli.jp/test-server/timeout/100")
+                .timeout(1000).execute();
 
         // Assert
         assertThat(res.isSuccess(), is(true));
@@ -363,7 +363,7 @@ public class HttpTest {
     public void testTimeout_Failure() {
 
         // Act
-        Http.url("http://ambrosoli.jp/test-server/timeout/500").timeout(500).execute();
+        Http.url("http://www.ambrosoli.jp/test-server/timeout/500").timeout(500).execute();
         fail("タイムアウトしませんでした");
     }
 
@@ -371,7 +371,7 @@ public class HttpTest {
     public void testAccept() {
 
         // Act
-        HttpResponse response = Http.url("http://ambrosoli.jp/test-server/header/accept")
+        HttpResponse response = Http.url("http://www.ambrosoli.jp/test-server/header/accept")
                 .accept(HTML, XHTML, JSON, XML, TEXT).execute();
 
         // Assert
@@ -391,7 +391,7 @@ public class HttpTest {
     public void testAuth_Basic() {
 
         // Act
-        HttpResponse response = Http.url("http://ambrosoli.jp/auth/basic")
+        HttpResponse response = Http.url("http://www.ambrosoli.jp/auth/basic")
                 .auth(basic("username", "password")).execute();
 
         // Assert
@@ -404,7 +404,7 @@ public class HttpTest {
     public void testAuth_Digest() {
 
         // Act
-        HttpResponse response = Http.url("http://ambrosoli.jp/auth/digest")
+        HttpResponse response = Http.url("http://www.ambrosoli.jp/auth/digest")
                 .auth(digest("username", "password")).execute();
 
         // Assert
