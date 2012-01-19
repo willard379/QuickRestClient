@@ -223,9 +223,6 @@ public class HttpRequestBuilder {
      * @return HttpBuilderオブジェクト
      */
     public HttpRequestBuilder auth(final AuthInfo authInfo) {
-        if (authInfo == null) {
-
-        }
         this.request.authInfo = authInfo;
         return this;
     }
