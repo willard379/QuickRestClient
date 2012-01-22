@@ -17,13 +17,14 @@ package jp.ambrosoli.quickrestclient.ahc.util;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
+import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
 import java.util.List;
 
+import jp.ambrosoli.quickrestclient.exception.IORuntimeException;
 import jp.ambrosoli.quickrestclient.headers.HttpHeader;
 
 import org.apache.http.Header;
@@ -32,9 +33,14 @@ import org.apache.http.entity.BasicHttpEntity;
 import org.apache.http.entity.InputStreamEntity;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.message.BasicHeader;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 public class AHCUtilTest {
+
+    @Rule
+    public ExpectedException expectedException = ExpectedException.none();
 
     @Test
     public void testConsumeEntity() throws Exception {
@@ -53,26 +59,44 @@ public class AHCUtilTest {
     }
 
     @Test
-    public void testConsumeEntity_null() throws Exception {
+    public void testConsumeEntity_Null() throws Exception {
+
+        // Act
+        AHCUtil.consumeEntity(null);
+    }
+
+    @Test
+    public void testConsumeEntity_Empty() throws Exception {
+        AHCUtil.consumeEntity(new BasicHttpEntity());
+    }
+
+    @Test
+    public void testConsumeEntity_NoInputStream() throws Exception {
 
         // Arrange
+        HttpEntity entity = mock(HttpEntity.class);
+        when(entity.isStreaming()).thenReturn(true);
+        when(entity.getContent()).thenReturn(null);
 
         // Act
-        AHCUtil.consumeEntity(null);
+        AHCUtil.consumeEntity(entity);
 
-        // Assert
     }
 
     @Test
-    public void testConsumeEntity_Null() throws UnsupportedEncodingException {
+    public void testConsumeEntity_Exception() throws Exception {
+
+        // Arrange
+        HttpEntity entity = mock(HttpEntity.class);
+        when(entity.isStreaming()).thenReturn(true);
+        when(entity.getContent()).thenThrow(new IOException());
+
+        // Expected
+        this.expectedException.expect(IORuntimeException.class);
 
         // Act
-        AHCUtil.consumeEntity(null);
-    }
+        AHCUtil.consumeEntity(entity);
 
-    @Test
-    public void testConsumeEntity_Empty() throws UnsupportedEncodingException {
-        AHCUtil.consumeEntity(new BasicHttpEntity());
     }
 
     @Test
@@ -163,4 +187,35 @@ public class AHCUtilTest {
 
         assertThat(AHCUtil.toByteArray(null), is(nullValue()));
     }
+
+    @Test
+    public void testToByteArray_Null() throws IOException {
+
+        // Arrange
+        HttpEntity entity = null;
+
+        // Act
+        byte[] data = AHCUtil.toByteArray(entity);
+
+        // Assert
+        assertThat(data, is(nullValue()));
+    }
+
+    @Test
+    public void testToByteArray_Exception() throws IOException {
+
+        // Arrange
+        InputStream input = mock(InputStream.class);
+        HttpEntity entity = new InputStreamEntity(input, 0);
+
+        when(input.read((byte[]) any())).thenThrow(new IOException());
+
+        // Expected
+        this.expectedException.expect(IORuntimeException.class);
+
+        // Act
+        AHCUtil.toByteArray(entity);
+
+    }
+
 }

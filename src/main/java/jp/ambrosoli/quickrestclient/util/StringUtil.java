@@ -15,6 +15,10 @@
  */
 package jp.ambrosoli.quickrestclient.util;
 
+import java.io.UnsupportedEncodingException;
+
+import jp.ambrosoli.quickrestclient.exception.UnsupportedEncodingRuntimeException;
+
 /**
  * 文字列に対するユーティリティクラスです。
  * 
@@ -48,4 +52,26 @@ public final class StringUtil {
         return str != null && str.length() > 0;
     }
 
+    /**
+     * バイト配列から文字列へ変換して返します。
+     * 
+     * @param data
+     *            バイト配列
+     * @param encoding
+     *            文字エンコード
+     * @throws UnsupportedEncodingRuntimeException
+     *             {@link UnsupportedEncodingException}が発生した場合
+     * @return バイト配列から変換した文字列
+     */
+    public static String toString(final byte[] data, final String encoding) {
+        if (data == null) {
+            return null;
+        }
+        String enc = StringUtil.isNotEmpty(encoding) ? encoding : DEFAULT_ENCODING;
+        try {
+            return new String(data, enc);
+        } catch (UnsupportedEncodingException e) {
+            throw new UnsupportedEncodingRuntimeException(e);
+        }
+    }
 }

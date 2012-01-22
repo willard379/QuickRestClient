@@ -17,9 +17,9 @@ package jp.ambrosoli.quickrestclient.response;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
+import java.io.OutputStream;
 
-import jp.ambrosoli.quickrestclient.exception.UnsupportedEncodingRuntimeException;
+import jp.ambrosoli.quickrestclient.util.InputStreamUtil;
 import jp.ambrosoli.quickrestclient.util.StringUtil;
 
 /**
@@ -96,10 +96,18 @@ public class ByteArrayResponseContent implements ResponseContent {
      * .String)
      */
     public String getAsString(final String encoding) {
-        try {
-            return new String(this.data, encoding);
-        } catch (UnsupportedEncodingException e) {
-            throw new UnsupportedEncodingRuntimeException(e);
-        }
+        return StringUtil.toString(this.data, encoding);
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * jp.ambrosoli.quickrestclient.response.ResponseContent#writeTo(java.io
+     * .ByteArrayOutputStream)
+     */
+    public void writeTo(final OutputStream output) {
+        InputStream input = this.getAsInputStream();
+        InputStreamUtil.copy(input, output);
     }
 }

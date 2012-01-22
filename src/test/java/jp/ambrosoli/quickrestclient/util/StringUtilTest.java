@@ -17,11 +17,16 @@ package jp.ambrosoli.quickrestclient.util;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
-import jp.ambrosoli.quickrestclient.util.StringUtil;
+import jp.ambrosoli.quickrestclient.exception.UnsupportedEncodingRuntimeException;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 public class StringUtilTest {
+
+    @Rule
+    public ExpectedException expectedException = ExpectedException.none();
 
     @Test
     public void testIsEmpty() {
@@ -57,4 +62,71 @@ public class StringUtilTest {
         assertThat(StringUtil.isNotEmpty(new StringBuilder("  bob  ")), is(true));
     }
 
+    @Test
+    public void testToString() throws Exception {
+
+        // Arrange
+        byte[] data = "オーシャン".getBytes("eucjp");
+
+        // Act
+        String result = StringUtil.toString(data, "eucjp");
+
+        // Assert
+        assertThat(result, is(equalTo("オーシャン")));
+    }
+
+    @Test
+    public void testToString_Empty() throws Exception {
+
+        // Arrange
+        byte[] data = new byte[0];
+
+        // Act
+        String result = StringUtil.toString(data, "UTF-8");
+
+        // Assert
+        assertThat(result, is(equalTo("")));
+    }
+
+    @Test
+    public void testToString_NullData() throws Exception {
+
+        // Arrange
+        byte[] data = null;
+
+        // Act
+        String result = StringUtil.toString(data, "UTF-8");
+
+        // Assert
+        assertThat(result, is(nullValue()));
+    }
+
+    @Test
+    public void testToString_NullEncoding() throws Exception {
+
+        // Arrange
+        byte[] data = "ロマンス".getBytes("UTF-8");
+
+        // Act
+        String result = StringUtil.toString(data, null);
+
+        // Assert
+        assertThat(result, is(equalTo("ロマンス")));
+    }
+
+    @Test
+    public void testToString_Exception() throws Exception {
+
+        // Arrange
+        byte[] data = "ハネムーン".getBytes("UTF-8");
+
+        // Expected
+        this.expectedException.expect(UnsupportedEncodingRuntimeException.class);
+
+        // Act
+        StringUtil.toString(data, "UTF-48");
+
+        // Assert
+        fail("UnsupportedEncodingRuntimeExceptionが発生しませんでした。");
+    }
 }

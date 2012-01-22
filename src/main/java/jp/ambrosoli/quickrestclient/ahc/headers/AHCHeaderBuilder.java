@@ -15,6 +15,7 @@
  */
 package jp.ambrosoli.quickrestclient.ahc.headers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jp.ambrosoli.quickrestclient.headers.HttpHeaderBuilder;
@@ -45,15 +46,15 @@ public class AHCHeaderBuilder implements HttpHeaderBuilder<Header[]> {
         }
 
         int size = headers.size();
-        Header[] dest = new Header[size];
+        List<Header> headerList = new ArrayList<Header>();
         for (int i = 0; i < size; i++) {
             NameValueObject nvo = headers.get(i);
-            if (nvo == null) {
-                continue;
+            if (nvo != null) {
+                BasicHeader header = new BasicHeader(nvo.getName(), nvo.getValue());
+                headerList.add(header);
             }
-            dest[i] = new BasicHeader(nvo.getName(), nvo.getValue());
         }
-        return dest;
+        return headerList.toArray(new Header[headerList.size()]);
     }
 
 }

@@ -16,6 +16,7 @@
 package jp.ambrosoli.quickrestclient.response;
 
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.List;
 
 import jp.ambrosoli.quickrestclient.headers.HttpHeader;
@@ -112,4 +113,11 @@ public interface HttpResponse {
      */
     long getContentLength();
 
+    /**
+     * レスポンスの内容を{@link OutputStream}に書き出します。
+     * 
+     * @param output
+     *            出力ストリーム
+     */
+    void writeTo(OutputStream output);
 }

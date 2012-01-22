@@ -17,17 +17,18 @@ package jp.ambrosoli.quickrestclient.response;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.util.List;
 
 import jp.ambrosoli.quickrestclient.headers.HttpHeader;
-import jp.ambrosoli.quickrestclient.response.AbstractHttpResponse;
-import jp.ambrosoli.quickrestclient.response.ByteArrayResponseContent;
-import jp.ambrosoli.quickrestclient.response.ResponseContent;
+import jp.ambrosoli.quickrestclient.util.StringUtil;
 
 import org.junit.Test;
 
@@ -159,7 +160,7 @@ public class AbstractHttpResponseTest {
     }
 
     @Test
-    public void testGetAsString_Null() {
+    public void testGetAsString_NoContent() {
 
         // Arrange
         ResponseContent content = null;
@@ -188,7 +189,7 @@ public class AbstractHttpResponseTest {
     }
 
     @Test
-    public void testGetAsString_Charset() throws IOException {
+    public void testGetAsStringString() throws IOException {
 
         // Arrange
         ResponseContent content = new ByteArrayResponseContent("えむえすきゅーさんに".getBytes("MS932"));
@@ -200,6 +201,65 @@ public class AbstractHttpResponseTest {
         // Assert
         assertThat(data, is(equalTo("えむえすきゅーさんに")));
     }
+
+    @Test
+    public void testGetAsStringString_NoContent() throws IOException {
+
+        // Arrange
+        AbstractHttpResponse response = new MockAbstractHttpResponseImpl(null);
+
+        // Act
+        String data = response.getAsString("MS932");
+
+        // Assert
+        assertThat(data, is(nullValue()));
+    }
+
+    @Test
+    public void testGetAsStringString_Null() throws IOException {
+
+        // Arrange
+        ResponseContent content = new ByteArrayResponseContent("としこし".getBytes("UTF-8"));
+        AbstractHttpResponse response = new MockAbstractHttpResponseImpl(content);
+
+        // Act
+        String data = response.getAsString(null);
+
+        // Assert
+        assertThat(data, is(equalTo("としこし")));
+    }
+
+    @Test
+    public void testWriteTo() throws Exception {
+
+        // Arrange
+        ResponseContent content = new ByteArrayResponseContent("しめじ".getBytes("UTF-8"));
+        AbstractHttpResponse response = new MockAbstractHttpResponseImpl(content);
+
+        ByteArrayOutputStream output = new ByteArrayOutputStream();
+
+        // Act
+        response.writeTo(output);
+
+        // Assert
+        String result = StringUtil.toString(output.toByteArray(), "UTF-8");
+        assertThat(result, is(equalTo("しめじ")));
+    }
+
+    @Test
+    public void testWriteTo_Null() throws Exception {
+
+        // Arrange
+        AbstractHttpResponse response = new MockAbstractHttpResponseImpl(null);
+        OutputStream output = mock(OutputStream.class);
+
+        // Act
+        response.writeTo(output);
+
+        // Assert
+        verify(output).close();
+    }
+
 }
 
 class MockAbstractHttpResponseImpl extends AbstractHttpResponse {
@@ -214,32 +274,26 @@ class MockAbstractHttpResponseImpl extends AbstractHttpResponse {
         super(content);
     }
 
-    @Override
     public List<HttpHeader> getAllHeaders() {
         return null;
     }
 
-    @Override
     public long getContentLength() {
         return 0;
     }
 
-    @Override
     public String getContentType() {
         return null;
     }
 
-    @Override
     public HttpHeader getHeader(final String headerName) {
         return null;
     }
 
-    @Override
     public List<HttpHeader> getHeaders(final String headerName) {
         return null;
     }
 
-    @Override
     public int getStatusCode() {
         return this.sc;
     }

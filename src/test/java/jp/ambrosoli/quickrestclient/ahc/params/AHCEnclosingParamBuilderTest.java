@@ -21,15 +21,19 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import jp.ambrosoli.quickrestclient.ahc.params.AHCEnclosingParamBuilder;
 import jp.ambrosoli.quickrestclient.params.NameValueObject;
 import jp.ambrosoli.quickrestclient.params.RequestParams;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 public class AHCEnclosingParamBuilderTest {
+
+    @Rule
+    public ExpectedException expectedException = ExpectedException.none();
 
     @Test
     public void testGetConformedParams() {
@@ -86,11 +90,11 @@ public class AHCEnclosingParamBuilderTest {
     }
 
     @Test
-    public void testCreateConformedParams_NoParams() {
+    public void testCreateConformedParams_NullParams() {
 
         // Act
         AHCEnclosingParamBuilder builder = new AHCEnclosingParamBuilder();
-        UrlEncodedFormEntity entity = builder.createConformedParams(null, null);
+        UrlEncodedFormEntity entity = builder.createConformedParams(null, "UTF-8");
 
         // Assert
         assertThat(entity, is(notNullValue()));
@@ -110,6 +114,62 @@ public class AHCEnclosingParamBuilderTest {
 
         // Assert
         assertThat(entity, is(notNullValue()));
+
+    }
+
+    @Test
+    public void testCreateConformedParams_NullCharset() throws Exception {
+
+        // Arrange
+        List<NameValueObject> params = new ArrayList<NameValueObject>();
+        params.add(new NameValueObject("Name1", "Value1"));
+        params.add(new NameValueObject("Name2", "Value2"));
+        params.add(new NameValueObject("Name3", "Value3"));
+
+        // Act
+        AHCEnclosingParamBuilder builder = new AHCEnclosingParamBuilder();
+        UrlEncodedFormEntity entity = builder.createConformedParams(params, null);
+
+        // Assert
+        assertThat(entity, is(notNullValue()));
+    }
+
+    @Test
+    public void testCreateConformedParams_InvalidCharset() throws Exception {
+
+        // Arrange
+        List<NameValueObject> params = new ArrayList<NameValueObject>();
+        params.add(new NameValueObject("Name1", "Value1"));
+        params.add(new NameValueObject("Name2", "Value2"));
+        params.add(new NameValueObject("Name3", "Value3"));
+
+        String charset = "UTF-48";
+
+        // Expected
+        this.expectedException.expect(IllegalArgumentException.class);
+
+        // Act
+        AHCEnclosingParamBuilder builder = new AHCEnclosingParamBuilder();
+        builder.createConformedParams(params, charset);
+
+    }
+
+    @Test
+    public void testCreateNameValuePairList() {
+
+        // Arrange
+        List<NameValueObject> params = new ArrayList<NameValueObject>();
+        params.add(new NameValueObject("Name1", "Value1"));
+        params.add(new NameValueObject("Name2", "Value2"));
+        params.add(new NameValueObject("Name3", "Value3"));
+
+        // Act
+        AHCEnclosingParamBuilder builder = new AHCEnclosingParamBuilder();
+        List<NameValuePair> dest = builder.createNameValuePairList(params);
+
+        // Assert
+        assertThat(dest, is(notNullValue()));
+        assertThat(dest.size(), is(params.size()));
 
     }
 
@@ -143,26 +203,7 @@ public class AHCEnclosingParamBuilderTest {
     }
 
     @Test
-    public void testCreateNameValuePairList_NameValueObjectListParam() {
-
-        // Arrange
-        List<NameValueObject> params = new ArrayList<NameValueObject>();
-        params.add(new NameValueObject("Name1", "Value1"));
-        params.add(new NameValueObject("Name2", "Value2"));
-        params.add(new NameValueObject("Name3", "Value3"));
-
-        // Act
-        AHCEnclosingParamBuilder builder = new AHCEnclosingParamBuilder();
-        List<NameValuePair> dest = builder.createNameValuePairList(params);
-
-        // Assert
-        assertThat(dest, is(notNullValue()));
-        assertThat(dest.size(), is(params.size()));
-
-    }
-
-    @Test
-    public void testCreateNameValuePairList_EmptyListParam() {
+    public void testCreateNameValuePairList_ContainsNull() {
 
         // Arrange
         List<NameValueObject> params = new ArrayList<NameValueObject>();

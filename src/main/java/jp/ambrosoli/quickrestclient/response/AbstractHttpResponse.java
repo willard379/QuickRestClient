@@ -16,10 +16,10 @@
 package jp.ambrosoli.quickrestclient.response;
 
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
-import java.util.List;
 
-import jp.ambrosoli.quickrestclient.headers.HttpHeader;
+import jp.ambrosoli.quickrestclient.util.OutputStreamUtil;
 
 /**
  * HTTPレスポンスを扱う抽象クラスです。
@@ -119,16 +119,18 @@ public abstract class AbstractHttpResponse implements HttpResponse {
         return this.content.getAsString(charset);
     }
 
-    public abstract int getStatusCode();
-
-    public abstract List<HttpHeader> getAllHeaders();
-
-    public abstract List<HttpHeader> getHeaders(String headerName);
-
-    public abstract HttpHeader getHeader(String headerName);
-
-    public abstract String getContentType();
-
-    public abstract long getContentLength();
+    /*
+     * (non-Javadoc)
+     * 
+     * @see jp.ambrosoli.quickrestclient.response.HttpResponse#writeTo(java.io.
+     * OutputStream)
+     */
+    public void writeTo(final OutputStream output) {
+        if (this.content == null) {
+            OutputStreamUtil.close(output);
+            return;
+        }
+        this.content.writeTo(output);
+    }
 
 }

@@ -18,10 +18,9 @@ package jp.ambrosoli.quickrestclient.response;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-
-import jp.ambrosoli.quickrestclient.response.ByteArrayResponseContent;
 
 import org.junit.Test;
 
@@ -55,6 +54,20 @@ public class ByteArrayResponseContentTest {
     }
 
     @Test
+    public void testGetAsByteArray_Null() {
+
+        // Arrange
+        ByteArrayResponseContent content = new ByteArrayResponseContent();
+        content.setData(null);
+
+        // Act
+        byte[] data = content.getAsByteArray();
+
+        // Assert
+        assertThat(data, is(nullValue()));
+    }
+
+    @Test
     public void testGetAsInputStream() throws IOException {
 
         // Arrange
@@ -73,6 +86,21 @@ public class ByteArrayResponseContentTest {
     }
 
     @Test
+    public void testGetAsInputStream_Null() throws IOException {
+
+        // Arrange
+        ByteArrayResponseContent content = new ByteArrayResponseContent();
+        content.setData(null);
+
+        // Act
+        InputStream inputStream = content.getAsInputStream();
+
+        // Assert
+        assertThat(inputStream, is(nullValue()));
+
+    }
+
+    @Test
     public void testGetAsString() {
 
         // Arrange
@@ -87,17 +115,17 @@ public class ByteArrayResponseContentTest {
     }
 
     @Test
-    public void testGetAsStringString_Null() throws IOException {
+    public void testGetAsString_Null() {
 
         // Arrange
         ByteArrayResponseContent content = new ByteArrayResponseContent();
+        content.setData(null);
 
         // Act
-        InputStream inputStream = content.getAsInputStream();
+        String data = content.getAsString();
 
         // Assert
-        assertThat(inputStream, is(nullValue()));
-
+        assertThat(data, is(nullValue()));
     }
 
     @Test
@@ -112,6 +140,22 @@ public class ByteArrayResponseContentTest {
 
         // Assert
         assertThat(data, is(equalTo("山田太郎")));
+    }
+
+    @Test
+    public void testWriteTo() throws Exception {
+
+        // Arrange
+        byte[] data = "ABCDEFG".getBytes("UTF-8");
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+
+        // Act
+        ResponseContent responseContent = new ByteArrayResponseContent(data);
+        responseContent.writeTo(outputStream);
+
+        // Assert
+        String result = new String(outputStream.toByteArray(), "UTF-8");
+        assertThat(result, is(equalTo("ABCDEFG")));
     }
 
 }

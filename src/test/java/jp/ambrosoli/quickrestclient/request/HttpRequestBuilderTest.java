@@ -540,6 +540,31 @@ public class HttpRequestBuilderTest {
     }
 
     @Test
+    public void testAccept_ContainsNull() throws Exception {
+
+        // Act
+        HttpRequestBuilder requestBuilder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
+        requestBuilder.accept(null, HTML, XHTML, XML, null, JSON, TEXT, null);
+
+        // Assert
+        List<NameValueObject> headers = requestBuilder.request.getHeaders().getHeaders();
+        assertThat(headers.size(), is(equalTo(5)));
+
+        List<Matcher<? extends String>> values = new ArrayList<Matcher<? extends String>>();
+        values.add(equalTo(HTML));
+        values.add(equalTo(XHTML));
+        values.add(equalTo(XML));
+        values.add(equalTo(JSON));
+        values.add(equalTo(TEXT));
+
+        for (NameValueObject header : headers) {
+            assertThat(header.getName(), is(equalTo("Accept")));
+            assertThat(header.getValue(), is(anyOf(values)));
+        }
+
+    }
+
+    @Test
     public void testAuth_TypeSafe() {
 
         // Arrange
@@ -575,49 +600,7 @@ public class HttpRequestBuilderTest {
     }
 
     @Test
-    public void testAuth_Null() {
-
-        // Arrange
-        HttpRequestBuilder builder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
-
-        // Act
-        builder.auth(null);
-
-        // Assert
-        AuthInfo authInfo = builder.request.getAuthInfo();
-        assertThat(authInfo, is(nullValue()));
-    }
-
-    @Test(expected = NullPointerException.class)
-    public void testAuth_AuthTypeNull() {
-
-        // Arrange
-        HttpRequestBuilder builder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
-
-        // Act
-        String authType = null;
-        builder.auth(authType, "user", "password");
-
-        // Assert
-        fail("例外が発生しませんでした。");
-
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testAuth_InvalidAuthType() {
-
-        // Arrange
-        HttpRequestBuilder builder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
-
-        // Act
-        builder.auth("hoge", "user", "password");
-
-        // Assert
-        fail("例外が発生しませんでした。");
-    }
-
-    @Test
-    public void testAuth3() {
+    public void testAuth_Enum() {
 
         // Arrange
         HttpRequestBuilder builder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
@@ -631,6 +614,33 @@ public class HttpRequestBuilderTest {
         assertThat(authInfo.type, is(AuthType.CLIENT_CERT));
         assertThat(authInfo.username, is(equalTo("abc")));
         assertThat(authInfo.password, is(equalTo("xyz")));
+    }
+
+    @Test
+    public void testAuth_Null() {
+
+        // Arrange
+        HttpRequestBuilder builder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
+
+        // Act
+        builder.auth(null);
+
+        // Assert
+        AuthInfo authInfo = builder.request.getAuthInfo();
+        assertThat(authInfo, is(nullValue()));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testAuth_InvalidAuthType() {
+
+        // Arrange
+        HttpRequestBuilder builder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
+
+        // Act
+        builder.auth("hoge", "user", "password");
+
+        // Assert
+        fail("例外が発生しませんでした。");
     }
 
 }

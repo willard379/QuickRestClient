@@ -22,6 +22,7 @@ import java.util.List;
 import jp.ambrosoli.quickrestclient.exception.UnsupportedEncodingRuntimeException;
 import jp.ambrosoli.quickrestclient.params.NameValueObject;
 import jp.ambrosoli.quickrestclient.params.RequestParamBuilder;
+import jp.ambrosoli.quickrestclient.util.StringUtil;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -46,7 +47,9 @@ public class AHCEnclosingParamBuilder implements RequestParamBuilder<UrlEncodedF
             final String charset) {
         try {
             List<NameValuePair> paramList = this.createNameValuePairList(params);
-            return new UrlEncodedFormEntity(paramList, charset);
+            String encoding = StringUtil.isNotEmpty(charset) ? charset
+                    : StringUtil.DEFAULT_ENCODING;
+            return new UrlEncodedFormEntity(paramList, encoding);
         } catch (UnsupportedEncodingException e) {
             throw new UnsupportedEncodingRuntimeException(e);
         }

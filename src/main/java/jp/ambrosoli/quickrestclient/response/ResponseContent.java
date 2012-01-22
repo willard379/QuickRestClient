@@ -16,6 +16,7 @@
 package jp.ambrosoli.quickrestclient.response;
 
 import java.io.InputStream;
+import java.io.OutputStream;
 
 /**
  * HTTP通信のレスポンスボディを保持するクラスです。
@@ -54,5 +55,13 @@ public interface ResponseContent {
      * @return レスポンスデータの入力ストリーム
      */
     InputStream getAsInputStream();
+
+    /**
+     * レスポンスデータを{@link OutputStream}に出力します。
+     * 
+     * @param output
+     *            出力先のストリーム
+     */
+    void writeTo(OutputStream output);
 
 }

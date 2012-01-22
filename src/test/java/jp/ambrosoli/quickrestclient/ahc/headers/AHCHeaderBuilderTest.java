@@ -21,7 +21,6 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import jp.ambrosoli.quickrestclient.ahc.headers.AHCHeaderBuilder;
 import jp.ambrosoli.quickrestclient.params.NameValueObject;
 
 import org.apache.http.Header;
@@ -40,12 +39,12 @@ public class AHCHeaderBuilderTest {
 
         // Act
         AHCHeaderBuilder builder = new AHCHeaderBuilder();
-        Header[] headers4 = builder.createConformedHeaders(values);
+        Header[] headers = builder.createConformedHeaders(values);
 
         // Assert
-        assertThat(headers4.length, is(values.size()));
-        assertThat(headers4[0].getName(), is(equalTo(values.get(0).getName())));
-        assertThat(headers4[0].getValue(), is(equalTo(values.get(0).getValue())));
+        assertThat(headers.length, is(values.size()));
+        assertThat(headers[0].getName(), is(equalTo(values.get(0).getName())));
+        assertThat(headers[0].getValue(), is(equalTo(values.get(0).getValue())));
     }
 
     @Test
@@ -53,10 +52,10 @@ public class AHCHeaderBuilderTest {
 
         // Act
         AHCHeaderBuilder builder = new AHCHeaderBuilder();
-        Header[] headers1 = builder.createConformedHeaders(null);
+        Header[] headers = builder.createConformedHeaders(null);
 
         // Assert
-        assertThat(headers1, is(nullValue()));
+        assertThat(headers, is(nullValue()));
 
     }
 
@@ -65,10 +64,29 @@ public class AHCHeaderBuilderTest {
 
         // Act
         AHCHeaderBuilder builder = new AHCHeaderBuilder();
-        Header[] headers2 = builder.createConformedHeaders(new ArrayList<NameValueObject>());
+        Header[] headers = builder.createConformedHeaders(new ArrayList<NameValueObject>());
 
         // Asseert
-        assertThat(headers2, is(nullValue()));
+        assertThat(headers, is(nullValue()));
+    }
+
+    @Test
+    public void testCreateConformedHeaders_ContainsNull() {
+
+        // Arrange
+        List<NameValueObject> values = new ArrayList<NameValueObject>();
+        values.add(null);
+        values.add(new NameValueObject("Name1", "Value1"));
+        values.add(null);
+        values.add(new NameValueObject("Name2", "Value2"));
+        values.add(null);
+
+        // Act
+        AHCHeaderBuilder builder = new AHCHeaderBuilder();
+        Header[] headers = builder.createConformedHeaders(values);
+
+        // Assert
+        assertThat(headers.length, is(2));
     }
 
 }
