@@ -13,11 +13,13 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package jp.ambrosoli.quickrestclient.ahc.response;
+package jp.ambrosoli.quickrestclient.apache.response;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
-import jp.ambrosoli.quickrestclient.ahc.util.AHCUtil;
+import jp.ambrosoli.quickrestclient.exception.IORuntimeException;
 import jp.ambrosoli.quickrestclient.headers.HttpHeader;
 import jp.ambrosoli.quickrestclient.response.AbstractHttpResponse;
 import jp.ambrosoli.quickrestclient.response.ByteArrayResponseContent;
@@ -25,37 +27,38 @@ import jp.ambrosoli.quickrestclient.response.ByteArrayResponseContent;
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.StatusLine;
+import org.apache.http.util.EntityUtils;
 
 /**
  * Apache HttpComponentsのHTTPレスポンスを扱うクラスです。
- *
+ * 
  * @author willard379
  * @since 0.1.0
  */
-public class AHCHttpResponse extends AbstractHttpResponse {
+public class ApacheHttpResponse extends AbstractHttpResponse {
 
     /** Apache HttpComponentsのレスポンス */
     private org.apache.http.HttpResponse response;
 
     /**
-     * AHCHttpResponseを生成します。
+     * ApacheHttpResponseを生成します。
      * 
      * @param response
-     *            AHCHttpResponse
+     *            ApacheHttpResponse
      */
-    public AHCHttpResponse(final org.apache.http.HttpResponse response) {
+    public ApacheHttpResponse(final org.apache.http.HttpResponse response) {
         super();
         if (response == null) {
             throw new NullPointerException();
         }
         this.response = response;
         HttpEntity entity = response.getEntity();
-        byte[] data = AHCUtil.toByteArray(entity);
+        byte[] data = this.toByteArray(entity);
         super.setContent(new ByteArrayResponseContent(data));
     }
 
     public List<HttpHeader> getAllHeaders() {
-        return AHCUtil.convertHttpHeaders(this.response.getAllHeaders());
+        return this.convertHttpHeaders(this.response.getAllHeaders());
     }
 
     public String getContentType() {
@@ -79,11 +82,11 @@ public class AHCHttpResponse extends AbstractHttpResponse {
     }
 
     public HttpHeader getHeader(final String headerName) {
-        return AHCUtil.convertHttpHeader(this.response.getFirstHeader(headerName));
+        return this.convertHttpHeader(this.response.getFirstHeader(headerName));
     }
 
     public List<HttpHeader> getHeaders(final String headerName) {
-        return AHCUtil.convertHttpHeaders(this.response.getHeaders(headerName));
+        return this.convertHttpHeaders(this.response.getHeaders(headerName));
     }
 
     public int getStatusCode() {
@@ -94,4 +97,54 @@ public class AHCHttpResponse extends AbstractHttpResponse {
         return statusLine.getStatusCode();
     }
 
+    /**
+     * {@link HttpEntity}からbyte配列を取得して返します。
+     * 
+     * @param entity
+     *            HTTPエンティティ
+     * @return 取得したbyte配列
+     */
+    public byte[] toByteArray(final HttpEntity entity) {
+        if (entity == null) {
+            return null;
+        }
+
+        try {
+            return EntityUtils.toByteArray(entity);
+        } catch (IOException e) {
+            throw new IORuntimeException();
+        }
+    }
+
+    /**
+     * {@link Header}の配列を{@link HttpHeader}のリストに変換して返します。
+     * 
+     * @param headers
+     *            {@link Header}の配列
+     * @return {@link HttpHeader}のリスト
+     */
+    public List<HttpHeader> convertHttpHeaders(final Header[] headers) {
+        if (headers == null) {
+            return null;
+        }
+        List<HttpHeader> headerList = new ArrayList<HttpHeader>();
+        for (Header header : headers) {
+            headerList.add(this.convertHttpHeader(header));
+        }
+        return headerList;
+    }
+
+    /**
+     * {@link Header}を{@link HttpHeader}に変換して返します。
+     * 
+     * @param header
+     *            {@link Header}オブジェクト
+     * @return {@link HttpHeader}オブジェクト
+     */
+    public HttpHeader convertHttpHeader(final Header header) {
+        if (header == null) {
+            return null;
+        }
+        return new HttpHeader(header.getName(), header.getValue());
+    }
 }

@@ -13,7 +13,22 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
+package jp.ambrosoli.quickrestclient.apache.service;
+
+import jp.ambrosoli.quickrestclient.service.HttpService;
+import jp.ambrosoli.quickrestclient.service.HttpServiceFactory;
+
 /**
- * Apache HttpComponents用のリクエストパラメータを扱う機能を提供します。
+ * {@link ApacheHttpService}を生成するファクトリクラスです。
+ * 
+ * @author willard379
+ * @since 0.1.0
  */
-package jp.ambrosoli.quickrestclient.ahc.params;
+public class ApacheHttpServiceFactory extends HttpServiceFactory {
+
+    @Override
+    public HttpService create() {
+        return new ApacheHttpService();
+    }
+
+}

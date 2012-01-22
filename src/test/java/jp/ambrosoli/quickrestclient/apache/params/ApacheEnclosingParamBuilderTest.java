@@ -13,7 +13,7 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package jp.ambrosoli.quickrestclient.ahc.params;
+package jp.ambrosoli.quickrestclient.apache.params;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
@@ -21,6 +21,7 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import jp.ambrosoli.quickrestclient.apache.params.ApacheEnclosingParamBuilder;
 import jp.ambrosoli.quickrestclient.params.NameValueObject;
 import jp.ambrosoli.quickrestclient.params.RequestParams;
 
@@ -30,7 +31,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-public class AHCEnclosingParamBuilderTest {
+public class ApacheEnclosingParamBuilderTest {
 
     @Rule
     public ExpectedException expectedException = ExpectedException.none();
@@ -46,7 +47,7 @@ public class AHCEnclosingParamBuilderTest {
         RequestParams reqParams = new RequestParams(params);
 
         // Act
-        AHCEnclosingParamBuilder builder = new AHCEnclosingParamBuilder();
+        ApacheEnclosingParamBuilder builder = new ApacheEnclosingParamBuilder();
         UrlEncodedFormEntity entity = reqParams.getConformedParams(builder);
 
         // Assert
@@ -65,7 +66,7 @@ public class AHCEnclosingParamBuilderTest {
         RequestParams reqParams = new RequestParams(params);
 
         // Act
-        AHCEnclosingParamBuilder builder = new AHCEnclosingParamBuilder();
+        ApacheEnclosingParamBuilder builder = new ApacheEnclosingParamBuilder();
         UrlEncodedFormEntity entity = reqParams.getConformedParams(builder, "UTF-8");
 
         // Assert
@@ -82,7 +83,7 @@ public class AHCEnclosingParamBuilderTest {
         params.add(new NameValueObject("Name3", "Value3"));
 
         // Act
-        AHCEnclosingParamBuilder builder = new AHCEnclosingParamBuilder();
+        ApacheEnclosingParamBuilder builder = new ApacheEnclosingParamBuilder();
         UrlEncodedFormEntity entity = builder.createConformedParams(params, "UTF-8");
 
         // Assert
@@ -93,7 +94,7 @@ public class AHCEnclosingParamBuilderTest {
     public void testCreateConformedParams_NullParams() {
 
         // Act
-        AHCEnclosingParamBuilder builder = new AHCEnclosingParamBuilder();
+        ApacheEnclosingParamBuilder builder = new ApacheEnclosingParamBuilder();
         UrlEncodedFormEntity entity = builder.createConformedParams(null, "UTF-8");
 
         // Assert
@@ -109,7 +110,7 @@ public class AHCEnclosingParamBuilderTest {
         String charset = "UTF-8";
 
         // Act
-        AHCEnclosingParamBuilder builder = new AHCEnclosingParamBuilder();
+        ApacheEnclosingParamBuilder builder = new ApacheEnclosingParamBuilder();
         UrlEncodedFormEntity entity = builder.createConformedParams(params, charset);
 
         // Assert
@@ -127,7 +128,7 @@ public class AHCEnclosingParamBuilderTest {
         params.add(new NameValueObject("Name3", "Value3"));
 
         // Act
-        AHCEnclosingParamBuilder builder = new AHCEnclosingParamBuilder();
+        ApacheEnclosingParamBuilder builder = new ApacheEnclosingParamBuilder();
         UrlEncodedFormEntity entity = builder.createConformedParams(params, null);
 
         // Assert
@@ -149,7 +150,7 @@ public class AHCEnclosingParamBuilderTest {
         this.expectedException.expect(IllegalArgumentException.class);
 
         // Act
-        AHCEnclosingParamBuilder builder = new AHCEnclosingParamBuilder();
+        ApacheEnclosingParamBuilder builder = new ApacheEnclosingParamBuilder();
         builder.createConformedParams(params, charset);
 
     }
@@ -164,7 +165,7 @@ public class AHCEnclosingParamBuilderTest {
         params.add(new NameValueObject("Name3", "Value3"));
 
         // Act
-        AHCEnclosingParamBuilder builder = new AHCEnclosingParamBuilder();
+        ApacheEnclosingParamBuilder builder = new ApacheEnclosingParamBuilder();
         List<NameValuePair> dest = builder.createNameValuePairList(params);
 
         // Assert
@@ -177,7 +178,7 @@ public class AHCEnclosingParamBuilderTest {
     public void testCreateNameValuePairList_NullParam() {
 
         // Act
-        AHCEnclosingParamBuilder builder = new AHCEnclosingParamBuilder();
+        ApacheEnclosingParamBuilder builder = new ApacheEnclosingParamBuilder();
         List<NameValuePair> dest = builder.createNameValuePairList(null);
 
         // Assert
@@ -193,7 +194,7 @@ public class AHCEnclosingParamBuilderTest {
         ArrayList<NameValueObject> params = new ArrayList<NameValueObject>();
 
         // Act
-        AHCEnclosingParamBuilder builder = new AHCEnclosingParamBuilder();
+        ApacheEnclosingParamBuilder builder = new ApacheEnclosingParamBuilder();
         List<NameValuePair> dest = builder.createNameValuePairList(params);
 
         // Assert
@@ -212,7 +213,7 @@ public class AHCEnclosingParamBuilderTest {
         params.add(null);
 
         // Act
-        AHCEnclosingParamBuilder builder = new AHCEnclosingParamBuilder();
+        ApacheEnclosingParamBuilder builder = new ApacheEnclosingParamBuilder();
         List<NameValuePair> dest = builder.createNameValuePairList(params);
 
         // Assert
@@ -228,7 +229,7 @@ public class AHCEnclosingParamBuilderTest {
         NameValueObject nvo = new NameValueObject("name", "value");
 
         // Act
-        AHCEnclosingParamBuilder builder = new AHCEnclosingParamBuilder();
+        ApacheEnclosingParamBuilder builder = new ApacheEnclosingParamBuilder();
         NameValuePair nameValuePair = builder.toNameValuePair(nvo);
 
         // Assert
@@ -242,7 +243,7 @@ public class AHCEnclosingParamBuilderTest {
     public void testToNameValuePair_NullParam() {
 
         // Act
-        AHCEnclosingParamBuilder builder = new AHCEnclosingParamBuilder();
+        ApacheEnclosingParamBuilder builder = new ApacheEnclosingParamBuilder();
         NameValuePair nameValuePair = builder.toNameValuePair(null);
 
         // Assert

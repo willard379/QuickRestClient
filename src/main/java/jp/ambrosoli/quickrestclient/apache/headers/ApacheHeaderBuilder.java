@@ -13,7 +13,7 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package jp.ambrosoli.quickrestclient.ahc.headers;
+package jp.ambrosoli.quickrestclient.apache.headers;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +31,7 @@ import org.apache.http.message.BasicHeader;
  * @since 0.1.0
  * 
  */
-public class AHCHeaderBuilder implements HttpHeaderBuilder<Header[]> {
+public class ApacheHeaderBuilder implements HttpHeaderBuilder<Header[]> {
 
     /*
      * (non-Javadoc)

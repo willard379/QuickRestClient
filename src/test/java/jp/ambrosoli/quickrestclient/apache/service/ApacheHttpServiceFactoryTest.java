@@ -13,22 +13,22 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package jp.ambrosoli.quickrestclient.ahc.service;
+package jp.ambrosoli.quickrestclient.apache.service;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
-import jp.ambrosoli.quickrestclient.ahc.service.AHCHttpServiceFactory;
+import jp.ambrosoli.quickrestclient.apache.service.ApacheHttpServiceFactory;
 import jp.ambrosoli.quickrestclient.service.HttpService;
 
 import org.junit.Test;
 
-public class AHCHttpServiceFactoryTest {
+public class ApacheHttpServiceFactoryTest {
 
     @Test
     public void testCreate() {
 
         // Arrange
-        AHCHttpServiceFactory factory = new AHCHttpServiceFactory();
+        ApacheHttpServiceFactory factory = new ApacheHttpServiceFactory();
 
         // Act
         HttpService service = factory.create();

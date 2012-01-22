@@ -14,6 +14,6 @@
  * governing permissions and limitations under the License.
  */
 /**
- * Apache HttpComponents用のHTTPヘッダーを扱う機能を提供します。
+ * Apache HttpComponents用のリクエストパラメータを扱う機能を提供します。
  */
-package jp.ambrosoli.quickrestclient.ahc.headers;
+package jp.ambrosoli.quickrestclient.apache.params;

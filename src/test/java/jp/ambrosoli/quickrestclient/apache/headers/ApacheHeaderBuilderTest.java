@@ -13,7 +13,7 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package jp.ambrosoli.quickrestclient.ahc.headers;
+package jp.ambrosoli.quickrestclient.apache.headers;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
@@ -21,12 +21,13 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import jp.ambrosoli.quickrestclient.apache.headers.ApacheHeaderBuilder;
 import jp.ambrosoli.quickrestclient.params.NameValueObject;
 
 import org.apache.http.Header;
 import org.junit.Test;
 
-public class AHCHeaderBuilderTest {
+public class ApacheHeaderBuilderTest {
 
     @Test
     public void testCreateConformedHeaders() {
@@ -38,7 +39,7 @@ public class AHCHeaderBuilderTest {
         values.add(new NameValueObject("Name3", "Value3"));
 
         // Act
-        AHCHeaderBuilder builder = new AHCHeaderBuilder();
+        ApacheHeaderBuilder builder = new ApacheHeaderBuilder();
         Header[] headers = builder.createConformedHeaders(values);
 
         // Assert
@@ -51,7 +52,7 @@ public class AHCHeaderBuilderTest {
     public void testCreateConformedHeaders_Null() {
 
         // Act
-        AHCHeaderBuilder builder = new AHCHeaderBuilder();
+        ApacheHeaderBuilder builder = new ApacheHeaderBuilder();
         Header[] headers = builder.createConformedHeaders(null);
 
         // Assert
@@ -63,7 +64,7 @@ public class AHCHeaderBuilderTest {
     public void testCreateConformedHeaders_Empty() {
 
         // Act
-        AHCHeaderBuilder builder = new AHCHeaderBuilder();
+        ApacheHeaderBuilder builder = new ApacheHeaderBuilder();
         Header[] headers = builder.createConformedHeaders(new ArrayList<NameValueObject>());
 
         // Asseert
@@ -82,7 +83,7 @@ public class AHCHeaderBuilderTest {
         values.add(null);
 
         // Act
-        AHCHeaderBuilder builder = new AHCHeaderBuilder();
+        ApacheHeaderBuilder builder = new ApacheHeaderBuilder();
         Header[] headers = builder.createConformedHeaders(values);
 
         // Assert

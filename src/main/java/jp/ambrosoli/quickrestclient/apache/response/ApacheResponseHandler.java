@@ -16,11 +16,15 @@
 /**
  * 
  */
-package jp.ambrosoli.quickrestclient.ahc.response;
+package jp.ambrosoli.quickrestclient.apache.response;
 
-import jp.ambrosoli.quickrestclient.ahc.util.AHCUtil;
+import java.io.IOException;
+import java.io.InputStream;
+
+import jp.ambrosoli.quickrestclient.exception.IORuntimeException;
 import jp.ambrosoli.quickrestclient.response.HttpResponse;
 
+import org.apache.http.HttpEntity;
 import org.apache.http.client.ResponseHandler;
 
 /**
@@ -29,7 +33,7 @@ import org.apache.http.client.ResponseHandler;
  * @author willard379
  * @since 0.1.0
  */
-public class AHCResponseHandler implements ResponseHandler<HttpResponse> {
+public class ApacheResponseHandler implements ResponseHandler<HttpResponse> {
 
     /*
      * (non-Javadoc)
@@ -40,11 +44,34 @@ public class AHCResponseHandler implements ResponseHandler<HttpResponse> {
      */
     public HttpResponse handleResponse(final org.apache.http.HttpResponse response) {
         try {
-            return new AHCHttpResponse(response);
+            return new ApacheHttpResponse(response);
         } finally {
             if (response != null) {
-                AHCUtil.consumeEntity(response.getEntity());
+                this.consumeEntity(response.getEntity());
             }
         }
     }
+
+    /**
+     * エンティティをconsumeします。
+     * 
+     * @param entity
+     *            エンティティ
+     */
+    public void consumeEntity(final HttpEntity entity) {
+        try {
+            if (entity == null) {
+                return;
+            }
+            if (entity.isStreaming()) {
+                InputStream instream = entity.getContent();
+                if (instream != null) {
+                    instream.close();
+                }
+            }
+        } catch (IOException e) {
+            throw new IORuntimeException(e);
+        }
+    }
+
 }

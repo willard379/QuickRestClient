@@ -13,7 +13,7 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package jp.ambrosoli.quickrestclient.ahc.service;
+package jp.ambrosoli.quickrestclient.apache.service;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jp.ambrosoli.quickrestclient.Http;
+import jp.ambrosoli.quickrestclient.apache.service.ApacheHttpService;
 import jp.ambrosoli.quickrestclient.enums.AuthType;
 import jp.ambrosoli.quickrestclient.enums.HttpMethod;
 import jp.ambrosoli.quickrestclient.headers.HttpHeaders;
@@ -68,7 +69,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-public class AHCHttpServiceTest {
+public class ApacheHttpServiceTest {
 
     @Rule
     public ExpectedException exceptionRule = ExpectedException.none();
@@ -77,7 +78,7 @@ public class AHCHttpServiceTest {
     public void testExecute_Minimum() {
 
         // Arrange
-        AHCHttpService service = new AHCHttpService();
+        ApacheHttpService service = new ApacheHttpService();
         HttpRequest request = new HttpRequest(
                 URIUtil.toURI("http://www.ambrosoli.jp/test-server/statusCode/ok"));
         HttpResponse response = service.execute(request);
@@ -93,7 +94,7 @@ public class AHCHttpServiceTest {
     public void testExecute_Maximum() {
 
         // Arrange
-        AHCHttpService service = new AHCHttpService();
+        ApacheHttpService service = new ApacheHttpService();
 
         List<NameValueObject> values = new ArrayList<NameValueObject>();
         values.add(new NameValueObject("Accept", "application/xml"));
@@ -123,7 +124,7 @@ public class AHCHttpServiceTest {
     public void testGetSocketFactory_HTTP() {
 
         // Arrange
-        AHCHttpService service = new AHCHttpService();
+        ApacheHttpService service = new ApacheHttpService();
 
         // Act
         SocketFactory factory = service.getSocketFactory(URIUtil
@@ -138,7 +139,7 @@ public class AHCHttpServiceTest {
     public void testGetSocketFactory_SSL() {
 
         // Arrange
-        AHCHttpService service = new AHCHttpService();
+        ApacheHttpService service = new ApacheHttpService();
 
         // Act
         SocketFactory factory = service.getSocketFactory(URIUtil
@@ -156,7 +157,7 @@ public class AHCHttpServiceTest {
         this.exceptionRule.expectMessage(is(equalTo("URL is null.")));
 
         // Act
-        AHCHttpService service = new AHCHttpService();
+        ApacheHttpService service = new ApacheHttpService();
         service.getSocketFactory(null);
 
         // Assert
@@ -171,7 +172,7 @@ public class AHCHttpServiceTest {
         this.exceptionRule.expectMessage(is(equalTo("invalid scheme.")));
 
         // Act
-        AHCHttpService service = new AHCHttpService();
+        ApacheHttpService service = new ApacheHttpService();
         service.getSocketFactory(URIUtil.toURI("ws://www.ambrosoli.jp/test-server/"));
 
         // Assert
@@ -182,7 +183,7 @@ public class AHCHttpServiceTest {
     public void testCreateSchemeRegistry_HTTP() {
 
         // Arrange
-        AHCHttpService service = new AHCHttpService();
+        ApacheHttpService service = new ApacheHttpService();
 
         // Act
         SchemeRegistry schreg = service.createSchemeRegistry(URIUtil
@@ -197,7 +198,7 @@ public class AHCHttpServiceTest {
     public void testCreateSchemeRegistry_SSL() {
 
         // Arrange
-        AHCHttpService service = new AHCHttpService();
+        ApacheHttpService service = new ApacheHttpService();
 
         // Act
         SchemeRegistry schreg = service.createSchemeRegistry(URIUtil
@@ -215,7 +216,7 @@ public class AHCHttpServiceTest {
         this.exceptionRule.expectMessage(is(equalTo("URL is null.")));
 
         // Act
-        AHCHttpService service = new AHCHttpService();
+        ApacheHttpService service = new ApacheHttpService();
         service.createSchemeRegistry(null);
 
         // Assert
@@ -230,7 +231,7 @@ public class AHCHttpServiceTest {
         this.exceptionRule.expectMessage(is(equalTo("invalid scheme.")));
 
         // Act
-        AHCHttpService service = new AHCHttpService();
+        ApacheHttpService service = new ApacheHttpService();
         service.createSchemeRegistry(URIUtil.toURI("wss://www.ambrosoli.jp/test-server/"));
 
         // Assert
@@ -241,7 +242,7 @@ public class AHCHttpServiceTest {
     public void testCreateHttpParams() {
 
         // Arrange
-        AHCHttpService service = new AHCHttpService();
+        ApacheHttpService service = new ApacheHttpService();
 
         // Act
         HttpParams params = service.createHttpParams();
@@ -254,7 +255,7 @@ public class AHCHttpServiceTest {
     public void testCreateClientConnectionManager() {
 
         // Arrange
-        AHCHttpService service = new AHCHttpService();
+        ApacheHttpService service = new ApacheHttpService();
         HttpParams params = new BasicHttpParams();
         SchemeRegistry schreg = new SchemeRegistry();
 
@@ -269,7 +270,7 @@ public class AHCHttpServiceTest {
     public void testCreateHttpClient() {
 
         // Arrange
-        AHCHttpService service = new AHCHttpService();
+        ApacheHttpService service = new ApacheHttpService();
         HttpParams params = new BasicHttpParams();
         SingleClientConnManager conman = new SingleClientConnManager(params, new SchemeRegistry());
 
@@ -284,7 +285,7 @@ public class AHCHttpServiceTest {
     public void testCreateHttpUriRequest_Get() {
 
         // Arrange
-        AHCHttpService service = new AHCHttpService();
+        ApacheHttpService service = new ApacheHttpService();
 
         List<NameValueObject> nvo = new ArrayList<NameValueObject>();
         nvo.add(new NameValueObject("a", "A"));
@@ -306,7 +307,7 @@ public class AHCHttpServiceTest {
     public void testCreateHttpUriRequest_DELETE() {
 
         // Arrange
-        AHCHttpService service = new AHCHttpService();
+        ApacheHttpService service = new ApacheHttpService();
 
         List<NameValueObject> nvo = new ArrayList<NameValueObject>();
         nvo.add(new NameValueObject("a", "A"));
@@ -329,7 +330,7 @@ public class AHCHttpServiceTest {
     public void testCreateHttpUriRequest_Head() {
 
         // Arrange
-        AHCHttpService service = new AHCHttpService();
+        ApacheHttpService service = new ApacheHttpService();
 
         List<NameValueObject> nvo = new ArrayList<NameValueObject>();
         nvo.add(new NameValueObject("a", "A"));
@@ -352,7 +353,7 @@ public class AHCHttpServiceTest {
     public void testCreateHttpUriRequest_Options() {
 
         // Arrange
-        AHCHttpService service = new AHCHttpService();
+        ApacheHttpService service = new ApacheHttpService();
 
         List<NameValueObject> nvo = new ArrayList<NameValueObject>();
         nvo.add(new NameValueObject("a", "A"));
@@ -375,7 +376,7 @@ public class AHCHttpServiceTest {
     public void testCreateHttpUriRequest_Get_Null() {
 
         // Arrange
-        AHCHttpService service = new AHCHttpService();
+        ApacheHttpService service = new ApacheHttpService();
 
         // Act
         URI uri = URIUtil.toURI("http://www.ambrosoli.jp/get");
@@ -391,7 +392,7 @@ public class AHCHttpServiceTest {
     public void testCreateHttpUriRequest_Post() throws IOException {
 
         // Arrange
-        AHCHttpService service = new AHCHttpService();
+        ApacheHttpService service = new ApacheHttpService();
 
         List<NameValueObject> nvo = new ArrayList<NameValueObject>();
         nvo.add(new NameValueObject("a", "A"));
@@ -420,7 +421,7 @@ public class AHCHttpServiceTest {
     public void testCreateHttpUriRequest_Put() throws IOException {
 
         // Arrange
-        AHCHttpService service = new AHCHttpService();
+        ApacheHttpService service = new ApacheHttpService();
 
         List<NameValueObject> nvo = new ArrayList<NameValueObject>();
         nvo.add(new NameValueObject("a", "A"));
@@ -449,7 +450,7 @@ public class AHCHttpServiceTest {
     public void testCreateHttpUriRequest_Post_Null() throws IOException {
 
         // Arrange
-        AHCHttpService service = new AHCHttpService();
+        ApacheHttpService service = new ApacheHttpService();
 
         // Act
         URI uri = URIUtil.toURI("http://www.ambrosoli.jp/post");
@@ -466,7 +467,7 @@ public class AHCHttpServiceTest {
     public void testAddQueryString() {
 
         // Arrange
-        AHCHttpService service = new AHCHttpService();
+        ApacheHttpService service = new ApacheHttpService();
 
         URI uri = URIUtil.toURI("http://www.ambrosoli.jp/");
         List<NameValueObject> nvo = new ArrayList<NameValueObject>();
@@ -487,7 +488,7 @@ public class AHCHttpServiceTest {
     public void testAddQueryString_NullParam() {
 
         // Arrange
-        AHCHttpService service = new AHCHttpService();
+        ApacheHttpService service = new ApacheHttpService();
         URI uri = URIUtil.toURI("http://www.ambrosoli.jp/");
 
         // Act
@@ -501,7 +502,7 @@ public class AHCHttpServiceTest {
     public void testAddQueryString_EmptyParam() {
 
         // Arrange
-        AHCHttpService service = new AHCHttpService();
+        ApacheHttpService service = new ApacheHttpService();
         URI uri = URIUtil.toURI("http://www.ambrosoli.jp/");
 
         // Act
@@ -515,7 +516,7 @@ public class AHCHttpServiceTest {
     public void testAddQueryString_NoEncoding() {
 
         // Arrange
-        AHCHttpService service = new AHCHttpService();
+        ApacheHttpService service = new ApacheHttpService();
 
         URI uri = URIUtil.toURI("http://www.ambrosoli.jp/");
         List<NameValueObject> nvo = new ArrayList<NameValueObject>();
@@ -535,7 +536,7 @@ public class AHCHttpServiceTest {
     public void testSetProxy() {
 
         // Arrange
-        AHCHttpService service = new AHCHttpService();
+        ApacheHttpService service = new ApacheHttpService();
         BasicHttpParams httpParams = new BasicHttpParams();
         ProxyInfo proxy = new ProxyInfo("localhost", 8080);
         service.setProxy(httpParams, proxy);
@@ -554,7 +555,7 @@ public class AHCHttpServiceTest {
     public void testSetProxy_NullParam() {
 
         // Arrange
-        AHCHttpService service = new AHCHttpService();
+        ApacheHttpService service = new ApacheHttpService();
         BasicHttpParams httpParams = new BasicHttpParams();
         service.setProxy(httpParams, null);
 
@@ -569,7 +570,7 @@ public class AHCHttpServiceTest {
     public void testSetProtocolVersion_HTTP1_0() {
 
         // Arrange
-        AHCHttpService service = new AHCHttpService();
+        ApacheHttpService service = new ApacheHttpService();
         HttpRequestBase httpRequestBase = new HttpGet();
 
         // Act
@@ -585,7 +586,7 @@ public class AHCHttpServiceTest {
     public void testSetProtocolVersion_HTTP1_1() {
 
         // Arrange
-        AHCHttpService service = new AHCHttpService();
+        ApacheHttpService service = new ApacheHttpService();
         HttpRequestBase httpRequestBase = new HttpPost();
 
         // Act
@@ -605,7 +606,7 @@ public class AHCHttpServiceTest {
         this.exceptionRule.expectMessage(is(equalTo("Http protocol version is illegal")));
 
         // Act
-        AHCHttpService service = new AHCHttpService();
+        ApacheHttpService service = new ApacheHttpService();
         service.setProtocolVersion(new BasicHttpParams(), "HTTP/2.0");
 
         // Assert
@@ -616,7 +617,7 @@ public class AHCHttpServiceTest {
     public void testSetTimeout_PositiveValueParam() {
 
         // Arrange
-        AHCHttpService service = new AHCHttpService();
+        ApacheHttpService service = new ApacheHttpService();
         BasicHttpParams httpParams = new BasicHttpParams();
 
         // Act
@@ -635,7 +636,7 @@ public class AHCHttpServiceTest {
     public void testSetTimeout_NegativeValueParam() {
 
         // Arrange
-        AHCHttpService service = new AHCHttpService();
+        ApacheHttpService service = new ApacheHttpService();
         BasicHttpParams httpParams = new BasicHttpParams();
 
         // Act
@@ -654,7 +655,7 @@ public class AHCHttpServiceTest {
     public void testSetTimeout_ZeroValueParam() {
 
         // Arrange
-        AHCHttpService service = new AHCHttpService();
+        ApacheHttpService service = new ApacheHttpService();
         BasicHttpParams httpParams = new BasicHttpParams();
 
         // Act
@@ -673,7 +674,7 @@ public class AHCHttpServiceTest {
     public void testSetCharset() {
 
         // Arrange
-        AHCHttpService service = new AHCHttpService();
+        ApacheHttpService service = new ApacheHttpService();
         BasicHttpParams httpParams = new BasicHttpParams();
 
         // Act
@@ -693,7 +694,7 @@ public class AHCHttpServiceTest {
     public void testSetHeaders() {
 
         // Arrange
-        AHCHttpService service = new AHCHttpService();
+        ApacheHttpService service = new ApacheHttpService();
 
         List<NameValueObject> headers = new ArrayList<NameValueObject>();
         headers.add(new NameValueObject("Accept", "application/xml"));
@@ -722,7 +723,7 @@ public class AHCHttpServiceTest {
     public void testSetHeaders_NullParam() {
 
         // Arrange
-        AHCHttpService service = new AHCHttpService();
+        ApacheHttpService service = new ApacheHttpService();
 
         List<NameValueObject> headers = new ArrayList<NameValueObject>();
         headers.add(new NameValueObject("Accept", "application/xml"));
@@ -745,7 +746,7 @@ public class AHCHttpServiceTest {
     public void testSetFormEntity() throws IOException {
 
         // Arrange
-        AHCHttpService service = new AHCHttpService();
+        ApacheHttpService service = new ApacheHttpService();
 
         HttpPost httpPost = new HttpPost();
 
@@ -775,7 +776,7 @@ public class AHCHttpServiceTest {
     public void testSetCredentialsAuthenticate_Basic() {
 
         // Arrange
-        AHCHttpService service = new AHCHttpService();
+        ApacheHttpService service = new ApacheHttpService();
 
         URI uri = URIUtil.toURI("http://www.ambrosoli.jp/");
         AuthInfo authInfo = new AuthInfo(AuthType.BASIC, "username", "password");
@@ -795,7 +796,7 @@ public class AHCHttpServiceTest {
     public void testSetCredentialsAuthenticate_Digest() {
 
         // Arrange
-        AHCHttpService service = new AHCHttpService();
+        ApacheHttpService service = new ApacheHttpService();
 
         URI uri = URIUtil.toURI("https://www.ambrosoli.jp/");
         AuthInfo authInfo = new AuthInfo(AuthType.DIGEST, "u1", "p1");
@@ -815,7 +816,7 @@ public class AHCHttpServiceTest {
     public void testSetCredentialsAuthenticate_Other() {
 
         // Arrange
-        AHCHttpService service = new AHCHttpService();
+        ApacheHttpService service = new ApacheHttpService();
 
         URI uri = URIUtil.toURI("http://www.ambrosoli.jp");
         AuthInfo authInfo = new AuthInfo(AuthType.CLIENT_CERT, "u1", "p1");
@@ -833,7 +834,7 @@ public class AHCHttpServiceTest {
     public void testSetCredentialsAuthenticate_AuthInfoNull() {
 
         // Arrange
-        AHCHttpService service = new AHCHttpService();
+        ApacheHttpService service = new ApacheHttpService();
 
         URI uri = URIUtil.toURI("http://www.ambrosoli.jp");
         AuthInfo authInfo = null;

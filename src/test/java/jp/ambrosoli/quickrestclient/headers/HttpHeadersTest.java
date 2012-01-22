@@ -21,7 +21,7 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import jp.ambrosoli.quickrestclient.ahc.headers.AHCHeaderBuilder;
+import jp.ambrosoli.quickrestclient.apache.headers.ApacheHeaderBuilder;
 import jp.ambrosoli.quickrestclient.headers.HttpHeaders;
 import jp.ambrosoli.quickrestclient.params.NameValueObject;
 
@@ -92,7 +92,7 @@ public class HttpHeadersTest {
     public void testGetConfirmedHeaders_InitialState() {
 
         // Arrange
-        AHCHeaderBuilder builder = new AHCHeaderBuilder();
+        ApacheHeaderBuilder builder = new ApacheHeaderBuilder();
         HttpHeaders httpHeaders1 = new HttpHeaders();
 
         // Act
@@ -107,7 +107,7 @@ public class HttpHeadersTest {
     public void testGetConfirmedHeaders_Empty() {
 
         // Arrange
-        AHCHeaderBuilder builder = new AHCHeaderBuilder();
+        ApacheHeaderBuilder builder = new ApacheHeaderBuilder();
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.addHeaders(new ArrayList<NameValueObject>());
 
@@ -123,7 +123,7 @@ public class HttpHeadersTest {
     public void testGetConfirmedHeaders_Null() {
 
         // Arrange
-        AHCHeaderBuilder builder = new AHCHeaderBuilder();
+        ApacheHeaderBuilder builder = new ApacheHeaderBuilder();
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.addHeaders(null);
 
@@ -139,7 +139,7 @@ public class HttpHeadersTest {
     public void testGetConfirmedHeaders() {
 
         // Arrange
-        AHCHeaderBuilder builder = new AHCHeaderBuilder();
+        ApacheHeaderBuilder builder = new ApacheHeaderBuilder();
         List<NameValueObject> values = new ArrayList<NameValueObject>();
         values.add(new NameValueObject("Name1", "Value1"));
         values.add(new NameValueObject("Name2", "Value2"));

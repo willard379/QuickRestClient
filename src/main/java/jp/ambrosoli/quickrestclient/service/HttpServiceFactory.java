@@ -18,7 +18,7 @@ package jp.ambrosoli.quickrestclient.service;
 import java.util.HashMap;
 import java.util.Map;
 
-import jp.ambrosoli.quickrestclient.ahc.service.AHCHttpServiceFactory;
+import jp.ambrosoli.quickrestclient.apache.service.ApacheHttpServiceFactory;
 
 /**
  * {@link HttpService}のファクトリクラスです。
@@ -39,7 +39,7 @@ public abstract class HttpServiceFactory {
     public static HttpServiceFactory getFactory() {
         HttpServiceFactory factory = cache.get(null);
         if (factory == null) {
-            factory = new AHCHttpServiceFactory();
+            factory = new ApacheHttpServiceFactory();
             register(null, factory);
         }
         return factory;

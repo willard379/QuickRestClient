@@ -13,7 +13,7 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package jp.ambrosoli.quickrestclient.ahc.params;
+package jp.ambrosoli.quickrestclient.apache.params;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -34,7 +34,7 @@ import org.apache.http.message.BasicNameValuePair;
  * @author willard379
  * @since 0.1.0
  */
-public class AHCEnclosingParamBuilder implements RequestParamBuilder<UrlEncodedFormEntity> {
+public class ApacheEnclosingParamBuilder implements RequestParamBuilder<UrlEncodedFormEntity> {
 
     /*
      * (non-Javadoc)

@@ -16,16 +16,16 @@
 /**
  * 
  */
-package jp.ambrosoli.quickrestclient.ahc.service;
+package jp.ambrosoli.quickrestclient.apache.service;
 
 import java.io.IOException;
 import java.net.SocketTimeoutException;
 import java.net.URI;
 
 import jp.ambrosoli.quickrestclient.Http;
-import jp.ambrosoli.quickrestclient.ahc.headers.AHCHeaderBuilder;
-import jp.ambrosoli.quickrestclient.ahc.params.AHCEnclosingParamBuilder;
-import jp.ambrosoli.quickrestclient.ahc.response.AHCResponseHandler;
+import jp.ambrosoli.quickrestclient.apache.headers.ApacheHeaderBuilder;
+import jp.ambrosoli.quickrestclient.apache.params.ApacheEnclosingParamBuilder;
+import jp.ambrosoli.quickrestclient.apache.response.ApacheResponseHandler;
 import jp.ambrosoli.quickrestclient.enums.AuthType;
 import jp.ambrosoli.quickrestclient.enums.HttpMethod;
 import jp.ambrosoli.quickrestclient.exception.IORuntimeException;
@@ -80,7 +80,7 @@ import org.apache.http.params.HttpProtocolParams;
  * @author willard379
  * @since 0.1.0
  */
-public class AHCHttpService implements HttpService {
+public class ApacheHttpService implements HttpService {
 
     /*
      * (non-Javadoc)
@@ -107,7 +107,7 @@ public class AHCHttpService implements HttpService {
         this.setCredentialsAuthenticate(uri, request.getAuthInfo(), client.getCredentialsProvider());
 
         try {
-            return client.execute(httpUriRequest, new AHCResponseHandler());
+            return client.execute(httpUriRequest, new ApacheResponseHandler());
         } catch (SocketTimeoutException e) {
             throw new SocketTimeoutRuntimeException(e);
         } catch (IOException e) {
@@ -330,7 +330,7 @@ public class AHCHttpService implements HttpService {
         if (httpHeaders == null || httpHeaders.isEmpty()) {
             return;
         }
-        Header[] headers = httpHeaders.getConformedHeaders(new AHCHeaderBuilder());
+        Header[] headers = httpHeaders.getConformedHeaders(new ApacheHeaderBuilder());
         if (headers == null || headers.length == 0) {
             return;
         }
@@ -352,7 +352,7 @@ public class AHCHttpService implements HttpService {
         if (requestParams == null) {
             return;
         }
-        AHCEnclosingParamBuilder builder = new AHCEnclosingParamBuilder();
+        ApacheEnclosingParamBuilder builder = new ApacheEnclosingParamBuilder();
         UrlEncodedFormEntity params = requestParams.getConformedParams(builder, encoding);
         enclosingRequest.setEntity(params);
     }

@@ -22,7 +22,7 @@ import static org.mockito.Mockito.*;
 import java.lang.reflect.Field;
 import java.util.Map;
 
-import jp.ambrosoli.quickrestclient.ahc.service.AHCHttpServiceFactory;
+import jp.ambrosoli.quickrestclient.apache.service.ApacheHttpServiceFactory;
 import jp.ambrosoli.quickrestclient.service.HttpServiceFactory;
 
 import org.junit.After;
@@ -51,7 +51,7 @@ public class HttpServiceFactoryTest {
 
         // Assert
         assertThat(factory, is(notNullValue()));
-        assertThat(AHCHttpServiceFactory.class.isInstance(factory), is(true));
+        assertThat(ApacheHttpServiceFactory.class.isInstance(factory), is(true));
     }
 
     @Test
@@ -62,7 +62,7 @@ public class HttpServiceFactoryTest {
 
         // Assert
         assertThat(factory, is(notNullValue()));
-        assertThat(AHCHttpServiceFactory.class.isInstance(factory), is(true));
+        assertThat(ApacheHttpServiceFactory.class.isInstance(factory), is(true));
     }
 
     @Test
