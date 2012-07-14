@@ -20,6 +20,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import jp.ambrosoli.quickrestclient.util.ReflectionToStringBuilder;
+
 /**
  * 名前と値のペアを保持するクラスです。
  * 
@@ -105,4 +107,13 @@ public class NameValueObject {
         return list;
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        return ReflectionToStringBuilder.toString(this);
+    }
 }

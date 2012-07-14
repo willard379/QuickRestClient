@@ -96,4 +96,16 @@ public class NameValueObjectTest {
         assertThat(NameValueObject.asList(new NameValueObject[0]).isEmpty(), is(true));
     }
 
+    @Test
+    public void toStringを呼び出すと文字列表現が返されること() {
+
+        // Setup
+        NameValueObject sut = new NameValueObject("name", "value");
+
+        // Exercise
+        String actual = sut.toString();
+
+        // Verify
+        assertThat(actual, is(equalTo("NameValueObject[\n  name=name\n  value=value\n]")));
+    }
 }
