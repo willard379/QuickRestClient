@@ -44,7 +44,7 @@ public class ApacheResponseHandlerTest {
     @Test
     public void testHandleResponse() {
 
-        // Arrange
+        // Setup
         BasicHttpResponse httpResponse = new BasicHttpResponse(HttpVersion.HTTP_1_1,
                 HttpStatus.SC_OK, "OK");
         byte[] data = "Stay here, I'll be back".getBytes();
@@ -53,10 +53,10 @@ public class ApacheResponseHandlerTest {
         httpResponse.setEntity(inputStreamEntity);
         ApacheResponseHandler handler = new ApacheResponseHandler();
 
-        // Act
+        // Exercise
         HttpResponse response = handler.handleResponse(httpResponse);
 
-        // Assert
+        // Verify
         assertThat(response, is(notNullValue()));
         assertThat(response.isSuccess(), is(true));
         assertThat(response.getAsString(), is(equalTo("Stay here, I'll be back")));
@@ -66,26 +66,26 @@ public class ApacheResponseHandlerTest {
     @Test(expected = NullPointerException.class)
     public void testHandleResponse_Null() {
 
-        // Arrange
+        // Setup
         ApacheResponseHandler handler = new ApacheResponseHandler();
 
-        // Act
+        // Exercise
         handler.handleResponse(null);
     }
 
     @Test
     public void testConsumeEntity() throws Exception {
 
-        // Arrange
+        // Setup
         InputStream input = mock(InputStream.class);
         HttpEntity entity = new InputStreamEntity(input, 100);
         assertThat(entity.isStreaming(), is(true));
 
-        // Act
+        // Exercise
         ApacheResponseHandler handler = new ApacheResponseHandler();
         handler.consumeEntity(entity);
 
-        // Assert
+        // Verify
         verify(input).close();
 
     }
@@ -93,7 +93,7 @@ public class ApacheResponseHandlerTest {
     @Test
     public void testConsumeEntity_Null() throws Exception {
 
-        // Act
+        // Exercise
         ApacheResponseHandler handler = new ApacheResponseHandler();
         handler.consumeEntity(null);
     }
@@ -101,7 +101,7 @@ public class ApacheResponseHandlerTest {
     @Test
     public void testConsumeEntity_Empty() throws Exception {
 
-        // Act
+        // Exercise
         ApacheResponseHandler handler = new ApacheResponseHandler();
         handler.consumeEntity(new BasicHttpEntity());
     }
@@ -109,12 +109,12 @@ public class ApacheResponseHandlerTest {
     @Test
     public void testConsumeEntity_NoInputStream() throws Exception {
 
-        // Arrange
+        // Setup
         HttpEntity entity = mock(HttpEntity.class);
         when(entity.isStreaming()).thenReturn(true);
         when(entity.getContent()).thenReturn(null);
 
-        // Act
+        // Exercise
         ApacheResponseHandler handler = new ApacheResponseHandler();
         handler.consumeEntity(entity);
 
@@ -123,7 +123,7 @@ public class ApacheResponseHandlerTest {
     @Test
     public void testConsumeEntity_Exception() throws Exception {
 
-        // Arrange
+        // Setup
         HttpEntity entity = mock(HttpEntity.class);
         when(entity.isStreaming()).thenReturn(true);
         when(entity.getContent()).thenThrow(new IOException());
@@ -131,7 +131,7 @@ public class ApacheResponseHandlerTest {
         // Expected
         this.expectedException.expect(IORuntimeException.class);
 
-        // Act
+        // Exercise
         ApacheResponseHandler handler = new ApacheResponseHandler();
         handler.consumeEntity(entity);
 

@@ -43,26 +43,26 @@ public class CloseableUtilTest {
     @Test
     public void testClose() throws Exception {
 
-        // Arrange
+        // Setup
         Closeable closeable = mock(Closeable.class);
 
-        // Act
+        // Exercise
         CloseableUtil.close(closeable);
 
-        // Assert
+        // Verify
         verify(closeable).close();
     }
 
     @Test
     public void testClose_Null() throws Exception {
 
-        // Arrange
+        // Setup
         Closeable closeable = null;
 
-        // Act
+        // Exercise
         CloseableUtil.close(closeable);
 
-        // Assert
+        // Verify
         // 例外が発生しなければOK
 
     }
@@ -70,43 +70,43 @@ public class CloseableUtilTest {
     @Test
     public void testClose_Exception() throws Exception {
 
-        // Arrange
+        // Setup
         Closeable closeable = mock(Closeable.class);
         doThrow(new IOException()).when(closeable).close();
 
         // Expected
         this.expectedException.expect(IORuntimeException.class);
 
-        // Act
+        // Exercise
         CloseableUtil.close(closeable);
 
-        // Assert
+        // Verify
         fail("IORuntimeExceptionが発生しませんでした。");
     }
 
     @Test
     public void testCloseSilentry() throws Exception {
 
-        // Arrange
+        // Setup
         Closeable closeable = mock(Closeable.class);
 
-        // Act
+        // Exercise
         CloseableUtil.closeSilently(closeable);
 
-        // Assert
+        // Verify
         verify(closeable).close();
     }
 
     @Test
     public void testCloseSilentry_Null() throws Exception {
 
-        // Arrange
+        // Setup
         Closeable closeable = null;
 
-        // Act
+        // Exercise
         CloseableUtil.closeSilently(closeable);
 
-        // Assert
+        // Verify
         // 例外が発生しなければOK
 
     }
@@ -114,31 +114,31 @@ public class CloseableUtilTest {
     @Test
     public void testCloseSilentry_Exception() throws Exception {
 
-        // Arrange
+        // Setup
         Closeable closeable = mock(Closeable.class);
         doThrow(new IOException()).when(closeable).close();
 
-        // Act
+        // Exercise
         CloseableUtil.closeSilently(closeable);
 
-        // Assert
+        // Verify
         // 例外が発生しなければOK
     }
 
     @Test
     public void testCloseAll() throws Exception {
 
-        // Arrange
+        // Setup
         Closeable closeable = mock(Closeable.class);
         InputStream inputStream = mock(InputStream.class);
         OutputStream outputStream = mock(OutputStream.class);
         Reader reader = mock(Reader.class);
         Writer writer = mock(Writer.class);
 
-        // Act
+        // Exercise
         CloseableUtil.closeAll(closeable, inputStream, outputStream, reader, writer);
 
-        // Assert
+        // Verify
         verify(closeable).close();
         verify(inputStream).close();
         verify(outputStream).close();
@@ -150,24 +150,24 @@ public class CloseableUtilTest {
     @Test
     public void testCloseAll_Null() throws Exception {
 
-        // Arrange
+        // Setup
         Closeable closeable = null;
         InputStream inputStream = null;
         OutputStream outputStream = null;
         Reader reader = null;
         Writer writer = null;
 
-        // Act
+        // Exercise
         CloseableUtil.closeAll(closeable, inputStream, outputStream, reader, writer);
 
-        // Assert
+        // Verify
         // 例外が発生しなければOK
     }
 
     @Test
     public void testCloseAll_Exception() throws Exception {
 
-        // Arrange
+        // Setup
         Closeable closeable = mock(Closeable.class);
         InputStream inputStream = mock(InputStream.class);
         OutputStream outputStream = mock(OutputStream.class);
@@ -185,10 +185,10 @@ public class CloseableUtilTest {
         this.expectedException.expect(RuntimeException.class);
         this.expectedException.expectMessage("occured in Closeable");
 
-        // Act
+        // Exercise
         CloseableUtil.closeAll(closeable, inputStream, outputStream, reader, writer);
 
-        // Assert
+        // Verify
         // 例外が発生しなければOK
     }
 

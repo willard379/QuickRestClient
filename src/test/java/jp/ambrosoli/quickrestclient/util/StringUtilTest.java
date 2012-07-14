@@ -65,68 +65,68 @@ public class StringUtilTest {
     @Test
     public void testToString() throws Exception {
 
-        // Arrange
+        // Setup
         byte[] data = "オーシャン".getBytes("eucjp");
 
-        // Act
+        // Exercise
         String result = StringUtil.toString(data, "eucjp");
 
-        // Assert
+        // Verify
         assertThat(result, is(equalTo("オーシャン")));
     }
 
     @Test
     public void testToString_Empty() throws Exception {
 
-        // Arrange
+        // Setup
         byte[] data = new byte[0];
 
-        // Act
+        // Exercise
         String result = StringUtil.toString(data, "UTF-8");
 
-        // Assert
+        // Verify
         assertThat(result, is(equalTo("")));
     }
 
     @Test
     public void testToString_NullData() throws Exception {
 
-        // Arrange
+        // Setup
         byte[] data = null;
 
-        // Act
+        // Exercise
         String result = StringUtil.toString(data, "UTF-8");
 
-        // Assert
+        // Verify
         assertThat(result, is(nullValue()));
     }
 
     @Test
     public void testToString_NullEncoding() throws Exception {
 
-        // Arrange
+        // Setup
         byte[] data = "ロマンス".getBytes("UTF-8");
 
-        // Act
+        // Exercise
         String result = StringUtil.toString(data, null);
 
-        // Assert
+        // Verify
         assertThat(result, is(equalTo("ロマンス")));
     }
 
     @Test
     public void testToString_Exception() throws Exception {
 
-        // Arrange
+        // Setup
         byte[] data = "ハネムーン".getBytes("UTF-8");
 
         // Expected
         this.expectedException.expect(UnsupportedEncodingRuntimeException.class);
 
-        // Act
+        // Exercise
         StringUtil.toString(data, "UTF-48");
 
-        // Assert
+        // Verify
         fail("UnsupportedEncodingRuntimeExceptionが発生しませんでした。");
     }
 }

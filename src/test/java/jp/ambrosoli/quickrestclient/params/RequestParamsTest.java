@@ -21,12 +21,6 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import jp.ambrosoli.quickrestclient.params.BasicQueryStringBuilder;
-import jp.ambrosoli.quickrestclient.params.NameValueObject;
-import jp.ambrosoli.quickrestclient.params.RequestParamBuilder;
-import jp.ambrosoli.quickrestclient.params.RequestParams;
-
-
 import org.junit.Test;
 
 public class RequestParamsTest {
@@ -34,27 +28,27 @@ public class RequestParamsTest {
     @Test
     public void testConstruct() {
 
-        // Arrange
+        // Setup
         List<NameValueObject> params = new ArrayList<NameValueObject>();
         params.add(new NameValueObject("a", "a"));
 
-        // Act
+        // Exercise
         RequestParams reqParams = new RequestParams(params);
 
-        // Assert
+        // Verify
         assertThat(reqParams.params, is(params));
         assertThat(reqParams.isEmpty(), is(false));
     }
 
     @Test
     public void testIsEmpty_Null() {
-        // Arrange
+        // Setup
         RequestParams requestParams = new RequestParams(null);
 
-        // Act
+        // Exercise
         boolean empty = requestParams.isEmpty();
 
-        // Assert
+        // Verify
         assertThat(empty, is(true));
 
     }
@@ -62,13 +56,13 @@ public class RequestParamsTest {
     @Test
     public void testIsEmpty_Empty() {
 
-        // Arrange
+        // Setup
         RequestParams requestParams = new RequestParams(new ArrayList<NameValueObject>());
 
-        // Act
+        // Exercise
         boolean empty = requestParams.isEmpty();
 
-        // Assert
+        // Verify
         assertThat(empty, is(true));
 
     }
@@ -76,28 +70,28 @@ public class RequestParamsTest {
     @Test
     public void testIsEmpty() {
 
-        // Arrange
+        // Setup
         List<NameValueObject> params1 = new ArrayList<NameValueObject>();
         params1.add(new NameValueObject("a", "a"));
         RequestParams requestParams = new RequestParams(params1);
-        // Act
+        // Exercise
         boolean empty = requestParams.isEmpty();
 
-        // Assert
+        // Verify
         assertThat(empty, is(false));
     }
 
     @Test
     public void testGetConformedParams_NullParams() {
 
-        // Arrange
+        // Setup
         RequestParamBuilder<String> builder = new BasicQueryStringBuilder();
         RequestParams requestParams = new RequestParams(null);
 
-        // Act
+        // Exercise
         String queryString = requestParams.getConformedParams(builder);
 
-        // Assert
+        // Verify
         assertThat(queryString, is(equalTo("")));
 
     }
@@ -105,7 +99,7 @@ public class RequestParamsTest {
     @Test
     public void testGetConformedParams() {
 
-        // Arrange
+        // Setup
         RequestParamBuilder<String> builder = new BasicQueryStringBuilder();
         List<NameValueObject> params = new ArrayList<NameValueObject>();
         params.add(new NameValueObject("a", "A"));
@@ -113,10 +107,10 @@ public class RequestParamsTest {
         params.add(new NameValueObject("c", "C"));
         RequestParams requestParams = new RequestParams(params);
 
-        // Act
+        // Exercise
         String queryString = requestParams.getConformedParams(builder);
 
-        // Assert
+        // Verify
         assertThat(queryString, is(equalTo("?a=A&b=B&c=C")));
 
     }
@@ -124,7 +118,7 @@ public class RequestParamsTest {
     @Test
     public void testGetConformedParams_WithEncoding() {
 
-        // Arrange
+        // Setup
         RequestParamBuilder<String> builder = new BasicQueryStringBuilder();
         List<NameValueObject> params = new ArrayList<NameValueObject>();
         params.add(new NameValueObject("a", "A"));
@@ -132,10 +126,10 @@ public class RequestParamsTest {
         params.add(new NameValueObject("c", "C"));
         RequestParams requestParams = new RequestParams(params);
 
-        // Act
+        // Exercise
         String queryString = requestParams.getConformedParams(builder, null);
 
-        // Assert
+        // Verify
         assertThat(queryString, is(equalTo("?a=A&b=B&c=C")));
 
     }
@@ -143,7 +137,7 @@ public class RequestParamsTest {
     @Test
     public void testGetConformedParams_ParamsFilledWithNull() {
 
-        // Arrange
+        // Setup
         RequestParamBuilder<String> builder = new BasicQueryStringBuilder();
         List<NameValueObject> params = new ArrayList<NameValueObject>();
         params.add(null);
@@ -152,10 +146,10 @@ public class RequestParamsTest {
         params.add(null);
         RequestParams requestParams = new RequestParams(params);
 
-        // Act
+        // Exercise
         String queryString = requestParams.getConformedParams(builder);
 
-        // Assert
+        // Verify
         assertThat(queryString, is(equalTo("")));
 
     }
@@ -163,17 +157,17 @@ public class RequestParamsTest {
     @Test
     public void testGetParams() {
 
-        // Arrange
+        // Setup
         List<NameValueObject> params1 = new ArrayList<NameValueObject>();
         params1.add(new NameValueObject("a", "A"));
         params1.add(new NameValueObject("b", "B"));
         params1.add(new NameValueObject("c", "C"));
         RequestParams requestParams = new RequestParams(params1);
 
-        // Act
+        // Exercise
         List<NameValueObject> params2 = requestParams.getParams();
 
-        // Assert
+        // Verify
         assertThat(params2, is(sameInstance(params1)));
 
     }

@@ -30,10 +30,10 @@ public class OperationsTest {
     @Test
     public void testAdd() {
 
-        // Act
+        // Exercise
         NameValueObject obj1 = add("name", "value");
 
-        // Assert
+        // Verify
         assertThat(obj1.getName(), is(equalTo("name")));
         assertThat(obj1.getValue(), is(equalTo("value")));
     }
@@ -41,10 +41,10 @@ public class OperationsTest {
     @Test
     public void testDigest() {
 
-        // Act
+        // Exercise
         AuthInfo digest = digest("user", "password");
 
-        // Assert
+        // Verify
         assertThat(digest, is(notNullValue()));
         assertThat(digest.type, is(AuthType.DIGEST));
         assertThat(digest.username, is(equalTo("user")));
@@ -54,10 +54,10 @@ public class OperationsTest {
     @Test
     public void testBasic() {
 
-        // Act
+        // Exercise
         AuthInfo basic = basic("user", "password");
 
-        // Assert
+        // Verify
         assertThat(basic, is(notNullValue()));
         assertThat(basic.type, is(AuthType.BASIC));
         assertThat(basic.username, is(equalTo("user")));

@@ -59,13 +59,13 @@ public class ApacheHttpResponseTest {
     @Test
     public void testConstruct() {
 
-        // Arrange
+        // Setup
         HttpResponse response = mock(HttpResponse.class);
 
-        // Act
+        // Exercise
         ApacheHttpResponse httpResponse = new ApacheHttpResponse(response);
 
-        // Assert
+        // Verify
         assertThat(httpResponse, is(notNullValue()));
 
     }
@@ -73,22 +73,22 @@ public class ApacheHttpResponseTest {
     @Test(expected = NullPointerException.class)
     public void testConstruct_NoEntity() {
 
-        // Act
+        // Exercise
         new ApacheHttpResponse(null);
     }
 
     @Test
     public void testGetAllHeaders() {
 
-        // Arrange
+        // Setup
         HttpResponse response = mock(HttpResponse.class);
         when(response.getAllHeaders()).thenReturn(this.SAMPLE_HEADERS);
 
-        // Act
+        // Exercise
         ApacheHttpResponse httpResponse = new ApacheHttpResponse(response);
         List<HttpHeader> headers = httpResponse.getAllHeaders();
 
-        // Assert
+        // Verify
         assertThat(headers, is(notNullValue()));
         assertThat(headers.size(), is(5));
 
@@ -97,15 +97,15 @@ public class ApacheHttpResponseTest {
     @Test
     public void testGetAsByteArray() throws Exception {
 
-        // Arrange
+        // Setup
         HttpResponse response = mock(HttpResponse.class);
         when(response.getEntity()).thenReturn(new StringEntity("Stay here, I'll be back"));
 
-        // Act
+        // Exercise
         ApacheHttpResponse httpResponse = new ApacheHttpResponse(response);
         byte[] asByteArray = httpResponse.getAsByteArray();
 
-        // Assert
+        // Verify
         assertThat(asByteArray, is(equalTo("Stay here, I'll be back".getBytes())));
     }
 
@@ -115,15 +115,15 @@ public class ApacheHttpResponseTest {
         InputStream input = null;
         try {
 
-            // Arrange
+            // Setup
             HttpResponse response = mock(HttpResponse.class);
             when(response.getEntity()).thenReturn(new StringEntity("I am a pen!"));
 
-            // Act
+            // Exercise
             ApacheHttpResponse httpResponse = new ApacheHttpResponse(response);
             input = httpResponse.getAsInputStream();
 
-            // Assert
+            // Verify
             assertThat(input, is(notNullValue()));
             String str = new BufferedReader(new InputStreamReader(input)).readLine();
             assertThat(str, is(equalTo("I am a pen!")));
@@ -136,15 +136,15 @@ public class ApacheHttpResponseTest {
     @Test
     public void testGetAsString() throws Exception {
 
-        // Arrange
+        // Setup
         HttpResponse response = mock(HttpResponse.class);
         when(response.getEntity()).thenReturn(new StringEntity("There is an apple."));
 
-        // Act
+        // Exercise
         ApacheHttpResponse httpResponse = new ApacheHttpResponse(response);
         String strResponse = httpResponse.getAsString();
 
-        // Assert
+        // Verify
         assertThat(strResponse, is(equalTo("There is an apple.")));
 
     }
@@ -152,15 +152,15 @@ public class ApacheHttpResponseTest {
     @Test
     public void testGetAsString_WithCharEncoding() throws Exception {
 
-        // Arrange
+        // Setup
         HttpResponse response = mock(HttpResponse.class);
         when(response.getEntity()).thenReturn(new StringEntity("There is an apple."));
 
-        // Act
+        // Exercise
         ApacheHttpResponse httpResponse = new ApacheHttpResponse(response);
         String strResponse = httpResponse.getAsString(StringUtil.DEFAULT_ENCODING);
 
-        // Assert
+        // Verify
         assertThat(strResponse, is(equalTo("There is an apple.")));
 
     }
@@ -168,106 +168,106 @@ public class ApacheHttpResponseTest {
     @Test
     public void testGetContentType() throws Exception {
 
-        // Arrange
+        // Setup
         HttpResponse response = mock(HttpResponse.class);
         StringEntity entity = new StringEntity("I am a pen!");
         entity.setContentType("application/json");
         when(response.getEntity()).thenReturn(entity);
 
-        // Act
+        // Exercise
         ApacheHttpResponse httpResponse = new ApacheHttpResponse(response);
         String contentType = httpResponse.getContentType();
 
-        // Assert
+        // Verify
         assertThat(contentType, is(equalTo("application/json")));
     }
 
     @Test
     public void testGetContentType_NoEntity() {
-        // Arrange
+        // Setup
         HttpResponse response = mock(HttpResponse.class);
         when(response.getEntity()).thenReturn(null);
 
-        // Act
+        // Exercise
         ApacheHttpResponse httpResponse = new ApacheHttpResponse(response);
         String contentType = httpResponse.getContentType();
 
-        // Assert
+        // Verify
         assertThat(contentType, is(nullValue()));
     }
 
     @Test
     public void testGetContentType_NoHeader() throws Exception {
 
-        // Arrange
+        // Setup
         HttpResponse response = new BasicHttpResponse(HttpVersion.HTTP_1_1, HttpStatus.SC_OK, "OK");
         response.setEntity(new ByteArrayEntity(new byte[0]));
 
-        // Act
+        // Exercise
         ApacheHttpResponse httpResponse = new ApacheHttpResponse(response);
         String contentType = httpResponse.getContentType();
 
-        // Assert
+        // Verify
         assertThat(contentType, is(nullValue()));
     }
 
     @Test
     public void testGetContentLength() {
 
-        // Arrange
+        // Setup
         HttpResponse response = mock(HttpResponse.class);
         byte[] data = new byte[100];
         when(response.getEntity()).thenReturn(new ByteArrayEntity(data));
 
-        // Act
+        // Exercise
         ApacheHttpResponse httpResponse = new ApacheHttpResponse(response);
         long contentLength = httpResponse.getContentLength();
 
-        // Assert
+        // Verify
         assertThat((long) data.length, is(equalTo(contentLength)));
     }
 
     @Test
     public void testGetContentLength_NoEntity() {
 
-        // Arrange
+        // Setup
         HttpResponse response = new BasicHttpResponse(HttpVersion.HTTP_1_1, HttpStatus.SC_OK, "OK");
         ApacheHttpResponse httpResponse = new ApacheHttpResponse(response);
 
-        // Act
+        // Exercise
         long contentLength = httpResponse.getContentLength();
 
-        // Assert
+        // Verify
         assertThat(contentLength, is(0L));
     }
 
     @Test
     public void testGetHeader() {
 
-        // Arrange
+        // Setup
         HttpResponse response = new BasicHttpResponse(HttpVersion.HTTP_1_1, HttpStatus.SC_OK, "OK");
         response.setHeaders(this.SAMPLE_HEADERS);
 
-        // Act
+        // Exercise
         ApacheHttpResponse httpResponse = new ApacheHttpResponse(response);
         HttpHeader header = httpResponse.getHeader("Location");
 
-        // Assert
+        // Verify
         assertThat(header, is(notNullValue()));
     }
 
     @Test
     public void testGetHeaders() {
 
-        // Arrange
+        // Setup
         HttpResponse response = new BasicHttpResponse(HttpVersion.HTTP_1_1, HttpStatus.SC_OK, "OK");
         response.setHeaders(this.SAMPLE_HEADERS);
 
-        // Act
+        // Exercise
         ApacheHttpResponse httpResponse = new ApacheHttpResponse(response);
         List<HttpHeader> headers = httpResponse.getHeaders("Set-Cookie");
 
-        // Assert
+        // Verify
         assertThat(headers, is(notNullValue()));
         assertThat(headers.size(), is(2));
         assertThat(headers.get(0).getValue(), is(equalTo("name=willard379")));
@@ -277,28 +277,28 @@ public class ApacheHttpResponseTest {
     @Test
     public void testGetStatusCode() {
 
-        // Arrange
+        // Setup
         HttpResponse response = new BasicHttpResponse(HttpVersion.HTTP_1_1, HttpStatus.SC_OK, "OK");
 
-        // Act
+        // Exercise
         ApacheHttpResponse httpResponse = new ApacheHttpResponse(response);
         int statusCode = httpResponse.getStatusCode();
 
-        // Assert
+        // Verify
         assertThat(statusCode, is(200));
     }
 
     @Test
     public void testIs200_OK() {
 
-        // Arrange
+        // Setup
         ApacheHttpResponse httpResponse = new ApacheHttpResponse(new BasicHttpResponse(
                 HttpVersion.HTTP_1_1, HttpStatus.SC_OK, "OK"));
 
-        // Act
+        // Exercise
         boolean isOk = httpResponse.isSuccess();
 
-        // Assert
+        // Verify
         assertThat(isOk, is(true));
 
     }
@@ -306,14 +306,14 @@ public class ApacheHttpResponseTest {
     @Test
     public void testIs200_OK_False() {
 
-        // Arrange
+        // Setup
         ApacheHttpResponse httpResponse = new ApacheHttpResponse(new BasicHttpResponse(
                 HttpVersion.HTTP_1_1, HttpStatus.SC_INTERNAL_SERVER_ERROR, "Internal Server Error"));
 
-        // Act
+        // Exercise
         boolean isOk = httpResponse.isSuccess();
 
-        // Assert
+        // Verify
         assertThat(isOk, is(false));
 
     }
@@ -321,7 +321,7 @@ public class ApacheHttpResponseTest {
     @Test
     public void testConvertHttpHeaders() {
 
-        // Arrange
+        // Setup
         HttpResponse response = mock(org.apache.http.HttpResponse.class);
         ApacheHttpResponse httpResponse = new ApacheHttpResponse(response);
 
@@ -332,10 +332,10 @@ public class ApacheHttpResponseTest {
         headers[3] = new BasicHeader("Set-Cookie", "name=willard379");
         headers[4] = new BasicHeader("Set-Cookie", "age=17");
 
-        // Act
+        // Exercise
         List<HttpHeader> headerList = httpResponse.convertHttpHeaders(headers);
 
-        // Assert
+        // Verify
         assertThat(headerList, is(notNullValue()));
         for (int i = 0; i < headers.length; i++) {
             assertThat(headerList.get(i).getName(), is(equalTo(headers[i].getName())));
@@ -347,14 +347,14 @@ public class ApacheHttpResponseTest {
     @Test
     public void testConvertHttpHeaders_Null() {
 
-        // Arrange
+        // Setup
         HttpResponse response = mock(org.apache.http.HttpResponse.class);
         ApacheHttpResponse httpResponse = new ApacheHttpResponse(response);
 
-        // Act
+        // Exercise
         List<HttpHeader> headerList = httpResponse.convertHttpHeaders(null);
 
-        // Assert
+        // Verify
         assertThat(headerList, is(nullValue()));
 
     }
@@ -362,14 +362,14 @@ public class ApacheHttpResponseTest {
     @Test
     public void testConvertHttpHeaders_Empty() {
 
-        // Arrange
+        // Setup
         HttpResponse response = mock(org.apache.http.HttpResponse.class);
         ApacheHttpResponse httpResponse = new ApacheHttpResponse(response);
 
-        // Act
+        // Exercise
         List<HttpHeader> headerList = httpResponse.convertHttpHeaders(new Header[0]);
 
-        // Assert
+        // Verify
         assertThat(headerList, is(notNullValue()));
         assertThat(headerList.isEmpty(), is(true));
     }
@@ -377,16 +377,16 @@ public class ApacheHttpResponseTest {
     @Test
     public void testConvertHttpHeader() {
 
-        // Arrange
+        // Setup
         HttpResponse response = mock(org.apache.http.HttpResponse.class);
         ApacheHttpResponse httpResponse = new ApacheHttpResponse(response);
 
         Header header = new BasicHeader("Transfer-Encoding", "chunked");
 
-        // Act
+        // Exercise
         HttpHeader httpHeader = httpResponse.convertHttpHeader(header);
 
-        // Assert
+        // Verify
         assertThat(header, is(notNullValue()));
         assertThat(header.getName(), is(httpHeader.getName()));
         assertThat(header.getValue(), is(httpHeader.getValue()));
@@ -396,31 +396,31 @@ public class ApacheHttpResponseTest {
     @Test
     public void testConvertHttpHeader_Null() {
 
-        // Arrange
+        // Setup
         HttpResponse response = mock(org.apache.http.HttpResponse.class);
         ApacheHttpResponse httpResponse = new ApacheHttpResponse(response);
 
-        // Act
+        // Exercise
         HttpHeader httpHeader = httpResponse.convertHttpHeader(null);
 
-        // Assert
+        // Verify
         assertThat(httpHeader, is(nullValue()));
     }
 
     @Test
     public void testToByteArray() throws IOException {
 
-        // Arrange
+        // Setup
         HttpResponse response = mock(org.apache.http.HttpResponse.class);
         ApacheHttpResponse httpResponse = new ApacheHttpResponse(response);
 
         String src = "And so, my fellow Americans: ask not what your country can do for you - ask what you can do for your country.";
         HttpEntity entity = new StringEntity(src);
 
-        // Act
+        // Exercise
         byte[] data = httpResponse.toByteArray(entity);
 
-        // Assert
+        // Verify
         assertThat(data, is(notNullValue()));
         assertThat(data, is(equalTo(src.getBytes())));
 
@@ -429,23 +429,23 @@ public class ApacheHttpResponseTest {
     @Test
     public void testToByteArray_Null() throws IOException {
 
-        // Arrange
+        // Setup
         HttpResponse response = mock(org.apache.http.HttpResponse.class);
         ApacheHttpResponse httpResponse = new ApacheHttpResponse(response);
 
         HttpEntity entity = null;
 
-        // Act
+        // Exercise
         byte[] data = httpResponse.toByteArray(entity);
 
-        // Assert
+        // Verify
         assertThat(data, is(nullValue()));
     }
 
     @Test
     public void testToByteArray_Exception() throws IOException {
 
-        // Arrange
+        // Setup
         HttpResponse response = mock(org.apache.http.HttpResponse.class);
         ApacheHttpResponse httpResponse = new ApacheHttpResponse(response);
 
@@ -457,10 +457,10 @@ public class ApacheHttpResponseTest {
         // Expected
         this.expectedException.expect(IORuntimeException.class);
 
-        // Act
+        // Exercise
         httpResponse.toByteArray(entity);
 
-        // Assert
+        // Verify
         fail();
     }
 

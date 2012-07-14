@@ -29,55 +29,55 @@ public class ByteArrayResponseContentTest {
     @Test
     public void testSetData() {
 
-        // Arrange
+        // Setup
         ByteArrayResponseContent content = new ByteArrayResponseContent();
 
-        // Act
+        // Exercise
         content.setData("abcdefg".getBytes());
 
-        // Assert
+        // Verify
         assertThat(content.data, is(notNullValue()));
     }
 
     @Test
     public void testGetAsByteArray() {
 
-        // Arrange
+        // Setup
         ByteArrayResponseContent content = new ByteArrayResponseContent();
         content.setData("あいうえお".getBytes());
 
-        // Act
+        // Exercise
         byte[] data = content.getAsByteArray();
 
-        // Assert
+        // Verify
         assertThat(data, is(equalTo(content.data)));
     }
 
     @Test
     public void testGetAsByteArray_Null() {
 
-        // Arrange
+        // Setup
         ByteArrayResponseContent content = new ByteArrayResponseContent();
         content.setData(null);
 
-        // Act
+        // Exercise
         byte[] data = content.getAsByteArray();
 
-        // Assert
+        // Verify
         assertThat(data, is(nullValue()));
     }
 
     @Test
     public void testGetAsInputStream() throws IOException {
 
-        // Arrange
+        // Setup
         ByteArrayResponseContent content = new ByteArrayResponseContent();
         content.setData("OPQRSTUVWXYZ".getBytes());
 
-        // Act
+        // Exercise
         InputStream input = content.getAsInputStream();
 
-        // Assert
+        // Verify
         assertThat(input, is(notNullValue()));
 
         byte[] res = new byte[input.available()];
@@ -88,14 +88,14 @@ public class ByteArrayResponseContentTest {
     @Test
     public void testGetAsInputStream_Null() throws IOException {
 
-        // Arrange
+        // Setup
         ByteArrayResponseContent content = new ByteArrayResponseContent();
         content.setData(null);
 
-        // Act
+        // Exercise
         InputStream inputStream = content.getAsInputStream();
 
-        // Assert
+        // Verify
         assertThat(inputStream, is(nullValue()));
 
     }
@@ -103,57 +103,57 @@ public class ByteArrayResponseContentTest {
     @Test
     public void testGetAsString() {
 
-        // Arrange
+        // Setup
         ByteArrayResponseContent content = new ByteArrayResponseContent();
         content.setData("willard379".getBytes());
 
-        // Act
+        // Exercise
         String data = content.getAsString();
 
-        // Assert
+        // Verify
         assertThat(data, is(equalTo("willard379")));
     }
 
     @Test
     public void testGetAsString_Null() {
 
-        // Arrange
+        // Setup
         ByteArrayResponseContent content = new ByteArrayResponseContent();
         content.setData(null);
 
-        // Act
+        // Exercise
         String data = content.getAsString();
 
-        // Assert
+        // Verify
         assertThat(data, is(nullValue()));
     }
 
     @Test
     public void testGetAsStringString() throws IOException {
 
-        // Arrange
+        // Setup
         ByteArrayResponseContent content = new ByteArrayResponseContent();
         content.setData("山田太郎".getBytes("MS932"));
 
-        // Act
+        // Exercise
         String data = content.getAsString("MS932");
 
-        // Assert
+        // Verify
         assertThat(data, is(equalTo("山田太郎")));
     }
 
     @Test
     public void testWriteTo() throws Exception {
 
-        // Arrange
+        // Setup
         byte[] data = "ABCDEFG".getBytes("UTF-8");
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
-        // Act
+        // Exercise
         ResponseContent responseContent = new ByteArrayResponseContent(data);
         responseContent.writeTo(outputStream);
 
-        // Assert
+        // Verify
         String result = new String(outputStream.toByteArray(), "UTF-8");
         assertThat(result, is(equalTo("ABCDEFG")));
     }

@@ -22,8 +22,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import jp.ambrosoli.quickrestclient.params.NameValueObject;
-
 import org.junit.Test;
 
 public class NameValueObjectTest {
@@ -31,17 +29,17 @@ public class NameValueObjectTest {
     @Test
     public void testToNameValueObject() {
 
-        // Arrange
+        // Setup
         Map<String, String> src = new HashMap<String, String>();
         src.put("param1", "value1");
         src.put("param2", "value2");
         src.put("param3", "value3");
         src.put("param4", "value4");
 
-        // Act
+        // Exercise
         List<NameValueObject> dest = NameValueObject.asList(src);
 
-        // Assert
+        // Verify
         assertThat(dest.size(), is(src.size()));
 
     }
@@ -49,13 +47,13 @@ public class NameValueObjectTest {
     @Test
     public void testToNameValueObject_Null() {
 
-        // Arrange
+        // Setup
         Map<String, String> src = null;
 
-        // Act
+        // Exercise
         List<NameValueObject> dest = NameValueObject.asList(src);
 
-        // Assert
+        // Verify
         assertThat(dest, is(nullValue()));
 
     }
@@ -63,20 +61,20 @@ public class NameValueObjectTest {
     @Test
     public void testToNameValueObject_Empty() {
 
-        // Arrange
+        // Setup
         HashMap<String, String> src = new HashMap<String, String>(0);
 
-        // Act
+        // Exercise
         List<NameValueObject> dest = NameValueObject.asList(src);
 
-        // Assert
+        // Verify
         assertThat(dest, is(nullValue()));
     }
 
     @Test
     public void testAsList() {
 
-        // Arrange
+        // Setup
         NameValueObject[] ary = new NameValueObject[5];
         ary[0] = new NameValueObject("Name1", "Value1");
         ary[1] = new NameValueObject("Name2", "Value2");
@@ -84,10 +82,10 @@ public class NameValueObjectTest {
         ary[3] = new NameValueObject("Name4", "Value4");
         ary[4] = new NameValueObject("Name5", "Value5");
 
-        // Act
+        // Exercise
         List<NameValueObject> list = NameValueObject.asList(ary);
 
-        // Assert
+        // Verify
         assertThat(list.size(), is(ary.length));
         for (int i = 0; i < ary.length; i++) {
             assertThat(list.get(i).getName(), is(equalTo(ary[i].getName())));

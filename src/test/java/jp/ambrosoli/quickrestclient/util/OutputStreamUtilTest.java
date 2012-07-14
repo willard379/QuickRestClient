@@ -30,26 +30,26 @@ public class OutputStreamUtilTest {
     @Test
     public void testClose() throws Exception {
 
-        // Arrange
+        // Setup
         OutputStream inputStream = mock(OutputStream.class);
 
-        // Act
+        // Exercise
         OutputStreamUtil.close(inputStream);
 
-        // Assert
+        // Verify
         verify(inputStream).close();
     }
 
     @Test
     public void testCloseSilentry() throws Exception {
 
-        // Arrange
+        // Setup
         OutputStream inputStream = mock(OutputStream.class);
 
-        // Act
+        // Exercise
         OutputStreamUtil.closeSilently(inputStream);
 
-        // Assert
+        // Verify
         verify(inputStream).close();
     }
 

@@ -17,7 +17,6 @@ package jp.ambrosoli.quickrestclient.apache.service;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
-import jp.ambrosoli.quickrestclient.apache.service.ApacheHttpServiceFactory;
 import jp.ambrosoli.quickrestclient.service.HttpService;
 
 import org.junit.Test;
@@ -27,13 +26,13 @@ public class ApacheHttpServiceFactoryTest {
     @Test
     public void testCreate() {
 
-        // Arrange
+        // Setup
         ApacheHttpServiceFactory factory = new ApacheHttpServiceFactory();
 
-        // Act
+        // Exercise
         HttpService service = factory.create();
 
-        // Assert
+        // Verify
         assertThat(service, is(notNullValue()));
     }
 }

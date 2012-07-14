@@ -44,40 +44,40 @@ public class InputStreamUtilTest {
     @Test
     public void testClose() throws Exception {
 
-        // Arrange
+        // Setup
         InputStream inputStream = mock(InputStream.class);
 
-        // Act
+        // Exercise
         InputStreamUtil.close(inputStream);
 
-        // Assert
+        // Verify
         verify(inputStream).close();
     }
 
     @Test
     public void testCloseSilentry() throws Exception {
 
-        // Arrange
+        // Setup
         InputStream inputStream = mock(InputStream.class);
 
-        // Act
+        // Exercise
         InputStreamUtil.closeSilently(inputStream);
 
-        // Assert
+        // Verify
         verify(inputStream).close();
     }
 
     @Test
     public void testCopy() throws Exception {
 
-        // Arrange
+        // Setup
         InputStream inputStream = new ByteArrayInputStream("willard379".getBytes("UTF-8"));
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
-        // Act
+        // Exercise
         InputStreamUtil.copy(inputStream, outputStream);
 
-        // Assert
+        // Verify
         String result = new String(outputStream.toByteArray(), "UTF-8");
         assertThat(result, is(equalTo("willard379")));
     }
@@ -85,14 +85,14 @@ public class InputStreamUtilTest {
     @Test
     public void testCopy_NullInputStream() throws Exception {
 
-        // Arrange
+        // Setup
         InputStream input = null;
         OutputStream output = mock(OutputStream.class);
 
-        // Act
+        // Exercise
         InputStreamUtil.copy(input, output);
 
-        // Assert
+        // Verify
         verify(output, never()).write((byte[]) any(), eq(0), anyInt());
         verify(output).close();
     }
@@ -100,14 +100,14 @@ public class InputStreamUtilTest {
     @Test
     public void testCopy_NullOutputStream() throws Exception {
 
-        // Arrange
+        // Setup
         InputStream input = mock(InputStream.class);
         OutputStream output = null;
 
-        // Act
+        // Exercise
         InputStreamUtil.copy(input, output);
 
-        // Assert
+        // Verify
         verify(input, never()).read((byte[]) any(), eq(0), anyInt());
         verify(input).close();
     }
@@ -115,7 +115,7 @@ public class InputStreamUtilTest {
     @Test
     public void testCopy_ExceptionInInputStream() throws Exception {
 
-        // Arrange
+        // Setup
         InputStream input = mock(InputStream.class);
         OutputStream output = mock(OutputStream.class);
 
@@ -124,17 +124,17 @@ public class InputStreamUtilTest {
         // Expected
         this.expectedException.expect(IORuntimeException.class);
 
-        // Act
+        // Exercise
         InputStreamUtil.copy(input, output);
 
-        // Assert
+        // Verify
         verify(output).close();
     }
 
     @Test
     public void testCopy_ExceptionInOutputStream() throws Exception {
 
-        // Arrange
+        // Setup
         InputStream input = mock(InputStream.class);
         OutputStream output = mock(OutputStream.class);
 
@@ -143,10 +143,10 @@ public class InputStreamUtilTest {
         // Expected
         this.expectedException.expect(IORuntimeException.class);
 
-        // Act
+        // Exercise
         InputStreamUtil.copy(input, output);
 
-        // Assert
+        // Verify
         verify(input).close();
     }
 

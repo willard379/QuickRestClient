@@ -21,11 +21,6 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import jp.ambrosoli.quickrestclient.params.BasicQueryStringBuilder;
-import jp.ambrosoli.quickrestclient.params.NameValueObject;
-import jp.ambrosoli.quickrestclient.params.RequestParamBuilder;
-
-
 import org.junit.Test;
 
 public class BasicQueryStringBuilderTest {
@@ -33,7 +28,7 @@ public class BasicQueryStringBuilderTest {
     @Test
     public void testCreateConformedParams() {
 
-        // Arrange
+        // Setup
         RequestParamBuilder<String> paramBuilder = new BasicQueryStringBuilder();
 
         List<NameValueObject> params = new ArrayList<NameValueObject>();
@@ -41,10 +36,10 @@ public class BasicQueryStringBuilderTest {
         params.add(new NameValueObject("b", "B"));
         params.add(new NameValueObject("c", "C"));
 
-        // Act
+        // Exercise
         String queryString = paramBuilder.createConformedParams(params, "UTF-8");
 
-        // Assert
+        // Verify
         assertThat(queryString, is(equalTo("?a=A&b=B&c=C")));
 
     }
@@ -52,15 +47,15 @@ public class BasicQueryStringBuilderTest {
     @Test
     public void testCreateConformedParams_EmptyParams() {
 
-        // Arrange
+        // Setup
         RequestParamBuilder<String> paramBuilder = new BasicQueryStringBuilder();
 
         ArrayList<NameValueObject> params = new ArrayList<NameValueObject>();
 
-        // Act
+        // Exercise
         String queryString = paramBuilder.createConformedParams(params, "UTF-8");
 
-        // Assert
+        // Verify
         assertThat(queryString, is(equalTo("")));
 
     }
@@ -68,13 +63,13 @@ public class BasicQueryStringBuilderTest {
     @Test
     public void testCreateConformedParams_NullParam() {
 
-        // Arrange
+        // Setup
         RequestParamBuilder<String> paramBuilder = new BasicQueryStringBuilder();
 
-        // Act
+        // Exercise
         String queryString = paramBuilder.createConformedParams(null, "UTF-8");
 
-        // Assert
+        // Verify
         assertThat(queryString, is(equalTo("")));
 
     }
@@ -82,7 +77,7 @@ public class BasicQueryStringBuilderTest {
     @Test
     public void testCreateConformedParams_NullEncoding() {
 
-        // Arrange
+        // Setup
         RequestParamBuilder<String> paramBuilder = new BasicQueryStringBuilder();
 
         List<NameValueObject> params = new ArrayList<NameValueObject>();
@@ -90,10 +85,10 @@ public class BasicQueryStringBuilderTest {
         params.add(new NameValueObject("b", "B"));
         params.add(new NameValueObject("c", "C"));
 
-        // Act
+        // Exercise
         String queryString = paramBuilder.createConformedParams(params, null);
 
-        // Assert
+        // Verify
         assertThat(queryString, is(equalTo("?a=A&b=B&c=C")));
 
     }
@@ -101,7 +96,7 @@ public class BasicQueryStringBuilderTest {
     @Test
     public void testCreateConformedParams_ParamsFilledWithNull() {
 
-        // Arrange
+        // Setup
         RequestParamBuilder<String> paramBuilder = new BasicQueryStringBuilder();
 
         List<NameValueObject> params = new ArrayList<NameValueObject>();
@@ -110,10 +105,10 @@ public class BasicQueryStringBuilderTest {
         params.add(null);
         params.add(null);
 
-        // Act
+        // Exercise
         String queryString = paramBuilder.createConformedParams(params, "UTF-8");
 
-        // Assert
+        // Verify
         assertThat(queryString, is(equalTo("")));
 
     }
@@ -121,16 +116,16 @@ public class BasicQueryStringBuilderTest {
     @Test
     public void testCreateConformedParams_MultibyteParams() {
 
-        // Arrange
+        // Setup
         RequestParamBuilder<String> paramBuilder = new BasicQueryStringBuilder();
 
         List<NameValueObject> params = new ArrayList<NameValueObject>();
         params.add(new NameValueObject("あ", "あいうえお"));
 
-        // Act
+        // Exercise
         String queryString = paramBuilder.createConformedParams(params, "UTF-8");
 
-        // Assert
+        // Verify
         assertThat(queryString,
                 is(equalTo("?%E3%81%82=%E3%81%82%E3%81%84%E3%81%86%E3%81%88%E3%81%8A")));
 

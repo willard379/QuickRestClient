@@ -21,7 +21,6 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import jp.ambrosoli.quickrestclient.apache.params.ApacheEnclosingParamBuilder;
 import jp.ambrosoli.quickrestclient.params.NameValueObject;
 import jp.ambrosoli.quickrestclient.params.RequestParams;
 
@@ -39,18 +38,18 @@ public class ApacheEnclosingParamBuilderTest {
     @Test
     public void testGetConformedParams() {
 
-        // Arrange
+        // Setup
         List<NameValueObject> params = new ArrayList<NameValueObject>();
         params.add(new NameValueObject("Name1", "Value1"));
         params.add(new NameValueObject("Name2", "Value2"));
         params.add(new NameValueObject("Name3", "Value3"));
         RequestParams reqParams = new RequestParams(params);
 
-        // Act
+        // Exercise
         ApacheEnclosingParamBuilder builder = new ApacheEnclosingParamBuilder();
         UrlEncodedFormEntity entity = reqParams.getConformedParams(builder);
 
-        // Assert
+        // Verify
         assertThat(entity, is(notNullValue()));
 
     }
@@ -58,46 +57,46 @@ public class ApacheEnclosingParamBuilderTest {
     @Test
     public void testGetConformedParams_UTF8() {
 
-        // Arrange
+        // Setup
         List<NameValueObject> params = new ArrayList<NameValueObject>();
         params.add(new NameValueObject("Name1", "Value1"));
         params.add(new NameValueObject("Name2", "Value2"));
         params.add(new NameValueObject("Name3", "Value3"));
         RequestParams reqParams = new RequestParams(params);
 
-        // Act
+        // Exercise
         ApacheEnclosingParamBuilder builder = new ApacheEnclosingParamBuilder();
         UrlEncodedFormEntity entity = reqParams.getConformedParams(builder, "UTF-8");
 
-        // Assert
+        // Verify
         assertThat(entity, is(notNullValue()));
     }
 
     @Test
     public void testCreateConformedParams() {
 
-        // Arrange
+        // Setup
         List<NameValueObject> params = new ArrayList<NameValueObject>();
         params.add(new NameValueObject("Name1", "Value1"));
         params.add(new NameValueObject("Name2", "Value2"));
         params.add(new NameValueObject("Name3", "Value3"));
 
-        // Act
+        // Exercise
         ApacheEnclosingParamBuilder builder = new ApacheEnclosingParamBuilder();
         UrlEncodedFormEntity entity = builder.createConformedParams(params, "UTF-8");
 
-        // Assert
+        // Verify
         assertThat(entity, is(notNullValue()));
     }
 
     @Test
     public void testCreateConformedParams_NullParams() {
 
-        // Act
+        // Exercise
         ApacheEnclosingParamBuilder builder = new ApacheEnclosingParamBuilder();
         UrlEncodedFormEntity entity = builder.createConformedParams(null, "UTF-8");
 
-        // Assert
+        // Verify
         assertThat(entity, is(notNullValue()));
 
     }
@@ -105,15 +104,15 @@ public class ApacheEnclosingParamBuilderTest {
     @Test
     public void testCreateConformedParams_EmptyParam() {
 
-        // Arrange
+        // Setup
         ArrayList<NameValueObject> params = new ArrayList<NameValueObject>();
         String charset = "UTF-8";
 
-        // Act
+        // Exercise
         ApacheEnclosingParamBuilder builder = new ApacheEnclosingParamBuilder();
         UrlEncodedFormEntity entity = builder.createConformedParams(params, charset);
 
-        // Assert
+        // Verify
         assertThat(entity, is(notNullValue()));
 
     }
@@ -121,24 +120,24 @@ public class ApacheEnclosingParamBuilderTest {
     @Test
     public void testCreateConformedParams_NullCharset() throws Exception {
 
-        // Arrange
+        // Setup
         List<NameValueObject> params = new ArrayList<NameValueObject>();
         params.add(new NameValueObject("Name1", "Value1"));
         params.add(new NameValueObject("Name2", "Value2"));
         params.add(new NameValueObject("Name3", "Value3"));
 
-        // Act
+        // Exercise
         ApacheEnclosingParamBuilder builder = new ApacheEnclosingParamBuilder();
         UrlEncodedFormEntity entity = builder.createConformedParams(params, null);
 
-        // Assert
+        // Verify
         assertThat(entity, is(notNullValue()));
     }
 
     @Test
     public void testCreateConformedParams_InvalidCharset() throws Exception {
 
-        // Arrange
+        // Setup
         List<NameValueObject> params = new ArrayList<NameValueObject>();
         params.add(new NameValueObject("Name1", "Value1"));
         params.add(new NameValueObject("Name2", "Value2"));
@@ -149,7 +148,7 @@ public class ApacheEnclosingParamBuilderTest {
         // Expected
         this.expectedException.expect(IllegalArgumentException.class);
 
-        // Act
+        // Exercise
         ApacheEnclosingParamBuilder builder = new ApacheEnclosingParamBuilder();
         builder.createConformedParams(params, charset);
 
@@ -158,17 +157,17 @@ public class ApacheEnclosingParamBuilderTest {
     @Test
     public void testCreateNameValuePairList() {
 
-        // Arrange
+        // Setup
         List<NameValueObject> params = new ArrayList<NameValueObject>();
         params.add(new NameValueObject("Name1", "Value1"));
         params.add(new NameValueObject("Name2", "Value2"));
         params.add(new NameValueObject("Name3", "Value3"));
 
-        // Act
+        // Exercise
         ApacheEnclosingParamBuilder builder = new ApacheEnclosingParamBuilder();
         List<NameValuePair> dest = builder.createNameValuePairList(params);
 
-        // Assert
+        // Verify
         assertThat(dest, is(notNullValue()));
         assertThat(dest.size(), is(params.size()));
 
@@ -177,11 +176,11 @@ public class ApacheEnclosingParamBuilderTest {
     @Test
     public void testCreateNameValuePairList_NullParam() {
 
-        // Act
+        // Exercise
         ApacheEnclosingParamBuilder builder = new ApacheEnclosingParamBuilder();
         List<NameValuePair> dest = builder.createNameValuePairList(null);
 
-        // Assert
+        // Verify
         assertThat(dest, is(notNullValue()));
         assertThat(dest.isEmpty(), is(true));
 
@@ -190,14 +189,14 @@ public class ApacheEnclosingParamBuilderTest {
     @Test
     public void testCreateNameValuePairList_EmptyParam() {
 
-        // Arrange
+        // Setup
         ArrayList<NameValueObject> params = new ArrayList<NameValueObject>();
 
-        // Act
+        // Exercise
         ApacheEnclosingParamBuilder builder = new ApacheEnclosingParamBuilder();
         List<NameValuePair> dest = builder.createNameValuePairList(params);
 
-        // Assert
+        // Verify
         assertThat(dest, is(notNullValue()));
         assertThat(dest.isEmpty(), is(true));
 
@@ -206,17 +205,17 @@ public class ApacheEnclosingParamBuilderTest {
     @Test
     public void testCreateNameValuePairList_ContainsNull() {
 
-        // Arrange
+        // Setup
         List<NameValueObject> params = new ArrayList<NameValueObject>();
         params.add(null);
         params.add(null);
         params.add(null);
 
-        // Act
+        // Exercise
         ApacheEnclosingParamBuilder builder = new ApacheEnclosingParamBuilder();
         List<NameValuePair> dest = builder.createNameValuePairList(params);
 
-        // Assert
+        // Verify
         assertThat(dest, is(notNullValue()));
         assertThat(dest.isEmpty(), is(true));
 
@@ -225,14 +224,14 @@ public class ApacheEnclosingParamBuilderTest {
     @Test
     public void testToNameValuePair() {
 
-        // Arrange
+        // Setup
         NameValueObject nvo = new NameValueObject("name", "value");
 
-        // Act
+        // Exercise
         ApacheEnclosingParamBuilder builder = new ApacheEnclosingParamBuilder();
         NameValuePair nameValuePair = builder.toNameValuePair(nvo);
 
-        // Assert
+        // Verify
         assertThat(nameValuePair, is(notNullValue()));
         assertThat(nameValuePair.getName(), is(equalTo(nvo.getName())));
         assertThat(nameValuePair.getValue(), is(equalTo(nvo.getValue())));
@@ -242,11 +241,11 @@ public class ApacheEnclosingParamBuilderTest {
     @Test
     public void testToNameValuePair_NullParam() {
 
-        // Act
+        // Exercise
         ApacheEnclosingParamBuilder builder = new ApacheEnclosingParamBuilder();
         NameValuePair nameValuePair = builder.toNameValuePair(null);
 
-        // Assert
+        // Verify
         assertThat(nameValuePair, is(nullValue()));
     }
 

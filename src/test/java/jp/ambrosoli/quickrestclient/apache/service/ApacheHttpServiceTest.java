@@ -24,7 +24,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jp.ambrosoli.quickrestclient.Http;
-import jp.ambrosoli.quickrestclient.apache.service.ApacheHttpService;
 import jp.ambrosoli.quickrestclient.enums.AuthType;
 import jp.ambrosoli.quickrestclient.enums.HttpMethod;
 import jp.ambrosoli.quickrestclient.headers.HttpHeaders;
@@ -77,23 +76,23 @@ public class ApacheHttpServiceTest {
     @Test
     public void testExecute_Minimum() {
 
-        // Arrange
+        // Setup
         ApacheHttpService service = new ApacheHttpService();
         HttpRequest request = new HttpRequest(
                 URIUtil.toURI("http://www.ambrosoli.jp/test-server/statusCode/ok"));
         HttpResponse response = service.execute(request);
 
-        // Act
+        // Exercise
         boolean isOk = response.isSuccess();
 
-        // Assert
+        // Verify
         assertThat(isOk, is(true));
     }
 
     @Test
     public void testExecute_Maximum() {
 
-        // Arrange
+        // Setup
         ApacheHttpService service = new ApacheHttpService();
 
         List<NameValueObject> values = new ArrayList<NameValueObject>();
@@ -112,10 +111,10 @@ public class ApacheHttpServiceTest {
         request.setProtocol(Http.HTTP_1_0);
         request.setTimeout(2000);
 
-        // Act
+        // Exercise
         HttpResponse response = service.execute(request);
 
-        // Assert
+        // Verify
         assertThat(response.isSuccess(), is(true));
         assertThat(response.getAsString(), is(equalTo("")));
     }
@@ -123,14 +122,14 @@ public class ApacheHttpServiceTest {
     @Test
     public void testGetSocketFactory_HTTP() {
 
-        // Arrange
+        // Setup
         ApacheHttpService service = new ApacheHttpService();
 
-        // Act
+        // Exercise
         SocketFactory factory = service.getSocketFactory(URIUtil
                 .toURI("http://www.ambrosoli.jp/test-server/"));
 
-        // Assert
+        // Verify
         assertThat(factory, is(instanceOf(PlainSocketFactory.class)));
 
     }
@@ -138,58 +137,58 @@ public class ApacheHttpServiceTest {
     @Test
     public void testGetSocketFactory_SSL() {
 
-        // Arrange
+        // Setup
         ApacheHttpService service = new ApacheHttpService();
 
-        // Act
+        // Exercise
         SocketFactory factory = service.getSocketFactory(URIUtil
                 .toURI("https://www.ambrosoli.jp/test-server/"));
 
-        // Assert
+        // Verify
         assertThat(factory, is(instanceOf(SSLSocketFactory.class)));
     }
 
     @Test
     public void testGetSocketFactory_Null() {
 
-        // Arrange
+        // Setup
         this.exceptionRule.expect(is(instanceOf(IllegalStateException.class)));
         this.exceptionRule.expectMessage(is(equalTo("URL is null.")));
 
-        // Act
+        // Exercise
         ApacheHttpService service = new ApacheHttpService();
         service.getSocketFactory(null);
 
-        // Assert
+        // Verify
         fail("例外が発生しませんでした。");
     }
 
     @Test
     public void testGetSocketFactory_InvalidScheme() {
 
-        // Arrange
+        // Setup
         this.exceptionRule.expect(is(instanceOf(IllegalArgumentException.class)));
         this.exceptionRule.expectMessage(is(equalTo("invalid scheme.")));
 
-        // Act
+        // Exercise
         ApacheHttpService service = new ApacheHttpService();
         service.getSocketFactory(URIUtil.toURI("ws://www.ambrosoli.jp/test-server/"));
 
-        // Assert
+        // Verify
         fail("例外が発生しませんでした。");
     }
 
     @Test
     public void testCreateSchemeRegistry_HTTP() {
 
-        // Arrange
+        // Setup
         ApacheHttpService service = new ApacheHttpService();
 
-        // Act
+        // Exercise
         SchemeRegistry schreg = service.createSchemeRegistry(URIUtil
                 .toURI("http://www.ambrosoli.jp/test-server/"));
 
-        // Assert
+        // Verify
         assertThat(schreg, is(notNullValue()));
 
     }
@@ -197,94 +196,94 @@ public class ApacheHttpServiceTest {
     @Test
     public void testCreateSchemeRegistry_SSL() {
 
-        // Arrange
+        // Setup
         ApacheHttpService service = new ApacheHttpService();
 
-        // Act
+        // Exercise
         SchemeRegistry schreg = service.createSchemeRegistry(URIUtil
                 .toURI("https://www.ambrosoli.jp/test-server/"));
 
-        // Assert
+        // Verify
         assertThat(schreg, is(notNullValue()));
     }
 
     @Test
     public void testCreateSchemeRegistry_Null() {
 
-        // Arrange
+        // Setup
         this.exceptionRule.expect(is(instanceOf(IllegalStateException.class)));
         this.exceptionRule.expectMessage(is(equalTo("URL is null.")));
 
-        // Act
+        // Exercise
         ApacheHttpService service = new ApacheHttpService();
         service.createSchemeRegistry(null);
 
-        // Assert
+        // Verify
         fail("例外が発生しませんでした。");
     }
 
     @Test
     public void testCreateSchemeRegistry_InvalidScheme() {
 
-        // Arrange
+        // Setup
         this.exceptionRule.expect(is(instanceOf(IllegalArgumentException.class)));
         this.exceptionRule.expectMessage(is(equalTo("invalid scheme.")));
 
-        // Act
+        // Exercise
         ApacheHttpService service = new ApacheHttpService();
         service.createSchemeRegistry(URIUtil.toURI("wss://www.ambrosoli.jp/test-server/"));
 
-        // Assert
+        // Verify
         fail("例外が発生しませんでした。");
     }
 
     @Test
     public void testCreateHttpParams() {
 
-        // Arrange
+        // Setup
         ApacheHttpService service = new ApacheHttpService();
 
-        // Act
+        // Exercise
         HttpParams params = service.createHttpParams();
 
-        // Assert
+        // Verify
         assertThat(params, is(notNullValue()));
     }
 
     @Test
     public void testCreateClientConnectionManager() {
 
-        // Arrange
+        // Setup
         ApacheHttpService service = new ApacheHttpService();
         HttpParams params = new BasicHttpParams();
         SchemeRegistry schreg = new SchemeRegistry();
 
-        // Act
+        // Exercise
         ClientConnectionManager conman = service.createClientConnectionManager(params, schreg);
 
-        // Assert
+        // Verify
         assertThat(conman, is(notNullValue()));
     }
 
     @Test
     public void testCreateHttpClient() {
 
-        // Arrange
+        // Setup
         ApacheHttpService service = new ApacheHttpService();
         HttpParams params = new BasicHttpParams();
         SingleClientConnManager conman = new SingleClientConnManager(params, new SchemeRegistry());
 
-        // Act
+        // Exercise
         HttpClient client = service.createHttpClient(conman, params);
 
-        // Assert
+        // Verify
         assertThat(client, is(notNullValue()));
     }
 
     @Test
     public void testCreateHttpUriRequest_Get() {
 
-        // Arrange
+        // Setup
         ApacheHttpService service = new ApacheHttpService();
 
         List<NameValueObject> nvo = new ArrayList<NameValueObject>();
@@ -293,11 +292,11 @@ public class ApacheHttpServiceTest {
         nvo.add(new NameValueObject("c", "C"));
         RequestParams params = new RequestParams(nvo);
 
-        // Act
+        // Exercise
         URI uri = URIUtil.toURI("http://www.ambrosoli.jp/get");
         HttpUriRequest request = service.createHttpUriRequest(uri, HttpMethod.GET, params, "UTF-8");
 
-        // Assert
+        // Verify
         assertThat(request, is(instanceOf(HttpGet.class)));
         assertThat(request.getURI().toString(), is(equalTo(uri.toString() + "?a=A&b=B&c=C")));
 
@@ -306,7 +305,7 @@ public class ApacheHttpServiceTest {
     @Test
     public void testCreateHttpUriRequest_DELETE() {
 
-        // Arrange
+        // Setup
         ApacheHttpService service = new ApacheHttpService();
 
         List<NameValueObject> nvo = new ArrayList<NameValueObject>();
@@ -315,12 +314,12 @@ public class ApacheHttpServiceTest {
         nvo.add(new NameValueObject("c", "C"));
         RequestParams params = new RequestParams(nvo);
 
-        // Act
+        // Exercise
         URI uri = URIUtil.toURI("http://www.ambrosoli.jp/delete");
         HttpUriRequest request = service.createHttpUriRequest(uri, HttpMethod.DELETE, params,
                 "UTF-8");
 
-        // Assert
+        // Verify
         assertThat(request, is(instanceOf(HttpDelete.class)));
         assertThat(request.getURI().toString(), is(equalTo(uri.toString() + "?a=A&b=B&c=C")));
 
@@ -329,7 +328,7 @@ public class ApacheHttpServiceTest {
     @Test
     public void testCreateHttpUriRequest_Head() {
 
-        // Arrange
+        // Setup
         ApacheHttpService service = new ApacheHttpService();
 
         List<NameValueObject> nvo = new ArrayList<NameValueObject>();
@@ -338,12 +337,12 @@ public class ApacheHttpServiceTest {
         nvo.add(new NameValueObject("c", "C"));
         RequestParams params = new RequestParams(nvo);
 
-        // Act
+        // Exercise
         URI uri = URIUtil.toURI("http://www.ambrosoli.jp/head");
         HttpUriRequest request = service
                 .createHttpUriRequest(uri, HttpMethod.HEAD, params, "UTF-8");
 
-        // Assert
+        // Verify
         assertThat(request, is(instanceOf(HttpHead.class)));
         assertThat(request.getURI().toString(), is(equalTo(uri.toString() + "?a=A&b=B&c=C")));
 
@@ -352,7 +351,7 @@ public class ApacheHttpServiceTest {
     @Test
     public void testCreateHttpUriRequest_Options() {
 
-        // Arrange
+        // Setup
         ApacheHttpService service = new ApacheHttpService();
 
         List<NameValueObject> nvo = new ArrayList<NameValueObject>();
@@ -361,12 +360,12 @@ public class ApacheHttpServiceTest {
         nvo.add(new NameValueObject("c", "C"));
         RequestParams params = new RequestParams(nvo);
 
-        // Act
+        // Exercise
         URI uri = URIUtil.toURI("http://www.ambrosoli.jp/options");
         HttpUriRequest request = service.createHttpUriRequest(uri, HttpMethod.OPTIONS, params,
                 "UTF-8");
 
-        // Assert
+        // Verify
         assertThat(request, is(instanceOf(HttpOptions.class)));
         assertThat(request.getURI().toString(), is(equalTo(uri.toString() + "?a=A&b=B&c=C")));
 
@@ -375,14 +374,14 @@ public class ApacheHttpServiceTest {
     @Test
     public void testCreateHttpUriRequest_Get_Null() {
 
-        // Arrange
+        // Setup
         ApacheHttpService service = new ApacheHttpService();
 
-        // Act
+        // Exercise
         URI uri = URIUtil.toURI("http://www.ambrosoli.jp/get");
         HttpUriRequest request = service.createHttpUriRequest(uri, HttpMethod.GET, null, "UTF-8");
 
-        // Assert
+        // Verify
         assertThat(request, is(instanceOf(HttpGet.class)));
         assertThat(request.getURI().toString(), is(equalTo(uri.toString())));
 
@@ -391,7 +390,7 @@ public class ApacheHttpServiceTest {
     @Test
     public void testCreateHttpUriRequest_Post() throws IOException {
 
-        // Arrange
+        // Setup
         ApacheHttpService service = new ApacheHttpService();
 
         List<NameValueObject> nvo = new ArrayList<NameValueObject>();
@@ -400,12 +399,12 @@ public class ApacheHttpServiceTest {
         nvo.add(new NameValueObject("c", "C"));
         RequestParams params = new RequestParams(nvo);
 
-        // Act
+        // Exercise
         URI uri = URIUtil.toURI("http://www.ambrosoli.jp/post");
         HttpPost httpPost = (HttpPost) service.createHttpUriRequest(uri, HttpMethod.POST, params,
                 "UTF-8");
 
-        // Assert
+        // Verify
         assertThat(httpPost, is(instanceOf(HttpPost.class)));
         assertThat(httpPost.getURI(), is(equalTo(uri)));
         assertThat(httpPost.getEntity(), is(notNullValue()));
@@ -420,7 +419,7 @@ public class ApacheHttpServiceTest {
     @Test
     public void testCreateHttpUriRequest_Put() throws IOException {
 
-        // Arrange
+        // Setup
         ApacheHttpService service = new ApacheHttpService();
 
         List<NameValueObject> nvo = new ArrayList<NameValueObject>();
@@ -429,12 +428,12 @@ public class ApacheHttpServiceTest {
         nvo.add(new NameValueObject("c", "C"));
         RequestParams params = new RequestParams(nvo);
 
-        // Act
+        // Exercise
         URI uri = URIUtil.toURI("http://www.ambrosoli.jp/put");
         HttpPut httpPut = (HttpPut) service.createHttpUriRequest(uri, HttpMethod.PUT, params,
                 "UTF-8");
 
-        // Assert
+        // Verify
         assertThat(httpPut, is(instanceOf(HttpPut.class)));
         assertThat(httpPut.getURI(), is(equalTo(uri)));
         assertThat(httpPut.getEntity(), is(notNullValue()));
@@ -449,15 +448,15 @@ public class ApacheHttpServiceTest {
     @Test
     public void testCreateHttpUriRequest_Post_Null() throws IOException {
 
-        // Arrange
+        // Setup
         ApacheHttpService service = new ApacheHttpService();
 
-        // Act
+        // Exercise
         URI uri = URIUtil.toURI("http://www.ambrosoli.jp/post");
         HttpPost httpPost2 = (HttpPost) service.createHttpUriRequest(uri, HttpMethod.POST, null,
                 "UTF-8");
 
-        // Assert
+        // Verify
         assertThat(httpPost2, is(instanceOf(HttpPost.class)));
         assertThat(httpPost2.getURI(), is(equalTo(uri)));
         assertThat(httpPost2.getEntity(), is(nullValue()));
@@ -466,7 +465,7 @@ public class ApacheHttpServiceTest {
     @Test
     public void testAddQueryString() {
 
-        // Arrange
+        // Setup
         ApacheHttpService service = new ApacheHttpService();
 
         URI uri = URIUtil.toURI("http://www.ambrosoli.jp/");
@@ -476,10 +475,10 @@ public class ApacheHttpServiceTest {
         nvo.add(new NameValueObject("c", "C"));
         RequestParams params = new RequestParams(nvo);
 
-        // Act
+        // Exercise
         String fullURI = service.addQueryString(uri, params, "UTF-8").toString();
 
-        // Assert
+        // Verify
         assertThat(fullURI, is(equalTo("http://www.ambrosoli.jp/?a=A&b=B&c=C")));
 
     }
@@ -487,13 +486,13 @@ public class ApacheHttpServiceTest {
     @Test
     public void testAddQueryString_NullParam() {
 
-        // Arrange
+        // Setup
         ApacheHttpService service = new ApacheHttpService();
         URI uri = URIUtil.toURI("http://www.ambrosoli.jp/");
 
-        // Act
+        // Exercise
         String fullURI = service.addQueryString(uri, null, "UTF-8").toString();
-        // Assert
+        // Verify
         assertThat(fullURI, is(equalTo("http://www.ambrosoli.jp/")));
 
     }
@@ -501,13 +500,13 @@ public class ApacheHttpServiceTest {
     @Test
     public void testAddQueryString_EmptyParam() {
 
-        // Arrange
+        // Setup
         ApacheHttpService service = new ApacheHttpService();
         URI uri = URIUtil.toURI("http://www.ambrosoli.jp/");
 
-        // Act
+        // Exercise
         String fullURI = service.addQueryString(uri, new RequestParams(null), "UTF-8").toString();
-        // Assert
+        // Verify
         assertThat(fullURI, is(equalTo("http://www.ambrosoli.jp/")));
 
     }
@@ -515,7 +514,7 @@ public class ApacheHttpServiceTest {
     @Test
     public void testAddQueryString_NoEncoding() {
 
-        // Arrange
+        // Setup
         ApacheHttpService service = new ApacheHttpService();
 
         URI uri = URIUtil.toURI("http://www.ambrosoli.jp/");
@@ -525,26 +524,26 @@ public class ApacheHttpServiceTest {
         nvo.add(new NameValueObject("c", "C"));
         RequestParams params = new RequestParams(nvo);
 
-        // Act
+        // Exercise
         String fullURI = service.addQueryString(uri, params, null).toString();
 
-        // Assert
+        // Verify
         assertThat(fullURI, is(equalTo("http://www.ambrosoli.jp/?a=A&b=B&c=C")));
     }
 
     @Test
     public void testSetProxy() {
 
-        // Arrange
+        // Setup
         ApacheHttpService service = new ApacheHttpService();
         BasicHttpParams httpParams = new BasicHttpParams();
         ProxyInfo proxy = new ProxyInfo("localhost", 8080);
         service.setProxy(httpParams, proxy);
 
-        // Act
+        // Exercise
         HttpHost httpHost = (HttpHost) httpParams.getParameter(ConnRoutePNames.DEFAULT_PROXY);
 
-        // Assert
+        // Verify
         assertThat(httpHost, is(notNullValue()));
         assertThat(httpHost.getHostName(), is(equalTo(proxy.getHost())));
         assertThat(httpHost.getPort(), is(equalTo(proxy.getPort())));
@@ -554,29 +553,29 @@ public class ApacheHttpServiceTest {
     @Test
     public void testSetProxy_NullParam() {
 
-        // Arrange
+        // Setup
         ApacheHttpService service = new ApacheHttpService();
         BasicHttpParams httpParams = new BasicHttpParams();
         service.setProxy(httpParams, null);
 
-        // Act
+        // Exercise
         HttpHost httpHost = (HttpHost) httpParams.getParameter(ConnRoutePNames.DEFAULT_PROXY);
 
-        // Assert
+        // Verify
         assertThat(httpHost, is(nullValue()));
     }
 
     @Test
     public void testSetProtocolVersion_HTTP1_0() {
 
-        // Arrange
+        // Setup
         ApacheHttpService service = new ApacheHttpService();
         HttpRequestBase httpRequestBase = new HttpGet();
 
-        // Act
+        // Exercise
         service.setProtocolVersion(httpRequestBase.getParams(), Http.HTTP_1_0);
 
-        // Assert
+        // Verify
         String protocolVersion = httpRequestBase.getProtocolVersion().toString();
         assertThat(protocolVersion, is(equalTo(Http.HTTP_1_0)));
 
@@ -585,14 +584,14 @@ public class ApacheHttpServiceTest {
     @Test
     public void testSetProtocolVersion_HTTP1_1() {
 
-        // Arrange
+        // Setup
         ApacheHttpService service = new ApacheHttpService();
         HttpRequestBase httpRequestBase = new HttpPost();
 
-        // Act
+        // Exercise
         service.setProtocolVersion(httpRequestBase.getParams(), Http.HTTP_1_1);
 
-        // Assert
+        // Verify
         String protocolVersion = httpRequestBase.getProtocolVersion().toString();
         assertThat(protocolVersion, is(equalTo(Http.HTTP_1_1)));
 
@@ -601,29 +600,29 @@ public class ApacheHttpServiceTest {
     @Test
     public void testSetProtocolVersion_Invalid() {
 
-        // Arrange
+        // Setup
         this.exceptionRule.expect(is(instanceOf(IllegalArgumentException.class)));
         this.exceptionRule.expectMessage(is(equalTo("Http protocol version is illegal")));
 
-        // Act
+        // Exercise
         ApacheHttpService service = new ApacheHttpService();
         service.setProtocolVersion(new BasicHttpParams(), "HTTP/2.0");
 
-        // Assert
+        // Verify
         fail("例外が発生しませんでした。");
     }
 
     @Test
     public void testSetTimeout_PositiveValueParam() {
 
-        // Arrange
+        // Setup
         ApacheHttpService service = new ApacheHttpService();
         BasicHttpParams httpParams = new BasicHttpParams();
 
-        // Act
+        // Exercise
         service.setTimeout(httpParams, 1000);
 
-        // Assert
+        // Verify
         int soTimeout = httpParams.getIntParameter(CoreConnectionPNames.SO_TIMEOUT, 0);
         assertThat(soTimeout, is(1000));
 
@@ -635,14 +634,14 @@ public class ApacheHttpServiceTest {
     @Test
     public void testSetTimeout_NegativeValueParam() {
 
-        // Arrange
+        // Setup
         ApacheHttpService service = new ApacheHttpService();
         BasicHttpParams httpParams = new BasicHttpParams();
 
-        // Act
+        // Exercise
         service.setTimeout(httpParams, -1);
 
-        // Assert
+        // Verify
         int soTimeout = httpParams.getIntParameter(CoreConnectionPNames.SO_TIMEOUT, 0);
         assertThat(soTimeout, is(-1));
 
@@ -654,14 +653,14 @@ public class ApacheHttpServiceTest {
     @Test
     public void testSetTimeout_ZeroValueParam() {
 
-        // Arrange
+        // Setup
         ApacheHttpService service = new ApacheHttpService();
         BasicHttpParams httpParams = new BasicHttpParams();
 
-        // Act
+        // Exercise
         service.setTimeout(httpParams, 0);
 
-        // Assert
+        // Verify
         int soTimeout = httpParams.getIntParameter(CoreConnectionPNames.SO_TIMEOUT, 0);
         assertThat(soTimeout, is(0));
 
@@ -673,14 +672,14 @@ public class ApacheHttpServiceTest {
     @Test
     public void testSetCharset() {
 
-        // Arrange
+        // Setup
         ApacheHttpService service = new ApacheHttpService();
         BasicHttpParams httpParams = new BasicHttpParams();
 
-        // Act
+        // Exercise
         service.setCharset(httpParams, "UTF-8");
 
-        // Assert
+        // Verify
         String httpConnectCharset = (String) httpParams
                 .getParameter(CoreProtocolPNames.HTTP_CONTENT_CHARSET);
         assertThat(httpConnectCharset, is(equalTo("UTF-8")));
@@ -693,7 +692,7 @@ public class ApacheHttpServiceTest {
     @Test
     public void testSetHeaders() {
 
-        // Arrange
+        // Setup
         ApacheHttpService service = new ApacheHttpService();
 
         List<NameValueObject> headers = new ArrayList<NameValueObject>();
@@ -704,11 +703,11 @@ public class ApacheHttpServiceTest {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.addHeaders(headers);
 
-        // Act
+        // Exercise
         HttpRequestBase httpRequestBase = new HttpGet();
         service.setHeaders(httpRequestBase, httpHeaders);
 
-        // Assert
+        // Verify
         Header[] result = httpRequestBase.getAllHeaders();
         assertThat(result.length, is(4));
 
@@ -722,7 +721,7 @@ public class ApacheHttpServiceTest {
     @Test
     public void testSetHeaders_NullParam() {
 
-        // Arrange
+        // Setup
         ApacheHttpService service = new ApacheHttpService();
 
         List<NameValueObject> headers = new ArrayList<NameValueObject>();
@@ -733,11 +732,11 @@ public class ApacheHttpServiceTest {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.addHeaders(headers);
 
-        // Act
+        // Exercise
         HttpRequestBase httpRequestBase = new HttpPost();
         service.setHeaders(httpRequestBase, null);
 
-        // Assert
+        // Verify
         assertThat(httpRequestBase.getAllHeaders().length, is(0));
 
     }
@@ -745,7 +744,7 @@ public class ApacheHttpServiceTest {
     @Test
     public void testSetFormEntity() throws IOException {
 
-        // Arrange
+        // Setup
         ApacheHttpService service = new ApacheHttpService();
 
         HttpPost httpPost = new HttpPost();
@@ -759,10 +758,10 @@ public class ApacheHttpServiceTest {
 
         RequestParams requestParams = new RequestParams(params);
 
-        // Act
+        // Exercise
         service.setFormEntity(httpPost, requestParams, "UTF-8");
 
-        // Assert
+        // Verify
         List<NameValuePair> list = URLEncodedUtils.parse(httpPost.getEntity());
         assertThat(list.size(), is(5));
 
@@ -775,17 +774,17 @@ public class ApacheHttpServiceTest {
     @Test
     public void testSetCredentialsAuthenticate_Basic() {
 
-        // Arrange
+        // Setup
         ApacheHttpService service = new ApacheHttpService();
 
         URI uri = URIUtil.toURI("http://www.ambrosoli.jp/");
         AuthInfo authInfo = new AuthInfo(AuthType.BASIC, "username", "password");
         CredentialsProvider provider = new BasicCredentialsProvider();
 
-        // Act
+        // Exercise
         service.setCredentialsAuthenticate(uri, authInfo, provider);
 
-        // Assert
+        // Verify
         Credentials credentials = provider.getCredentials(new AuthScope("www.ambrosoli.jp", 80));
         assertThat(credentials, is(notNullValue()));
         assertThat(credentials.getUserPrincipal().getName(), is(equalTo("username")));
@@ -795,17 +794,17 @@ public class ApacheHttpServiceTest {
     @Test
     public void testSetCredentialsAuthenticate_Digest() {
 
-        // Arrange
+        // Setup
         ApacheHttpService service = new ApacheHttpService();
 
         URI uri = URIUtil.toURI("https://www.ambrosoli.jp/");
         AuthInfo authInfo = new AuthInfo(AuthType.DIGEST, "u1", "p1");
         CredentialsProvider provider = new BasicCredentialsProvider();
 
-        // Act
+        // Exercise
         service.setCredentialsAuthenticate(uri, authInfo, provider);
 
-        // Assert
+        // Verify
         Credentials credentials = provider.getCredentials(new AuthScope("www.ambrosoli.jp", 443));
         assertThat(credentials, is(notNullValue()));
         assertThat(credentials.getUserPrincipal().getName(), is(equalTo("u1")));
@@ -815,17 +814,17 @@ public class ApacheHttpServiceTest {
     @Test
     public void testSetCredentialsAuthenticate_Other() {
 
-        // Arrange
+        // Setup
         ApacheHttpService service = new ApacheHttpService();
 
         URI uri = URIUtil.toURI("http://www.ambrosoli.jp");
         AuthInfo authInfo = new AuthInfo(AuthType.CLIENT_CERT, "u1", "p1");
         CredentialsProvider provider = new BasicCredentialsProvider();
 
-        // Act
+        // Exercise
         service.setCredentialsAuthenticate(uri, authInfo, provider);
 
-        // Assert
+        // Verify
         Credentials credentials = provider.getCredentials(new AuthScope("www.ambrosoli.jp", 80));
         assertThat(credentials, is(nullValue()));
     }
@@ -833,17 +832,17 @@ public class ApacheHttpServiceTest {
     @Test
     public void testSetCredentialsAuthenticate_AuthInfoNull() {
 
-        // Arrange
+        // Setup
         ApacheHttpService service = new ApacheHttpService();
 
         URI uri = URIUtil.toURI("http://www.ambrosoli.jp");
         AuthInfo authInfo = null;
         CredentialsProvider provider = new BasicCredentialsProvider();
 
-        // Act
+        // Exercise
         service.setCredentialsAuthenticate(uri, authInfo, provider);
 
-        // Assert
+        // Verify
         Credentials credentials = provider.getCredentials(new AuthScope("www.ambrosoli.jp", 80));
         assertThat(credentials, is(nullValue()));
     }

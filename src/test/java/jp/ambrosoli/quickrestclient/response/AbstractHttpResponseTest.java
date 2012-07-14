@@ -37,14 +37,14 @@ public class AbstractHttpResponseTest {
     @Test
     public void testIsSuccess_200() {
 
-        // Arrange
+        // Setup
         MockAbstractHttpResponseImpl response = new MockAbstractHttpResponseImpl();
         response.sc = 200;
 
-        // Act
+        // Exercise
         boolean ok = response.isSuccess();
 
-        // Assert
+        // Verify
         assertThat(ok, is(true));
 
     }
@@ -52,14 +52,14 @@ public class AbstractHttpResponseTest {
     @Test
     public void testIsSuccess_201() {
 
-        // Arrange
+        // Setup
         MockAbstractHttpResponseImpl response = new MockAbstractHttpResponseImpl();
         response.sc = 201;
 
-        // Act
+        // Exercise
         boolean ok = response.isSuccess();
 
-        // Assert
+        // Verify
         assertThat(ok, is(true));
 
     }
@@ -67,14 +67,14 @@ public class AbstractHttpResponseTest {
     @Test
     public void testIsSuccess_500() {
 
-        // Arrange
+        // Setup
         MockAbstractHttpResponseImpl response = new MockAbstractHttpResponseImpl();
         response.sc = 500;
 
-        // Act
+        // Exercise
         boolean ok = response.isSuccess();
 
-        // Assert
+        // Verify
         assertThat(ok, is(false));
 
     }
@@ -82,14 +82,14 @@ public class AbstractHttpResponseTest {
     @Test
     public void testIsSuccess_0() {
 
-        // Arrange
+        // Setup
         MockAbstractHttpResponseImpl response = new MockAbstractHttpResponseImpl();
         response.sc = 0;
 
-        // Act
+        // Exercise
         boolean ok = response.isSuccess();
 
-        // Assert
+        // Verify
         assertThat(ok, is(false));
 
     }
@@ -97,13 +97,13 @@ public class AbstractHttpResponseTest {
     @Test
     public void testGetAsByteArray_Null() {
 
-        // Arrange
+        // Setup
         AbstractHttpResponse response = new MockAbstractHttpResponseImpl(null);
 
-        // Act
+        // Exercise
         byte[] data = response.getAsByteArray();
 
-        // Assert
+        // Verify
         assertThat(data, is(nullValue()));
 
     }
@@ -111,14 +111,14 @@ public class AbstractHttpResponseTest {
     @Test
     public void testGetAsByteArray() {
 
-        // Arrange
+        // Setup
         ResponseContent content = new ByteArrayResponseContent("I dislike Tsukemen!".getBytes());
         AbstractHttpResponse response = new MockAbstractHttpResponseImpl(content);
 
-        // Act
+        // Exercise
         byte[] data = response.getAsByteArray();
 
-        // Assert
+        // Verify
         assertThat(data, is(sameInstance(data)));
 
     }
@@ -126,13 +126,13 @@ public class AbstractHttpResponseTest {
     @Test
     public void testGetAsInputStream_Null() throws IOException {
 
-        // Arrange
+        // Setup
         AbstractHttpResponse response = new MockAbstractHttpResponseImpl(null);
 
-        // Act
+        // Exercise
         InputStream inputStream = response.getAsInputStream();
 
-        // Assert
+        // Verify
         assertThat(inputStream, is(nullValue()));
 
     }
@@ -140,15 +140,15 @@ public class AbstractHttpResponseTest {
     @Test
     public void testGetAsInputStream() throws IOException {
 
-        // Arrange
+        // Setup
         ResponseContent content = new ByteArrayResponseContent(
                 "I have respect for Robinmask.".getBytes());
         AbstractHttpResponse response = new MockAbstractHttpResponseImpl(content);
 
-        // Act
+        // Exercise
         InputStream input = response.getAsInputStream();
 
-        // Assert
+        // Verify
         assertThat(input, is(notNullValue()));
         try {
 
@@ -162,14 +162,14 @@ public class AbstractHttpResponseTest {
     @Test
     public void testGetAsString_NoContent() {
 
-        // Arrange
+        // Setup
         ResponseContent content = null;
         AbstractHttpResponse response = new MockAbstractHttpResponseImpl(content);
 
-        // Act
+        // Exercise
         String data = response.getAsString();
 
-        // Assert
+        // Verify
         assertThat(data, is(nullValue()));
 
     }
@@ -177,71 +177,71 @@ public class AbstractHttpResponseTest {
     @Test
     public void testGetAsString() {
 
-        // Arrange
+        // Setup
         ResponseContent content = new ByteArrayResponseContent("Test".getBytes());
         AbstractHttpResponse response = new MockAbstractHttpResponseImpl(content);
 
-        // Act
+        // Exercise
         String data = response.getAsString();
 
-        // Assert
+        // Verify
         assertThat(data, is(equalTo("Test")));
     }
 
     @Test
     public void testGetAsStringString() throws IOException {
 
-        // Arrange
+        // Setup
         ResponseContent content = new ByteArrayResponseContent("えむえすきゅーさんに".getBytes("MS932"));
         AbstractHttpResponse response = new MockAbstractHttpResponseImpl(content);
 
-        // Act
+        // Exercise
         String data = response.getAsString("MS932");
 
-        // Assert
+        // Verify
         assertThat(data, is(equalTo("えむえすきゅーさんに")));
     }
 
     @Test
     public void testGetAsStringString_NoContent() throws IOException {
 
-        // Arrange
+        // Setup
         AbstractHttpResponse response = new MockAbstractHttpResponseImpl(null);
 
-        // Act
+        // Exercise
         String data = response.getAsString("MS932");
 
-        // Assert
+        // Verify
         assertThat(data, is(nullValue()));
     }
 
     @Test
     public void testGetAsStringString_Null() throws IOException {
 
-        // Arrange
+        // Setup
         ResponseContent content = new ByteArrayResponseContent("としこし".getBytes("UTF-8"));
         AbstractHttpResponse response = new MockAbstractHttpResponseImpl(content);
 
-        // Act
+        // Exercise
         String data = response.getAsString(null);
 
-        // Assert
+        // Verify
         assertThat(data, is(equalTo("としこし")));
     }
 
     @Test
     public void testWriteTo() throws Exception {
 
-        // Arrange
+        // Setup
         ResponseContent content = new ByteArrayResponseContent("しめじ".getBytes("UTF-8"));
         AbstractHttpResponse response = new MockAbstractHttpResponseImpl(content);
 
         ByteArrayOutputStream output = new ByteArrayOutputStream();
 
-        // Act
+        // Exercise
         response.writeTo(output);
 
-        // Assert
+        // Verify
         String result = StringUtil.toString(output.toByteArray(), "UTF-8");
         assertThat(result, is(equalTo("しめじ")));
     }
@@ -249,14 +249,14 @@ public class AbstractHttpResponseTest {
     @Test
     public void testWriteTo_Null() throws Exception {
 
-        // Arrange
+        // Setup
         AbstractHttpResponse response = new MockAbstractHttpResponseImpl(null);
         OutputStream output = mock(OutputStream.class);
 
-        // Act
+        // Exercise
         response.writeTo(output);
 
-        // Assert
+        // Verify
         verify(output).close();
     }
 

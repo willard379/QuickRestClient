@@ -23,7 +23,6 @@ import java.lang.reflect.Field;
 import java.util.Map;
 
 import jp.ambrosoli.quickrestclient.apache.service.ApacheHttpServiceFactory;
-import jp.ambrosoli.quickrestclient.service.HttpServiceFactory;
 
 import org.junit.After;
 import org.junit.Rule;
@@ -46,10 +45,10 @@ public class HttpServiceFactoryTest {
     @Test
     public void testGetFactory_Default() {
 
-        // Act
+        // Exercise
         HttpServiceFactory factory = HttpServiceFactory.getFactory();
 
-        // Assert
+        // Verify
         assertThat(factory, is(notNullValue()));
         assertThat(ApacheHttpServiceFactory.class.isInstance(factory), is(true));
     }
@@ -57,10 +56,10 @@ public class HttpServiceFactoryTest {
     @Test
     public void testGetFactory_Null() throws ClassNotFoundException {
 
-        // Act
+        // Exercise
         HttpServiceFactory factory = HttpServiceFactory.getFactory(null);
 
-        // Assert
+        // Verify
         assertThat(factory, is(notNullValue()));
         assertThat(ApacheHttpServiceFactory.class.isInstance(factory), is(true));
     }
@@ -68,56 +67,56 @@ public class HttpServiceFactoryTest {
     @Test
     public void testGetFactory_Unregistered() {
 
-        // Arrange
+        // Setup
         this.expectedException.expect(is(instanceOf(IllegalStateException.class)));
         this.expectedException
                 .expectMessage(is(equalTo("HttpServiceFactory {unregistered} is not registerd.")));
 
-        // Act
+        // Exercise
         HttpServiceFactory.getFactory("unregistered");
 
-        // Assert
+        // Verify
         fail("例外が発生しませんでした");
     }
 
     @Test
     public void testRegister() {
 
-        // Arrange
+        // Setup
         HttpServiceFactory factory = mock(HttpServiceFactory.class);
 
-        // Act
+        // Exercise
         HttpServiceFactory.register("test_factory", factory);
 
-        // Assert
+        // Verify
         assertThat(HttpServiceFactory.getFactory("test_factory"), is(sameInstance(factory)));
     }
 
     @Test
     public void testRegister_OverrideDefault() {
 
-        // Arrange
+        // Setup
         HttpServiceFactory factory = mock(HttpServiceFactory.class);
 
-        // Act
+        // Exercise
         HttpServiceFactory.register(null, factory);
 
-        // Assert
+        // Verify
         assertThat(HttpServiceFactory.getFactory(null), is(sameInstance(factory)));
     }
 
     @Test
     public void testRegister_Null() {
 
-        // Arrange
+        // Setup
         this.expectedException.expect(is(instanceOf(IllegalStateException.class)));
         this.expectedException
                 .expectMessage(is(equalTo("HttpServiceFactory {hoge} could not be registerd.")));
 
-        // Act
+        // Exercise
         HttpServiceFactory.register("hoge", null);
 
-        // Assert
+        // Verify
         fail("例外が発生しませんでした");
     }
 

@@ -49,27 +49,27 @@ public class HttpRequestBuilderTest {
     @Test
     public void testConstruct_Null() {
 
-        // Arrange
+        // Setup
         this.expectedException.expect(is(instanceOf(IllegalArgumentException.class)));
         this.expectedException.expectMessage(is(equalTo("URL may not be null or blank.")));
 
-        // Act
+        // Exercise
         new HttpRequestBuilder(null);
 
-        // Assert
+        // Verify
         fail("例外が発生しませんでした。");
     }
 
     @Test
     public void testCharset() {
 
-        // Arrange
+        // Setup
         HttpRequestBuilder builder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
 
-        // Act
+        // Exercise
         builder.charset("Shift_JIS");
 
-        // Assert
+        // Verify
         String charset = builder.request.getCharset();
         assertThat(charset, is(equalTo("Shift_JIS")));
 
@@ -78,13 +78,13 @@ public class HttpRequestBuilderTest {
     @Test
     public void testCharset_Null() {
 
-        // Arrange
+        // Setup
         HttpRequestBuilder builder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
 
-        // Act
+        // Exercise
         builder.charset(null);
 
-        // Assert
+        // Verify
         String charset = builder.request.getCharset();
         assertThat(charset, is(nullValue()));
     }
@@ -92,7 +92,7 @@ public class HttpRequestBuilderTest {
     @Test
     public void testHeaders_NameValueObjectArray() {
 
-        // Arrange
+        // Setup
         HttpRequestBuilder builder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
 
         NameValueObject[] params = new NameValueObject[3];
@@ -100,10 +100,10 @@ public class HttpRequestBuilderTest {
         params[1] = new NameValueObject("Header2", "Value2");
         params[2] = new NameValueObject("Header3", "Value3");
 
-        // Act
+        // Exercise
         builder.headers(params);
 
-        // Assert
+        // Verify
         List<NameValueObject> headers = builder.request.getHeaders().getHeaders();
         assertThat(headers.size(), is(3));
 
@@ -117,14 +117,14 @@ public class HttpRequestBuilderTest {
     @Test
     public void testHeaders_NameValueObjectArray_Null() {
 
-        // Arrange
+        // Setup
         HttpRequestBuilder builder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
         NameValueObject[] params = null;
 
-        // Act
+        // Exercise
         builder.headers(params);
 
-        // Assert
+        // Verify
         HttpHeaders headers = builder.request.getHeaders();
         assertThat(headers.isEmpty(), is(true));
 
@@ -133,7 +133,7 @@ public class HttpRequestBuilderTest {
     @Test
     public void testHeaders_Map() {
 
-        // Arrange
+        // Setup
         HttpRequestBuilder builder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
 
         Map<String, String> params = new HashMap<String, String>();
@@ -145,10 +145,10 @@ public class HttpRequestBuilderTest {
         params.put("tokyo", "shinjyuku");
         params.put("kanagawa", "yokohama");
 
-        // Act
+        // Exercise
         builder.headers(params);
 
-        // Assert
+        // Verify
         List<NameValueObject> headers = builder.request.getHeaders().getHeaders();
         assertThat(headers.size(), is(7));
 
@@ -164,15 +164,15 @@ public class HttpRequestBuilderTest {
     @Test
     public void testHeaders_Map_Null() {
 
-        // Arrange
+        // Setup
         HttpRequestBuilder builder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
 
         Map<String, String> params = null;
 
-        // Act
+        // Exercise
         builder.headers(params);
 
-        // Assert
+        // Verify
         HttpHeaders headers = builder.request.getHeaders();
         assertThat(headers.isEmpty(), is(true));
     }
@@ -180,10 +180,10 @@ public class HttpRequestBuilderTest {
     @Test
     public void testMethod() {
 
-        // Arrange
+        // Setup
         HttpRequestBuilder builder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
 
-        // Act
+        // Exercise
         builder.method(Http.GET);
         HttpMethod method_get = builder.request.getMethod();
 
@@ -202,7 +202,7 @@ public class HttpRequestBuilderTest {
         builder.method(Http.HEAD);
         HttpMethod method_head = builder.request.getMethod();
 
-        // Assert
+        // Verify
         assertThat(method_get, is(HttpMethod.GET));
         assertThat(method_post, is(HttpMethod.POST));
         assertThat(method_put, is(HttpMethod.PUT));
@@ -214,38 +214,38 @@ public class HttpRequestBuilderTest {
     @Test
     public void testMethod_Null() {
 
-        // Arrange
+        // Setup
         this.expectedException.expect(is(instanceOf(NullPointerException.class)));
         this.expectedException.expectMessage(is(equalTo("method may not to be null.")));
 
-        // Act
+        // Exercise
         HttpRequestBuilder builder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
         builder.method(null);
 
-        // Assert
+        // Verify
         fail("例外が発生しませんでした");
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testMethod_Invalid() {
 
-        // Arrange
+        // Setup
         HttpRequestBuilder builder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
 
-        // Act
+        // Exercise
         builder.method("TRACE");
 
-        // Assert
+        // Verify
         fail("例外が発生しませんでした");
     }
 
     @Test
     public void testMethod_LowerCase() {
 
-        // Arrange
+        // Setup
         HttpRequestBuilder builder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
 
-        // Act
+        // Exercise
         builder.method("get");
         HttpMethod method_get = builder.request.getMethod();
 
@@ -264,7 +264,7 @@ public class HttpRequestBuilderTest {
         builder.method("head");
         HttpMethod method_head = builder.request.getMethod();
 
-        // Assert
+        // Verify
         assertThat(method_get, is(HttpMethod.GET));
         assertThat(method_post, is(HttpMethod.POST));
         assertThat(method_put, is(HttpMethod.PUT));
@@ -276,7 +276,7 @@ public class HttpRequestBuilderTest {
     @Test
     public void testParams_NameValueObjectArray() {
 
-        // Arrange
+        // Setup
         HttpRequestBuilder builder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
 
         NameValueObject[] params = new NameValueObject[1];
@@ -284,10 +284,10 @@ public class HttpRequestBuilderTest {
         params[0] = new NameValueObject("celery", "セロリ");
         params[0] = new NameValueObject("bracken", "蕨");
 
-        // Act
+        // Exercise
         builder.params(params);
 
-        // Assert
+        // Verify
         List<NameValueObject> paramList = builder.request.getParams().getParams();
         assertThat(paramList.size(), is(params.length));
         for (int i = 0; i < params.length; i++) {
@@ -300,14 +300,14 @@ public class HttpRequestBuilderTest {
     @Test
     public void testParams_NameValueObjectArray_Null() {
 
-        // Arrange
+        // Setup
         HttpRequestBuilder builder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
         NameValueObject[] params = null;
 
-        // Act
+        // Exercise
         builder.params(params);
 
-        // Assert
+        // Verify
         List<NameValueObject> paramList = builder.request.getParams().getParams();
         assertThat(paramList, is(nullValue()));
     }
@@ -315,7 +315,7 @@ public class HttpRequestBuilderTest {
     @Test
     public void testParams_Map() {
 
-        // Arrange
+        // Setup
         HttpRequestBuilder builder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
 
         Map<String, String> params = new HashMap<String, String>();
@@ -324,7 +324,7 @@ public class HttpRequestBuilderTest {
         params.put("Chrysler", "U.S.A");
         params.put("Porsche", "Germany");
 
-        // Act
+        // Exercise
         builder.params(params);
 
         List<NameValueObject> paramList = builder.request.getParams().getParams();
@@ -342,13 +342,13 @@ public class HttpRequestBuilderTest {
     @Test
     public void testParams_Map_Null() {
 
-        // Arrange
+        // Setup
         HttpRequestBuilder builder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
 
-        // Act
+        // Exercise
         builder.params((Map<String, String>) null);
 
-        // Assert
+        // Verify
         List<NameValueObject> paramList = builder.request.getParams().getParams();
         assertThat(paramList, is(nullValue()));
     }
@@ -356,13 +356,13 @@ public class HttpRequestBuilderTest {
     @Test
     public void testProtocol() {
 
-        // Arrange
+        // Setup
         HttpRequestBuilder builder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
 
-        // Act
+        // Exercise
         builder.protocol(Http.HTTP_1_0);
 
-        // Assert
+        // Verify
         assertThat(builder.request.getProtocol(), is(equalTo(Http.HTTP_1_0)));
 
     }
@@ -370,26 +370,26 @@ public class HttpRequestBuilderTest {
     @Test
     public void testProtocol_Null() {
 
-        // Arrange
+        // Setup
         HttpRequestBuilder builder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
 
-        // Act
+        // Exercise
         builder.protocol(null);
 
-        // Assert
+        // Verify
         assertThat(builder.request.getProtocol(), is(nullValue()));
     }
 
     @Test
     public void testProxy() {
 
-        // Arrange
+        // Setup
         HttpRequestBuilder builder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
 
-        // Act
+        // Exercise
         builder.proxy("localhost", 8080);
 
-        // Assert
+        // Verify
         ProxyInfo proxyInfo = builder.request.getProxyInfo();
         assertThat(proxyInfo.getHost(), is(equalTo("localhost")));
         assertThat(proxyInfo.getPort(), is(equalTo(8080)));
@@ -398,15 +398,15 @@ public class HttpRequestBuilderTest {
     @Test
     public void testProxy_Null() {
 
-        // Arrange
+        // Setup
         this.expectedException.expect(is(instanceOf(IllegalArgumentException.class)));
         this.expectedException.expectMessage(is(equalTo("hostname may not be null")));
 
-        // Act
+        // Exercise
         HttpRequestBuilder builder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
         builder.proxy(null, 8080);
 
-        // Assert
+        // Verify
         fail("例外が発生しませんでした");
 
     }
@@ -414,13 +414,13 @@ public class HttpRequestBuilderTest {
     @Test
     public void testTimeout_PositiveValue() {
 
-        // Arrange
+        // Setup
         HttpRequestBuilder builder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
 
-        // Act
+        // Exercise
         builder.timeout(15000);
 
-        // Assert
+        // Verify
         assertThat(builder.request.getTimeout(), is(15000));
 
     }
@@ -428,13 +428,13 @@ public class HttpRequestBuilderTest {
     @Test
     public void testTimeout_ZeroValue() {
 
-        // Arrange
+        // Setup
         HttpRequestBuilder builder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
 
-        // Act
+        // Exercise
         builder.timeout(0);
 
-        // Assert
+        // Verify
         assertThat(builder.request.getTimeout(), is(0));
 
     }
@@ -442,13 +442,13 @@ public class HttpRequestBuilderTest {
     @Test
     public void testTimeout_NegativeValue() {
 
-        // Arrange
+        // Setup
         HttpRequestBuilder builder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
 
-        // Act
+        // Exercise
         builder.timeout(-15000);
 
-        // Assert
+        // Verify
         assertThat(builder.request.getTimeout(), is(-15000));
 
     }
@@ -456,13 +456,13 @@ public class HttpRequestBuilderTest {
     @Test
     public void testUserAgent() {
 
-        // Arrange
+        // Setup
         HttpRequestBuilder builder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
 
-        // Act
+        // Exercise
         builder.userAgent("hoge/1.0");
 
-        // Assert
+        // Verify
         List<NameValueObject> headers = builder.request.getHeaders().getHeaders();
         assertThat(headers.size(), is(1));
         assertThat(headers.get(0).getName(), is(equalTo("User-Agent")));
@@ -472,27 +472,27 @@ public class HttpRequestBuilderTest {
     @Test
     public void testExecute() {
 
-        // Arrange
+        // Setup
         HttpRequestBuilder builder = new HttpRequestBuilder(
                 "http://www.ambrosoli.jp/test-server/statusCode/ok");
 
-        // Act
+        // Exercise
         HttpResponse response = builder.execute();
 
-        // Assert
+        // Verify
         assertThat(response.isSuccess(), is(true));
     }
 
     @Test
     public void testSetUserAgent() {
 
-        // Arrange
+        // Setup
         HttpRequestBuilder builder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
 
-        // Act
+        // Exercise
         builder.userAgent("Mozilla/10.0");
 
-        // Assert
+        // Verify
         NameValueObject userAgent = builder.request.getHeaders().getHeaders().get(0);
         assertThat(userAgent.getName(), is("User-Agent"));
         assertThat(userAgent.getValue(), is("Mozilla/10.0"));
@@ -502,13 +502,13 @@ public class HttpRequestBuilderTest {
     @Test
     public void testSetUserAgent_Null() {
 
-        // Arrange
+        // Setup
         HttpRequestBuilder builder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
 
-        // Act
+        // Exercise
         builder.userAgent(null);
 
-        // Assert
+        // Verify
         HttpHeaders headers = builder.request.getHeaders();
         assertThat(headers, is(nullValue()));
 
@@ -517,11 +517,11 @@ public class HttpRequestBuilderTest {
     @Test
     public void testAccept() {
 
-        // Act
+        // Exercise
         HttpRequestBuilder requestBuilder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
         requestBuilder.accept(HTML, XHTML, XML, JSON, TEXT);
 
-        // Assert
+        // Verify
         List<NameValueObject> headers = requestBuilder.request.getHeaders().getHeaders();
         assertThat(headers.size(), is(equalTo(5)));
 
@@ -542,11 +542,11 @@ public class HttpRequestBuilderTest {
     @Test
     public void testAccept_ContainsNull() throws Exception {
 
-        // Act
+        // Exercise
         HttpRequestBuilder requestBuilder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
         requestBuilder.accept(null, HTML, XHTML, XML, null, JSON, TEXT, null);
 
-        // Assert
+        // Verify
         List<NameValueObject> headers = requestBuilder.request.getHeaders().getHeaders();
         assertThat(headers.size(), is(equalTo(5)));
 
@@ -567,14 +567,14 @@ public class HttpRequestBuilderTest {
     @Test
     public void testAuth_TypeSafe() {
 
-        // Arrange
+        // Setup
         HttpRequestBuilder builder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
 
-        // Act
+        // Exercise
         AuthInfo auth = Operations.digest("aaa", "bbb");
         builder.auth(auth);
 
-        // Assert
+        // Verify
         AuthInfo authInfo = builder.request.getAuthInfo();
         assertThat(authInfo, is(notNullValue()));
         assertThat(authInfo.type, is(AuthType.DIGEST));
@@ -585,13 +585,13 @@ public class HttpRequestBuilderTest {
     @Test
     public void testAuth_String() {
 
-        // Arrange
+        // Setup
         HttpRequestBuilder builder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
 
-        // Act
+        // Exercise
         builder.auth("BASIC", "pppp", "hhhh");
 
-        // Assert
+        // Verify
         AuthInfo authInfo = builder.request.getAuthInfo();
         assertThat(authInfo, is(notNullValue()));
         assertThat(authInfo.type, is(AuthType.BASIC));
@@ -602,13 +602,13 @@ public class HttpRequestBuilderTest {
     @Test
     public void testAuth_Enum() {
 
-        // Arrange
+        // Setup
         HttpRequestBuilder builder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
 
-        // Act
+        // Exercise
         builder.auth(AuthType.CLIENT_CERT, "abc", "xyz");
 
-        // Assert
+        // Verify
         AuthInfo authInfo = builder.request.getAuthInfo();
         assertThat(authInfo, is(notNullValue()));
         assertThat(authInfo.type, is(AuthType.CLIENT_CERT));
@@ -619,13 +619,13 @@ public class HttpRequestBuilderTest {
     @Test
     public void testAuth_Null() {
 
-        // Arrange
+        // Setup
         HttpRequestBuilder builder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
 
-        // Act
+        // Exercise
         builder.auth(null);
 
-        // Assert
+        // Verify
         AuthInfo authInfo = builder.request.getAuthInfo();
         assertThat(authInfo, is(nullValue()));
     }
@@ -633,13 +633,13 @@ public class HttpRequestBuilderTest {
     @Test(expected = IllegalArgumentException.class)
     public void testAuth_InvalidAuthType() {
 
-        // Arrange
+        // Setup
         HttpRequestBuilder builder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
 
-        // Act
+        // Exercise
         builder.auth("hoge", "user", "password");
 
-        // Assert
+        // Verify
         fail("例外が発生しませんでした。");
     }
 

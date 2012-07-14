@@ -38,113 +38,113 @@ public class HttpTest {
     @Test
     public void testUrl() {
 
-        // Act
+        // Exercise
         HttpResponse response = Http.url("http://www.ambrosoli.jp/test-server/").execute();
 
-        // Assert
+        // Verify
         assertThat(response.isSuccess(), is(true));
     }
 
     @Test
     public void testGetRequest() {
 
-        // Act
+        // Exercise
         HttpResponse response = Http.url("http://www.ambrosoli.jp/test-server/method/get")
                 .method(Http.GET).execute();
 
-        // Assert
+        // Verify
         assertThat(response.isSuccess(), is(true));
     }
 
     @Test
     public void testPostRequest() {
 
-        // Act
+        // Exercise
         HttpResponse response = Http.url("http://www.ambrosoli.jp/test-server/method/post")
                 .method(Http.POST).execute();
 
-        // Assert
+        // Verify
         assertThat(response.isSuccess(), is(true));
     }
 
     @Test
     public void testPutRequest() {
 
-        // Act
+        // Exercise
         HttpResponse response = Http.url("http://www.ambrosoli.jp/test-server/method/put")
                 .method(Http.PUT).execute();
 
-        // Assert
+        // Verify
         assertThat(response.isSuccess(), is(true));
     }
 
     @Test
     public void testDeleteRequest() {
 
-        // Act
+        // Exercise
         HttpResponse response = Http.url("http://www.ambrosoli.jp/test-server/method/delete")
                 .method(Http.DELETE).execute();
 
-        // Assert
+        // Verify
         assertThat(response.isSuccess(), is(true));
     }
 
     @Test
     public void testHeadRequest() {
 
-        // Act
+        // Exercise
         HttpResponse response = Http.url("http://www.ambrosoli.jp/test-server/method/head")
                 .method(Http.HEAD).execute();
 
-        // Assert
+        // Verify
         assertThat(response.isSuccess(), is(true));
     }
 
     @Test
     public void testOptionsRequest() {
 
-        // Act
+        // Exercise
         HttpResponse response = Http.url("http://www.ambrosoli.jp/test-server/method/options")
                 .method(Http.OPTIONS).execute();
 
-        // Assert
+        // Verify
         assertThat(response.isSuccess(), is(true));
     }
 
     @Test
     public void testGetRequestWithString() {
 
-        // Act
+        // Exercise
         HttpResponse response = Http.url("http://www.ambrosoli.jp/test-server/method/get")
                 .method("GET").execute();
 
-        // Assert
+        // Verify
         assertThat(response.isSuccess(), is(true));
     }
 
     @Test
     public void testPostRequestWithStringLowerCase() {
 
-        // Act
+        // Exercise
         HttpResponse response = Http.url("http://www.ambrosoli.jp/test-server/method/post")
                 .method("post").execute();
 
-        // Assert
+        // Verify
         assertThat(response.isSuccess(), is(true));
     }
 
     @Test
     public void testProtocol_1_0() {
 
-        // Arrange
+        // Setup
         // HTTP/1.0のリクエストに対して200 OKを返すURL
         String url = "http://www.ambrosoli.jp/test-server/httpProtocol/version1_0";
 
-        // Act
+        // Exercise
         HttpResponse response_1_0 = Http.url(url).protocol(Http.HTTP_1_0).execute();
         HttpResponse response_1_1 = Http.url(url).protocol(Http.HTTP_1_1).execute();
 
-        // Assert
+        // Verify
         assertThat(response_1_0.isSuccess(), is(true));
         assertThat(response_1_1.isSuccess(), is(false));
 
@@ -153,15 +153,15 @@ public class HttpTest {
     @Test
     public void testProtocol_1_1() {
 
-        // Arrange
+        // Setup
         // HTTP/1.1のリクエストに対して200 OKを返すURL
         String url = "http://www.ambrosoli.jp/test-server/httpProtocol/version1_1";
 
-        // Act
+        // Exercise
         HttpResponse response_1_1 = Http.url(url).protocol(Http.HTTP_1_1).execute();
         HttpResponse response_1_0 = Http.url(url).protocol(Http.HTTP_1_0).execute();
 
-        // Assert
+        // Verify
         assertThat(response_1_1.isSuccess(), is(true));
         assertThat(response_1_0.isSuccess(), is(false));
     }
@@ -169,11 +169,11 @@ public class HttpTest {
     @Test
     public void testUserAgent() {
 
-        // Act
+        // Exercise
         HttpResponse response = Http.url("http://www.ambrosoli.jp/test-server/header/userAgent")
                 .userAgent("Ambrosoli/X.X").execute();
 
-        // Assert
+        // Verify
         assertThat(response.isSuccess(), is(true));
         assertThat(response.getAsString(), is(equalTo("Ambrosoli/X.X")));
     }
@@ -181,55 +181,55 @@ public class HttpTest {
     @Test
     public void testGetWithParameter() {
 
-        // Act
+        // Exercise
         HttpResponse response = Http.url("http://www.ambrosoli.jp/test-server/helloWorld")
                 .method(Http.GET).params(add("name", "willard379")).execute();
 
-        // Assert
+        // Verify
         assertThat(response.getAsString(), is(equalTo("Hello, willard379!")));
     }
 
     @Test
     public void testPostWithParameter() {
 
-        // Act
+        // Exercise
         HttpResponse response = Http.url("http://www.ambrosoli.jp/test-server/helloWorld")
                 .method(Http.POST).params(add("name", "willard379")).execute();
 
-        // Assert
+        // Verify
         assertThat(response.getAsString(), is(equalTo("Hello, willard379!")));
     }
 
     @Test
     public void testPostWithParameter_Map() {
 
-        // Arrange
+        // Setup
         Map<String, String> params = new HashMap<String, String>();
         params.put("name", "willard379");
 
-        // Act
+        // Exercise
         HttpResponse response = Http.url("http://www.ambrosoli.jp/test-server/helloWorld")
                 .method(Http.POST).params(params).execute();
 
-        // Assert
+        // Verify
         assertThat(response.getAsString(), is(equalTo("Hello, willard379!")));
     }
 
     @Test
     public void testCharset() {
 
-        // Act
+        // Exercise
         HttpResponse response = Http.url("http://www.ambrosoli.jp/test-server/helloWorld")
                 .method(Http.GET).params(add("name", "まぐ☆なむ")).charset("UTF-8").execute();
 
-        // Assert
+        // Verify
         assertThat(response.getAsString(), is(equalTo("Hello, まぐ☆なむ!")));
     }
 
     @Test
     public void testHeaders() {
 
-        // Act
+        // Exercise
         HttpResponse res = Http
                 .url("http://www.ambrosoli.jp/test-server/header/sameAsParams")
                 .method(Http.POST)
@@ -239,54 +239,54 @@ public class HttpTest {
                         add("Accept-Language", "ja"), add("Pragma", "no-cache")).charset("UTF-8")
                 .execute();
 
-        // Assert
+        // Verify
         assertThat(res.isSuccess(), is(true));
     }
 
     @Test
     public void testHeadersMap() {
 
-        // Arrange
+        // Setup
         Map<String, String> map = new HashMap<String, String>();
         map.put("Accept", "application/xml");
         map.put("Connection", "Keep-Alive");
         map.put("Accept-Language", "ja");
         map.put("Pragma", "no-cache");
 
-        // Act
+        // Exercise
         HttpResponse res = Http.url("http://www.ambrosoli.jp/test-server/header/sameAsParams")
                 .method(Http.POST).headers(map).params(map).charset("UTF-8").execute();
 
-        // Assert
+        // Verify
         assertThat(res.isSuccess(), is(true));
     }
 
     @Test
     public void testGetContentType() {
 
-        // Act
+        // Exercise
         HttpResponse response = Http.url("http://www.ambrosoli.jp/test-server/header/setHeaders")
                 .params(add("Content-Type", "text/html;charset=Shift_JIS")).execute();
 
-        // Assert
+        // Verify
         assertThat(response.getContentType(), is(equalTo("text/html;charset=Shift_JIS")));
     }
 
     @Test
     public void testGetAllHeaders() {
 
-        // Arrange
+        // Setup
         Map<String, String> params = new HashMap<String, String>();
         params.put("Allow", "GET, POST, PUT, DELETE");
         params.put("Content-Language", "ja");
         params.put("Connection", "close");
 
-        // Act
+        // Exercise
         HttpResponse response = Http.url("http://www.ambrosoli.jp/test-server/header/setHeaders")
                 .params(params).execute();
         List<HttpHeader> allHeaders = response.getAllHeaders();
 
-        // Assert
+        // Verify
         int cnt = 0;
         for (HttpHeader header : allHeaders) {
             String name = header.getName();
@@ -303,17 +303,17 @@ public class HttpTest {
     @Test
     public void testGetHeaders() {
 
-        // Arrange
+        // Setup
         Map<String, String> params = new HashMap<String, String>();
         params.put("Allow", "GET, POST, PUT, DELETE");
         params.put("Content-Language", "ja");
         params.put("Connection", "close");
 
-        // Act
+        // Exercise
         HttpResponse response = Http.url("http://www.ambrosoli.jp/test-server/header/setHeaders")
                 .params(params).execute();
 
-        // Assert
+        // Verify
         List<HttpHeader> headers = response.getHeaders(null);
         assertThat(headers.isEmpty(), is(true));
 
@@ -327,17 +327,17 @@ public class HttpTest {
     @Test
     public void testGetHeader() {
 
-        // Arrange
+        // Setup
         Map<String, String> params = new HashMap<String, String>();
         params.put("Allow", "GET, POST, PUT, DELETE");
         params.put("Content-Language", "ja");
         params.put("Connection", "close");
 
-        // Act
+        // Exercise
         HttpResponse response = Http.url("http://www.ambrosoli.jp/test-server/header/setHeaders")
                 .params(params).execute();
 
-        // Assert
+        // Verify
         HttpHeader header = response.getHeader(null);
         assertThat(header, is(nullValue()));
 
@@ -351,18 +351,18 @@ public class HttpTest {
     @Test
     public void testTimeout_Success() {
 
-        // Act
+        // Exercise
         HttpResponse res = Http.url("http://www.ambrosoli.jp/test-server/timeout/100")
                 .timeout(1000).execute();
 
-        // Assert
+        // Verify
         assertThat(res.isSuccess(), is(true));
     }
 
     @Test(expected = SocketTimeoutRuntimeException.class)
     public void testTimeout_Failure() {
 
-        // Act
+        // Exercise
         Http.url("http://www.ambrosoli.jp/test-server/timeout/500").timeout(500).execute();
         fail("タイムアウトしませんでした");
     }
@@ -370,11 +370,11 @@ public class HttpTest {
     @Test
     public void testAccept() {
 
-        // Act
+        // Exercise
         HttpResponse response = Http.url("http://www.ambrosoli.jp/test-server/header/accept")
                 .accept(HTML, XHTML, JSON, XML, TEXT).execute();
 
-        // Assert
+        // Verify
         assertThat(response.isSuccess(), is(true));
 
         // Acceptヘッダーに設定した値がレスポンスボディにCSV形式で設定される
@@ -390,11 +390,11 @@ public class HttpTest {
     @Test
     public void testAuth_Basic() {
 
-        // Act
+        // Exercise
         HttpResponse response = Http.url("http://www.ambrosoli.jp/auth/basic")
                 .auth(basic("username", "password")).execute();
 
-        // Assert
+        // Verify
         assertThat(response.isSuccess(), is(true));
         assertThat(response.getAsString(), is(notNullValue()));
     }
@@ -403,11 +403,11 @@ public class HttpTest {
     @Test
     public void testAuth_Digest() {
 
-        // Act
+        // Exercise
         HttpResponse response = Http.url("http://www.ambrosoli.jp/auth/digest")
                 .auth(digest("username", "password")).execute();
 
-        // Assert
+        // Verify
         assertThat(response.isSuccess(), is(true));
         assertThat(response.getAsString(), is(notNullValue()));
     }

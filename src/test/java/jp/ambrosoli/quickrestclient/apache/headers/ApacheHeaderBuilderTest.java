@@ -21,7 +21,6 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import jp.ambrosoli.quickrestclient.apache.headers.ApacheHeaderBuilder;
 import jp.ambrosoli.quickrestclient.params.NameValueObject;
 
 import org.apache.http.Header;
@@ -32,17 +31,17 @@ public class ApacheHeaderBuilderTest {
     @Test
     public void testCreateConformedHeaders() {
 
-        // Arrange
+        // Setup
         List<NameValueObject> values = new ArrayList<NameValueObject>();
         values.add(new NameValueObject("Name1", "Value1"));
         values.add(new NameValueObject("Name2", "Value2"));
         values.add(new NameValueObject("Name3", "Value3"));
 
-        // Act
+        // Exercise
         ApacheHeaderBuilder builder = new ApacheHeaderBuilder();
         Header[] headers = builder.createConformedHeaders(values);
 
-        // Assert
+        // Verify
         assertThat(headers.length, is(values.size()));
         assertThat(headers[0].getName(), is(equalTo(values.get(0).getName())));
         assertThat(headers[0].getValue(), is(equalTo(values.get(0).getValue())));
@@ -51,11 +50,11 @@ public class ApacheHeaderBuilderTest {
     @Test
     public void testCreateConformedHeaders_Null() {
 
-        // Act
+        // Exercise
         ApacheHeaderBuilder builder = new ApacheHeaderBuilder();
         Header[] headers = builder.createConformedHeaders(null);
 
-        // Assert
+        // Verify
         assertThat(headers, is(nullValue()));
 
     }
@@ -63,7 +62,7 @@ public class ApacheHeaderBuilderTest {
     @Test
     public void testCreateConformedHeaders_Empty() {
 
-        // Act
+        // Exercise
         ApacheHeaderBuilder builder = new ApacheHeaderBuilder();
         Header[] headers = builder.createConformedHeaders(new ArrayList<NameValueObject>());
 
@@ -74,7 +73,7 @@ public class ApacheHeaderBuilderTest {
     @Test
     public void testCreateConformedHeaders_ContainsNull() {
 
-        // Arrange
+        // Setup
         List<NameValueObject> values = new ArrayList<NameValueObject>();
         values.add(null);
         values.add(new NameValueObject("Name1", "Value1"));
@@ -82,11 +81,11 @@ public class ApacheHeaderBuilderTest {
         values.add(new NameValueObject("Name2", "Value2"));
         values.add(null);
 
-        // Act
+        // Exercise
         ApacheHeaderBuilder builder = new ApacheHeaderBuilder();
         Header[] headers = builder.createConformedHeaders(values);
 
-        // Assert
+        // Verify
         assertThat(headers.length, is(2));
     }
 

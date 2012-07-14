@@ -40,35 +40,35 @@ public class HttpRequestTest {
     @Test
     public void testConstruct() {
 
-        // Arrange
+        // Setup
         URI uri = URIUtil.toURI("http://www.ambrosoli.jp/test-server/");
 
-        // Act
+        // Exercise
         HttpRequest httpRequest = new HttpRequest(uri);
 
-        // Assert
+        // Verify
         assertThat(httpRequest, is(notNullValue()));
     }
 
     @Test
     public void testConstruct_Null() {
 
-        // Arrange
+        // Setup
         this.expectedException.expect(is(instanceOf(IllegalArgumentException.class)));
         this.expectedException.expectMessage(is(equalTo("URI mey not to be null")));
 
-        // Act
+        // Exercise
         URI uri = null;
         new HttpRequest(uri);
 
-        // Assert
+        // Verify
         fail("例外が発生しませんでした");
     }
 
     @Test
     public void testAddHeaders() {
 
-        // Arrange
+        // Setup
         URI uri = URIUtil.toURI("http://www.ambrosoli.jp/");
         HttpRequest httpRequest = new HttpRequest(uri);
 
@@ -78,17 +78,17 @@ public class HttpRequestTest {
         values.add(new NameValueObject("name3", "value3"));
         values.add(new NameValueObject("name4", "value4"));
 
-        // Act
+        // Exercise
         httpRequest.addHeaders(values);
 
-        // Assert
+        // Verify
         assertThat(httpRequest.headers.getHeaders().size(), is(values.size()));
     }
 
     @Test
     public void testAddHeaders_CallTwice() {
 
-        // Arrange
+        // Setup
         URI uri = URIUtil.toURI("http://www.ambrosoli.jp/");
         HttpRequest httpRequest = new HttpRequest(uri);
 
@@ -102,25 +102,25 @@ public class HttpRequestTest {
         values2.add(new NameValueObject("name5", "value5"));
         values2.add(new NameValueObject("name6", "value6"));
 
-        // Act
+        // Exercise
         httpRequest.addHeaders(values1);
         httpRequest.addHeaders(values2);
 
-        // Assert
+        // Verify
         assertThat(httpRequest.headers.getHeaders().size(), is(equalTo(6)));
     }
 
     @Test
     public void testAddHeaders_Null() {
 
-        // Arrange
+        // Setup
         URI uri = URIUtil.toURI("http://www.ambrosoli.jp/");
         HttpRequest httpRequest = new HttpRequest(uri);
 
-        // Act
+        // Exercise
         httpRequest.addHeaders(null);
 
-        // Assert
+        // Verify
         assertThat(httpRequest.headers.isEmpty(), is(true));
 
     }
@@ -128,14 +128,14 @@ public class HttpRequestTest {
     @Test
     public void testAddHeader() {
 
-        // Arrange
+        // Setup
         HttpRequest httpRequest = new HttpRequest(URIUtil.toURI("http://www.ambrosoli.jp/"));
         NameValueObject header = new NameValueObject("name", "value");
 
-        // Act
+        // Exercise
         httpRequest.addHeader(header);
 
-        // Assert
+        // Verify
         assertThat(httpRequest.headers.getHeaders().size(), is(1));
         assertThat(httpRequest.headers.getHeaders().get(0), is(sameInstance(header)));
     }
@@ -143,31 +143,31 @@ public class HttpRequestTest {
     @Test
     public void testAddHeader_CallMany() {
 
-        // Arrange
+        // Setup
         HttpRequest httpRequest = new HttpRequest(URIUtil.toURI("http://www.ambrosoli.jp/"));
 
-        // Act
+        // Exercise
         httpRequest.addHeader(new HttpHeader("name1", "value1"));
         httpRequest.addHeader(new HttpHeader("name2", "value2"));
         httpRequest.addHeader(new HttpHeader("name3", "value3"));
         httpRequest.addHeader(new HttpHeader("name4", "value4"));
 
-        // Assert
+        // Verify
         assertThat(httpRequest.headers.getHeaders().size(), is(4));
     }
 
     @Test
     public void testAddHeaders_Empty() {
 
-        // Arrange
+        // Setup
         URI uri = URIUtil.toURI("http://www.ambrosoli.jp/");
         HttpRequest httpRequest = new HttpRequest(uri);
         List<NameValueObject> values = new ArrayList<NameValueObject>();
 
-        // Act
+        // Exercise
         httpRequest.addHeaders(values);
 
-        // Assert
+        // Verify
         assertThat(httpRequest.headers.isEmpty(), is(true));
 
     }
@@ -175,13 +175,13 @@ public class HttpRequestTest {
     @Test
     public void testAddHeader_Null() {
 
-        // Arrange
+        // Setup
         HttpRequest httpRequest = new HttpRequest(URIUtil.toURI("http://www.ambrosoli.jp/"));
         NameValueObject header = null;
-        // Act
+        // Exercise
         httpRequest.addHeader(header);
 
-        // Assert
+        // Verify
         assertThat(httpRequest.headers.isEmpty(), is(true));
 
     }
@@ -189,27 +189,27 @@ public class HttpRequestTest {
     @Test
     public void testSetAuthInfo() {
 
-        // Arrange
+        // Setup
         HttpRequest httpRequest = new HttpRequest(URIUtil.toURI("http://www.ambrosoli.jp/"));
 
-        // Act
+        // Exercise
         AuthInfo authInfo = new AuthInfo(AuthType.BASIC, "user.name", "user.password");
         httpRequest.setAuthInfo(authInfo);
 
-        // Assert
+        // Verify
         assertThat(httpRequest.getAuthInfo(), is(equalTo(authInfo)));
     }
 
     @Test
     public void testSetAuthInfo_Null() {
 
-        // Arrange
+        // Setup
         HttpRequest httpRequest = new HttpRequest(URIUtil.toURI("http://www.ambrosoli.jp/"));
 
-        // Act
+        // Exercise
         httpRequest.setAuthInfo(null);
 
-        // Assert
+        // Verify
         assertThat(httpRequest.getAuthInfo(), is(nullValue()));
     }
 

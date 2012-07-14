@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jp.ambrosoli.quickrestclient.apache.headers.ApacheHeaderBuilder;
-import jp.ambrosoli.quickrestclient.headers.HttpHeaders;
 import jp.ambrosoli.quickrestclient.params.NameValueObject;
 
 import org.apache.http.Header;
@@ -33,27 +32,27 @@ public class HttpHeadersTest {
     @Test
     public void testIsEmpty() {
 
-        // Arrange
+        // Setup
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.addHeader(new NameValueObject("a", "a"));
 
-        // Act
+        // Exercise
         boolean empty = httpHeaders.isEmpty();
 
-        // Assert
+        // Verify
         assertThat(empty, is(false));
     }
 
     @Test
     public void testIsEmpty_InitialState() {
 
-        // Arrange
+        // Setup
         HttpHeaders httpHeaders = new HttpHeaders();
 
-        // Act
+        // Exercise
         boolean empty = httpHeaders.isEmpty();
 
-        // Assert
+        // Verify
         assertThat(empty, is(true));
 
     }
@@ -61,14 +60,14 @@ public class HttpHeadersTest {
     @Test
     public void testIsEmpty_Empty() {
 
-        // Arrange
+        // Setup
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.addHeaders(new ArrayList<NameValueObject>());
 
-        // Act
+        // Exercise
         boolean empty = httpHeaders.isEmpty();
 
-        // Assert
+        // Verify
         assertThat(empty, is(true));
 
     }
@@ -76,14 +75,14 @@ public class HttpHeadersTest {
     @Test
     public void testIsEmpty_Null() {
 
-        // Arrange
+        // Setup
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.addHeaders(null);
 
-        // Act
+        // Exercise
         boolean empty = httpHeaders.isEmpty();
 
-        // Assert
+        // Verify
         assertThat(empty, is(true));
 
     }
@@ -91,14 +90,14 @@ public class HttpHeadersTest {
     @Test
     public void testGetConfirmedHeaders_InitialState() {
 
-        // Arrange
+        // Setup
         ApacheHeaderBuilder builder = new ApacheHeaderBuilder();
         HttpHeaders httpHeaders1 = new HttpHeaders();
 
-        // Act
+        // Exercise
         Header[] headers1 = httpHeaders1.getConformedHeaders(builder);
 
-        // Assert
+        // Verify
         assertThat(headers1, is(nullValue()));
 
     }
@@ -106,15 +105,15 @@ public class HttpHeadersTest {
     @Test
     public void testGetConfirmedHeaders_Empty() {
 
-        // Arrange
+        // Setup
         ApacheHeaderBuilder builder = new ApacheHeaderBuilder();
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.addHeaders(new ArrayList<NameValueObject>());
 
-        // Act
+        // Exercise
         Header[] headers2 = httpHeaders.getConformedHeaders(builder);
 
-        // Assert
+        // Verify
         assertThat(headers2, is(nullValue()));
 
     }
@@ -122,15 +121,15 @@ public class HttpHeadersTest {
     @Test
     public void testGetConfirmedHeaders_Null() {
 
-        // Arrange
+        // Setup
         ApacheHeaderBuilder builder = new ApacheHeaderBuilder();
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.addHeaders(null);
 
-        // Act
+        // Exercise
         Header[] headers2 = httpHeaders.getConformedHeaders(builder);
 
-        // Assert
+        // Verify
         assertThat(headers2, is(nullValue()));
 
     }
@@ -138,7 +137,7 @@ public class HttpHeadersTest {
     @Test
     public void testGetConfirmedHeaders() {
 
-        // Arrange
+        // Setup
         ApacheHeaderBuilder builder = new ApacheHeaderBuilder();
         List<NameValueObject> values = new ArrayList<NameValueObject>();
         values.add(new NameValueObject("Name1", "Value1"));
@@ -147,10 +146,10 @@ public class HttpHeadersTest {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.addHeaders(values);
 
-        // Act
+        // Exercise
         Header[] headers3 = httpHeaders.getConformedHeaders(builder);
 
-        // Assert
+        // Verify
         assertThat(headers3.length, is(values.size()));
         assertThat(headers3[0].getName(), is(equalTo(values.get(0).getName())));
         assertThat(headers3[0].getValue(), is(equalTo(values.get(0).getValue())));
@@ -159,11 +158,11 @@ public class HttpHeadersTest {
     @Test
     public void tesAddHeader() {
 
-        // Act
+        // Exercise
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.addHeader(new NameValueObject("Name3", "Value3-2"));
 
-        // Assert
+        // Verify
         List<NameValueObject> headers = httpHeaders.getHeaders();
         assertThat(headers.size(), is(1));
 
@@ -176,11 +175,11 @@ public class HttpHeadersTest {
     @Test
     public void tesAddHeader_Null() {
 
-        // Act
+        // Exercise
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.addHeader(null);
 
-        // Assert
+        // Verify
         List<NameValueObject> headers = httpHeaders.getHeaders();
         assertThat(headers.size(), is(0));
     }
@@ -188,17 +187,17 @@ public class HttpHeadersTest {
     @Test
     public void testAddHeaders() {
 
-        // Arrange
+        // Setup
         List<NameValueObject> values = new ArrayList<NameValueObject>();
         values.add(new NameValueObject("Name1", "Value1"));
         values.add(new NameValueObject("Name2", "Value2"));
         values.add(new NameValueObject("Name3", "Value3"));
 
-        // Act
+        // Exercise
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.addHeaders(values);
 
-        // Assert
+        // Verify
         List<NameValueObject> headers = httpHeaders.getHeaders();
         assertThat(headers.size(), is(3));
 
@@ -212,20 +211,20 @@ public class HttpHeadersTest {
     @Test
     public void testAddHeaders_Null() {
 
-        // Arrange
+        // Setup
         HttpHeaders httpHeaders = new HttpHeaders();
 
-        // Act
+        // Exercise
         httpHeaders.addHeaders(null);
 
-        // Assert
+        // Verify
         assertThat(httpHeaders.getHeaders().size(), is(0));
     }
 
     @Test
     public void testAddHeaders_Append() {
 
-        // Arrange
+        // Setup
         HttpHeaders httpHeaders = new HttpHeaders();
 
         // あらかじめ2件分のヘッダーをセットしておく
@@ -234,7 +233,7 @@ public class HttpHeadersTest {
         values1.add(new NameValueObject("Name2", "Value2"));
         httpHeaders.addHeaders(values1);
 
-        // Act
+        // Exercise
         // 3件分のヘッダーを追加する
         List<NameValueObject> values2 = new ArrayList<NameValueObject>();
         values2.add(new NameValueObject("Name3", "Value3"));
@@ -242,7 +241,7 @@ public class HttpHeadersTest {
         values2.add(new NameValueObject("Name5", "Value5"));
         httpHeaders.addHeaders(values2);
 
-        // Assert
+        // Verify
         List<NameValueObject> headers = httpHeaders.getHeaders();
         assertThat(headers.size(), is(5));
 
@@ -253,7 +252,7 @@ public class HttpHeadersTest {
     @Test
     public void testAddHeaders_AppendNull() {
 
-        // Arrange
+        // Setup
         // あらかじめ2件分のデータをセットしておく
         HttpHeaders httpHeaders = new HttpHeaders();
 
@@ -262,11 +261,11 @@ public class HttpHeadersTest {
         values1.add(new NameValueObject("Name2", "Value2"));
         httpHeaders.addHeaders(values1);
 
-        // Act
+        // Exercise
         // nullを追加する
         httpHeaders.addHeaders(null);
 
-        // Assert
+        // Verify
         // 件数が2件のままであること
         assertThat(httpHeaders.getHeaders().size(), is(2));
     }
@@ -274,13 +273,13 @@ public class HttpHeadersTest {
     @Test
     public void testClear_InitialState() {
 
-        // Arrange
+        // Setup
         HttpHeaders httpHeaders = new HttpHeaders();
 
-        // Act
+        // Exercise
         httpHeaders.clear();
 
-        // Assert
+        // Verify
         assertThat(httpHeaders.isEmpty(), is(true));
 
         List<NameValueObject> values = new ArrayList<NameValueObject>();
@@ -296,7 +295,7 @@ public class HttpHeadersTest {
     @Test
     public void testClear() {
 
-        // Arrange
+        // Setup
         HttpHeaders httpHeaders = new HttpHeaders();
 
         List<NameValueObject> values = new ArrayList<NameValueObject>();
@@ -305,10 +304,10 @@ public class HttpHeadersTest {
         values.add(new NameValueObject("Name3", "Value3"));
         httpHeaders.addHeaders(values);
 
-        // Act
+        // Exercise
         httpHeaders.clear();
 
-        // Assert
+        // Verify
         assertThat(httpHeaders.isEmpty(), is(true));
 
     }
