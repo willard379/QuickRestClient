@@ -15,7 +15,7 @@
  */
 package jp.ambrosoli.quickrestclient.service;
 
-import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 

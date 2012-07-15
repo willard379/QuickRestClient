@@ -16,7 +16,7 @@
 package jp.ambrosoli.quickrestclient;
 
 import static jp.ambrosoli.quickrestclient.Operations.*;
-import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
 import jp.ambrosoli.quickrestclient.enums.AuthType;
 import jp.ambrosoli.quickrestclient.params.AuthInfo;
@@ -28,45 +28,45 @@ import org.junit.Test;
 public class OperationsTest {
 
     @Test
-    public void testAdd() {
+    public void addメソッドを呼び出すとNameValueObjectが生成されること() {
 
         // Exercise
-        NameValueObject obj1 = add("name", "value");
+        NameValueObject actual = add("name", "value");
 
         // Verify
-        assertThat(obj1.getName(), is(equalTo("name")));
-        assertThat(obj1.getValue(), is(equalTo("value")));
+        assertThat(actual.getName(), is(equalTo("name")));
+        assertThat(actual.getValue(), is(equalTo("value")));
     }
 
     @Test
-    public void testDigest() {
+    public void digestメソッドを呼び出すとAuthInfoが生成されること() {
 
         // Exercise
-        AuthInfo digest = digest("user", "password");
+        AuthInfo actual = digest("user", "password");
 
         // Verify
-        assertThat(digest, is(notNullValue()));
-        assertThat(digest.type, is(AuthType.DIGEST));
-        assertThat(digest.username, is(equalTo("user")));
-        assertThat(digest.password, is(equalTo("password")));
+        assertThat(actual, is(notNullValue()));
+        assertThat(actual.type, is(AuthType.DIGEST));
+        assertThat(actual.username, is(equalTo("user")));
+        assertThat(actual.password, is(equalTo("password")));
     }
 
     @Test
-    public void testBasic() {
+    public void basicメソッドを呼び出すとAuthInfoが生成されること() {
 
         // Exercise
-        AuthInfo basic = basic("user", "password");
+        AuthInfo actual = basic("user", "password");
 
         // Verify
-        assertThat(basic, is(notNullValue()));
-        assertThat(basic.type, is(AuthType.BASIC));
-        assertThat(basic.username, is(equalTo("user")));
-        assertThat(basic.password, is(equalTo("password")));
+        assertThat(actual, is(notNullValue()));
+        assertThat(actual.type, is(AuthType.BASIC));
+        assertThat(actual.username, is(equalTo("user")));
+        assertThat(actual.password, is(equalTo("password")));
     }
 
     @Ignore
     @Test
-    public void testClientCert() {
+    public void clientCertメソッドを呼び出すとAuthInfoが生成されること() {
         fail();
     }
 

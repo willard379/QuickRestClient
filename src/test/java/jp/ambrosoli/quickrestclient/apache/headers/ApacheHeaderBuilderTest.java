@@ -1,4 +1,5 @@
 /*
+
  * Copyright (c) 2011-2012 ambrosoli.jp.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,7 +16,7 @@
  */
 package jp.ambrosoli.quickrestclient.apache.headers;
 
-import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
@@ -29,51 +30,58 @@ import org.junit.Test;
 public class ApacheHeaderBuilderTest {
 
     @Test
-    public void testCreateConformedHeaders() {
+    public void createConformedHeadersを呼び出すと_引数で渡した名前と値でHTTPヘッダーが生成されること() {
 
         // Setup
+        ApacheHeaderBuilder sut = new ApacheHeaderBuilder();
+
         List<NameValueObject> values = new ArrayList<NameValueObject>();
         values.add(new NameValueObject("Name1", "Value1"));
         values.add(new NameValueObject("Name2", "Value2"));
         values.add(new NameValueObject("Name3", "Value3"));
 
         // Exercise
-        ApacheHeaderBuilder builder = new ApacheHeaderBuilder();
-        Header[] headers = builder.createConformedHeaders(values);
+        Header[] actual = sut.createConformedHeaders(values);
 
         // Verify
-        assertThat(headers.length, is(values.size()));
-        assertThat(headers[0].getName(), is(equalTo(values.get(0).getName())));
-        assertThat(headers[0].getValue(), is(equalTo(values.get(0).getValue())));
+        assertThat(actual.length, is(values.size()));
+        assertThat(actual[0].getName(), is(equalTo(values.get(0).getName())));
+        assertThat(actual[0].getValue(), is(equalTo(values.get(0).getValue())));
     }
 
     @Test
-    public void testCreateConformedHeaders_Null() {
-
-        // Exercise
-        ApacheHeaderBuilder builder = new ApacheHeaderBuilder();
-        Header[] headers = builder.createConformedHeaders(null);
-
-        // Verify
-        assertThat(headers, is(nullValue()));
-
-    }
-
-    @Test
-    public void testCreateConformedHeaders_Empty() {
-
-        // Exercise
-        ApacheHeaderBuilder builder = new ApacheHeaderBuilder();
-        Header[] headers = builder.createConformedHeaders(new ArrayList<NameValueObject>());
-
-        // Asseert
-        assertThat(headers, is(nullValue()));
-    }
-
-    @Test
-    public void testCreateConformedHeaders_ContainsNull() {
+    public void createConformedHeaderにnullを渡すと_nullが返されること() {
 
         // Setup
+        ApacheHeaderBuilder sut = new ApacheHeaderBuilder();
+
+        // Exercise
+        Header[] actual = sut.createConformedHeaders(null);
+
+        // Verify
+        assertThat(actual, is(nullValue()));
+
+    }
+
+    @Test
+    public void createConformedHeaderに空のListを渡すと_nullが返されること() {
+
+        // Setup
+        ApacheHeaderBuilder sut = new ApacheHeaderBuilder();
+
+        // Exercise
+        Header[] actual = sut.createConformedHeaders(new ArrayList<NameValueObject>());
+
+        // Asseert
+        assertThat(actual, is(nullValue()));
+    }
+
+    @Test
+    public void createConformedHeaderにnullの要素を含むListを渡すと_nullがconpactされてHTTPヘッダーが返されること() {
+
+        // Setup
+        ApacheHeaderBuilder sut = new ApacheHeaderBuilder();
+
         List<NameValueObject> values = new ArrayList<NameValueObject>();
         values.add(null);
         values.add(new NameValueObject("Name1", "Value1"));
@@ -82,11 +90,10 @@ public class ApacheHeaderBuilderTest {
         values.add(null);
 
         // Exercise
-        ApacheHeaderBuilder builder = new ApacheHeaderBuilder();
-        Header[] headers = builder.createConformedHeaders(values);
+        Header[] actual = sut.createConformedHeaders(values);
 
         // Verify
-        assertThat(headers.length, is(2));
+        assertThat(actual.length, is(2));
     }
 
 }

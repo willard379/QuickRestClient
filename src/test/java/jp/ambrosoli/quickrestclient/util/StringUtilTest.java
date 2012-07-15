@@ -15,7 +15,7 @@
  */
 package jp.ambrosoli.quickrestclient.util;
 
-import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
 import jp.ambrosoli.quickrestclient.exception.UnsupportedEncodingRuntimeException;
 
@@ -120,8 +120,7 @@ public class StringUtilTest {
         // Setup
         byte[] data = "ハネムーン".getBytes("UTF-8");
 
-        // Expected
-        this.expectedException.expect(UnsupportedEncodingRuntimeException.class);
+        this.expectedException.expect(is(instanceOf(UnsupportedEncodingRuntimeException.class)));
 
         // Exercise
         StringUtil.toString(data, "UTF-48");

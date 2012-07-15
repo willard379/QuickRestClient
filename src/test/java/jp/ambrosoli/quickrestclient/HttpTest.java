@@ -17,9 +17,8 @@ package jp.ambrosoli.quickrestclient;
 
 import static jp.ambrosoli.quickrestclient.HttpConstants.*;
 import static jp.ambrosoli.quickrestclient.Operations.*;
-import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
-import static org.junit.matchers.JUnitMatchers.*;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -31,22 +30,41 @@ import jp.ambrosoli.quickrestclient.headers.HttpHeader;
 import jp.ambrosoli.quickrestclient.response.HttpResponse;
 
 import org.junit.Ignore;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 public class HttpTest {
 
+    @Rule
+    public ExpectedException expectedException = ExpectedException.none();
+
     @Test
-    public void testUrl() {
+    public void URLのみ指定して正しく通信が行われること() {
 
         // Exercise
         HttpResponse response = Http.url("http://www.ambrosoli.jp/test-server/").execute();
 
         // Verify
         assertThat(response.isSuccess(), is(true));
+
     }
 
     @Test
-    public void testGetRequest() {
+    public void HTTPメソッドを指定しなかった場合_GETリクエストが送信されること() {
+
+        // Exercise
+
+        // このURLにGETメソッドでリクエストした場合、ステータスコード200が返却される。
+        // GETメソッド以外でリクエストした場合、ステータスコード405が返却される。
+        HttpResponse sut = Http.url("http://www.ambrosoli.jp/test-server/method/get").execute();
+
+        // Verify
+        assertThat(sut.isSuccess(), is(true));
+    }
+
+    @Test
+    public void GETメソッドを送信する() {
 
         // Exercise
         HttpResponse response = Http.url("http://www.ambrosoli.jp/test-server/method/get")
@@ -57,7 +75,7 @@ public class HttpTest {
     }
 
     @Test
-    public void testPostRequest() {
+    public void POSTメソッドを送信する() {
 
         // Exercise
         HttpResponse response = Http.url("http://www.ambrosoli.jp/test-server/method/post")
@@ -68,7 +86,7 @@ public class HttpTest {
     }
 
     @Test
-    public void testPutRequest() {
+    public void PUTメソッドを送信する() {
 
         // Exercise
         HttpResponse response = Http.url("http://www.ambrosoli.jp/test-server/method/put")
@@ -79,7 +97,7 @@ public class HttpTest {
     }
 
     @Test
-    public void testDeleteRequest() {
+    public void DELETEメソッドを送信する() {
 
         // Exercise
         HttpResponse response = Http.url("http://www.ambrosoli.jp/test-server/method/delete")
@@ -90,7 +108,7 @@ public class HttpTest {
     }
 
     @Test
-    public void testHeadRequest() {
+    public void HEADメソッドを送信する() {
 
         // Exercise
         HttpResponse response = Http.url("http://www.ambrosoli.jp/test-server/method/head")
@@ -101,7 +119,7 @@ public class HttpTest {
     }
 
     @Test
-    public void testOptionsRequest() {
+    public void OPTIONSメソッドを送信する() {
 
         // Exercise
         HttpResponse response = Http.url("http://www.ambrosoli.jp/test-server/method/options")
@@ -112,7 +130,7 @@ public class HttpTest {
     }
 
     @Test
-    public void testGetRequestWithString() {
+    public void GETメソッドを文字列で指定して送信する() {
 
         // Exercise
         HttpResponse response = Http.url("http://www.ambrosoli.jp/test-server/method/get")
@@ -123,7 +141,7 @@ public class HttpTest {
     }
 
     @Test
-    public void testPostRequestWithStringLowerCase() {
+    public void POSTメソッドを文字列で指定して送信する() {
 
         // Exercise
         HttpResponse response = Http.url("http://www.ambrosoli.jp/test-server/method/post")
@@ -134,7 +152,7 @@ public class HttpTest {
     }
 
     @Test
-    public void testProtocol_1_0() {
+    public void HTTPプロトコルバージョンに1てん0を指定する() {
 
         // Setup
         // HTTP/1.0のリクエストに対して200 OKを返すURL
@@ -151,7 +169,7 @@ public class HttpTest {
     }
 
     @Test
-    public void testProtocol_1_1() {
+    public void HTTPプロトコルバージョンに1てん1を指定する() {
 
         // Setup
         // HTTP/1.1のリクエストに対して200 OKを返すURL
@@ -167,7 +185,7 @@ public class HttpTest {
     }
 
     @Test
-    public void testUserAgent() {
+    public void UserAgentを設定して送信する() {
 
         // Exercise
         HttpResponse response = Http.url("http://www.ambrosoli.jp/test-server/header/userAgent")
@@ -179,7 +197,7 @@ public class HttpTest {
     }
 
     @Test
-    public void testGetWithParameter() {
+    public void GETリクエストにリクエストパラメータを付与して送信する() {
 
         // Exercise
         HttpResponse response = Http.url("http://www.ambrosoli.jp/test-server/helloWorld")
@@ -190,7 +208,7 @@ public class HttpTest {
     }
 
     @Test
-    public void testPostWithParameter() {
+    public void POSTリクエストにリクエストパラメータを付与して送信する() {
 
         // Exercise
         HttpResponse response = Http.url("http://www.ambrosoli.jp/test-server/helloWorld")
@@ -201,7 +219,7 @@ public class HttpTest {
     }
 
     @Test
-    public void testPostWithParameter_Map() {
+    public void リクエストパラメータをMapで設定する() {
 
         // Setup
         Map<String, String> params = new HashMap<String, String>();
@@ -216,7 +234,7 @@ public class HttpTest {
     }
 
     @Test
-    public void testCharset() {
+    public void charsetを指定して送信する() {
 
         // Exercise
         HttpResponse response = Http.url("http://www.ambrosoli.jp/test-server/helloWorld")
@@ -227,7 +245,7 @@ public class HttpTest {
     }
 
     @Test
-    public void testHeaders() {
+    public void HTTPヘッダーを付与する() {
 
         // Exercise
         HttpResponse res = Http
@@ -240,11 +258,12 @@ public class HttpTest {
                 .execute();
 
         // Verify
+        // HTTPヘッダーとリクエストパラメータの内容が同じ場合にのみステータスコード200が返される。
         assertThat(res.isSuccess(), is(true));
     }
 
     @Test
-    public void testHeadersMap() {
+    public void HTTPヘッダーをMapで設定する() {
 
         // Setup
         Map<String, String> map = new HashMap<String, String>();
@@ -262,7 +281,7 @@ public class HttpTest {
     }
 
     @Test
-    public void testGetContentType() {
+    public void ContentTypeを設定する() {
 
         // Exercise
         HttpResponse response = Http.url("http://www.ambrosoli.jp/test-server/header/setHeaders")
@@ -273,7 +292,7 @@ public class HttpTest {
     }
 
     @Test
-    public void testGetAllHeaders() {
+    public void HTTPレスポンスからすべてのHTTPヘッダーを取得する() {
 
         // Setup
         Map<String, String> params = new HashMap<String, String>();
@@ -301,7 +320,11 @@ public class HttpTest {
     }
 
     @Test
-    public void testGetHeaders() {
+    public void getHeadersの引数にnullを指定してHTTPレスポンスヘッダーを取得した場合_空のリストが返されること() {
+
+        // HTTPヘッダーはヘッダー名の重複を許容する。
+        // getHeaders()メソッドは、引数に該当するすべてのHTTPヘッダーをListで返却する。
+        // 該当するHTTPヘッダーのうち最初の１件のみ取得したい場合は、getHeader()メソッドを使用する。
 
         // Setup
         Map<String, String> params = new HashMap<String, String>();
@@ -312,20 +335,62 @@ public class HttpTest {
         // Exercise
         HttpResponse response = Http.url("http://www.ambrosoli.jp/test-server/header/setHeaders")
                 .params(params).execute();
+        List<HttpHeader> headers = response.getHeaders(null);
 
         // Verify
-        List<HttpHeader> headers = response.getHeaders(null);
         assertThat(headers.isEmpty(), is(true));
+    }
 
-        headers = response.getHeaders("Trailer");
+    @Test
+    public void getHeadersの引数に指定したヘッダー名がHTTPレスポンスヘッダーに含まれない場合_空のリストが返されること() {
+
+        // HTTPヘッダーはヘッダー名の重複を許容する。
+        // getHeaders()メソッドは、引数に該当するすべてのHTTPヘッダーをListで返却する。
+        // 該当するHTTPヘッダーのうち最初の１件のみ取得したい場合は、getHeader()メソッドを使用する。
+
+        // Setup
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("Allow", "GET, POST, PUT, DELETE");
+        params.put("Content-Language", "ja");
+        params.put("Connection", "close");
+
+        // Exercise
+        HttpResponse response = Http.url("http://www.ambrosoli.jp/test-server/header/setHeaders")
+                .params(params).execute();
+        List<HttpHeader> headers = response.getHeaders("Trailer");
+
+        // Verify
         assertThat(headers.isEmpty(), is(true));
+    }
 
-        headers = response.getHeaders("Content-Language");
+    @Test
+    public void getHeadersの引数に指定したヘッダー名がHTTPレスポンスヘッダーに含まれる場合_該当するHTTPレスポンスヘッダーが返されること() {
+
+        // HTTPヘッダーはヘッダー名の重複を許容する。
+        // getHeaders()メソッドは、引数に該当するすべてのHTTPヘッダーをListで返却する。
+        // 該当するHTTPヘッダーのうち最初の１件のみ取得したい場合は、getHeader()メソッドを使用する。
+
+        // Setup
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("Allow", "GET, POST, PUT, DELETE");
+        params.put("Content-Language", "ja");
+        params.put("Connection", "close");
+
+        // Exercise
+        HttpResponse response = Http.url("http://www.ambrosoli.jp/test-server/header/setHeaders")
+                .params(params).execute();
+        List<HttpHeader> headers = response.getHeaders("Content-Language");
+
+        // Verify
         assertThat(headers.get(0).getValue(), is(equalTo("ja")));
     }
 
     @Test
-    public void testGetHeader() {
+    public void getHeaderの引数にnullを指定してHTTPレスポンスヘッダーを取得した場合_nullが返されること() {
+
+        // HTTPヘッダーはヘッダー名の重複を許容する。
+        // getHeader()メソッドは、引数に該当するHTTPヘッダーをのうち最初の１件のみ返却する。
+        // 該当するすべてのHTTPヘッダーを取得したい場合、getHeaders()メソッドを使用する。
 
         // Setup
         Map<String, String> params = new HashMap<String, String>();
@@ -336,20 +401,58 @@ public class HttpTest {
         // Exercise
         HttpResponse response = Http.url("http://www.ambrosoli.jp/test-server/header/setHeaders")
                 .params(params).execute();
+        HttpHeader header = response.getHeader(null);
 
         // Verify
-        HttpHeader header = response.getHeader(null);
         assertThat(header, is(nullValue()));
+    }
 
-        header = response.getHeader("Transfer-Encoding");
+    @Test
+    public void getHeaderの引数に指定したヘッダー名がHTTPレスポンスヘッダーに含まれない場合_空のリストが返されること() {
+
+        // HTTPヘッダーはヘッダー名の重複を許容する。
+        // getHeader()メソッドは、引数に該当するHTTPヘッダーをのうち最初の１件のみ返却する。
+        // 該当するすべてのHTTPヘッダーを取得したい場合、getHeaders()メソッドを使用する。
+
+        // Setup
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("Allow", "GET, POST, PUT, DELETE");
+        params.put("Content-Language", "ja");
+        params.put("Connection", "close");
+
+        // Exercise
+        HttpResponse response = Http.url("http://www.ambrosoli.jp/test-server/header/setHeaders")
+                .params(params).execute();
+        HttpHeader header = response.getHeader("Transfer-Encoding");
+
+        // Verify
         assertThat(header, is(nullValue()));
+    }
 
-        header = response.getHeader("Allow");
+    @Test
+    public void getHeaderの引数に指定したヘッダー名がHTTPレスポンスヘッダーに含まれる場合_該当するHTTPレスポンスヘッダーが返されること() {
+
+        // HTTPヘッダーはヘッダー名の重複を許容する。
+        // getHeader()メソッドは、引数に該当するHTTPヘッダーをのうち最初の１件のみ返却する。
+        // 該当するすべてのHTTPヘッダーを取得したい場合、getHeaders()メソッドを使用する。
+
+        // Setup
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("Allow", "GET, POST, PUT, DELETE");
+        params.put("Content-Language", "ja");
+        params.put("Connection", "close");
+
+        // Exercise
+        HttpResponse response = Http.url("http://www.ambrosoli.jp/test-server/header/setHeaders")
+                .params(params).execute();
+        HttpHeader header = response.getHeader("Allow");
+
+        // Verify
         assertThat(header.getValue(), is(equalTo("GET, POST, PUT, DELETE")));
     }
 
     @Test
-    public void testTimeout_Success() {
+    public void timeoutメソッドで指定したミリ秒以内にHTTPレスポンスが返却された場合_Exceptionが発生しないこと() {
 
         // Exercise
         HttpResponse res = Http.url("http://www.ambrosoli.jp/test-server/timeout/100")
@@ -359,16 +462,21 @@ public class HttpTest {
         assertThat(res.isSuccess(), is(true));
     }
 
-    @Test(expected = SocketTimeoutRuntimeException.class)
-    public void testTimeout_Failure() {
+    @Test
+    public void timeoutメソッドで指定したミリ秒以内にHTTPレスポンスが返却されない場合_SocketTimeoutRuntimeExceptionが発生すること() {
+
+        // Setup
+        this.expectedException.expect(is(instanceOf(SocketTimeoutRuntimeException.class)));
 
         // Exercise
         Http.url("http://www.ambrosoli.jp/test-server/timeout/500").timeout(500).execute();
+
+        // Verify
         fail("タイムアウトしませんでした");
     }
 
     @Test
-    public void testAccept() {
+    public void Acceptを設定して送信する() {
 
         // Exercise
         HttpResponse response = Http.url("http://www.ambrosoli.jp/test-server/header/accept")
@@ -379,16 +487,13 @@ public class HttpTest {
 
         // Acceptヘッダーに設定した値がレスポンスボディにCSV形式で設定される
         String responseBody = response.getAsString();
-        assertThat(responseBody, is(notNullValue()));
-        assertThat(responseBody.contains(","), is(true));
-
         List<String> accepts = Arrays.asList(responseBody.split(", *"));
         assertThat(accepts, hasItems(HTML, XHTML, JSON, XML, TEXT));
     }
 
     @Ignore("サーバ側の準備ができていないため保留")
     @Test
-    public void testAuth_Basic() {
+    public void Basic認証を使用する() {
 
         // Exercise
         HttpResponse response = Http.url("http://www.ambrosoli.jp/auth/basic")
@@ -401,7 +506,7 @@ public class HttpTest {
 
     @Ignore("サーバ側の準備ができていないため保留")
     @Test
-    public void testAuth_Digest() {
+    public void Digest認証を使用する() {
 
         // Exercise
         HttpResponse response = Http.url("http://www.ambrosoli.jp/auth/digest")

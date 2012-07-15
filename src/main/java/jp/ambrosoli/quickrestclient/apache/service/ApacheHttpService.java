@@ -143,7 +143,7 @@ public class ApacheHttpService implements HttpService {
      */
     protected SocketFactory getSocketFactory(final URI uri) {
         if (uri == null) {
-            throw new IllegalStateException("URL is null.");
+            throw new NullPointerException("URL is null.");
         }
 
         SocketFactory factory;

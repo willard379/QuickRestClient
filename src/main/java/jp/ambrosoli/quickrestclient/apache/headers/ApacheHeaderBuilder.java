@@ -45,15 +45,14 @@ public class ApacheHeaderBuilder implements HttpHeaderBuilder<Header[]> {
             return null;
         }
 
-        int size = headers.size();
-        List<Header> headerList = new ArrayList<Header>();
-        for (int i = 0; i < size; i++) {
-            NameValueObject nvo = headers.get(i);
+        ArrayList<Header> headerList = new ArrayList<Header>();
+        for (NameValueObject nvo : headers) {
             if (nvo != null) {
                 BasicHeader header = new BasicHeader(nvo.getName(), nvo.getValue());
                 headerList.add(header);
             }
         }
+
         return headerList.toArray(new Header[headerList.size()]);
     }
 

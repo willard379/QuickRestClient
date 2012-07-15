@@ -15,7 +15,7 @@
  */
 package jp.ambrosoli.quickrestclient.apache.response;
 
-import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
 import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
@@ -57,62 +57,68 @@ public class ApacheHttpResponseTest {
             new BasicHeader("Set-Cookie", "age=17"), };
 
     @Test
-    public void testConstruct() {
+    public void ApacheHttpResponseのコンストラクタにorg_apache_http_HttpResponseを渡すと_インスタンスが生成されること() {
 
         // Setup
         HttpResponse response = mock(HttpResponse.class);
 
         // Exercise
-        ApacheHttpResponse httpResponse = new ApacheHttpResponse(response);
+        ApacheHttpResponse actual = new ApacheHttpResponse(response);
 
         // Verify
-        assertThat(httpResponse, is(notNullValue()));
+        assertThat(actual, is(notNullValue()));
 
-    }
-
-    @Test(expected = NullPointerException.class)
-    public void testConstruct_NoEntity() {
-
-        // Exercise
-        new ApacheHttpResponse(null);
     }
 
     @Test
-    public void testGetAllHeaders() {
+    public void ApacheHttpResponseのコンストラクタにnullを渡すと_NullPointerExceptionが発生すること() {
+
+        // Setup
+        this.expectedException.expect(is(instanceOf(NullPointerException.class)));
+
+        // Exercise
+        new ApacheHttpResponse(null);
+
+        // Verify
+        fail("NullPointerExceptionが発生しませんでした。");
+    }
+
+    @Test
+    public void getAllHeadersを呼び出すと_すべてのHTTPヘッダーが返されること() {
 
         // Setup
         HttpResponse response = mock(HttpResponse.class);
         when(response.getAllHeaders()).thenReturn(this.SAMPLE_HEADERS);
 
         // Exercise
-        ApacheHttpResponse httpResponse = new ApacheHttpResponse(response);
-        List<HttpHeader> headers = httpResponse.getAllHeaders();
+        ApacheHttpResponse sut = new ApacheHttpResponse(response);
+        List<HttpHeader> actual = sut.getAllHeaders();
 
         // Verify
-        assertThat(headers, is(notNullValue()));
-        assertThat(headers.size(), is(5));
+        assertThat(actual, is(notNullValue()));
+        assertThat(actual.size(), is(5));
 
     }
 
     @Test
-    public void testGetAsByteArray() throws Exception {
+    public void getAsByteArrayを呼び出すと_レスポンスボディがbyte配列で返されること() throws Exception {
 
         // Setup
         HttpResponse response = mock(HttpResponse.class);
         when(response.getEntity()).thenReturn(new StringEntity("Stay here, I'll be back"));
 
         // Exercise
-        ApacheHttpResponse httpResponse = new ApacheHttpResponse(response);
-        byte[] asByteArray = httpResponse.getAsByteArray();
+        ApacheHttpResponse sut = new ApacheHttpResponse(response);
+        byte[] actual = sut.getAsByteArray();
 
         // Verify
-        assertThat(asByteArray, is(equalTo("Stay here, I'll be back".getBytes())));
+        assertThat(actual, is(equalTo("Stay here, I'll be back".getBytes())));
     }
 
     @Test
-    public void testGetAsInputStream() throws IOException {
+    public void getAsInputStreamを呼び出すと_レスポンスボディがInputStreamで返されること() throws IOException {
 
-        InputStream input = null;
+        InputStream actual = null;
         try {
 
             // Setup
@@ -120,53 +126,55 @@ public class ApacheHttpResponseTest {
             when(response.getEntity()).thenReturn(new StringEntity("I am a pen!"));
 
             // Exercise
-            ApacheHttpResponse httpResponse = new ApacheHttpResponse(response);
-            input = httpResponse.getAsInputStream();
+            ApacheHttpResponse sut = new ApacheHttpResponse(response);
+            actual = sut.getAsInputStream();
 
             // Verify
-            assertThat(input, is(notNullValue()));
-            String str = new BufferedReader(new InputStreamReader(input)).readLine();
-            assertThat(str, is(equalTo("I am a pen!")));
+            assertThat(actual, is(notNullValue()));
+            String actualStr = new BufferedReader(new InputStreamReader(actual)).readLine();
+            assertThat(actualStr, is(equalTo("I am a pen!")));
 
         } finally {
-            input.close();
+            if (actual != null) {
+                actual.close();
+            }
         }
     }
 
     @Test
-    public void testGetAsString() throws Exception {
+    public void getAsStringを呼び出すと_レスポンスボディがStringで返されること() throws Exception {
 
         // Setup
         HttpResponse response = mock(HttpResponse.class);
         when(response.getEntity()).thenReturn(new StringEntity("There is an apple."));
 
         // Exercise
-        ApacheHttpResponse httpResponse = new ApacheHttpResponse(response);
-        String strResponse = httpResponse.getAsString();
+        ApacheHttpResponse sut = new ApacheHttpResponse(response);
+        String actual = sut.getAsString();
 
         // Verify
-        assertThat(strResponse, is(equalTo("There is an apple.")));
+        assertThat(actual, is(equalTo("There is an apple.")));
 
     }
 
     @Test
-    public void testGetAsString_WithCharEncoding() throws Exception {
+    public void getAsStringをエンコーディングを指定して呼び出すと_レスポンスボディが指定したエンコードのStringで返されること() throws Exception {
 
         // Setup
         HttpResponse response = mock(HttpResponse.class);
         when(response.getEntity()).thenReturn(new StringEntity("There is an apple."));
 
         // Exercise
-        ApacheHttpResponse httpResponse = new ApacheHttpResponse(response);
-        String strResponse = httpResponse.getAsString(StringUtil.DEFAULT_ENCODING);
+        ApacheHttpResponse sut = new ApacheHttpResponse(response);
+        String actual = sut.getAsString(StringUtil.DEFAULT_ENCODING);
 
         // Verify
-        assertThat(strResponse, is(equalTo("There is an apple.")));
+        assertThat(actual, is(equalTo("There is an apple.")));
 
     }
 
     @Test
-    public void testGetContentType() throws Exception {
+    public void getContentTypeを呼び出すと_HTTPレスポンスヘッダーのContentTypeの値が返されること() throws Exception {
 
         // Setup
         HttpResponse response = mock(HttpResponse.class);
@@ -175,44 +183,44 @@ public class ApacheHttpResponseTest {
         when(response.getEntity()).thenReturn(entity);
 
         // Exercise
-        ApacheHttpResponse httpResponse = new ApacheHttpResponse(response);
-        String contentType = httpResponse.getContentType();
+        ApacheHttpResponse sut = new ApacheHttpResponse(response);
+        String actual = sut.getContentType();
 
         // Verify
-        assertThat(contentType, is(equalTo("application/json")));
+        assertThat(actual, is(equalTo("application/json")));
     }
 
     @Test
-    public void testGetContentType_NoEntity() {
+    public void HTTPレスポンスのEntityがnullの状態でgetContentTypeを呼び出すと_nullが返されること() {
         // Setup
         HttpResponse response = mock(HttpResponse.class);
         when(response.getEntity()).thenReturn(null);
 
         // Exercise
-        ApacheHttpResponse httpResponse = new ApacheHttpResponse(response);
-        String contentType = httpResponse.getContentType();
+        ApacheHttpResponse sut = new ApacheHttpResponse(response);
+        String actual = sut.getContentType();
 
         // Verify
-        assertThat(contentType, is(nullValue()));
+        assertThat(actual, is(nullValue()));
     }
 
     @Test
-    public void testGetContentType_NoHeader() throws Exception {
+    public void HTTPレスポンスヘッダーにContentTypeがない状態でgetContentTypeを呼び出すと_nullが返されること() throws Exception {
 
         // Setup
         HttpResponse response = new BasicHttpResponse(HttpVersion.HTTP_1_1, HttpStatus.SC_OK, "OK");
         response.setEntity(new ByteArrayEntity(new byte[0]));
 
         // Exercise
-        ApacheHttpResponse httpResponse = new ApacheHttpResponse(response);
-        String contentType = httpResponse.getContentType();
+        ApacheHttpResponse sut = new ApacheHttpResponse(response);
+        String actual = sut.getContentType();
 
         // Verify
-        assertThat(contentType, is(nullValue()));
+        assertThat(actual, is(nullValue()));
     }
 
     @Test
-    public void testGetContentLength() {
+    public void getContentLengthを呼び出すと_HTTPレスポンスボディのバイト数が返されること() {
 
         // Setup
         HttpResponse response = mock(HttpResponse.class);
@@ -220,110 +228,159 @@ public class ApacheHttpResponseTest {
         when(response.getEntity()).thenReturn(new ByteArrayEntity(data));
 
         // Exercise
-        ApacheHttpResponse httpResponse = new ApacheHttpResponse(response);
-        long contentLength = httpResponse.getContentLength();
+        ApacheHttpResponse sut = new ApacheHttpResponse(response);
+        long actual = sut.getContentLength();
 
         // Verify
-        assertThat((long) data.length, is(equalTo(contentLength)));
+        assertThat(actual, is(equalTo((long) data.length)));
     }
 
     @Test
-    public void testGetContentLength_NoEntity() {
+    public void HTTPレスポンスのEntityがnullの状態でgetContentLengthを呼び出すと_0が返されること() {
 
         // Setup
         HttpResponse response = new BasicHttpResponse(HttpVersion.HTTP_1_1, HttpStatus.SC_OK, "OK");
-        ApacheHttpResponse httpResponse = new ApacheHttpResponse(response);
 
         // Exercise
-        long contentLength = httpResponse.getContentLength();
+        ApacheHttpResponse sut = new ApacheHttpResponse(response);
+        long actual = sut.getContentLength();
 
         // Verify
-        assertThat(contentLength, is(0L));
+        assertThat(actual, is(0L));
     }
 
     @Test
-    public void testGetHeader() {
-
-        // Setup
-        HttpResponse response = new BasicHttpResponse(HttpVersion.HTTP_1_1, HttpStatus.SC_OK, "OK");
-        response.setHeaders(this.SAMPLE_HEADERS);
-
-        // Exercise
-        ApacheHttpResponse httpResponse = new ApacheHttpResponse(response);
-        HttpHeader header = httpResponse.getHeader("Location");
-
-        // Verify
-        assertThat(header, is(notNullValue()));
-    }
-
-    @Test
-    public void testGetHeaders() {
+    public void getHeaderを呼び出すと_該当するHTTPレスポンスヘッダーの最初の1件が返されること() {
 
         // Setup
         HttpResponse response = new BasicHttpResponse(HttpVersion.HTTP_1_1, HttpStatus.SC_OK, "OK");
         response.setHeaders(this.SAMPLE_HEADERS);
 
         // Exercise
-        ApacheHttpResponse httpResponse = new ApacheHttpResponse(response);
-        List<HttpHeader> headers = httpResponse.getHeaders("Set-Cookie");
+        ApacheHttpResponse sut = new ApacheHttpResponse(response);
+        HttpHeader actual = sut.getHeader("Location");
 
         // Verify
-        assertThat(headers, is(notNullValue()));
-        assertThat(headers.size(), is(2));
-        assertThat(headers.get(0).getValue(), is(equalTo("name=willard379")));
-        assertThat(headers.get(1).getValue(), is(equalTo("age=17")));
+        assertThat(actual, is(notNullValue()));
+        assertThat(actual.getName(), is(equalTo("Location")));
+        assertThat(actual.getValue(), is(equalTo("http://www.ambrosoli.jp/test-server/")));
     }
 
     @Test
-    public void testGetStatusCode() {
+    public void getHeaderの引数にHTTPレスポンスヘッダーに含まれないヘッダー名を指定した場合_nullが返されること() {
+
+        // Setup
+        HttpResponse response = new BasicHttpResponse(HttpVersion.HTTP_1_1, HttpStatus.SC_OK, "OK");
+        response.setHeaders(this.SAMPLE_HEADERS);
+
+        // Exercise
+        ApacheHttpResponse sut = new ApacheHttpResponse(response);
+        HttpHeader actual = sut.getHeader("hoge");
+
+        // Verify
+        assertThat(actual, is(nullValue()));
+    }
+
+    @Test
+    public void getHeadersを呼び出すと_該当するHTTPレスポンスヘッダーがすべて返されること() {
+
+        // Setup
+        HttpResponse response = new BasicHttpResponse(HttpVersion.HTTP_1_1, HttpStatus.SC_OK, "OK");
+        response.setHeaders(this.SAMPLE_HEADERS);
+
+        // Exercise
+        ApacheHttpResponse sut = new ApacheHttpResponse(response);
+        List<HttpHeader> actual = sut.getHeaders("Set-Cookie");
+
+        // Verify
+        assertThat(actual, is(notNullValue()));
+        assertThat(actual.size(), is(2));
+        assertThat(actual.get(0).getName(), is(equalTo("Set-Cookie")));
+        assertThat(actual.get(0).getValue(), is(equalTo("name=willard379")));
+        assertThat(actual.get(1).getName(), is(equalTo("Set-Cookie")));
+        assertThat(actual.get(1).getValue(), is(equalTo("age=17")));
+    }
+
+    @Test
+    public void getHeadersの引数にHTTPレスポンスヘッダーに含まれないヘッダー名を指定した場合_空のListが返されること() {
+
+        // Setup
+        HttpResponse response = new BasicHttpResponse(HttpVersion.HTTP_1_1, HttpStatus.SC_OK, "OK");
+        response.setHeaders(this.SAMPLE_HEADERS);
+
+        // Exercise
+        ApacheHttpResponse sut = new ApacheHttpResponse(response);
+        List<HttpHeader> actual = sut.getHeaders("Fizz");
+
+        // Verify
+        assertThat(actual.isEmpty(), is(true));
+    }
+
+    @Test
+    public void getStatusCodeを呼び出すと_HTTPステータスコードが返されること() {
 
         // Setup
         HttpResponse response = new BasicHttpResponse(HttpVersion.HTTP_1_1, HttpStatus.SC_OK, "OK");
 
         // Exercise
-        ApacheHttpResponse httpResponse = new ApacheHttpResponse(response);
-        int statusCode = httpResponse.getStatusCode();
+        ApacheHttpResponse sut = new ApacheHttpResponse(response);
+        int actual = sut.getStatusCode();
 
         // Verify
-        assertThat(statusCode, is(200));
+        assertThat(actual, is(200));
     }
 
     @Test
-    public void testIs200_OK() {
+    public void HTTPステータスコードが200の状態でisSuccessを呼び出すと_trueが返されること() {
 
         // Setup
-        ApacheHttpResponse httpResponse = new ApacheHttpResponse(new BasicHttpResponse(
-                HttpVersion.HTTP_1_1, HttpStatus.SC_OK, "OK"));
+        ApacheHttpResponse sut = new ApacheHttpResponse(new BasicHttpResponse(HttpVersion.HTTP_1_1,
+                HttpStatus.SC_OK, "OK"));
 
         // Exercise
-        boolean isOk = httpResponse.isSuccess();
+        boolean actual = sut.isSuccess();
 
         // Verify
-        assertThat(isOk, is(true));
+        assertThat(actual, is(true));
 
     }
 
     @Test
-    public void testIs200_OK_False() {
+    public void HTTPステータスコードが201の状態でisSuccessを呼び出すと_trueが返されること() {
 
         // Setup
-        ApacheHttpResponse httpResponse = new ApacheHttpResponse(new BasicHttpResponse(
-                HttpVersion.HTTP_1_1, HttpStatus.SC_INTERNAL_SERVER_ERROR, "Internal Server Error"));
+        ApacheHttpResponse sut = new ApacheHttpResponse(new BasicHttpResponse(HttpVersion.HTTP_1_1,
+                HttpStatus.SC_CREATED, "OK"));
 
         // Exercise
-        boolean isOk = httpResponse.isSuccess();
+        boolean actual = sut.isSuccess();
 
         // Verify
-        assertThat(isOk, is(false));
+        assertThat(actual, is(true));
 
     }
 
     @Test
-    public void testConvertHttpHeaders() {
+    public void HTTPステータスコードが500の状態でisSuccessを呼び出すと_falseが返されること() {
+
+        // Setup
+        ApacheHttpResponse sut = new ApacheHttpResponse(new BasicHttpResponse(HttpVersion.HTTP_1_1,
+                HttpStatus.SC_INTERNAL_SERVER_ERROR, "Internal Server Error"));
+
+        // Exercise
+        boolean actual = sut.isSuccess();
+
+        // Verify
+        assertThat(actual, is(false));
+
+    }
+
+    @Test
+    public void convertHttpHeadersを呼び出すと_Header配列からHttpHeaderのListが生成されて返されること() {
 
         // Setup
         HttpResponse response = mock(org.apache.http.HttpResponse.class);
-        ApacheHttpResponse httpResponse = new ApacheHttpResponse(response);
+        ApacheHttpResponse sut = new ApacheHttpResponse(response);
 
         Header[] headers = new Header[5];
         headers[0] = new BasicHeader("Transfer-Encoding", "chunked");
@@ -333,135 +390,134 @@ public class ApacheHttpResponseTest {
         headers[4] = new BasicHeader("Set-Cookie", "age=17");
 
         // Exercise
-        List<HttpHeader> headerList = httpResponse.convertHttpHeaders(headers);
+        List<HttpHeader> actual = sut.convertHttpHeaders(headers);
 
         // Verify
-        assertThat(headerList, is(notNullValue()));
+        assertThat(actual, is(notNullValue()));
         for (int i = 0; i < headers.length; i++) {
-            assertThat(headerList.get(i).getName(), is(equalTo(headers[i].getName())));
-            assertThat(headerList.get(i).getValue(), is(equalTo(headers[i].getValue())));
+            assertThat(actual.get(i).getName(), is(equalTo(headers[i].getName())));
+            assertThat(actual.get(i).getValue(), is(equalTo(headers[i].getValue())));
         }
 
     }
 
     @Test
-    public void testConvertHttpHeaders_Null() {
+    public void convertHttpHeadersの引数でnullを渡すと_nullが返されること() {
 
         // Setup
         HttpResponse response = mock(org.apache.http.HttpResponse.class);
-        ApacheHttpResponse httpResponse = new ApacheHttpResponse(response);
+        ApacheHttpResponse sut = new ApacheHttpResponse(response);
 
         // Exercise
-        List<HttpHeader> headerList = httpResponse.convertHttpHeaders(null);
+        List<HttpHeader> actual = sut.convertHttpHeaders(null);
 
         // Verify
-        assertThat(headerList, is(nullValue()));
+        assertThat(actual, is(nullValue()));
 
     }
 
     @Test
-    public void testConvertHttpHeaders_Empty() {
+    public void convertHttpHeadersの引数に要素数0のHeader配列を渡すと_空のListが返されること() {
 
         // Setup
         HttpResponse response = mock(org.apache.http.HttpResponse.class);
-        ApacheHttpResponse httpResponse = new ApacheHttpResponse(response);
+        ApacheHttpResponse sut = new ApacheHttpResponse(response);
 
         // Exercise
-        List<HttpHeader> headerList = httpResponse.convertHttpHeaders(new Header[0]);
+        List<HttpHeader> actual = sut.convertHttpHeaders(new Header[0]);
 
         // Verify
-        assertThat(headerList, is(notNullValue()));
-        assertThat(headerList.isEmpty(), is(true));
+        assertThat(actual, is(notNullValue()));
+        assertThat(actual.isEmpty(), is(true));
     }
 
     @Test
-    public void testConvertHttpHeader() {
+    public void convertHttpHeaderの引数にHeaderを渡すと_HeaderからHttpHeaderが生成されて返されること() {
 
         // Setup
         HttpResponse response = mock(org.apache.http.HttpResponse.class);
-        ApacheHttpResponse httpResponse = new ApacheHttpResponse(response);
+        ApacheHttpResponse sut = new ApacheHttpResponse(response);
 
         Header header = new BasicHeader("Transfer-Encoding", "chunked");
 
         // Exercise
-        HttpHeader httpHeader = httpResponse.convertHttpHeader(header);
+        HttpHeader actual = sut.convertHttpHeader(header);
 
         // Verify
         assertThat(header, is(notNullValue()));
-        assertThat(header.getName(), is(httpHeader.getName()));
-        assertThat(header.getValue(), is(httpHeader.getValue()));
+        assertThat(header.getName(), is(actual.getName()));
+        assertThat(header.getValue(), is(actual.getValue()));
 
     }
 
     @Test
-    public void testConvertHttpHeader_Null() {
+    public void convertHttpHeaderの引数にnullを渡すと_nullが返されること() {
 
         // Setup
         HttpResponse response = mock(org.apache.http.HttpResponse.class);
-        ApacheHttpResponse httpResponse = new ApacheHttpResponse(response);
+        ApacheHttpResponse sut = new ApacheHttpResponse(response);
 
         // Exercise
-        HttpHeader httpHeader = httpResponse.convertHttpHeader(null);
+        HttpHeader actual = sut.convertHttpHeader(null);
 
         // Verify
-        assertThat(httpHeader, is(nullValue()));
+        assertThat(actual, is(nullValue()));
     }
 
     @Test
-    public void testToByteArray() throws IOException {
+    public void toByteArrayを呼び出すと_レスポンスボディの内容がbyte配列で返されること() throws IOException {
 
         // Setup
         HttpResponse response = mock(org.apache.http.HttpResponse.class);
-        ApacheHttpResponse httpResponse = new ApacheHttpResponse(response);
+        ApacheHttpResponse sut = new ApacheHttpResponse(response);
 
         String src = "And so, my fellow Americans: ask not what your country can do for you - ask what you can do for your country.";
         HttpEntity entity = new StringEntity(src);
 
         // Exercise
-        byte[] data = httpResponse.toByteArray(entity);
+        byte[] actual = sut.toByteArray(entity);
 
         // Verify
-        assertThat(data, is(notNullValue()));
-        assertThat(data, is(equalTo(src.getBytes())));
+        assertThat(actual, is(notNullValue()));
+        assertThat(actual, is(equalTo(src.getBytes())));
 
     }
 
     @Test
-    public void testToByteArray_Null() throws IOException {
+    public void toByteArrayの引数にnullを渡すと_nullが返されること() throws IOException {
 
         // Setup
         HttpResponse response = mock(org.apache.http.HttpResponse.class);
-        ApacheHttpResponse httpResponse = new ApacheHttpResponse(response);
+        ApacheHttpResponse sut = new ApacheHttpResponse(response);
 
         HttpEntity entity = null;
 
         // Exercise
-        byte[] data = httpResponse.toByteArray(entity);
+        byte[] actual = sut.toByteArray(entity);
 
         // Verify
-        assertThat(data, is(nullValue()));
+        assertThat(actual, is(nullValue()));
     }
 
     @Test
-    public void testToByteArray_Exception() throws IOException {
+    public void toByteArrayを呼び出した際にInputStreamからIOExceptionが発生した場合_IORuntimeExceptionにラップされてスローされること()
+            throws IOException {
 
         // Setup
         HttpResponse response = mock(org.apache.http.HttpResponse.class);
-        ApacheHttpResponse httpResponse = new ApacheHttpResponse(response);
+        ApacheHttpResponse sut = new ApacheHttpResponse(response);
 
         InputStream input = mock(InputStream.class);
         HttpEntity entity = new InputStreamEntity(input, 0);
 
         when(input.read((byte[]) any())).thenThrow(new IOException());
 
-        // Expected
-        this.expectedException.expect(IORuntimeException.class);
+        this.expectedException.expect(is(instanceOf(IORuntimeException.class)));
 
         // Exercise
-        httpResponse.toByteArray(entity);
+        sut.toByteArray(entity);
 
         // Verify
-        fail();
+        fail("IORuntimeExceptionが発生しませんでした。");
     }
-
 }

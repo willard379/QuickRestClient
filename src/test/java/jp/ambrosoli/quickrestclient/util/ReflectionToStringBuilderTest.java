@@ -1,6 +1,6 @@
 package jp.ambrosoli.quickrestclient.util;
 
-import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
 
 import java.util.Arrays;

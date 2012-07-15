@@ -1,6 +1,6 @@
 <projectDescription>
-  <name>QuickRestClient</name>
-  <comment/>
+  <name>quick-rest-client</name>
+  <comment>&quot;QuickRestClient&quot; is Simple RESTful client API for Java. NO_M2ECLIPSE_SUPPORT: Project files created with the maven-eclipse-plugin are not supported in M2Eclipse.</comment>
   <projects/>
   <buildSpec>
     <buildCommand>

@@ -15,7 +15,7 @@
  */
 package jp.ambrosoli.quickrestclient.apache.service;
 
-import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
 import jp.ambrosoli.quickrestclient.service.HttpService;
 
@@ -24,15 +24,16 @@ import org.junit.Test;
 public class ApacheHttpServiceFactoryTest {
 
     @Test
-    public void testCreate() {
+    public void createメソッドを呼び出すと_ApacheHttpServiceのインスタンスが生成されること() {
 
         // Setup
-        ApacheHttpServiceFactory factory = new ApacheHttpServiceFactory();
+        ApacheHttpServiceFactory sut = new ApacheHttpServiceFactory();
 
         // Exercise
-        HttpService service = factory.create();
+        HttpService actual = sut.create();
 
         // Verify
-        assertThat(service, is(notNullValue()));
+        assertThat(actual, is(notNullValue()));
+        assertThat(actual, is(instanceOf(ApacheHttpService.class)));
     }
 }

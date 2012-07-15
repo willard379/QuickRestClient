@@ -15,7 +15,7 @@
  */
 package jp.ambrosoli.quickrestclient.util;
 
-import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
 import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
@@ -121,8 +121,7 @@ public class InputStreamUtilTest {
 
         doThrow(new IOException("Read error")).when(input).read((byte[]) any(), eq(0), anyInt());
 
-        // Expected
-        this.expectedException.expect(IORuntimeException.class);
+        this.expectedException.expect(is(instanceOf(IORuntimeException.class)));
 
         // Exercise
         InputStreamUtil.copy(input, output);
@@ -140,8 +139,7 @@ public class InputStreamUtilTest {
 
         doThrow(new IOException("Write error")).when(output).write((byte[]) any(), eq(0), anyInt());
 
-        // Expected
-        this.expectedException.expect(IORuntimeException.class);
+        this.expectedException.expect(is(instanceOf(IORuntimeException.class)));
 
         // Exercise
         InputStreamUtil.copy(input, output);
@@ -149,5 +147,4 @@ public class InputStreamUtilTest {
         // Verify
         verify(input).close();
     }
-
 }

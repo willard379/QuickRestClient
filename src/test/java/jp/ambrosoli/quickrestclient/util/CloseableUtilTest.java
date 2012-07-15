@@ -15,6 +15,7 @@
  */
 package jp.ambrosoli.quickrestclient.util;
 
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
@@ -74,8 +75,7 @@ public class CloseableUtilTest {
         Closeable closeable = mock(Closeable.class);
         doThrow(new IOException()).when(closeable).close();
 
-        // Expected
-        this.expectedException.expect(IORuntimeException.class);
+        this.expectedException.expect(is(instanceOf(IORuntimeException.class)));
 
         // Exercise
         CloseableUtil.close(closeable);
@@ -180,16 +180,14 @@ public class CloseableUtilTest {
         doThrow(new RuntimeException("occured in Reader")).when(reader).close();
         doThrow(new RuntimeException("occured in Writer")).when(writer).close();
 
-        // Expected
         // 最初に発生した例外がスローされる
-        this.expectedException.expect(RuntimeException.class);
-        this.expectedException.expectMessage("occured in Closeable");
+        this.expectedException.expect(is(instanceOf(RuntimeException.class)));
+        this.expectedException.expectMessage(is(equalTo("occured in Closeable")));
 
         // Exercise
         CloseableUtil.closeAll(closeable, inputStream, outputStream, reader, writer);
 
         // Verify
-        // 例外が発生しなければOK
+        fail("例外が発生しませんでした。");
     }
-
 }

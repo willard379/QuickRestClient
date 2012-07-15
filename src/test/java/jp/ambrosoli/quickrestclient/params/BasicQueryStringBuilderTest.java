@@ -15,7 +15,7 @@
  */
 package jp.ambrosoli.quickrestclient.params;
 
-import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
@@ -26,10 +26,10 @@ import org.junit.Test;
 public class BasicQueryStringBuilderTest {
 
     @Test
-    public void testCreateConformedParams() {
+    public void createConformedParamsの引数にリクエストパラメータを渡して呼び出すと_クエリストリングが生成されること() {
 
         // Setup
-        RequestParamBuilder<String> paramBuilder = new BasicQueryStringBuilder();
+        RequestParamBuilder<String> sut = new BasicQueryStringBuilder();
 
         List<NameValueObject> params = new ArrayList<NameValueObject>();
         params.add(new NameValueObject("a", "A"));
@@ -37,48 +37,48 @@ public class BasicQueryStringBuilderTest {
         params.add(new NameValueObject("c", "C"));
 
         // Exercise
-        String queryString = paramBuilder.createConformedParams(params, "UTF-8");
+        String actual = sut.createConformedParams(params, "UTF-8");
 
         // Verify
-        assertThat(queryString, is(equalTo("?a=A&b=B&c=C")));
+        assertThat(actual, is(equalTo("?a=A&b=B&c=C")));
 
     }
 
     @Test
-    public void testCreateConformedParams_EmptyParams() {
+    public void createConformedParamsの引数に空のListを渡した場合_空文字が返されること() {
 
         // Setup
-        RequestParamBuilder<String> paramBuilder = new BasicQueryStringBuilder();
+        RequestParamBuilder<String> sut = new BasicQueryStringBuilder();
 
         ArrayList<NameValueObject> params = new ArrayList<NameValueObject>();
 
         // Exercise
-        String queryString = paramBuilder.createConformedParams(params, "UTF-8");
+        String actual = sut.createConformedParams(params, "UTF-8");
 
         // Verify
-        assertThat(queryString, is(equalTo("")));
+        assertThat(actual, is(equalTo("")));
 
     }
 
     @Test
-    public void testCreateConformedParams_NullParam() {
+    public void createConformedParamsの引数にnullを渡した場合_空文字が返されること() {
 
         // Setup
-        RequestParamBuilder<String> paramBuilder = new BasicQueryStringBuilder();
+        RequestParamBuilder<String> sut = new BasicQueryStringBuilder();
 
         // Exercise
-        String queryString = paramBuilder.createConformedParams(null, "UTF-8");
+        String actual = sut.createConformedParams(null, "UTF-8");
 
         // Verify
-        assertThat(queryString, is(equalTo("")));
+        assertThat(actual, is(equalTo("")));
 
     }
 
     @Test
-    public void testCreateConformedParams_NullEncoding() {
+    public void createConformedParamsの引数に渡すエンコーディングがnullの場合でも_デフォルトのエンコーディングでクエリストリングが生成されること() {
 
         // Setup
-        RequestParamBuilder<String> paramBuilder = new BasicQueryStringBuilder();
+        RequestParamBuilder<String> sut = new BasicQueryStringBuilder();
 
         List<NameValueObject> params = new ArrayList<NameValueObject>();
         params.add(new NameValueObject("a", "A"));
@@ -86,15 +86,15 @@ public class BasicQueryStringBuilderTest {
         params.add(new NameValueObject("c", "C"));
 
         // Exercise
-        String queryString = paramBuilder.createConformedParams(params, null);
+        String actual = sut.createConformedParams(params, null);
 
         // Verify
-        assertThat(queryString, is(equalTo("?a=A&b=B&c=C")));
+        assertThat(actual, is(equalTo("?a=A&b=B&c=C")));
 
     }
 
     @Test
-    public void testCreateConformedParams_ParamsFilledWithNull() {
+    public void createConformedParamsの引数にすべての要素がnullのListを渡した場合_空文字が返却されること() {
 
         // Setup
         RequestParamBuilder<String> paramBuilder = new BasicQueryStringBuilder();
@@ -114,7 +114,7 @@ public class BasicQueryStringBuilderTest {
     }
 
     @Test
-    public void testCreateConformedParams_MultibyteParams() {
+    public void createConformedParamsの引数にマルチバイト文字を含むリストを渡した場合_URLエンコードされたクエリストリングが返されること() {
 
         // Setup
         RequestParamBuilder<String> paramBuilder = new BasicQueryStringBuilder();

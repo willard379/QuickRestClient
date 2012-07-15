@@ -15,7 +15,7 @@
  */
 package jp.ambrosoli.quickrestclient.apache.response;
 
-import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
@@ -42,48 +42,55 @@ public class ApacheResponseHandlerTest {
     public ExpectedException expectedException = ExpectedException.none();
 
     @Test
-    public void testHandleResponse() {
+    public void handleResponseを呼び出すと_HttpResponseが返されること() {
 
         // Setup
+        ApacheResponseHandler sut = new ApacheResponseHandler();
+
         BasicHttpResponse httpResponse = new BasicHttpResponse(HttpVersion.HTTP_1_1,
                 HttpStatus.SC_OK, "OK");
         byte[] data = "Stay here, I'll be back".getBytes();
         ByteArrayInputStream input = new ByteArrayInputStream(data);
         InputStreamEntity inputStreamEntity = new InputStreamEntity(input, data.length);
         httpResponse.setEntity(inputStreamEntity);
-        ApacheResponseHandler handler = new ApacheResponseHandler();
 
         // Exercise
-        HttpResponse response = handler.handleResponse(httpResponse);
+        HttpResponse actual = sut.handleResponse(httpResponse);
 
         // Verify
-        assertThat(response, is(notNullValue()));
-        assertThat(response.isSuccess(), is(true));
-        assertThat(response.getAsString(), is(equalTo("Stay here, I'll be back")));
+        assertThat(actual, is(notNullValue()));
+        assertThat(actual.isSuccess(), is(true));
+        assertThat(actual.getAsString(), is(equalTo("Stay here, I'll be back")));
 
-    }
-
-    @Test(expected = NullPointerException.class)
-    public void testHandleResponse_Null() {
-
-        // Setup
-        ApacheResponseHandler handler = new ApacheResponseHandler();
-
-        // Exercise
-        handler.handleResponse(null);
     }
 
     @Test
-    public void testConsumeEntity() throws Exception {
+    public void handleResponseの引数にnullを渡すと_NullPointerExceptionが発生すること() {
 
         // Setup
+        ApacheResponseHandler sut = new ApacheResponseHandler();
+
+        this.expectedException.expect(is(instanceOf(NullPointerException.class)));
+
+        // Exercise
+        sut.handleResponse(null);
+
+        // Verify
+        fail("NullPoiinterExceptionが発生しませんでした。");
+    }
+
+    @Test
+    public void consumeEntityを呼び出すと_InputStreamがcloseされること() throws Exception {
+
+        // Setup
+        ApacheResponseHandler sut = new ApacheResponseHandler();
+
         InputStream input = mock(InputStream.class);
         HttpEntity entity = new InputStreamEntity(input, 100);
         assertThat(entity.isStreaming(), is(true));
 
         // Exercise
-        ApacheResponseHandler handler = new ApacheResponseHandler();
-        handler.consumeEntity(entity);
+        sut.consumeEntity(entity);
 
         // Verify
         verify(input).close();
@@ -91,50 +98,65 @@ public class ApacheResponseHandlerTest {
     }
 
     @Test
-    public void testConsumeEntity_Null() throws Exception {
-
-        // Exercise
-        ApacheResponseHandler handler = new ApacheResponseHandler();
-        handler.consumeEntity(null);
-    }
-
-    @Test
-    public void testConsumeEntity_Empty() throws Exception {
-
-        // Exercise
-        ApacheResponseHandler handler = new ApacheResponseHandler();
-        handler.consumeEntity(new BasicHttpEntity());
-    }
-
-    @Test
-    public void testConsumeEntity_NoInputStream() throws Exception {
+    public void consumeEntityの引数にnullを渡してもExceptionが発生しないこと() throws Exception {
 
         // Setup
+        ApacheResponseHandler sut = new ApacheResponseHandler();
+
+        // Exercise
+        sut.consumeEntity(null);
+
+        // Verify
+        // noop
+    }
+
+    @Test
+    public void consumeEntityに空のEntityを渡してもExceptionが発生しないこと() throws Exception {
+
+        // Setup
+        ApacheResponseHandler sut = new ApacheResponseHandler();
+
+        // Exercise
+        sut.consumeEntity(new BasicHttpEntity());
+
+        // Exercise
+        // noop
+    }
+
+    @Test
+    public void EntityからInputStreamが返されない状態でconsumeEntityを呼び出してもExceptionが発生しないこと()
+            throws Exception {
+
+        // Setup
+        ApacheResponseHandler sut = new ApacheResponseHandler();
+
         HttpEntity entity = mock(HttpEntity.class);
         when(entity.isStreaming()).thenReturn(true);
         when(entity.getContent()).thenReturn(null);
 
         // Exercise
-        ApacheResponseHandler handler = new ApacheResponseHandler();
-        handler.consumeEntity(entity);
+        sut.consumeEntity(entity);
 
+        // Verify
     }
 
     @Test
-    public void testConsumeEntity_Exception() throws Exception {
+    public void consumeEntityを呼び出した際にIOExceptionが発生した場合_IORuntimeExcepitonにラップされてスローされること()
+            throws Exception {
 
         // Setup
+        ApacheResponseHandler sut = new ApacheResponseHandler();
+
         HttpEntity entity = mock(HttpEntity.class);
         when(entity.isStreaming()).thenReturn(true);
         when(entity.getContent()).thenThrow(new IOException());
 
-        // Expected
-        this.expectedException.expect(IORuntimeException.class);
+        this.expectedException.expect(is(instanceOf(IORuntimeException.class)));
 
         // Exercise
-        ApacheResponseHandler handler = new ApacheResponseHandler();
-        handler.consumeEntity(entity);
+        sut.consumeEntity(entity);
 
+        // Verify
+        fail("IORuntimeExceptionが発生しませんでした。");
     }
-
 }

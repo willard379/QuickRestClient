@@ -15,7 +15,7 @@
  */
 package jp.ambrosoli.quickrestclient.params;
 
-import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
 
 import java.util.HashMap;
@@ -27,7 +27,7 @@ import org.junit.Test;
 public class NameValueObjectTest {
 
     @Test
-    public void testToNameValueObject() {
+    public void asListの引数にMapを渡した場合_Mapの内容からNameValueObjectのListが生成されて返されること() {
 
         // Setup
         Map<String, String> src = new HashMap<String, String>();
@@ -37,42 +37,42 @@ public class NameValueObjectTest {
         src.put("param4", "value4");
 
         // Exercise
-        List<NameValueObject> dest = NameValueObject.asList(src);
+        List<NameValueObject> actual = NameValueObject.asList(src);
 
         // Verify
-        assertThat(dest.size(), is(src.size()));
+        assertThat(actual.size(), is(src.size()));
 
     }
 
     @Test
-    public void testToNameValueObject_Null() {
+    public void asListの引数にMap型のnullを渡した場合_nullが返されること() {
 
         // Setup
         Map<String, String> src = null;
 
         // Exercise
-        List<NameValueObject> dest = NameValueObject.asList(src);
+        List<NameValueObject> actual = NameValueObject.asList(src);
 
         // Verify
-        assertThat(dest, is(nullValue()));
+        assertThat(actual, is(nullValue()));
 
     }
 
     @Test
-    public void testToNameValueObject_Empty() {
+    public void asListの引数に空のMapを渡した場合_nullが返されること() {
 
         // Setup
-        HashMap<String, String> src = new HashMap<String, String>(0);
+        Map<String, String> src = new HashMap<String, String>(0);
 
         // Exercise
-        List<NameValueObject> dest = NameValueObject.asList(src);
+        List<NameValueObject> actual = NameValueObject.asList(src);
 
         // Verify
-        assertThat(dest, is(nullValue()));
+        assertThat(actual, is(nullValue()));
     }
 
     @Test
-    public void testAsList() {
+    public void asListの引数にNameValueObjectの配列を渡した場合_NameValueObjectのListが生成されて返されること() {
 
         // Setup
         NameValueObject[] ary = new NameValueObject[5];
@@ -83,17 +83,30 @@ public class NameValueObjectTest {
         ary[4] = new NameValueObject("Name5", "Value5");
 
         // Exercise
-        List<NameValueObject> list = NameValueObject.asList(ary);
+        List<NameValueObject> actual = NameValueObject.asList(ary);
 
         // Verify
-        assertThat(list.size(), is(ary.length));
+        assertThat(actual.size(), is(ary.length));
         for (int i = 0; i < ary.length; i++) {
-            assertThat(list.get(i).getName(), is(equalTo(ary[i].getName())));
-            assertThat(list.get(i).getValue(), is(equalTo(ary[i].getValue())));
+            assertThat(actual.get(i).getName(), is(equalTo(ary[i].getName())));
+            assertThat(actual.get(i).getValue(), is(equalTo(ary[i].getValue())));
         }
 
         assertThat(NameValueObject.asList((NameValueObject[]) null), is(nullValue()));
         assertThat(NameValueObject.asList(new NameValueObject[0]).isEmpty(), is(true));
+    }
+
+    @Test
+    public void asListの引数にNameValueObject配列型のnullを渡した場合_nullが返されること() {
+
+        // Setup
+        NameValueObject[] ary = null;
+
+        // Exercise
+        List<NameValueObject> actual = NameValueObject.asList(ary);
+
+        // Verify
+        assertThat(actual, is(nullValue()));
     }
 
     @Test

@@ -16,10 +16,9 @@
 package jp.ambrosoli.quickrestclient.request;
 
 import static jp.ambrosoli.quickrestclient.HttpConstants.*;
-import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -36,7 +35,6 @@ import jp.ambrosoli.quickrestclient.params.NameValueObject;
 import jp.ambrosoli.quickrestclient.params.ProxyInfo;
 import jp.ambrosoli.quickrestclient.response.HttpResponse;
 
-import org.hamcrest.Matcher;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -525,16 +523,11 @@ public class HttpRequestBuilderTest {
         List<NameValueObject> headers = requestBuilder.request.getHeaders().getHeaders();
         assertThat(headers.size(), is(equalTo(5)));
 
-        List<Matcher<? extends String>> values = new ArrayList<Matcher<? extends String>>();
-        values.add(equalTo(HTML));
-        values.add(equalTo(XHTML));
-        values.add(equalTo(XML));
-        values.add(equalTo(JSON));
-        values.add(equalTo(TEXT));
-
         for (NameValueObject header : headers) {
             assertThat(header.getName(), is(equalTo("Accept")));
-            assertThat(header.getValue(), is(anyOf(values)));
+            assertThat(
+                    header.getValue(),
+                    anyOf(equalTo(HTML), equalTo(XHTML), equalTo(XML), equalTo(JSON), equalTo(TEXT)));
         }
 
     }
@@ -550,16 +543,11 @@ public class HttpRequestBuilderTest {
         List<NameValueObject> headers = requestBuilder.request.getHeaders().getHeaders();
         assertThat(headers.size(), is(equalTo(5)));
 
-        List<Matcher<? extends String>> values = new ArrayList<Matcher<? extends String>>();
-        values.add(equalTo(HTML));
-        values.add(equalTo(XHTML));
-        values.add(equalTo(XML));
-        values.add(equalTo(JSON));
-        values.add(equalTo(TEXT));
-
         for (NameValueObject header : headers) {
             assertThat(header.getName(), is(equalTo("Accept")));
-            assertThat(header.getValue(), is(anyOf(values)));
+            assertThat(
+                    header.getValue(),
+                    anyOf(equalTo(HTML), equalTo(XHTML), equalTo(XML), equalTo(JSON), equalTo(TEXT)));
         }
 
     }

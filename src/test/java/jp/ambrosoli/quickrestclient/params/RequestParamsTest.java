@@ -15,7 +15,7 @@
  */
 package jp.ambrosoli.quickrestclient.params;
 
-import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
@@ -26,149 +26,151 @@ import org.junit.Test;
 public class RequestParamsTest {
 
     @Test
-    public void testConstruct() {
+    public void RequestParamsのコンストラクタを呼び出した場合_RequestParamsのインスタンスにコンストラクタの引数で渡したリクエストパラメータが設定されること() {
+
+        // Setup
+        List<NameValueObject> params = new ArrayList<NameValueObject>();
+        params.add(new NameValueObject("a", "b"));
+
+        // Exercise
+        RequestParams actual = new RequestParams(params);
+
+        // Verify
+        assertThat(actual.params, is(params));
+        assertThat(actual.isEmpty(), is(false));
+        assertThat(actual.params.get(0).getName(), is(equalTo("a")));
+        assertThat(actual.params.get(0).getValue(), is(equalTo("b")));
+    }
+
+    @Test
+    public void RequestParamsのコンストラクタにnullを渡してisEmptyを呼び出した場合_trueが返されること() {
+
+        // Setup
+        RequestParams sut = new RequestParams(null);
+
+        // Exercise
+        boolean actual = sut.isEmpty();
+
+        // Verify
+        assertThat(actual, is(true));
+
+    }
+
+    @Test
+    public void RequestParamsのコンストラクタに空のListを渡してisEmptyを呼び出した場合_trueが返されること() {
+
+        // Setup
+        RequestParams sut = new RequestParams(new ArrayList<NameValueObject>());
+
+        // Exercise
+        boolean acutal = sut.isEmpty();
+
+        // Verify
+        assertThat(acutal, is(true));
+
+    }
+
+    @Test
+    public void RequestParamsのコンストラクタにNameValueObjectのListを渡してisEmptyを呼び出した場合_falseが返されること() {
 
         // Setup
         List<NameValueObject> params = new ArrayList<NameValueObject>();
         params.add(new NameValueObject("a", "a"));
 
+        RequestParams sut = new RequestParams(params);
+
         // Exercise
-        RequestParams reqParams = new RequestParams(params);
+        boolean actual = sut.isEmpty();
 
         // Verify
-        assertThat(reqParams.params, is(params));
-        assertThat(reqParams.isEmpty(), is(false));
+        assertThat(actual, is(false));
     }
 
     @Test
-    public void testIsEmpty_Null() {
-        // Setup
-        RequestParams requestParams = new RequestParams(null);
-
-        // Exercise
-        boolean empty = requestParams.isEmpty();
-
-        // Verify
-        assertThat(empty, is(true));
-
-    }
-
-    @Test
-    public void testIsEmpty_Empty() {
+    public void RequestParamsにリクエストパラメータがnullの状態でgetConformedParamsを呼び出した場合_空文字が返されること() {
 
         // Setup
-        RequestParams requestParams = new RequestParams(new ArrayList<NameValueObject>());
+        RequestParams sut = new RequestParams(null);
 
         // Exercise
-        boolean empty = requestParams.isEmpty();
+        String actual = sut.getConformedParams(new BasicQueryStringBuilder());
 
         // Verify
-        assertThat(empty, is(true));
+        assertThat(actual, is(equalTo("")));
 
     }
 
     @Test
-    public void testIsEmpty() {
+    public void ReauestParamsにリクエストパラメータが設定されている状態でgetConformedParamsを呼び出した場合_クエリストリングが生成されて返されること() {
 
         // Setup
-        List<NameValueObject> params1 = new ArrayList<NameValueObject>();
-        params1.add(new NameValueObject("a", "a"));
-        RequestParams requestParams = new RequestParams(params1);
-        // Exercise
-        boolean empty = requestParams.isEmpty();
-
-        // Verify
-        assertThat(empty, is(false));
-    }
-
-    @Test
-    public void testGetConformedParams_NullParams() {
-
-        // Setup
-        RequestParamBuilder<String> builder = new BasicQueryStringBuilder();
-        RequestParams requestParams = new RequestParams(null);
-
-        // Exercise
-        String queryString = requestParams.getConformedParams(builder);
-
-        // Verify
-        assertThat(queryString, is(equalTo("")));
-
-    }
-
-    @Test
-    public void testGetConformedParams() {
-
-        // Setup
-        RequestParamBuilder<String> builder = new BasicQueryStringBuilder();
         List<NameValueObject> params = new ArrayList<NameValueObject>();
         params.add(new NameValueObject("a", "A"));
         params.add(new NameValueObject("b", "B"));
         params.add(new NameValueObject("c", "C"));
-        RequestParams requestParams = new RequestParams(params);
+
+        RequestParams sut = new RequestParams(params);
 
         // Exercise
-        String queryString = requestParams.getConformedParams(builder);
+        String actual = sut.getConformedParams(new BasicQueryStringBuilder());
 
         // Verify
-        assertThat(queryString, is(equalTo("?a=A&b=B&c=C")));
+        assertThat(actual, is(equalTo("?a=A&b=B&c=C")));
 
     }
 
     @Test
-    public void testGetConformedParams_WithEncoding() {
+    public void RequestParamsにリクエストパラメータが設定されている状態でgetConformedParamsにエンコーディングをnullで渡した場合でも_デフォルトエンコーディングでクエリストリングが生成されること() {
 
         // Setup
-        RequestParamBuilder<String> builder = new BasicQueryStringBuilder();
         List<NameValueObject> params = new ArrayList<NameValueObject>();
         params.add(new NameValueObject("a", "A"));
         params.add(new NameValueObject("b", "B"));
         params.add(new NameValueObject("c", "C"));
-        RequestParams requestParams = new RequestParams(params);
+        RequestParams sut = new RequestParams(params);
 
         // Exercise
-        String queryString = requestParams.getConformedParams(builder, null);
+        String actual = sut.getConformedParams(new BasicQueryStringBuilder(), null);
 
         // Verify
-        assertThat(queryString, is(equalTo("?a=A&b=B&c=C")));
+        assertThat(actual, is(equalTo("?a=A&b=B&c=C")));
 
     }
 
     @Test
-    public void testGetConformedParams_ParamsFilledWithNull() {
+    public void RequestParamsにすべての要素がnullのリクエストパラメータを設定した状態でgetConformedParamsを呼び出した場合_空文字が返されること() {
 
         // Setup
-        RequestParamBuilder<String> builder = new BasicQueryStringBuilder();
         List<NameValueObject> params = new ArrayList<NameValueObject>();
         params.add(null);
         params.add(null);
         params.add(null);
         params.add(null);
-        RequestParams requestParams = new RequestParams(params);
+        RequestParams sut = new RequestParams(params);
 
         // Exercise
-        String queryString = requestParams.getConformedParams(builder);
+        String actual = sut.getConformedParams(new BasicQueryStringBuilder());
 
         // Verify
-        assertThat(queryString, is(equalTo("")));
+        assertThat(actual, is(equalTo("")));
 
     }
 
     @Test
-    public void testGetParams() {
+    public void getParamsを呼び出すと_RequestParamsに設定されたリクエストパラメータのListが返されること() {
 
         // Setup
-        List<NameValueObject> params1 = new ArrayList<NameValueObject>();
-        params1.add(new NameValueObject("a", "A"));
-        params1.add(new NameValueObject("b", "B"));
-        params1.add(new NameValueObject("c", "C"));
-        RequestParams requestParams = new RequestParams(params1);
+        List<NameValueObject> params = new ArrayList<NameValueObject>();
+        params.add(new NameValueObject("a", "A"));
+        params.add(new NameValueObject("b", "B"));
+        params.add(new NameValueObject("c", "C"));
+        RequestParams sut = new RequestParams(params);
 
         // Exercise
-        List<NameValueObject> params2 = requestParams.getParams();
+        List<NameValueObject> actual = sut.getParams();
 
         // Verify
-        assertThat(params2, is(sameInstance(params1)));
+        assertThat(actual, is(sameInstance(params)));
 
     }
 }

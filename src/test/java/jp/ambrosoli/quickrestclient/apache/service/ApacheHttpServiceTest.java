@@ -15,7 +15,7 @@
  */
 package jp.ambrosoli.quickrestclient.apache.service;
 
-import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
 
 import java.io.IOException;
@@ -74,26 +74,26 @@ public class ApacheHttpServiceTest {
     public ExpectedException exceptionRule = ExpectedException.none();
 
     @Test
-    public void testExecute_Minimum() {
+    public void HttpRequestにURLのみ指定してexecuteを実行すると_正常に通信できること() {
 
         // Setup
-        ApacheHttpService service = new ApacheHttpService();
+        ApacheHttpService sut = new ApacheHttpService();
+
         HttpRequest request = new HttpRequest(
                 URIUtil.toURI("http://www.ambrosoli.jp/test-server/statusCode/ok"));
-        HttpResponse response = service.execute(request);
 
         // Exercise
-        boolean isOk = response.isSuccess();
+        HttpResponse actual = sut.execute(request);
 
         // Verify
-        assertThat(isOk, is(true));
+        assertThat(actual.isSuccess(), is(true));
     }
 
     @Test
-    public void testExecute_Maximum() {
+    public void HttpRequestに各種パラメータを指定してexecuteを実行すると_正常に通信できること() {
 
         // Setup
-        ApacheHttpService service = new ApacheHttpService();
+        ApacheHttpService sut = new ApacheHttpService();
 
         List<NameValueObject> values = new ArrayList<NameValueObject>();
         values.add(new NameValueObject("Accept", "application/xml"));
@@ -112,179 +112,188 @@ public class ApacheHttpServiceTest {
         request.setTimeout(2000);
 
         // Exercise
-        HttpResponse response = service.execute(request);
+        HttpResponse actual = sut.execute(request);
 
         // Verify
-        assertThat(response.isSuccess(), is(true));
-        assertThat(response.getAsString(), is(equalTo("")));
+        assertThat(actual.isSuccess(), is(true));
     }
 
     @Test
-    public void testGetSocketFactory_HTTP() {
+    public void getSocketFactoryの引数にhttpスキーマのURIを指定した場合_PlainSocketFactoryが生成されること() {
 
         // Setup
-        ApacheHttpService service = new ApacheHttpService();
+        ApacheHttpService sut = new ApacheHttpService();
 
         // Exercise
-        SocketFactory factory = service.getSocketFactory(URIUtil
+        SocketFactory actual = sut.getSocketFactory(URIUtil
                 .toURI("http://www.ambrosoli.jp/test-server/"));
 
         // Verify
-        assertThat(factory, is(instanceOf(PlainSocketFactory.class)));
+        assertThat(actual, is(instanceOf(PlainSocketFactory.class)));
 
     }
 
     @Test
-    public void testGetSocketFactory_SSL() {
+    public void getSocketFactoryの引数にhttpsスキーマのURIを指定した場合_SSLSocketFactoryが生成されること() {
 
         // Setup
-        ApacheHttpService service = new ApacheHttpService();
+        ApacheHttpService sut = new ApacheHttpService();
 
         // Exercise
-        SocketFactory factory = service.getSocketFactory(URIUtil
+        SocketFactory actual = sut.getSocketFactory(URIUtil
                 .toURI("https://www.ambrosoli.jp/test-server/"));
 
         // Verify
-        assertThat(factory, is(instanceOf(SSLSocketFactory.class)));
+        assertThat(actual, is(instanceOf(SSLSocketFactory.class)));
     }
 
     @Test
-    public void testGetSocketFactory_Null() {
+    public void getSocketFactoryの引数にnullを指定した場合_IllegalStateExceptionが発生すること() {
 
         // Setup
-        this.exceptionRule.expect(is(instanceOf(IllegalStateException.class)));
+        ApacheHttpService sut = new ApacheHttpService();
+
+        this.exceptionRule.expect(is(instanceOf(NullPointerException.class)));
         this.exceptionRule.expectMessage(is(equalTo("URL is null.")));
 
         // Exercise
-        ApacheHttpService service = new ApacheHttpService();
-        service.getSocketFactory(null);
+        sut.getSocketFactory(null);
 
         // Verify
         fail("例外が発生しませんでした。");
     }
 
     @Test
-    public void testGetSocketFactory_InvalidScheme() {
+    public void getSocketFactoryの引数にwsスキーマのURIを指定した場合_IllegalArgumentExceptionが発生すること() {
 
         // Setup
+        ApacheHttpService sut = new ApacheHttpService();
+
         this.exceptionRule.expect(is(instanceOf(IllegalArgumentException.class)));
         this.exceptionRule.expectMessage(is(equalTo("invalid scheme.")));
 
         // Exercise
-        ApacheHttpService service = new ApacheHttpService();
-        service.getSocketFactory(URIUtil.toURI("ws://www.ambrosoli.jp/test-server/"));
+        sut.getSocketFactory(URIUtil.toURI("ws://www.ambrosoli.jp/test-server/"));
 
         // Verify
         fail("例外が発生しませんでした。");
     }
 
     @Test
-    public void testCreateSchemeRegistry_HTTP() {
+    public void createSchemeRegistryにhttpスキーマのURIを渡した場合_戻り値のSchemeRegistryにhttpスキーマが設定されていること() {
 
         // Setup
-        ApacheHttpService service = new ApacheHttpService();
+        ApacheHttpService sut = new ApacheHttpService();
 
         // Exercise
-        SchemeRegistry schreg = service.createSchemeRegistry(URIUtil
+        SchemeRegistry actual = sut.createSchemeRegistry(URIUtil
                 .toURI("http://www.ambrosoli.jp/test-server/"));
 
         // Verify
-        assertThat(schreg, is(notNullValue()));
-
+        assertThat(actual, is(notNullValue()));
+        List<String> schemeNames = actual.getSchemeNames();
+        assertThat(schemeNames.size(), is(1));
+        assertThat(schemeNames.get(0), is(equalTo("http")));
     }
 
     @Test
-    public void testCreateSchemeRegistry_SSL() {
+    public void createSchemeRegistryにhttpsスキーマのURIを渡した場合_戻り値のSchemeRegistryにhttpsスキーマが設定されていること() {
 
         // Setup
-        ApacheHttpService service = new ApacheHttpService();
+        ApacheHttpService sut = new ApacheHttpService();
 
         // Exercise
-        SchemeRegistry schreg = service.createSchemeRegistry(URIUtil
+        SchemeRegistry actual = sut.createSchemeRegistry(URIUtil
                 .toURI("https://www.ambrosoli.jp/test-server/"));
 
         // Verify
-        assertThat(schreg, is(notNullValue()));
+        assertThat(actual, is(notNullValue()));
+        List<String> schemeNames = actual.getSchemeNames();
+        assertThat(schemeNames.size(), is(1));
+        assertThat(schemeNames.get(0), is(equalTo("https")));
     }
 
     @Test
-    public void testCreateSchemeRegistry_Null() {
+    public void createSchemeREgistryにnullを渡した場合_NullPointerExceptionが発生すること() {
 
         // Setup
-        this.exceptionRule.expect(is(instanceOf(IllegalStateException.class)));
+        ApacheHttpService sut = new ApacheHttpService();
+
+        this.exceptionRule.expect(is(instanceOf(NullPointerException.class)));
         this.exceptionRule.expectMessage(is(equalTo("URL is null.")));
 
         // Exercise
-        ApacheHttpService service = new ApacheHttpService();
-        service.createSchemeRegistry(null);
+        sut.createSchemeRegistry(null);
 
         // Verify
         fail("例外が発生しませんでした。");
     }
 
     @Test
-    public void testCreateSchemeRegistry_InvalidScheme() {
+    public void createSchemeRegistryの引数にwssスキーマのURIを指定した場合_IllegalArgumentExceptionが発生すること() {
 
         // Setup
+        ApacheHttpService sut = new ApacheHttpService();
+
         this.exceptionRule.expect(is(instanceOf(IllegalArgumentException.class)));
         this.exceptionRule.expectMessage(is(equalTo("invalid scheme.")));
 
         // Exercise
-        ApacheHttpService service = new ApacheHttpService();
-        service.createSchemeRegistry(URIUtil.toURI("wss://www.ambrosoli.jp/test-server/"));
+        sut.createSchemeRegistry(URIUtil.toURI("wss://www.ambrosoli.jp/test-server/"));
 
         // Verify
         fail("例外が発生しませんでした。");
     }
 
     @Test
-    public void testCreateHttpParams() {
+    public void createHttpParamsを呼び出すと_HttpParamsが生成されること() {
 
         // Setup
-        ApacheHttpService service = new ApacheHttpService();
+        ApacheHttpService sut = new ApacheHttpService();
 
         // Exercise
-        HttpParams params = service.createHttpParams();
+        HttpParams actual = sut.createHttpParams();
 
         // Verify
-        assertThat(params, is(notNullValue()));
+        assertThat(actual, is(notNullValue()));
     }
 
     @Test
-    public void testCreateClientConnectionManager() {
+    public void createClientConnectionManagerを呼び出すと_ClientConnectionManagerが生成されること() {
 
         // Setup
-        ApacheHttpService service = new ApacheHttpService();
+        ApacheHttpService sut = new ApacheHttpService();
+
         HttpParams params = new BasicHttpParams();
         SchemeRegistry schreg = new SchemeRegistry();
 
         // Exercise
-        ClientConnectionManager conman = service.createClientConnectionManager(params, schreg);
+        ClientConnectionManager actual = sut.createClientConnectionManager(params, schreg);
 
         // Verify
-        assertThat(conman, is(notNullValue()));
+        assertThat(actual, is(notNullValue()));
     }
 
     @Test
-    public void testCreateHttpClient() {
+    public void createHttpClientを呼び出すと_HttpClientが生成されること() {
 
         // Setup
-        ApacheHttpService service = new ApacheHttpService();
+        ApacheHttpService sut = new ApacheHttpService();
         HttpParams params = new BasicHttpParams();
         SingleClientConnManager conman = new SingleClientConnManager(params, new SchemeRegistry());
 
         // Exercise
-        HttpClient client = service.createHttpClient(conman, params);
+        HttpClient actual = sut.createHttpClient(conman, params);
 
         // Verify
-        assertThat(client, is(notNullValue()));
+        assertThat(actual, is(notNullValue()));
     }
 
     @Test
-    public void testCreateHttpUriRequest_Get() {
+    public void createHttpUriRequestの第二引数にGETを指定すると_HttpGetが生成され_クエリストリングが設定されること() {
 
         // Setup
-        ApacheHttpService service = new ApacheHttpService();
+        ApacheHttpService sut = new ApacheHttpService();
 
         List<NameValueObject> nvo = new ArrayList<NameValueObject>();
         nvo.add(new NameValueObject("a", "A"));
@@ -294,19 +303,19 @@ public class ApacheHttpServiceTest {
 
         // Exercise
         URI uri = URIUtil.toURI("http://www.ambrosoli.jp/get");
-        HttpUriRequest request = service.createHttpUriRequest(uri, HttpMethod.GET, params, "UTF-8");
+        HttpUriRequest actual = sut.createHttpUriRequest(uri, HttpMethod.GET, params, "UTF-8");
 
         // Verify
-        assertThat(request, is(instanceOf(HttpGet.class)));
-        assertThat(request.getURI().toString(), is(equalTo(uri.toString() + "?a=A&b=B&c=C")));
+        assertThat(actual, is(instanceOf(HttpGet.class)));
+        assertThat(actual.getURI().toString(), is(equalTo(uri.toString() + "?a=A&b=B&c=C")));
 
     }
 
     @Test
-    public void testCreateHttpUriRequest_DELETE() {
+    public void createHttpUriRequestの第二引数にDELETEを指定すると_HttpDeleteが生成され_クエリストリングが設定されること() {
 
         // Setup
-        ApacheHttpService service = new ApacheHttpService();
+        ApacheHttpService sut = new ApacheHttpService();
 
         List<NameValueObject> nvo = new ArrayList<NameValueObject>();
         nvo.add(new NameValueObject("a", "A"));
@@ -316,20 +325,19 @@ public class ApacheHttpServiceTest {
 
         // Exercise
         URI uri = URIUtil.toURI("http://www.ambrosoli.jp/delete");
-        HttpUriRequest request = service.createHttpUriRequest(uri, HttpMethod.DELETE, params,
-                "UTF-8");
+        HttpUriRequest actual = sut.createHttpUriRequest(uri, HttpMethod.DELETE, params, "UTF-8");
 
         // Verify
-        assertThat(request, is(instanceOf(HttpDelete.class)));
-        assertThat(request.getURI().toString(), is(equalTo(uri.toString() + "?a=A&b=B&c=C")));
+        assertThat(actual, is(instanceOf(HttpDelete.class)));
+        assertThat(actual.getURI().toString(), is(equalTo(uri.toString() + "?a=A&b=B&c=C")));
 
     }
 
     @Test
-    public void testCreateHttpUriRequest_Head() {
+    public void createHttpUriRequestの第二引数にHEADを指定すると_HttpHeadが生成され_クエリストリングが設定されること() {
 
         // Setup
-        ApacheHttpService service = new ApacheHttpService();
+        ApacheHttpService sut = new ApacheHttpService();
 
         List<NameValueObject> nvo = new ArrayList<NameValueObject>();
         nvo.add(new NameValueObject("a", "A"));
@@ -339,20 +347,19 @@ public class ApacheHttpServiceTest {
 
         // Exercise
         URI uri = URIUtil.toURI("http://www.ambrosoli.jp/head");
-        HttpUriRequest request = service
-                .createHttpUriRequest(uri, HttpMethod.HEAD, params, "UTF-8");
+        HttpUriRequest actual = sut.createHttpUriRequest(uri, HttpMethod.HEAD, params, "UTF-8");
 
         // Verify
-        assertThat(request, is(instanceOf(HttpHead.class)));
-        assertThat(request.getURI().toString(), is(equalTo(uri.toString() + "?a=A&b=B&c=C")));
+        assertThat(actual, is(instanceOf(HttpHead.class)));
+        assertThat(actual.getURI().toString(), is(equalTo(uri.toString() + "?a=A&b=B&c=C")));
 
     }
 
     @Test
-    public void testCreateHttpUriRequest_Options() {
+    public void createHttpUriRequestの第二引数にOptionsを指定すると_HttpOptionsが生成され_クエリストリングが設定されること() {
 
         // Setup
-        ApacheHttpService service = new ApacheHttpService();
+        ApacheHttpService sut = new ApacheHttpService();
 
         List<NameValueObject> nvo = new ArrayList<NameValueObject>();
         nvo.add(new NameValueObject("a", "A"));
@@ -362,36 +369,36 @@ public class ApacheHttpServiceTest {
 
         // Exercise
         URI uri = URIUtil.toURI("http://www.ambrosoli.jp/options");
-        HttpUriRequest request = service.createHttpUriRequest(uri, HttpMethod.OPTIONS, params,
-                "UTF-8");
+        HttpUriRequest actual = sut.createHttpUriRequest(uri, HttpMethod.OPTIONS, params, "UTF-8");
 
         // Verify
-        assertThat(request, is(instanceOf(HttpOptions.class)));
-        assertThat(request.getURI().toString(), is(equalTo(uri.toString() + "?a=A&b=B&c=C")));
+        assertThat(actual, is(instanceOf(HttpOptions.class)));
+        assertThat(actual.getURI().toString(), is(equalTo(uri.toString() + "?a=A&b=B&c=C")));
 
     }
 
     @Test
-    public void testCreateHttpUriRequest_Get_Null() {
+    public void createHttpUriRequestの第二引数にGetを指定して_第三引数のリクエストパラメータがnullの場合_クエリストリングが設定されないこと() {
 
         // Setup
-        ApacheHttpService service = new ApacheHttpService();
+        ApacheHttpService sut = new ApacheHttpService();
 
         // Exercise
         URI uri = URIUtil.toURI("http://www.ambrosoli.jp/get");
-        HttpUriRequest request = service.createHttpUriRequest(uri, HttpMethod.GET, null, "UTF-8");
+        HttpUriRequest actual = sut.createHttpUriRequest(uri, HttpMethod.GET, null, "UTF-8");
 
         // Verify
-        assertThat(request, is(instanceOf(HttpGet.class)));
-        assertThat(request.getURI().toString(), is(equalTo(uri.toString())));
+        assertThat(actual, is(instanceOf(HttpGet.class)));
+        assertThat(actual.getURI().toString(), is(equalTo(uri.toString())));
 
     }
 
     @Test
-    public void testCreateHttpUriRequest_Post() throws IOException {
+    public void createHttpUriRequestの第二引数にPostを指定すると_HttpPostが生成され_リクエストパラメータが設定されること()
+            throws IOException {
 
         // Setup
-        ApacheHttpService service = new ApacheHttpService();
+        ApacheHttpService sut = new ApacheHttpService();
 
         List<NameValueObject> nvo = new ArrayList<NameValueObject>();
         nvo.add(new NameValueObject("a", "A"));
@@ -401,14 +408,15 @@ public class ApacheHttpServiceTest {
 
         // Exercise
         URI uri = URIUtil.toURI("http://www.ambrosoli.jp/post");
-        HttpPost httpPost = (HttpPost) service.createHttpUriRequest(uri, HttpMethod.POST, params,
-                "UTF-8");
+        HttpUriRequest actual = sut.createHttpUriRequest(uri, HttpMethod.POST, params, "UTF-8");
 
         // Verify
-        assertThat(httpPost, is(instanceOf(HttpPost.class)));
-        assertThat(httpPost.getURI(), is(equalTo(uri)));
-        assertThat(httpPost.getEntity(), is(notNullValue()));
-        List<NameValuePair> postParams = URLEncodedUtils.parse(httpPost.getEntity());
+        assertThat(actual, is(instanceOf(HttpPost.class)));
+        assertThat(actual.getURI(), is(equalTo(uri)));
+
+        HttpPost post = (HttpPost) actual;
+        assertThat(post.getEntity(), is(notNullValue()));
+        List<NameValuePair> postParams = URLEncodedUtils.parse(post.getEntity());
         for (int i = 0; i < nvo.size(); i++) {
             assertThat(postParams.get(i).getName(), is(nvo.get(i).getName()));
             assertThat(postParams.get(i).getValue(), is(nvo.get(i).getValue()));
@@ -417,10 +425,11 @@ public class ApacheHttpServiceTest {
     }
 
     @Test
-    public void testCreateHttpUriRequest_Put() throws IOException {
+    public void createHttpUriRequestの第二引数にPutを指定すると_HttpPutが生成され_リクエストパラメータが設定されること()
+            throws IOException {
 
         // Setup
-        ApacheHttpService service = new ApacheHttpService();
+        ApacheHttpService sut = new ApacheHttpService();
 
         List<NameValueObject> nvo = new ArrayList<NameValueObject>();
         nvo.add(new NameValueObject("a", "A"));
@@ -430,14 +439,15 @@ public class ApacheHttpServiceTest {
 
         // Exercise
         URI uri = URIUtil.toURI("http://www.ambrosoli.jp/put");
-        HttpPut httpPut = (HttpPut) service.createHttpUriRequest(uri, HttpMethod.PUT, params,
-                "UTF-8");
+        HttpUriRequest actual = sut.createHttpUriRequest(uri, HttpMethod.PUT, params, "UTF-8");
 
         // Verify
-        assertThat(httpPut, is(instanceOf(HttpPut.class)));
-        assertThat(httpPut.getURI(), is(equalTo(uri)));
-        assertThat(httpPut.getEntity(), is(notNullValue()));
-        List<NameValuePair> putParams = URLEncodedUtils.parse(httpPut.getEntity());
+        assertThat(actual, is(instanceOf(HttpPut.class)));
+        assertThat(actual.getURI(), is(equalTo(uri)));
+
+        HttpPut put = (HttpPut) actual;
+        assertThat(put.getEntity(), is(notNullValue()));
+        List<NameValuePair> putParams = URLEncodedUtils.parse(put.getEntity());
         for (int i = 0; i < nvo.size(); i++) {
             assertThat(putParams.get(i).getName(), is(nvo.get(i).getName()));
             assertThat(putParams.get(i).getValue(), is(nvo.get(i).getValue()));
@@ -446,27 +456,27 @@ public class ApacheHttpServiceTest {
     }
 
     @Test
-    public void testCreateHttpUriRequest_Post_Null() throws IOException {
+    public void createHttpUriRequestの第二引数にPOSTを指定して_第三引数のリクエストパラメータがnullの場合_リクエストパラメータが設定されないこと()
+            throws IOException {
 
         // Setup
-        ApacheHttpService service = new ApacheHttpService();
+        ApacheHttpService sut = new ApacheHttpService();
 
         // Exercise
         URI uri = URIUtil.toURI("http://www.ambrosoli.jp/post");
-        HttpPost httpPost2 = (HttpPost) service.createHttpUriRequest(uri, HttpMethod.POST, null,
-                "UTF-8");
+        HttpPost actual = (HttpPost) sut.createHttpUriRequest(uri, HttpMethod.POST, null, "UTF-8");
 
         // Verify
-        assertThat(httpPost2, is(instanceOf(HttpPost.class)));
-        assertThat(httpPost2.getURI(), is(equalTo(uri)));
-        assertThat(httpPost2.getEntity(), is(nullValue()));
+        assertThat(actual, is(instanceOf(HttpPost.class)));
+        assertThat(actual.getURI(), is(equalTo(uri)));
+        assertThat(actual.getEntity(), is(nullValue()));
     }
 
     @Test
-    public void testAddQueryString() {
+    public void addQueryStringを呼び出すと_URIにクエリストリングが付与されること() {
 
         // Setup
-        ApacheHttpService service = new ApacheHttpService();
+        ApacheHttpService sut = new ApacheHttpService();
 
         URI uri = URIUtil.toURI("http://www.ambrosoli.jp/");
         List<NameValueObject> nvo = new ArrayList<NameValueObject>();
@@ -476,46 +486,47 @@ public class ApacheHttpServiceTest {
         RequestParams params = new RequestParams(nvo);
 
         // Exercise
-        String fullURI = service.addQueryString(uri, params, "UTF-8").toString();
+        String actual = sut.addQueryString(uri, params, "UTF-8").toString();
 
         // Verify
-        assertThat(fullURI, is(equalTo("http://www.ambrosoli.jp/?a=A&b=B&c=C")));
+        assertThat(actual, is(equalTo("http://www.ambrosoli.jp/?a=A&b=B&c=C")));
 
     }
 
     @Test
-    public void testAddQueryString_NullParam() {
+    public void addQueryStringに渡すRequestParamsがnullの場合_URIにクエリストリングが付与されないこと() {
 
         // Setup
-        ApacheHttpService service = new ApacheHttpService();
+        ApacheHttpService sut = new ApacheHttpService();
         URI uri = URIUtil.toURI("http://www.ambrosoli.jp/");
 
         // Exercise
-        String fullURI = service.addQueryString(uri, null, "UTF-8").toString();
+        String actual = sut.addQueryString(uri, null, "UTF-8").toString();
+
         // Verify
-        assertThat(fullURI, is(equalTo("http://www.ambrosoli.jp/")));
+        assertThat(actual, is(equalTo("http://www.ambrosoli.jp/")));
 
     }
 
     @Test
-    public void testAddQueryString_EmptyParam() {
+    public void addQueryStringに渡すRequestParamsにリクエストパラメータがセットされていない場合_URIにクエリストリングが付与されないこと() {
 
         // Setup
-        ApacheHttpService service = new ApacheHttpService();
+        ApacheHttpService sut = new ApacheHttpService();
         URI uri = URIUtil.toURI("http://www.ambrosoli.jp/");
 
         // Exercise
-        String fullURI = service.addQueryString(uri, new RequestParams(null), "UTF-8").toString();
+        String actual = sut.addQueryString(uri, new RequestParams(null), "UTF-8").toString();
         // Verify
-        assertThat(fullURI, is(equalTo("http://www.ambrosoli.jp/")));
+        assertThat(actual, is(equalTo("http://www.ambrosoli.jp/")));
 
     }
 
     @Test
-    public void testAddQueryString_NoEncoding() {
+    public void addQueryStringに渡すエンコーディングを指定しない場合でも_URIにクエリストリングが付与されること() {
 
         // Setup
-        ApacheHttpService service = new ApacheHttpService();
+        ApacheHttpService sut = new ApacheHttpService();
 
         URI uri = URIUtil.toURI("http://www.ambrosoli.jp/");
         List<NameValueObject> nvo = new ArrayList<NameValueObject>();
@@ -525,55 +536,55 @@ public class ApacheHttpServiceTest {
         RequestParams params = new RequestParams(nvo);
 
         // Exercise
-        String fullURI = service.addQueryString(uri, params, null).toString();
+        String actual = sut.addQueryString(uri, params, null).toString();
 
         // Verify
-        assertThat(fullURI, is(equalTo("http://www.ambrosoli.jp/?a=A&b=B&c=C")));
+        assertThat(actual, is(equalTo("http://www.ambrosoli.jp/?a=A&b=B&c=C")));
     }
 
     @Test
-    public void testSetProxy() {
+    public void setProxyを呼び出すと_HttpHostが生成されプロキシの情報が設定されること() {
 
         // Setup
-        ApacheHttpService service = new ApacheHttpService();
+        ApacheHttpService sut = new ApacheHttpService();
         BasicHttpParams httpParams = new BasicHttpParams();
         ProxyInfo proxy = new ProxyInfo("localhost", 8080);
-        service.setProxy(httpParams, proxy);
 
         // Exercise
-        HttpHost httpHost = (HttpHost) httpParams.getParameter(ConnRoutePNames.DEFAULT_PROXY);
+        sut.setProxy(httpParams, proxy);
 
         // Verify
-        assertThat(httpHost, is(notNullValue()));
-        assertThat(httpHost.getHostName(), is(equalTo(proxy.getHost())));
-        assertThat(httpHost.getPort(), is(equalTo(proxy.getPort())));
+        HttpHost actual = (HttpHost) httpParams.getParameter(ConnRoutePNames.DEFAULT_PROXY);
+        assertThat(actual, is(notNullValue()));
+        assertThat(actual.getHostName(), is(equalTo(proxy.getHost())));
+        assertThat(actual.getPort(), is(equalTo(proxy.getPort())));
 
     }
 
     @Test
-    public void testSetProxy_NullParam() {
+    public void setProxyに渡すプロキシがnullの場合_HttpHostが生成されないこと() {
 
         // Setup
-        ApacheHttpService service = new ApacheHttpService();
+        ApacheHttpService sut = new ApacheHttpService();
         BasicHttpParams httpParams = new BasicHttpParams();
-        service.setProxy(httpParams, null);
 
         // Exercise
-        HttpHost httpHost = (HttpHost) httpParams.getParameter(ConnRoutePNames.DEFAULT_PROXY);
+        sut.setProxy(httpParams, null);
 
         // Verify
+        HttpHost httpHost = (HttpHost) httpParams.getParameter(ConnRoutePNames.DEFAULT_PROXY);
         assertThat(httpHost, is(nullValue()));
     }
 
     @Test
-    public void testSetProtocolVersion_HTTP1_0() {
+    public void setProtocolVersionにHTTP_1_0を指定した場合_HTTPスラッシュ1てん0が設定されること() {
 
         // Setup
-        ApacheHttpService service = new ApacheHttpService();
+        ApacheHttpService sut = new ApacheHttpService();
         HttpRequestBase httpRequestBase = new HttpGet();
 
         // Exercise
-        service.setProtocolVersion(httpRequestBase.getParams(), Http.HTTP_1_0);
+        sut.setProtocolVersion(httpRequestBase.getParams(), Http.HTTP_1_0);
 
         // Verify
         String protocolVersion = httpRequestBase.getProtocolVersion().toString();
@@ -582,14 +593,14 @@ public class ApacheHttpServiceTest {
     }
 
     @Test
-    public void testSetProtocolVersion_HTTP1_1() {
+    public void setProtocolVersionにHTTP_1_1を指定した場合_HTTPスラッシュ1てん1が設定されること() {
 
         // Setup
-        ApacheHttpService service = new ApacheHttpService();
+        ApacheHttpService sut = new ApacheHttpService();
         HttpRequestBase httpRequestBase = new HttpPost();
 
         // Exercise
-        service.setProtocolVersion(httpRequestBase.getParams(), Http.HTTP_1_1);
+        sut.setProtocolVersion(httpRequestBase.getParams(), Http.HTTP_1_1);
 
         // Verify
         String protocolVersion = httpRequestBase.getProtocolVersion().toString();
@@ -598,29 +609,30 @@ public class ApacheHttpServiceTest {
     }
 
     @Test
-    public void testSetProtocolVersion_Invalid() {
+    public void setProtocolVersionにHTTP_2_0を指定した場合_IllegalArgumentExceptionが発生すること() {
 
         // Setup
+        ApacheHttpService sut = new ApacheHttpService();
+
         this.exceptionRule.expect(is(instanceOf(IllegalArgumentException.class)));
         this.exceptionRule.expectMessage(is(equalTo("Http protocol version is illegal")));
 
         // Exercise
-        ApacheHttpService service = new ApacheHttpService();
-        service.setProtocolVersion(new BasicHttpParams(), "HTTP/2.0");
+        sut.setProtocolVersion(new BasicHttpParams(), "HTTP/2.0");
 
         // Verify
         fail("例外が発生しませんでした。");
     }
 
     @Test
-    public void testSetTimeout_PositiveValueParam() {
+    public void setTimeoutの引数に1000を渡した場合_SO_TIMEOUTとCONNECTION_TIMEOUTに1000が設定されること() {
 
         // Setup
-        ApacheHttpService service = new ApacheHttpService();
+        ApacheHttpService sut = new ApacheHttpService();
         BasicHttpParams httpParams = new BasicHttpParams();
 
         // Exercise
-        service.setTimeout(httpParams, 1000);
+        sut.setTimeout(httpParams, 1000);
 
         // Verify
         int soTimeout = httpParams.getIntParameter(CoreConnectionPNames.SO_TIMEOUT, 0);
@@ -632,14 +644,14 @@ public class ApacheHttpServiceTest {
     }
 
     @Test
-    public void testSetTimeout_NegativeValueParam() {
+    public void setTimeoutの引数にマイナス1を渡した場合_SO_TIMEOUTとCONNECTION_TIMEOUTにマイナス1が設定されること() {
 
         // Setup
-        ApacheHttpService service = new ApacheHttpService();
+        ApacheHttpService sut = new ApacheHttpService();
         BasicHttpParams httpParams = new BasicHttpParams();
 
         // Exercise
-        service.setTimeout(httpParams, -1);
+        sut.setTimeout(httpParams, -1);
 
         // Verify
         int soTimeout = httpParams.getIntParameter(CoreConnectionPNames.SO_TIMEOUT, 0);
@@ -651,14 +663,14 @@ public class ApacheHttpServiceTest {
     }
 
     @Test
-    public void testSetTimeout_ZeroValueParam() {
+    public void setTimeoutの引数に0を指定した場合_SO_TIMEOUTとCONNECTION_TIMEOUTに0が設定されること() {
 
         // Setup
-        ApacheHttpService service = new ApacheHttpService();
+        ApacheHttpService sut = new ApacheHttpService();
         BasicHttpParams httpParams = new BasicHttpParams();
 
         // Exercise
-        service.setTimeout(httpParams, 0);
+        sut.setTimeout(httpParams, 0);
 
         // Verify
         int soTimeout = httpParams.getIntParameter(CoreConnectionPNames.SO_TIMEOUT, 0);
@@ -670,14 +682,14 @@ public class ApacheHttpServiceTest {
     }
 
     @Test
-    public void testSetCharset() {
+    public void setCharsetの引数にUTF8を指定した場合_HTTP_CONTENT_CHARSETとHTTP_ELEMENT_CHARSETにUTF8が設定されること() {
 
         // Setup
-        ApacheHttpService service = new ApacheHttpService();
+        ApacheHttpService sut = new ApacheHttpService();
         BasicHttpParams httpParams = new BasicHttpParams();
 
         // Exercise
-        service.setCharset(httpParams, "UTF-8");
+        sut.setCharset(httpParams, "UTF-8");
 
         // Verify
         String httpConnectCharset = (String) httpParams
@@ -690,10 +702,12 @@ public class ApacheHttpServiceTest {
     }
 
     @Test
-    public void testSetHeaders() {
+    public void setHeadersを呼び出すと_引数で渡したヘッダーがHTTPヘッダーに設定されること() {
 
         // Setup
-        ApacheHttpService service = new ApacheHttpService();
+        ApacheHttpService sut = new ApacheHttpService();
+
+        HttpRequestBase httpRequestBase = new HttpGet();
 
         List<NameValueObject> headers = new ArrayList<NameValueObject>();
         headers.add(new NameValueObject("Accept", "application/xml"));
@@ -704,8 +718,7 @@ public class ApacheHttpServiceTest {
         httpHeaders.addHeaders(headers);
 
         // Exercise
-        HttpRequestBase httpRequestBase = new HttpGet();
-        service.setHeaders(httpRequestBase, httpHeaders);
+        sut.setHeaders(httpRequestBase, httpHeaders);
 
         // Verify
         Header[] result = httpRequestBase.getAllHeaders();
@@ -719,10 +732,10 @@ public class ApacheHttpServiceTest {
     }
 
     @Test
-    public void testSetHeaders_NullParam() {
+    public void setHeadersに渡すヘッダーのリストがnullの場合_HTTPヘッダーが設定されないこと() {
 
         // Setup
-        ApacheHttpService service = new ApacheHttpService();
+        ApacheHttpService sut = new ApacheHttpService();
 
         List<NameValueObject> headers = new ArrayList<NameValueObject>();
         headers.add(new NameValueObject("Accept", "application/xml"));
@@ -734,7 +747,7 @@ public class ApacheHttpServiceTest {
 
         // Exercise
         HttpRequestBase httpRequestBase = new HttpPost();
-        service.setHeaders(httpRequestBase, null);
+        sut.setHeaders(httpRequestBase, null);
 
         // Verify
         assertThat(httpRequestBase.getAllHeaders().length, is(0));
@@ -742,10 +755,10 @@ public class ApacheHttpServiceTest {
     }
 
     @Test
-    public void testSetFormEntity() throws IOException {
+    public void setFormEntityを呼び出すと_引数で渡したリクエストパラメータが設定されること() throws IOException {
 
         // Setup
-        ApacheHttpService service = new ApacheHttpService();
+        ApacheHttpService sut = new ApacheHttpService();
 
         HttpPost httpPost = new HttpPost();
 
@@ -759,7 +772,7 @@ public class ApacheHttpServiceTest {
         RequestParams requestParams = new RequestParams(params);
 
         // Exercise
-        service.setFormEntity(httpPost, requestParams, "UTF-8");
+        sut.setFormEntity(httpPost, requestParams, "UTF-8");
 
         // Verify
         List<NameValuePair> list = URLEncodedUtils.parse(httpPost.getEntity());
@@ -772,17 +785,17 @@ public class ApacheHttpServiceTest {
     }
 
     @Test
-    public void testSetCredentialsAuthenticate_Basic() {
+    public void setCredentialsAuthenticateを呼び出すと_引数で渡したBasic認証情報が設定されること() {
 
         // Setup
-        ApacheHttpService service = new ApacheHttpService();
+        ApacheHttpService sut = new ApacheHttpService();
 
         URI uri = URIUtil.toURI("http://www.ambrosoli.jp/");
         AuthInfo authInfo = new AuthInfo(AuthType.BASIC, "username", "password");
         CredentialsProvider provider = new BasicCredentialsProvider();
 
         // Exercise
-        service.setCredentialsAuthenticate(uri, authInfo, provider);
+        sut.setCredentialsAuthenticate(uri, authInfo, provider);
 
         // Verify
         Credentials credentials = provider.getCredentials(new AuthScope("www.ambrosoli.jp", 80));
@@ -792,17 +805,17 @@ public class ApacheHttpServiceTest {
     }
 
     @Test
-    public void testSetCredentialsAuthenticate_Digest() {
+    public void setCredentialsAuthenticateを呼び出すと_引数で渡したDigest認証情報が設定されること() {
 
         // Setup
-        ApacheHttpService service = new ApacheHttpService();
+        ApacheHttpService sut = new ApacheHttpService();
 
         URI uri = URIUtil.toURI("https://www.ambrosoli.jp/");
         AuthInfo authInfo = new AuthInfo(AuthType.DIGEST, "u1", "p1");
         CredentialsProvider provider = new BasicCredentialsProvider();
 
         // Exercise
-        service.setCredentialsAuthenticate(uri, authInfo, provider);
+        sut.setCredentialsAuthenticate(uri, authInfo, provider);
 
         // Verify
         Credentials credentials = provider.getCredentials(new AuthScope("www.ambrosoli.jp", 443));
@@ -812,17 +825,17 @@ public class ApacheHttpServiceTest {
     }
 
     @Test
-    public void testSetCredentialsAuthenticate_Other() {
+    public void setCredentialsAuthenticateを呼び出すと_引数で渡したClientCert認証情報が設定されること() {
 
         // Setup
-        ApacheHttpService service = new ApacheHttpService();
+        ApacheHttpService sut = new ApacheHttpService();
 
         URI uri = URIUtil.toURI("http://www.ambrosoli.jp");
         AuthInfo authInfo = new AuthInfo(AuthType.CLIENT_CERT, "u1", "p1");
         CredentialsProvider provider = new BasicCredentialsProvider();
 
         // Exercise
-        service.setCredentialsAuthenticate(uri, authInfo, provider);
+        sut.setCredentialsAuthenticate(uri, authInfo, provider);
 
         // Verify
         Credentials credentials = provider.getCredentials(new AuthScope("www.ambrosoli.jp", 80));
@@ -830,17 +843,17 @@ public class ApacheHttpServiceTest {
     }
 
     @Test
-    public void testSetCredentialsAuthenticate_AuthInfoNull() {
+    public void setCredentialsAuthenticateに渡す認証情報がnullの場合_認証情報が設定されないこと() {
 
         // Setup
-        ApacheHttpService service = new ApacheHttpService();
+        ApacheHttpService sut = new ApacheHttpService();
 
         URI uri = URIUtil.toURI("http://www.ambrosoli.jp");
         AuthInfo authInfo = null;
         CredentialsProvider provider = new BasicCredentialsProvider();
 
         // Exercise
-        service.setCredentialsAuthenticate(uri, authInfo, provider);
+        sut.setCredentialsAuthenticate(uri, authInfo, provider);
 
         // Verify
         Credentials credentials = provider.getCredentials(new AuthScope("www.ambrosoli.jp", 80));

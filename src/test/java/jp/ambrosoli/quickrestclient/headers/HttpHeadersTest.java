@@ -15,7 +15,7 @@
  */
 package jp.ambrosoli.quickrestclient.headers;
 
-import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
@@ -30,140 +30,139 @@ import org.junit.Test;
 public class HttpHeadersTest {
 
     @Test
-    public void testIsEmpty() {
+    public void HttpHeadersにHTTPヘッダーが登録されている状態でisEmptyを呼び出すと_falseが返却されること() {
 
         // Setup
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.addHeader(new NameValueObject("a", "a"));
+        HttpHeaders sut = new HttpHeaders();
+        sut.addHeader(new NameValueObject("a", "a"));
 
         // Exercise
-        boolean empty = httpHeaders.isEmpty();
+        boolean actual = sut.isEmpty();
 
         // Verify
-        assertThat(empty, is(false));
+        assertThat(actual, is(false));
     }
 
     @Test
-    public void testIsEmpty_InitialState() {
+    public void HttpHeadersにHTTPヘッダーが登録されていない状態でisEmptyを呼び出すと_trueが返却されること() {
 
         // Setup
-        HttpHeaders httpHeaders = new HttpHeaders();
+        HttpHeaders sut = new HttpHeaders();
 
         // Exercise
-        boolean empty = httpHeaders.isEmpty();
+        boolean actual = sut.isEmpty();
 
         // Verify
-        assertThat(empty, is(true));
-
-    }
-
-    @Test
-    public void testIsEmpty_Empty() {
-
-        // Setup
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.addHeaders(new ArrayList<NameValueObject>());
-
-        // Exercise
-        boolean empty = httpHeaders.isEmpty();
-
-        // Verify
-        assertThat(empty, is(true));
+        assertThat(actual, is(true));
 
     }
 
     @Test
-    public void testIsEmpty_Null() {
+    public void HttpHeadersに空のリストを設定した状態でisEmptyを呼び出すと_trueが返却されること() {
 
         // Setup
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.addHeaders(null);
+        HttpHeaders sut = new HttpHeaders();
+        sut.addHeaders(new ArrayList<NameValueObject>());
 
         // Exercise
-        boolean empty = httpHeaders.isEmpty();
+        boolean actual = sut.isEmpty();
 
         // Verify
-        assertThat(empty, is(true));
+        assertThat(actual, is(true));
 
     }
 
     @Test
-    public void testGetConfirmedHeaders_InitialState() {
+    public void HttpHeadersにnullを設定した状態でisEmptyを呼び出すと_trueが返却されること() {
 
         // Setup
-        ApacheHeaderBuilder builder = new ApacheHeaderBuilder();
-        HttpHeaders httpHeaders1 = new HttpHeaders();
+        HttpHeaders sut = new HttpHeaders();
+        sut.addHeaders(null);
 
         // Exercise
-        Header[] headers1 = httpHeaders1.getConformedHeaders(builder);
+        boolean actual = sut.isEmpty();
 
         // Verify
-        assertThat(headers1, is(nullValue()));
+        assertThat(actual, is(true));
 
     }
 
     @Test
-    public void testGetConfirmedHeaders_Empty() {
+    public void HttpHeadersに何も設定せずにgetConformedHeadersを呼び出した場合_Header配列が生成されないこと() {
 
         // Setup
-        ApacheHeaderBuilder builder = new ApacheHeaderBuilder();
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.addHeaders(new ArrayList<NameValueObject>());
+        HttpHeaders sut = new HttpHeaders();
 
         // Exercise
-        Header[] headers2 = httpHeaders.getConformedHeaders(builder);
+        Header[] actual = sut.getConformedHeaders(new ApacheHeaderBuilder());
 
         // Verify
-        assertThat(headers2, is(nullValue()));
+        assertThat(actual, is(nullValue()));
 
     }
 
     @Test
-    public void testGetConfirmedHeaders_Null() {
+    public void HttpHeadersに空のリストを登録した状態でgetConformedHeadersを呼び出すと_Header配列が生成されないこと() {
 
         // Setup
-        ApacheHeaderBuilder builder = new ApacheHeaderBuilder();
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.addHeaders(null);
+        HttpHeaders sut = new HttpHeaders();
+        sut.addHeaders(new ArrayList<NameValueObject>());
 
         // Exercise
-        Header[] headers2 = httpHeaders.getConformedHeaders(builder);
+        Header[] actual = sut.getConformedHeaders(new ApacheHeaderBuilder());
 
         // Verify
-        assertThat(headers2, is(nullValue()));
+        assertThat(actual, is(nullValue()));
 
     }
 
     @Test
-    public void testGetConfirmedHeaders() {
+    public void HttpHeadersにnullを設定した状態でgetConformedHeadersを呼び出すと_Header配列が生成されないこと() {
 
         // Setup
-        ApacheHeaderBuilder builder = new ApacheHeaderBuilder();
+        HttpHeaders sut = new HttpHeaders();
+        sut.addHeaders(null);
+
+        // Exercise
+        Header[] actual = sut.getConformedHeaders(new ApacheHeaderBuilder());
+
+        // Verify
+        assertThat(actual, is(nullValue()));
+
+    }
+
+    @Test
+    public void HttpHeadersにHTTPヘッダーを設定した状態でgetConformedHeadersを呼び出すと_設定したHTTPヘッダーのHeader配列が生成されること() {
+
+        // Setup
+        HttpHeaders sut = new HttpHeaders();
+
         List<NameValueObject> values = new ArrayList<NameValueObject>();
         values.add(new NameValueObject("Name1", "Value1"));
         values.add(new NameValueObject("Name2", "Value2"));
         values.add(new NameValueObject("Name3", "Value3"));
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.addHeaders(values);
+        sut.addHeaders(values);
 
         // Exercise
-        Header[] headers3 = httpHeaders.getConformedHeaders(builder);
+        Header[] actual = sut.getConformedHeaders(new ApacheHeaderBuilder());
 
         // Verify
-        assertThat(headers3.length, is(values.size()));
-        assertThat(headers3[0].getName(), is(equalTo(values.get(0).getName())));
-        assertThat(headers3[0].getValue(), is(equalTo(values.get(0).getValue())));
+        assertThat(actual.length, is(values.size()));
+        assertThat(actual[0].getName(), is(equalTo(values.get(0).getName())));
+        assertThat(actual[0].getValue(), is(equalTo(values.get(0).getValue())));
     }
 
     @Test
-    public void tesAddHeader() {
+    public void addHeaderの引数にNameValueObjectを渡すと_引数に渡したNameValueObjectがHttpHeadersに保持されること() {
+
+        // Setup
+        HttpHeaders sut = new HttpHeaders();
 
         // Exercise
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.addHeader(new NameValueObject("Name3", "Value3-2"));
+        sut.addHeader(new NameValueObject("Name3", "Value3-2"));
 
         // Verify
-        List<NameValueObject> headers = httpHeaders.getHeaders();
+        List<NameValueObject> headers = sut.getHeaders();
         assertThat(headers.size(), is(1));
 
         NameValueObject nvo = headers.get(0);
@@ -173,32 +172,35 @@ public class HttpHeadersTest {
     }
 
     @Test
-    public void tesAddHeader_Null() {
+    public void addHeaderの引数にnullを渡すと_nullは保持されないこと() {
+
+        // Setup
+        HttpHeaders sut = new HttpHeaders();
 
         // Exercise
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.addHeader(null);
+        sut.addHeader(null);
 
         // Verify
-        List<NameValueObject> headers = httpHeaders.getHeaders();
+        List<NameValueObject> headers = sut.getHeaders();
         assertThat(headers.size(), is(0));
     }
 
     @Test
-    public void testAddHeaders() {
+    public void addHeadersの引数にNameValueObjectのListを渡すと_引数で渡したNameValueObjectがすべてHttpHeadersに保持されること() {
 
         // Setup
+        HttpHeaders sut = new HttpHeaders();
+
         List<NameValueObject> values = new ArrayList<NameValueObject>();
         values.add(new NameValueObject("Name1", "Value1"));
         values.add(new NameValueObject("Name2", "Value2"));
         values.add(new NameValueObject("Name3", "Value3"));
 
         // Exercise
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.addHeaders(values);
+        sut.addHeaders(values);
 
         // Verify
-        List<NameValueObject> headers = httpHeaders.getHeaders();
+        List<NameValueObject> headers = sut.getHeaders();
         assertThat(headers.size(), is(3));
 
         for (int i = 0; i < headers.size(); i++) {
@@ -209,29 +211,29 @@ public class HttpHeadersTest {
     }
 
     @Test
-    public void testAddHeaders_Null() {
+    public void addHeadersの引数にnullを渡した場合_nullは保持されないこと() {
 
         // Setup
-        HttpHeaders httpHeaders = new HttpHeaders();
+        HttpHeaders sut = new HttpHeaders();
 
         // Exercise
-        httpHeaders.addHeaders(null);
+        sut.addHeaders(null);
 
         // Verify
-        assertThat(httpHeaders.getHeaders().size(), is(0));
+        assertThat(sut.getHeaders().size(), is(0));
     }
 
     @Test
-    public void testAddHeaders_Append() {
+    public void あらかじめ２件分のヘッダーを登録した状態でaddHeadersの引数にNameValueObjectを渡すと_引数で渡したNameValueObjectがすべてHttpHeadersに追加されること() {
 
         // Setup
-        HttpHeaders httpHeaders = new HttpHeaders();
+        HttpHeaders sut = new HttpHeaders();
 
         // あらかじめ2件分のヘッダーをセットしておく
         List<NameValueObject> values1 = new ArrayList<NameValueObject>();
         values1.add(new NameValueObject("Name1", "Value1"));
         values1.add(new NameValueObject("Name2", "Value2"));
-        httpHeaders.addHeaders(values1);
+        sut.addHeaders(values1);
 
         // Exercise
         // 3件分のヘッダーを追加する
@@ -239,76 +241,69 @@ public class HttpHeadersTest {
         values2.add(new NameValueObject("Name3", "Value3"));
         values2.add(new NameValueObject("Name4", "Value4"));
         values2.add(new NameValueObject("Name5", "Value5"));
-        httpHeaders.addHeaders(values2);
+
+        sut.addHeaders(values2);
 
         // Verify
-        List<NameValueObject> headers = httpHeaders.getHeaders();
+        List<NameValueObject> headers = sut.getHeaders();
         assertThat(headers.size(), is(5));
 
-        httpHeaders.addHeaders(null);
-        assertThat(httpHeaders.getHeaders().size(), is(5));
+        sut.addHeaders(null);
+        assertThat(sut.getHeaders().size(), is(5));
     }
 
     @Test
-    public void testAddHeaders_AppendNull() {
+    public void あらかじめ２件分のヘッダーを登録した状態でaddHeadersの引数にnullを渡すと_nullは追加されないこと() {
 
         // Setup
         // あらかじめ2件分のデータをセットしておく
-        HttpHeaders httpHeaders = new HttpHeaders();
+        HttpHeaders sut = new HttpHeaders();
 
         List<NameValueObject> values1 = new ArrayList<NameValueObject>();
         values1.add(new NameValueObject("Name1", "Value1"));
         values1.add(new NameValueObject("Name2", "Value2"));
-        httpHeaders.addHeaders(values1);
+        sut.addHeaders(values1);
 
         // Exercise
         // nullを追加する
-        httpHeaders.addHeaders(null);
+        sut.addHeaders(null);
 
         // Verify
         // 件数が2件のままであること
-        assertThat(httpHeaders.getHeaders().size(), is(2));
+        assertThat(sut.getHeaders().size(), is(2));
     }
 
     @Test
-    public void testClear_InitialState() {
+    public void HttpHeadersがHTTPヘッダーを保持していない状態でclearを呼び出すと_何も起こらないこと() {
 
         // Setup
-        HttpHeaders httpHeaders = new HttpHeaders();
+        HttpHeaders sut = new HttpHeaders();
 
         // Exercise
-        httpHeaders.clear();
+        sut.clear();
 
         // Verify
-        assertThat(httpHeaders.isEmpty(), is(true));
+        assertThat(sut.isEmpty(), is(true));
+
+    }
+
+    @Test
+    public void HttpHeadersがHTTPヘッダーを保持している状態でclearを呼び出すと_HttpHeadersに保持しているHTTPヘッダーがクリアされること() {
+
+        // Setup
+        HttpHeaders sut = new HttpHeaders();
 
         List<NameValueObject> values = new ArrayList<NameValueObject>();
         values.add(new NameValueObject("Name1", "Value1"));
         values.add(new NameValueObject("Name2", "Value2"));
         values.add(new NameValueObject("Name3", "Value3"));
-        httpHeaders.addHeaders(values);
-        httpHeaders.clear();
-        assertThat(httpHeaders.isEmpty(), is(true));
-
-    }
-
-    @Test
-    public void testClear() {
-
-        // Setup
-        HttpHeaders httpHeaders = new HttpHeaders();
-
-        List<NameValueObject> values = new ArrayList<NameValueObject>();
-        values.add(new NameValueObject("Name1", "Value1"));
-        values.add(new NameValueObject("Name2", "Value2"));
-        values.add(new NameValueObject("Name3", "Value3"));
-        httpHeaders.addHeaders(values);
+        sut.addHeaders(values);
 
         // Exercise
-        httpHeaders.clear();
+        sut.clear();
 
         // Verify
-        assertThat(httpHeaders.isEmpty(), is(true));
+        assertThat(sut.isEmpty(), is(true));
 
     }
 
