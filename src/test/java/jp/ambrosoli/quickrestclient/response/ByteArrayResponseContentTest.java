@@ -27,131 +27,137 @@ import org.junit.Test;
 public class ByteArrayResponseContentTest {
 
     @Test
-    public void testSetData() {
+    public void setDataの引数にbyte配列を渡すと_ResponseContentに保持されること() {
 
         // Setup
-        ByteArrayResponseContent content = new ByteArrayResponseContent();
+        ByteArrayResponseContent sut = new ByteArrayResponseContent();
+
+        String content = "abcdefg";
 
         // Exercise
-        content.setData("abcdefg".getBytes());
+        sut.setData(content.getBytes());
 
         // Verify
-        assertThat(content.data, is(notNullValue()));
+        assertThat(sut.data, is(equalTo(content.getBytes())));
     }
 
     @Test
-    public void testGetAsByteArray() {
+    public void getAsByteArrayを呼び出すと_ResponseContentのデータ内容がbyte配列で返されること() {
 
         // Setup
-        ByteArrayResponseContent content = new ByteArrayResponseContent();
-        content.setData("あいうえお".getBytes());
+        ByteArrayResponseContent sut = new ByteArrayResponseContent();
+        sut.setData("あいうえお".getBytes());
 
         // Exercise
-        byte[] data = content.getAsByteArray();
+        byte[] actual = sut.getAsByteArray();
 
         // Verify
-        assertThat(data, is(equalTo(content.data)));
+        assertThat(actual, is(equalTo(sut.data)));
     }
 
     @Test
-    public void testGetAsByteArray_Null() {
+    public void ResponseContentのデータがnullの状態でgetAsByteArrayを呼び出すと_nullが返されること() {
 
         // Setup
-        ByteArrayResponseContent content = new ByteArrayResponseContent();
-        content.setData(null);
+        ByteArrayResponseContent sut = new ByteArrayResponseContent();
+        sut.setData(null);
 
         // Exercise
-        byte[] data = content.getAsByteArray();
+        byte[] actual = sut.getAsByteArray();
 
         // Verify
-        assertThat(data, is(nullValue()));
+        assertThat(actual, is(nullValue()));
     }
 
     @Test
-    public void testGetAsInputStream() throws IOException {
+    public void getAsInputStreamを呼び出すと_ResponseContentのデータ内容がInputStreamで返されること()
+            throws IOException {
 
         // Setup
-        ByteArrayResponseContent content = new ByteArrayResponseContent();
-        content.setData("OPQRSTUVWXYZ".getBytes());
+        ByteArrayResponseContent sut = new ByteArrayResponseContent();
+        sut.setData("OPQRSTUVWXYZ".getBytes());
 
         // Exercise
-        InputStream input = content.getAsInputStream();
+        InputStream actual = sut.getAsInputStream();
 
         // Verify
-        assertThat(input, is(notNullValue()));
+        assertThat(actual, is(notNullValue()));
 
-        byte[] res = new byte[input.available()];
-        input.read(res);
-        assertThat(res, is(equalTo(content.data)));
+        byte[] res = new byte[actual.available()];
+        actual.read(res);
+        assertThat(res, is(equalTo(sut.data)));
     }
 
     @Test
-    public void testGetAsInputStream_Null() throws IOException {
+    public void ResponseContentのデータがnullの状態でgetAsInputStreamを呼び出すと_nullが返されること() throws IOException {
 
         // Setup
-        ByteArrayResponseContent content = new ByteArrayResponseContent();
-        content.setData(null);
+        ByteArrayResponseContent sut = new ByteArrayResponseContent();
+        sut.setData(null);
 
         // Exercise
-        InputStream inputStream = content.getAsInputStream();
+        InputStream actual = sut.getAsInputStream();
 
         // Verify
-        assertThat(inputStream, is(nullValue()));
+        assertThat(actual, is(nullValue()));
 
     }
 
     @Test
-    public void testGetAsString() {
+    public void getAsStringを呼び出すと_ResponseContentのデータが文字列として返されること() {
 
         // Setup
-        ByteArrayResponseContent content = new ByteArrayResponseContent();
-        content.setData("willard379".getBytes());
+        ByteArrayResponseContent sut = new ByteArrayResponseContent();
+        sut.setData("willard379".getBytes());
 
         // Exercise
-        String data = content.getAsString();
+        String actual = sut.getAsString();
 
         // Verify
-        assertThat(data, is(equalTo("willard379")));
+        assertThat(actual, is(equalTo("willard379")));
     }
 
     @Test
-    public void testGetAsString_Null() {
+    public void ResponseContentのデータがnullの状態でgetAsStringを呼び出すと_nullが返されること() {
 
         // Setup
-        ByteArrayResponseContent content = new ByteArrayResponseContent();
-        content.setData(null);
+        ByteArrayResponseContent sut = new ByteArrayResponseContent();
+        sut.setData(null);
 
         // Exercise
-        String data = content.getAsString();
+        String actual = sut.getAsString();
 
         // Verify
-        assertThat(data, is(nullValue()));
+        assertThat(actual, is(nullValue()));
     }
 
     @Test
-    public void testGetAsStringString() throws IOException {
+    public void getAsStringの引数にエンコーディングを指定して呼び出すと_ResponseContentのデータが指定したエンコーディングの文字列として返されること()
+            throws IOException {
 
         // Setup
-        ByteArrayResponseContent content = new ByteArrayResponseContent();
-        content.setData("山田太郎".getBytes("MS932"));
+        ByteArrayResponseContent sut = new ByteArrayResponseContent();
+        sut.setData("𩸽".getBytes("UTF-16"));
 
         // Exercise
-        String data = content.getAsString("MS932");
+        String actual = sut.getAsString("UTF-16");
 
         // Verify
-        assertThat(data, is(equalTo("山田太郎")));
+        assertThat(actual, is(equalTo("𩸽")));
     }
 
     @Test
-    public void testWriteTo() throws Exception {
+    public void writeToの引数にOutputStreamを渡すと_ResponseContentのデータがOutputStreamに書き出されること()
+            throws Exception {
 
         // Setup
         byte[] data = "ABCDEFG".getBytes("UTF-8");
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
+        ResponseContent sut = new ByteArrayResponseContent(data);
+
         // Exercise
-        ResponseContent responseContent = new ByteArrayResponseContent(data);
-        responseContent.writeTo(outputStream);
+        sut.writeTo(outputStream);
 
         // Verify
         String result = new String(outputStream.toByteArray(), "UTF-8");

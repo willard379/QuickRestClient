@@ -35,226 +35,221 @@ import org.junit.Test;
 public class AbstractHttpResponseTest {
 
     @Test
-    public void testIsSuccess_200() {
+    public void HTTPステータスコードが200の状態でisSuccessを呼び出すと_trueが返されること() {
 
         // Setup
-        MockAbstractHttpResponseImpl response = new MockAbstractHttpResponseImpl();
-        response.sc = 200;
+        MockAbstractHttpResponseImpl sut = new MockAbstractHttpResponseImpl();
+        sut.sc = 200;
 
         // Exercise
-        boolean ok = response.isSuccess();
+        boolean actual = sut.isSuccess();
 
         // Verify
-        assertThat(ok, is(true));
+        assertThat(actual, is(true));
 
     }
 
     @Test
-    public void testIsSuccess_201() {
+    public void HTTPステータスコードが201の状態でisSuccessを呼び出すと_trueが返されること() {
 
         // Setup
-        MockAbstractHttpResponseImpl response = new MockAbstractHttpResponseImpl();
-        response.sc = 201;
+        MockAbstractHttpResponseImpl sut = new MockAbstractHttpResponseImpl();
+        sut.sc = 201;
 
         // Exercise
-        boolean ok = response.isSuccess();
+        boolean actual = sut.isSuccess();
 
         // Verify
-        assertThat(ok, is(true));
+        assertThat(actual, is(true));
 
     }
 
     @Test
-    public void testIsSuccess_500() {
+    public void HTTPステータスコードが500の状態でisSuccessを呼び出すと_falseが返されること() {
 
         // Setup
-        MockAbstractHttpResponseImpl response = new MockAbstractHttpResponseImpl();
-        response.sc = 500;
+        MockAbstractHttpResponseImpl sut = new MockAbstractHttpResponseImpl();
+        sut.sc = 500;
 
         // Exercise
-        boolean ok = response.isSuccess();
+        boolean actual = sut.isSuccess();
 
         // Verify
-        assertThat(ok, is(false));
+        assertThat(actual, is(false));
 
     }
 
     @Test
-    public void testIsSuccess_0() {
+    public void HTTPステータスコードが0の状態でisSuccessを呼び出すと_falseが返されること() {
 
         // Setup
-        MockAbstractHttpResponseImpl response = new MockAbstractHttpResponseImpl();
-        response.sc = 0;
+        MockAbstractHttpResponseImpl sut = new MockAbstractHttpResponseImpl();
+        sut.sc = 0;
 
         // Exercise
-        boolean ok = response.isSuccess();
+        boolean actual = sut.isSuccess();
 
         // Verify
-        assertThat(ok, is(false));
+        assertThat(actual, is(false));
 
     }
 
     @Test
-    public void testGetAsByteArray_Null() {
+    public void HttpResponseのデータがnullの状態でgetAsByteArrayを呼び出すと_nullが返されること() {
 
         // Setup
-        AbstractHttpResponse response = new MockAbstractHttpResponseImpl(null);
+        AbstractHttpResponse sut = new MockAbstractHttpResponseImpl(null);
 
         // Exercise
-        byte[] data = response.getAsByteArray();
+        byte[] actual = sut.getAsByteArray();
 
         // Verify
-        assertThat(data, is(nullValue()));
+        assertThat(actual, is(nullValue()));
 
     }
 
     @Test
-    public void testGetAsByteArray() {
+    public void HttpResponseにデータがある状態でgetAsByteArrayを呼び出すと_HttpResponseのデータがbyte配列で返されること() {
 
         // Setup
-        ResponseContent content = new ByteArrayResponseContent("I dislike Tsukemen!".getBytes());
-        AbstractHttpResponse response = new MockAbstractHttpResponseImpl(content);
+        byte[] data = "BUILD SUCCESS".getBytes();
+        ResponseContent content = new ByteArrayResponseContent(data);
+        AbstractHttpResponse sut = new MockAbstractHttpResponseImpl(content);
 
         // Exercise
-        byte[] data = response.getAsByteArray();
+        byte[] actual = sut.getAsByteArray();
 
         // Verify
-        assertThat(data, is(sameInstance(data)));
+        assertThat(actual, is(equalTo(data)));
 
     }
 
     @Test
-    public void testGetAsInputStream_Null() throws IOException {
+    public void HttpResponseにデータがない状態でgetAsInputStreamを呼び出すと_nullが返されること() throws IOException {
 
         // Setup
-        AbstractHttpResponse response = new MockAbstractHttpResponseImpl(null);
+        AbstractHttpResponse sut = new MockAbstractHttpResponseImpl(null);
 
         // Exercise
-        InputStream inputStream = response.getAsInputStream();
+        InputStream actual = sut.getAsInputStream();
 
         // Verify
-        assertThat(inputStream, is(nullValue()));
+        assertThat(actual, is(nullValue()));
 
     }
 
     @Test
-    public void testGetAsInputStream() throws IOException {
+    public void HttpResponseにデータがある状態でgetAsInputStreamを呼び出すと_HttpResponseのデータがInputStreamで返されること()
+            throws IOException {
 
         // Setup
-        ResponseContent content = new ByteArrayResponseContent(
-                "I have respect for Robinmask.".getBytes());
-        AbstractHttpResponse response = new MockAbstractHttpResponseImpl(content);
+        String data = "Robinmask";
+        ResponseContent content = new ByteArrayResponseContent(data.getBytes());
+        AbstractHttpResponse sut = new MockAbstractHttpResponseImpl(content);
 
         // Exercise
-        InputStream input = response.getAsInputStream();
+        InputStream actual = sut.getAsInputStream();
 
         // Verify
-        assertThat(input, is(notNullValue()));
+        assertThat(actual, is(notNullValue()));
         try {
 
-            BufferedReader br = new BufferedReader(new InputStreamReader(input));
-            assertThat(br.readLine(), is(equalTo("I have respect for Robinmask.")));
+            BufferedReader br = new BufferedReader(new InputStreamReader(actual));
+            assertThat(br.readLine(), is(equalTo(data)));
         } finally {
-            input.close();
+            actual.close();
         }
     }
 
     @Test
-    public void testGetAsString_NoContent() {
+    public void HttpResponseにデータがない状態でgetAsStringを呼び出すと_nullが返されること() {
 
         // Setup
         ResponseContent content = null;
-        AbstractHttpResponse response = new MockAbstractHttpResponseImpl(content);
+        AbstractHttpResponse sut = new MockAbstractHttpResponseImpl(content);
 
         // Exercise
-        String data = response.getAsString();
+        String actual = sut.getAsString();
 
         // Verify
-        assertThat(data, is(nullValue()));
+        assertThat(actual, is(nullValue()));
 
     }
 
     @Test
-    public void testGetAsString() {
+    public void HttpResponseにデータがある状態でgetAsStringを呼び出すと_HttpResponseのデータがStringで返されること() {
 
         // Setup
-        ResponseContent content = new ByteArrayResponseContent("Test".getBytes());
-        AbstractHttpResponse response = new MockAbstractHttpResponseImpl(content);
+        String data = "Test";
+        ResponseContent content = new ByteArrayResponseContent(data.getBytes());
+        AbstractHttpResponse sut = new MockAbstractHttpResponseImpl(content);
 
         // Exercise
-        String data = response.getAsString();
+        String actual = sut.getAsString();
 
         // Verify
-        assertThat(data, is(equalTo("Test")));
+        assertThat(actual, is(equalTo(data)));
     }
 
     @Test
-    public void testGetAsStringString() throws IOException {
+    public void HttpResponseにデータがある状態でgetAsStringの引数にエンコーディングを指定して呼び出した場合_HttpResponseのデータが指定したエンコーディングの文字列として返されること()
+            throws IOException {
 
         // Setup
-        ResponseContent content = new ByteArrayResponseContent("えむえすきゅーさんに".getBytes("MS932"));
-        AbstractHttpResponse response = new MockAbstractHttpResponseImpl(content);
+        String data = "𩸽";
+        ResponseContent content = new ByteArrayResponseContent(data.getBytes("UTF-16"));
+        AbstractHttpResponse sut = new MockAbstractHttpResponseImpl(content);
 
         // Exercise
-        String data = response.getAsString("MS932");
+        String actual = sut.getAsString("UTF-16");
 
         // Verify
-        assertThat(data, is(equalTo("えむえすきゅーさんに")));
+        assertThat(actual, is(equalTo(data)));
     }
 
     @Test
-    public void testGetAsStringString_NoContent() throws IOException {
+    public void HttpResponseにデータがない状態でgetAsStringの引数にエンコーディングを指定して呼び出した場合_nullが返されること()
+            throws IOException {
 
         // Setup
-        AbstractHttpResponse response = new MockAbstractHttpResponseImpl(null);
+        AbstractHttpResponse sut = new MockAbstractHttpResponseImpl(null);
 
         // Exercise
-        String data = response.getAsString("MS932");
+        String actual = sut.getAsString("MS932");
 
         // Verify
-        assertThat(data, is(nullValue()));
+        assertThat(actual, is(nullValue()));
     }
 
     @Test
-    public void testGetAsStringString_Null() throws IOException {
-
-        // Setup
-        ResponseContent content = new ByteArrayResponseContent("としこし".getBytes("UTF-8"));
-        AbstractHttpResponse response = new MockAbstractHttpResponseImpl(content);
-
-        // Exercise
-        String data = response.getAsString(null);
-
-        // Verify
-        assertThat(data, is(equalTo("としこし")));
-    }
-
-    @Test
-    public void testWriteTo() throws Exception {
+    public void HttpResponseにデータがある状態でwriteToを呼び出した場合_HttpResponseのデータがOutputStreamに書き出されてcloseされていること()
+            throws Exception {
 
         // Setup
         ResponseContent content = new ByteArrayResponseContent("しめじ".getBytes("UTF-8"));
-        AbstractHttpResponse response = new MockAbstractHttpResponseImpl(content);
+        AbstractHttpResponse sut = new MockAbstractHttpResponseImpl(content);
 
-        ByteArrayOutputStream output = new ByteArrayOutputStream();
+        ByteArrayOutputStream output = spy(new ByteArrayOutputStream());
 
         // Exercise
-        response.writeTo(output);
+        sut.writeTo(output);
 
         // Verify
         String result = StringUtil.toString(output.toByteArray(), "UTF-8");
         assertThat(result, is(equalTo("しめじ")));
+        verify(output).close();
     }
 
     @Test
-    public void testWriteTo_Null() throws Exception {
+    public void HttpResponseにデータがない状態でwriteToを呼び出した場合_OutputStreamに書きだされずにcloseが呼ばれていること()
+            throws Exception {
 
         // Setup
-        AbstractHttpResponse response = new MockAbstractHttpResponseImpl(null);
+        AbstractHttpResponse sut = new MockAbstractHttpResponseImpl(null);
         OutputStream output = mock(OutputStream.class);
 
         // Exercise
-        response.writeTo(output);
+        sut.writeTo(output);
 
         // Verify
         verify(output).close();

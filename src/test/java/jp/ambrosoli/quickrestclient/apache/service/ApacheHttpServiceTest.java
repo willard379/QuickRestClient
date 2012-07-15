@@ -119,7 +119,7 @@ public class ApacheHttpServiceTest {
     }
 
     @Test
-    public void getSocketFactoryの引数にhttpスキーマのURIを指定した場合_PlainSocketFactoryが生成されること() {
+    public void getSocketFactoryの引数にhttpスキームのURIを指定した場合_PlainSocketFactoryが生成されること() {
 
         // Setup
         ApacheHttpService sut = new ApacheHttpService();
@@ -134,7 +134,7 @@ public class ApacheHttpServiceTest {
     }
 
     @Test
-    public void getSocketFactoryの引数にhttpsスキーマのURIを指定した場合_SSLSocketFactoryが生成されること() {
+    public void getSocketFactoryの引数にhttpsスキームのURIを指定した場合_SSLSocketFactoryが生成されること() {
 
         // Setup
         ApacheHttpService sut = new ApacheHttpService();
@@ -164,7 +164,7 @@ public class ApacheHttpServiceTest {
     }
 
     @Test
-    public void getSocketFactoryの引数にwsスキーマのURIを指定した場合_IllegalArgumentExceptionが発生すること() {
+    public void getSocketFactoryの引数にwsスキームのURIを指定した場合_IllegalArgumentExceptionが発生すること() {
 
         // Setup
         ApacheHttpService sut = new ApacheHttpService();
@@ -180,7 +180,7 @@ public class ApacheHttpServiceTest {
     }
 
     @Test
-    public void createSchemeRegistryにhttpスキーマのURIを渡した場合_戻り値のSchemeRegistryにhttpスキーマが設定されていること() {
+    public void createSchemeRegistryにhttpスキームのURIを渡した場合_戻り値のSchemeRegistryにhttpスキームが設定されていること() {
 
         // Setup
         ApacheHttpService sut = new ApacheHttpService();
@@ -197,7 +197,7 @@ public class ApacheHttpServiceTest {
     }
 
     @Test
-    public void createSchemeRegistryにhttpsスキーマのURIを渡した場合_戻り値のSchemeRegistryにhttpsスキーマが設定されていること() {
+    public void createSchemeRegistryにhttpsスキームのURIを渡した場合_戻り値のSchemeRegistryにhttpsスキームが設定されていること() {
 
         // Setup
         ApacheHttpService sut = new ApacheHttpService();
@@ -230,7 +230,7 @@ public class ApacheHttpServiceTest {
     }
 
     @Test
-    public void createSchemeRegistryの引数にwssスキーマのURIを指定した場合_IllegalArgumentExceptionが発生すること() {
+    public void createSchemeRegistryの引数にwssスキームのURIを指定した場合_IllegalArgumentExceptionが発生すること() {
 
         // Setup
         ApacheHttpService sut = new ApacheHttpService();

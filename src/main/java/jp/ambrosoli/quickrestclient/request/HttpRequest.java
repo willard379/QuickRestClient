@@ -131,7 +131,7 @@ public class HttpRequest {
      * @param headers
      *            HTTPヘッダー
      */
-    public void addHeaders(final List<NameValueObject> headers) {
+    public void addHeaders(final List<? extends NameValueObject> headers) {
         if (this.headers == null) {
             this.headers = new HttpHeaders();
         }

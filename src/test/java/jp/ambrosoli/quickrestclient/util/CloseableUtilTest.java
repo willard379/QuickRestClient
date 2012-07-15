@@ -42,7 +42,7 @@ public class CloseableUtilTest {
     public ExpectedException expectedException = ExpectedException.none();
 
     @Test
-    public void testClose() throws Exception {
+    public void closeを呼び出すと_引数に渡したCloseableがcloseされること() throws Exception {
 
         // Setup
         Closeable closeable = mock(Closeable.class);
@@ -55,7 +55,7 @@ public class CloseableUtilTest {
     }
 
     @Test
-    public void testClose_Null() throws Exception {
+    public void closeの引数にnullを渡した場合_例外が発生しないこと() throws Exception {
 
         // Setup
         Closeable closeable = null;
@@ -69,7 +69,8 @@ public class CloseableUtilTest {
     }
 
     @Test
-    public void testClose_Exception() throws Exception {
+    public void closeを呼び出した際に引数で渡したCloseableで例外が発生した場合_IORuntimeExceptionにラップされてスローされること()
+            throws Exception {
 
         // Setup
         Closeable closeable = mock(Closeable.class);
@@ -85,7 +86,7 @@ public class CloseableUtilTest {
     }
 
     @Test
-    public void testCloseSilentry() throws Exception {
+    public void closeSilentryを呼び出した場合_引数に渡したCloseableがcloseされること() throws Exception {
 
         // Setup
         Closeable closeable = mock(Closeable.class);
@@ -98,7 +99,7 @@ public class CloseableUtilTest {
     }
 
     @Test
-    public void testCloseSilentry_Null() throws Exception {
+    public void closeSilentryの引数にnullを渡した場合_例外が発生しないこと() throws Exception {
 
         // Setup
         Closeable closeable = null;
@@ -112,7 +113,8 @@ public class CloseableUtilTest {
     }
 
     @Test
-    public void testCloseSilentry_Exception() throws Exception {
+    public void closeSilentryの引数に渡したCloseableで例外が発生した場合_closeSilentryでは例外がスローされないこと()
+            throws Exception {
 
         // Setup
         Closeable closeable = mock(Closeable.class);
@@ -126,7 +128,7 @@ public class CloseableUtilTest {
     }
 
     @Test
-    public void testCloseAll() throws Exception {
+    public void closeAllを呼び出した場合_引数で渡したすべてのCLoseableがcloseされること() throws Exception {
 
         // Setup
         Closeable closeable = mock(Closeable.class);
@@ -148,7 +150,7 @@ public class CloseableUtilTest {
     }
 
     @Test
-    public void testCloseAll_Null() throws Exception {
+    public void closeAllの引数にnullを渡した場合_例外が発生しないこと() throws Exception {
 
         // Setup
         Closeable closeable = null;
@@ -165,7 +167,7 @@ public class CloseableUtilTest {
     }
 
     @Test
-    public void testCloseAll_Exception() throws Exception {
+    public void closeAllの引数に渡したすべてのCloseableで例外が発生した場合_最初に発生した例外がスローされること() throws Exception {
 
         // Setup
         Closeable closeable = mock(Closeable.class);
@@ -189,5 +191,38 @@ public class CloseableUtilTest {
 
         // Verify
         fail("例外が発生しませんでした。");
+
+    }
+
+    @Test
+    public void closeAllの引数に渡したCloseableのひとつで例外が発生した場合_それ以外のCloseableはcloseされていること()
+            throws Exception {
+
+        // Setup
+        Closeable closeable = mock(Closeable.class);
+        InputStream inputStream = mock(InputStream.class);
+        OutputStream outputStream = mock(OutputStream.class);
+        Reader reader = mock(Reader.class);
+        Writer writer = mock(Writer.class);
+
+        doThrow(new RuntimeException("occured in Closeable")).when(closeable).close();
+
+        // 最初に発生した例外がスローされる
+        this.expectedException.expect(is(instanceOf(RuntimeException.class)));
+        this.expectedException.expectMessage(is(equalTo("occured in Closeable")));
+
+        try {
+            // Exercise
+            CloseableUtil.closeAll(closeable, inputStream, outputStream, reader, writer);
+
+        } finally {
+
+            // Verify
+            verify(inputStream).close();
+            verify(outputStream).close();
+            verify(reader).close();
+            verify(writer).close();
+        }
+
     }
 }

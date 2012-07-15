@@ -31,6 +31,8 @@ import org.junit.rules.ExpectedException;
 
 public class HttpServiceFactoryTest {
 
+    private static final Class<ApacheHttpServiceFactory> DEFAULT_FACTORY = ApacheHttpServiceFactory.class;
+
     @Rule
     public ExpectedException expectedException = ExpectedException.none();
 
@@ -43,29 +45,30 @@ public class HttpServiceFactoryTest {
     }
 
     @Test
-    public void testGetFactory_Default() {
+    public void getFactoryを呼び出すと_デフォルトのHttpServiceFactoryが返されること() {
 
         // Exercise
-        HttpServiceFactory factory = HttpServiceFactory.getFactory();
+        HttpServiceFactory actual = HttpServiceFactory.getFactory();
 
         // Verify
-        assertThat(factory, is(notNullValue()));
-        assertThat(ApacheHttpServiceFactory.class.isInstance(factory), is(true));
+        assertThat(actual, is(notNullValue()));
+        assertThat(actual, is(instanceOf(DEFAULT_FACTORY)));
     }
 
     @Test
-    public void testGetFactory_Null() throws ClassNotFoundException {
+    public void getFactoryの引数にnullを渡すと_デフォルトのHttpServiceFactoryが返されること()
+            throws ClassNotFoundException {
 
         // Exercise
-        HttpServiceFactory factory = HttpServiceFactory.getFactory(null);
+        HttpServiceFactory actual = HttpServiceFactory.getFactory(null);
 
         // Verify
-        assertThat(factory, is(notNullValue()));
-        assertThat(ApacheHttpServiceFactory.class.isInstance(factory), is(true));
+        assertThat(actual, is(notNullValue()));
+        assertThat(actual, is(instanceOf(DEFAULT_FACTORY)));
     }
 
     @Test
-    public void testGetFactory_Unregistered() {
+    public void getFactoryの引数に登録していないファクトリ名を指定した場合_IllegalStateExceptionが返されること() {
 
         // Setup
         this.expectedException.expect(is(instanceOf(IllegalStateException.class)));
@@ -80,7 +83,7 @@ public class HttpServiceFactoryTest {
     }
 
     @Test
-    public void testRegister() {
+    public void registerを呼び出すと_HttpServiceFactoryのキャッシュに登録されること() {
 
         // Setup
         HttpServiceFactory factory = mock(HttpServiceFactory.class);
@@ -93,7 +96,7 @@ public class HttpServiceFactoryTest {
     }
 
     @Test
-    public void testRegister_OverrideDefault() {
+    public void registerの第一引数にnullを渡すと_デフォルトのHttpServiceFactoryが上書きされること() {
 
         // Setup
         HttpServiceFactory factory = mock(HttpServiceFactory.class);
@@ -106,10 +109,10 @@ public class HttpServiceFactoryTest {
     }
 
     @Test
-    public void testRegister_Null() {
+    public void registerの第二引数にnullを渡すと_IllegalArgumentExceptionが発生すること() {
 
         // Setup
-        this.expectedException.expect(is(instanceOf(IllegalStateException.class)));
+        this.expectedException.expect(is(instanceOf(IllegalArgumentException.class)));
         this.expectedException
                 .expectMessage(is(equalTo("HttpServiceFactory {hoge} could not be registerd.")));
 

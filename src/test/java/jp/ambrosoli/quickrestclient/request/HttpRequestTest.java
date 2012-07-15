@@ -20,6 +20,7 @@ import static org.junit.Assert.*;
 
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import jp.ambrosoli.quickrestclient.enums.AuthType;
@@ -38,27 +39,28 @@ public class HttpRequestTest {
     public ExpectedException expectedException = ExpectedException.none();
 
     @Test
-    public void testConstruct() {
+    public void コンストラクタの引数にURIを指定して呼び出すと_HttpRequestが生成されること() {
 
         // Setup
         URI uri = URIUtil.toURI("http://www.ambrosoli.jp/test-server/");
 
         // Exercise
-        HttpRequest httpRequest = new HttpRequest(uri);
+        HttpRequest actual = new HttpRequest(uri);
 
         // Verify
-        assertThat(httpRequest, is(notNullValue()));
+        assertThat(actual, is(notNullValue()));
     }
 
     @Test
-    public void testConstruct_Null() {
+    public void コンストラクタの引数にnullを渡すと_IllegalArgumentExceptionが発生すること() {
 
         // Setup
+        URI uri = null;
+
         this.expectedException.expect(is(instanceOf(IllegalArgumentException.class)));
         this.expectedException.expectMessage(is(equalTo("URI mey not to be null")));
 
         // Exercise
-        URI uri = null;
         new HttpRequest(uri);
 
         // Verify
@@ -66,11 +68,11 @@ public class HttpRequestTest {
     }
 
     @Test
-    public void testAddHeaders() {
+    public void addHeadersの引数にNameValueObject配列を渡すと_HttpRequestにNameValueObjectのListが保持されること() {
 
         // Setup
         URI uri = URIUtil.toURI("http://www.ambrosoli.jp/");
-        HttpRequest httpRequest = new HttpRequest(uri);
+        HttpRequest sut = new HttpRequest(uri);
 
         List<NameValueObject> values = new ArrayList<NameValueObject>();
         values.add(new NameValueObject("name1", "value1"));
@@ -79,18 +81,18 @@ public class HttpRequestTest {
         values.add(new NameValueObject("name4", "value4"));
 
         // Exercise
-        httpRequest.addHeaders(values);
+        sut.addHeaders(values);
 
         // Verify
-        assertThat(httpRequest.headers.getHeaders().size(), is(values.size()));
+        assertThat(sut.headers.getHeaders().size(), is(values.size()));
     }
 
     @Test
-    public void testAddHeaders_CallTwice() {
+    public void addHeadersを２回呼び出すと_上書きではなく追加で保持されること() {
 
         // Setup
         URI uri = URIUtil.toURI("http://www.ambrosoli.jp/");
-        HttpRequest httpRequest = new HttpRequest(uri);
+        HttpRequest sut = new HttpRequest(uri);
 
         List<NameValueObject> values1 = new ArrayList<NameValueObject>();
         values1.add(new NameValueObject("name1", "value1"));
@@ -103,114 +105,117 @@ public class HttpRequestTest {
         values2.add(new NameValueObject("name6", "value6"));
 
         // Exercise
-        httpRequest.addHeaders(values1);
-        httpRequest.addHeaders(values2);
+        sut.addHeaders(values1);
+        sut.addHeaders(values2);
 
         // Verify
-        assertThat(httpRequest.headers.getHeaders().size(), is(equalTo(6)));
+        assertThat(sut.headers.getHeaders().size(), is(equalTo(6)));
     }
 
     @Test
-    public void testAddHeaders_Null() {
+    public void addHeadersにnullを渡すと_HttpRequestに追加されないこと() {
 
         // Setup
         URI uri = URIUtil.toURI("http://www.ambrosoli.jp/");
-        HttpRequest httpRequest = new HttpRequest(uri);
+        HttpRequest sut = new HttpRequest(uri);
 
         // Exercise
-        httpRequest.addHeaders(null);
+        sut.addHeaders(Arrays.asList(new HttpHeader("name", "value")));
+        sut.addHeaders(null);
 
         // Verify
-        assertThat(httpRequest.headers.isEmpty(), is(true));
+        assertThat(sut.headers.getHeaders().size(), is(1));
 
     }
 
     @Test
-    public void testAddHeader() {
+    public void addHeaderの引数にNameValueObjectを渡すと_HttpRequestに追加されること() {
 
         // Setup
-        HttpRequest httpRequest = new HttpRequest(URIUtil.toURI("http://www.ambrosoli.jp/"));
+        HttpRequest sut = new HttpRequest(URIUtil.toURI("http://www.ambrosoli.jp/"));
         NameValueObject header = new NameValueObject("name", "value");
 
         // Exercise
-        httpRequest.addHeader(header);
+        sut.addHeader(header);
 
         // Verify
-        assertThat(httpRequest.headers.getHeaders().size(), is(1));
-        assertThat(httpRequest.headers.getHeaders().get(0), is(sameInstance(header)));
+        assertThat(sut.headers.getHeaders().size(), is(1));
+        assertThat(sut.headers.getHeaders().get(0), is(sameInstance(header)));
     }
 
     @Test
-    public void testAddHeader_CallMany() {
+    public void addHeaderを複数回呼び出すと_上書きではなく追加で保持されること() {
 
         // Setup
-        HttpRequest httpRequest = new HttpRequest(URIUtil.toURI("http://www.ambrosoli.jp/"));
+        HttpRequest sut = new HttpRequest(URIUtil.toURI("http://www.ambrosoli.jp/"));
 
         // Exercise
-        httpRequest.addHeader(new HttpHeader("name1", "value1"));
-        httpRequest.addHeader(new HttpHeader("name2", "value2"));
-        httpRequest.addHeader(new HttpHeader("name3", "value3"));
-        httpRequest.addHeader(new HttpHeader("name4", "value4"));
+        sut.addHeader(new HttpHeader("name1", "value1"));
+        sut.addHeader(new HttpHeader("name2", "value2"));
+        sut.addHeader(new HttpHeader("name3", "value3"));
+        sut.addHeader(new HttpHeader("name4", "value4"));
 
         // Verify
-        assertThat(httpRequest.headers.getHeaders().size(), is(4));
+        assertThat(sut.headers.getHeaders().size(), is(4));
     }
 
     @Test
-    public void testAddHeaders_Empty() {
+    public void addHeaderの引数にnullを渡すと_HttpRequestに追加されないこと() {
+
+        // Setup
+        HttpRequest sut = new HttpRequest(URIUtil.toURI("http://www.ambrosoli.jp/"));
+
+        // Exercise
+        sut.addHeader(null);
+        sut.addHeader(null);
+        sut.addHeader(null);
+        sut.addHeader(new HttpHeader("name4", "value4"));
+
+        // Verify
+        assertThat(sut.headers.getHeaders().size(), is(1));
+    }
+
+    @Test
+    public void addHeadersの引数に空のListを渡した場合_HttpRequestに追加されないこと() {
 
         // Setup
         URI uri = URIUtil.toURI("http://www.ambrosoli.jp/");
-        HttpRequest httpRequest = new HttpRequest(uri);
+        HttpRequest sut = new HttpRequest(uri);
         List<NameValueObject> values = new ArrayList<NameValueObject>();
 
         // Exercise
-        httpRequest.addHeaders(values);
+        sut.addHeaders(values);
 
         // Verify
-        assertThat(httpRequest.headers.isEmpty(), is(true));
+        assertThat(sut.headers.isEmpty(), is(true));
 
     }
 
     @Test
-    public void testAddHeader_Null() {
+    public void setAuthInfoの引数にAuthInfoを指定した場合_HttpRequestにAuthInfoが保持されること() {
 
         // Setup
-        HttpRequest httpRequest = new HttpRequest(URIUtil.toURI("http://www.ambrosoli.jp/"));
-        NameValueObject header = null;
-        // Exercise
-        httpRequest.addHeader(header);
-
-        // Verify
-        assertThat(httpRequest.headers.isEmpty(), is(true));
-
-    }
-
-    @Test
-    public void testSetAuthInfo() {
-
-        // Setup
-        HttpRequest httpRequest = new HttpRequest(URIUtil.toURI("http://www.ambrosoli.jp/"));
+        HttpRequest sut = new HttpRequest(URIUtil.toURI("http://www.ambrosoli.jp/"));
 
         // Exercise
         AuthInfo authInfo = new AuthInfo(AuthType.BASIC, "user.name", "user.password");
-        httpRequest.setAuthInfo(authInfo);
+        sut.setAuthInfo(authInfo);
 
         // Verify
-        assertThat(httpRequest.getAuthInfo(), is(equalTo(authInfo)));
+        assertThat(sut.getAuthInfo(), is(equalTo(authInfo)));
     }
 
     @Test
-    public void testSetAuthInfo_Null() {
+    public void setAuthInfoの引数にnullを渡した場合_HttpRequestにnullが保持されること() {
 
         // Setup
-        HttpRequest httpRequest = new HttpRequest(URIUtil.toURI("http://www.ambrosoli.jp/"));
+        HttpRequest sut = new HttpRequest(URIUtil.toURI("http://www.ambrosoli.jp/"));
 
         // Exercise
-        httpRequest.setAuthInfo(null);
+        sut.setAuthInfo(null);
 
         // Verify
-        assertThat(httpRequest.getAuthInfo(), is(nullValue()));
+        assertThat(sut.getAuthInfo(), is(nullValue()));
     }
 
 }

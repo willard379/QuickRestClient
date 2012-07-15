@@ -29,54 +29,121 @@ public class StringUtilTest {
     public ExpectedException expectedException = ExpectedException.none();
 
     @Test
-    public void testIsEmpty() {
+    public void isEmptyの引数にnullを渡した場合_trueが返されること() {
         assertThat(StringUtil.isEmpty(null), is(true));
+    }
+
+    @Test
+    public void isEmptyの引数に空文字を渡した場合_trueが返されること() {
         assertThat(StringUtil.isEmpty(""), is(true));
+    }
+
+    @Test
+    public void isEmptyの引数にホワイトスペースを渡した場合_falseが返されること() {
         assertThat(StringUtil.isEmpty(" "), is(false));
+    }
+
+    @Test
+    public void isEmptyの引数にブランクでない文字列を渡した場合_falseが返されること() {
         assertThat(StringUtil.isEmpty("bob"), is(false));
+    }
+
+    @Test
+    public void isEmptyの引数に前後にホワイトスペースを含むブランクでない文字列を渡した場合_falseが返されること() {
         assertThat(StringUtil.isEmpty("  bob  "), is(false));
     }
 
     @Test
-    public void testIsEmpty_StringBuilder() {
+    public void isEmptyにStringBuilder型のnullを渡した場合_trueが返されること() {
+        assertThat(StringUtil.isEmpty((StringBuilder) null), is(true));
+    }
+
+    @Test
+    public void isEmptyに空のStringBuilderを渡した場合_trueが返されること() {
         assertThat(StringUtil.isEmpty(new StringBuilder()), is(true));
+    }
+
+    @Test
+    public void isEmptyの引数にホワイトスペースの文字列を持つStringBuilderを渡した場合_falseが返されること() {
         assertThat(StringUtil.isEmpty(new StringBuilder(" ")), is(false));
+    }
+
+    @Test
+    public void isEmptyの引数にブランクでない文字列を持つStringBuilderを渡した場合_falseが返されること() {
         assertThat(StringUtil.isEmpty(new StringBuilder("bob")), is(false));
+    }
+
+    @Test
+    public void isEmptyの引数に前後にホワイトスペースを含むブランクでない文字列を持つStringBuilderを渡した場合_falseが返されること() {
         assertThat(StringUtil.isEmpty(new StringBuilder("  bob  ")), is(false));
     }
 
     @Test
-    public void testIsNotEmpty() {
+    public void isNotEmptyの引数にnullを渡した場合_falseが返されること() {
         assertThat(StringUtil.isNotEmpty(null), is(false));
+    }
+
+    @Test
+    public void isNotEmptyの引数に空文字を渡した場合_falseが返されること() {
         assertThat(StringUtil.isNotEmpty(""), is(false));
+    }
+
+    @Test
+    public void isNotEmptyの引数にホワイトスペースを渡した場合_trueが返されること() {
         assertThat(StringUtil.isNotEmpty(" "), is(true));
+    }
+
+    @Test
+    public void isNotEmptyの引数にブランクでない文字列を渡した場合_trueが返されること() {
         assertThat(StringUtil.isNotEmpty("bob"), is(true));
+    }
+
+    @Test
+    public void isNotEmptyの引数に前後にホワイトスペースを含むブランクでない文字列を渡した場合_trueが返されること() {
         assertThat(StringUtil.isNotEmpty("  bob  "), is(true));
     }
 
     @Test
-    public void testIsNotEmpty_StringBuilder() {
+    public void isNotEmptyにStringBuilder型のnullを渡した場合_falseが返されること() {
+        assertThat(StringUtil.isNotEmpty((StringBuilder) null), is(false));
+    }
+
+    @Test
+    public void isNotEmptyに空のStringBuilderを渡した場合_falseが返されること() {
         assertThat(StringUtil.isNotEmpty(new StringBuilder("")), is(false));
+    }
+
+    @Test
+    public void isNotEmptyの引数にホワイトスペースの文字列を持つStringBuilderを渡した場合_trueが返されること() {
         assertThat(StringUtil.isNotEmpty(new StringBuilder(" ")), is(true));
+    }
+
+    @Test
+    public void isNotEmptyの引数にブランクでない文字列を持つStringBuilderを渡した場合_trueが返されること() {
         assertThat(StringUtil.isNotEmpty(new StringBuilder("bob")), is(true));
+    }
+
+    @Test
+    public void isNotEmptyの引数に前後にホワイトスペースを含むブランクでない文字列を持つStringBuilderを渡した場合_trueが返されること() {
         assertThat(StringUtil.isNotEmpty(new StringBuilder("  bob  ")), is(true));
     }
 
     @Test
-    public void testToString() throws Exception {
+    public void toStringを呼び出した場合_引数で渡されたバイト配列が指定したエンコーディングの文字列に変換して返されること() throws Exception {
 
         // Setup
-        byte[] data = "オーシャン".getBytes("eucjp");
+        // ↓全部サロゲートペア
+        byte[] data = "𠀋𡈽𡌛𡑮𡢽𠮟𡚴𡸴𣇄𣗄".getBytes("UTF-16");
 
         // Exercise
-        String result = StringUtil.toString(data, "eucjp");
+        String result = StringUtil.toString(data, "UTF-16");
 
         // Verify
-        assertThat(result, is(equalTo("オーシャン")));
+        assertThat(result, is(equalTo("𠀋𡈽𡌛𡑮𡢽𠮟𡚴𡸴𣇄𣗄")));
     }
 
     @Test
-    public void testToString_Empty() throws Exception {
+    public void toStringの引数に空のバイト配列を渡した場合_空文字が返されること() throws Exception {
 
         // Setup
         byte[] data = new byte[0];
@@ -89,7 +156,7 @@ public class StringUtilTest {
     }
 
     @Test
-    public void testToString_NullData() throws Exception {
+    public void toStringの引数にnullを渡した場合_nullが返されること() throws Exception {
 
         // Setup
         byte[] data = null;
@@ -102,7 +169,7 @@ public class StringUtilTest {
     }
 
     @Test
-    public void testToString_NullEncoding() throws Exception {
+    public void toStringの第二引数にnullを渡した場合_第一引数で渡されたbyte配列がUTF8の文字列に変換されて返されること() throws Exception {
 
         // Setup
         byte[] data = "ロマンス".getBytes("UTF-8");
@@ -115,7 +182,8 @@ public class StringUtilTest {
     }
 
     @Test
-    public void testToString_Exception() throws Exception {
+    public void toStringの第二引数に存在しないエンコーディングを指定した場合_UnsupportedEncodingRuntimeExcetionが発生すること()
+            throws Exception {
 
         // Setup
         byte[] data = "ハネムーン".getBytes("UTF-8");

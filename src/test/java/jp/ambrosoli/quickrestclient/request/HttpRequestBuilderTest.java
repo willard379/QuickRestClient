@@ -45,7 +45,7 @@ public class HttpRequestBuilderTest {
     public ExpectedException expectedException = ExpectedException.none();
 
     @Test
-    public void testConstruct_Null() {
+    public void コンストラクタにnullを渡すと_IllegalArgumentExceptionが発生すること() {
 
         // Setup
         this.expectedException.expect(is(instanceOf(IllegalArgumentException.class)));
@@ -59,39 +59,39 @@ public class HttpRequestBuilderTest {
     }
 
     @Test
-    public void testCharset() {
+    public void charsetを呼び出すと_引数に渡したcharsetがHttpRequestに保持されること() {
 
         // Setup
-        HttpRequestBuilder builder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
+        HttpRequestBuilder sut = new HttpRequestBuilder("http://www.ambrosoli.jp/");
 
         // Exercise
-        builder.charset("Shift_JIS");
+        sut.charset("Shift_JIS");
 
         // Verify
-        String charset = builder.request.getCharset();
+        String charset = sut.request.getCharset();
         assertThat(charset, is(equalTo("Shift_JIS")));
 
     }
 
     @Test
-    public void testCharset_Null() {
+    public void charsetの引数にnullを渡すと_nullがHttpRequestに保持されること() {
 
         // Setup
-        HttpRequestBuilder builder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
+        HttpRequestBuilder sut = new HttpRequestBuilder("http://www.ambrosoli.jp/");
 
         // Exercise
-        builder.charset(null);
+        sut.charset(null);
 
         // Verify
-        String charset = builder.request.getCharset();
+        String charset = sut.request.getCharset();
         assertThat(charset, is(nullValue()));
     }
 
     @Test
-    public void testHeaders_NameValueObjectArray() {
+    public void headersの引数にNameValueObject配列を渡すと_HttpRequestにListとして保持されること() {
 
         // Setup
-        HttpRequestBuilder builder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
+        HttpRequestBuilder sut = new HttpRequestBuilder("http://www.ambrosoli.jp/");
 
         NameValueObject[] params = new NameValueObject[3];
         params[0] = new NameValueObject("Header1", "Value1");
@@ -99,10 +99,10 @@ public class HttpRequestBuilderTest {
         params[2] = new NameValueObject("Header3", "Value3");
 
         // Exercise
-        builder.headers(params);
+        sut.headers(params);
 
         // Verify
-        List<NameValueObject> headers = builder.request.getHeaders().getHeaders();
+        List<NameValueObject> headers = sut.request.getHeaders().getHeaders();
         assertThat(headers.size(), is(3));
 
         for (int i = 0; i < params.length; i++) {
@@ -113,26 +113,26 @@ public class HttpRequestBuilderTest {
     }
 
     @Test
-    public void testHeaders_NameValueObjectArray_Null() {
+    public void headersの引数にNameValueObject配列型でnullを渡すと_HttpRequestに空のListが保持されること() {
 
         // Setup
-        HttpRequestBuilder builder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
+        HttpRequestBuilder sut = new HttpRequestBuilder("http://www.ambrosoli.jp/");
         NameValueObject[] params = null;
 
         // Exercise
-        builder.headers(params);
+        sut.headers(params);
 
         // Verify
-        HttpHeaders headers = builder.request.getHeaders();
+        HttpHeaders headers = sut.request.getHeaders();
         assertThat(headers.isEmpty(), is(true));
 
     }
 
     @Test
-    public void testHeaders_Map() {
+    public void headersの引数にMapを渡すと_HttpRequestにNameValueObjectのListとして保持されること() {
 
         // Setup
-        HttpRequestBuilder builder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
+        HttpRequestBuilder sut = new HttpRequestBuilder("http://www.ambrosoli.jp/");
 
         Map<String, String> params = new HashMap<String, String>();
         params.put("ibaraki", "mito");
@@ -144,10 +144,10 @@ public class HttpRequestBuilderTest {
         params.put("kanagawa", "yokohama");
 
         // Exercise
-        builder.headers(params);
+        sut.headers(params);
 
         // Verify
-        List<NameValueObject> headers = builder.request.getHeaders().getHeaders();
+        List<NameValueObject> headers = sut.request.getHeaders().getHeaders();
         assertThat(headers.size(), is(7));
 
         Iterator<Entry<String, String>> itr = params.entrySet().iterator();
@@ -160,45 +160,45 @@ public class HttpRequestBuilderTest {
     }
 
     @Test
-    public void testHeaders_Map_Null() {
+    public void headersの引数にMap型でnullを渡すと_HttpRequestに空のListが保持されること() {
 
         // Setup
-        HttpRequestBuilder builder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
+        HttpRequestBuilder sut = new HttpRequestBuilder("http://www.ambrosoli.jp/");
 
         Map<String, String> params = null;
 
         // Exercise
-        builder.headers(params);
+        sut.headers(params);
 
         // Verify
-        HttpHeaders headers = builder.request.getHeaders();
+        HttpHeaders headers = sut.request.getHeaders();
         assertThat(headers.isEmpty(), is(true));
     }
 
     @Test
-    public void testMethod() {
+    public void methodの引数にHTTPメソッドを文字列で渡すと_対応するHttpMethodが返されること() {
 
         // Setup
-        HttpRequestBuilder builder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
+        HttpRequestBuilder sut = new HttpRequestBuilder("http://www.ambrosoli.jp/");
 
         // Exercise
-        builder.method(Http.GET);
-        HttpMethod method_get = builder.request.getMethod();
+        sut.method(Http.GET);
+        HttpMethod method_get = sut.request.getMethod();
 
-        builder.method(Http.POST);
-        HttpMethod method_post = builder.request.getMethod();
+        sut.method(Http.POST);
+        HttpMethod method_post = sut.request.getMethod();
 
-        builder.method(Http.PUT);
-        HttpMethod method_put = builder.request.getMethod();
+        sut.method(Http.PUT);
+        HttpMethod method_put = sut.request.getMethod();
 
-        builder.method(Http.DELETE);
-        HttpMethod method_delete = builder.request.getMethod();
+        sut.method(Http.DELETE);
+        HttpMethod method_delete = sut.request.getMethod();
 
-        builder.method(Http.OPTIONS);
-        HttpMethod method_options = builder.request.getMethod();
+        sut.method(Http.OPTIONS);
+        HttpMethod method_options = sut.request.getMethod();
 
-        builder.method(Http.HEAD);
-        HttpMethod method_head = builder.request.getMethod();
+        sut.method(Http.HEAD);
+        HttpMethod method_head = sut.request.getMethod();
 
         // Verify
         assertThat(method_get, is(HttpMethod.GET));
@@ -210,57 +210,59 @@ public class HttpRequestBuilderTest {
     }
 
     @Test
-    public void testMethod_Null() {
+    public void methodの引数にnullを渡すと_NullPointerExceptionが発生すること() {
 
         // Setup
         this.expectedException.expect(is(instanceOf(NullPointerException.class)));
         this.expectedException.expectMessage(is(equalTo("method may not to be null.")));
 
         // Exercise
-        HttpRequestBuilder builder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
-        builder.method(null);
-
-        // Verify
-        fail("例外が発生しませんでした");
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testMethod_Invalid() {
-
-        // Setup
-        HttpRequestBuilder builder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
-
-        // Exercise
-        builder.method("TRACE");
+        HttpRequestBuilder sut = new HttpRequestBuilder("http://www.ambrosoli.jp/");
+        sut.method(null);
 
         // Verify
         fail("例外が発生しませんでした");
     }
 
     @Test
-    public void testMethod_LowerCase() {
+    public void methodの引数にTRACEを渡すと_IllegalArgumentExceptionが発生すること() {
 
         // Setup
-        HttpRequestBuilder builder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
+        HttpRequestBuilder sut = new HttpRequestBuilder("http://www.ambrosoli.jp/");
+
+        this.expectedException.expect(is(instanceOf(IllegalArgumentException.class)));
 
         // Exercise
-        builder.method("get");
-        HttpMethod method_get = builder.request.getMethod();
+        sut.method("TRACE");
 
-        builder.method("post");
-        HttpMethod method_post = builder.request.getMethod();
+        // Verify
+        fail("例外が発生しませんでした");
+    }
 
-        builder.method("put");
-        HttpMethod method_put = builder.request.getMethod();
+    @Test
+    public void methodの引数にHTTPメソッドを小文字で渡すと_対応するHttpMethodが返されること() {
 
-        builder.method("delete");
-        HttpMethod method_delete = builder.request.getMethod();
+        // Setup
+        HttpRequestBuilder sut = new HttpRequestBuilder("http://www.ambrosoli.jp/");
 
-        builder.method("options");
-        HttpMethod method_options = builder.request.getMethod();
+        // Exercise
+        sut.method("get");
+        HttpMethod method_get = sut.request.getMethod();
 
-        builder.method("head");
-        HttpMethod method_head = builder.request.getMethod();
+        sut.method("post");
+        HttpMethod method_post = sut.request.getMethod();
+
+        sut.method("put");
+        HttpMethod method_put = sut.request.getMethod();
+
+        sut.method("delete");
+        HttpMethod method_delete = sut.request.getMethod();
+
+        sut.method("options");
+        HttpMethod method_options = sut.request.getMethod();
+
+        sut.method("head");
+        HttpMethod method_head = sut.request.getMethod();
 
         // Verify
         assertThat(method_get, is(HttpMethod.GET));
@@ -272,21 +274,21 @@ public class HttpRequestBuilderTest {
     }
 
     @Test
-    public void testParams_NameValueObjectArray() {
+    public void paramsの引数にNameValueObjectの配列を渡すと_HttpRequestに保持されること() {
 
         // Setup
-        HttpRequestBuilder builder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
+        HttpRequestBuilder sut = new HttpRequestBuilder("http://www.ambrosoli.jp/");
 
-        NameValueObject[] params = new NameValueObject[1];
+        NameValueObject[] params = new NameValueObject[3];
         params[0] = new NameValueObject("lettuce", "レタス");
-        params[0] = new NameValueObject("celery", "セロリ");
-        params[0] = new NameValueObject("bracken", "蕨");
+        params[1] = new NameValueObject("celery", "セロリ");
+        params[2] = new NameValueObject("bracken", "蕨");
 
         // Exercise
-        builder.params(params);
+        sut.params(params);
 
         // Verify
-        List<NameValueObject> paramList = builder.request.getParams().getParams();
+        List<NameValueObject> paramList = sut.request.getParams().getParams();
         assertThat(paramList.size(), is(params.length));
         for (int i = 0; i < params.length; i++) {
             assertThat(paramList.get(i).getName(), is(equalTo(params[i].getName())));
@@ -296,25 +298,25 @@ public class HttpRequestBuilderTest {
     }
 
     @Test
-    public void testParams_NameValueObjectArray_Null() {
+    public void paramsの引数にNameValueObject配列型のnullを渡すと_HttpRequestに空のListが保持されること() {
 
         // Setup
-        HttpRequestBuilder builder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
+        HttpRequestBuilder sut = new HttpRequestBuilder("http://www.ambrosoli.jp/");
         NameValueObject[] params = null;
 
         // Exercise
-        builder.params(params);
+        sut.params(params);
 
         // Verify
-        List<NameValueObject> paramList = builder.request.getParams().getParams();
+        List<NameValueObject> paramList = sut.request.getParams().getParams();
         assertThat(paramList, is(nullValue()));
     }
 
     @Test
-    public void testParams_Map() {
+    public void paramsの引数にMapを渡すと_HttpRequestにNameValueObjectのListとして保持されること() {
 
         // Setup
-        HttpRequestBuilder builder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
+        HttpRequestBuilder sut = new HttpRequestBuilder("http://www.ambrosoli.jp/");
 
         Map<String, String> params = new HashMap<String, String>();
         params.put("NISSAN", "Japan");
@@ -323,9 +325,9 @@ public class HttpRequestBuilderTest {
         params.put("Porsche", "Germany");
 
         // Exercise
-        builder.params(params);
+        sut.params(params);
 
-        List<NameValueObject> paramList = builder.request.getParams().getParams();
+        List<NameValueObject> paramList = sut.request.getParams().getParams();
         assertThat(paramList.size(), is(params.size()));
 
         Iterator<Entry<String, String>> itr = params.entrySet().iterator();
@@ -338,71 +340,72 @@ public class HttpRequestBuilderTest {
     }
 
     @Test
-    public void testParams_Map_Null() {
+    public void paramsの引数にMap型のnullを渡すと_HttpRequestに空のListが保持されること() {
 
         // Setup
-        HttpRequestBuilder builder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
+        HttpRequestBuilder sut = new HttpRequestBuilder("http://www.ambrosoli.jp/");
+        Map<String, String> param = null;
 
         // Exercise
-        builder.params((Map<String, String>) null);
+        sut.params(param);
 
         // Verify
-        List<NameValueObject> paramList = builder.request.getParams().getParams();
+        List<NameValueObject> paramList = sut.request.getParams().getParams();
         assertThat(paramList, is(nullValue()));
     }
 
     @Test
-    public void testProtocol() {
+    public void protocolを呼び出すと_引数で渡した値がHttpRequestに保持されること() {
 
         // Setup
-        HttpRequestBuilder builder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
+        HttpRequestBuilder sut = new HttpRequestBuilder("http://www.ambrosoli.jp/");
 
         // Exercise
-        builder.protocol(Http.HTTP_1_0);
+        sut.protocol(Http.HTTP_1_0);
 
         // Verify
-        assertThat(builder.request.getProtocol(), is(equalTo(Http.HTTP_1_0)));
+        assertThat(sut.request.getProtocol(), is(equalTo(Http.HTTP_1_0)));
 
     }
 
     @Test
-    public void testProtocol_Null() {
+    public void protocolの引数にnullを渡すと_nullがHttpRequestに保持されること() {
 
         // Setup
-        HttpRequestBuilder builder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
+        HttpRequestBuilder sut = new HttpRequestBuilder("http://www.ambrosoli.jp/");
 
         // Exercise
-        builder.protocol(null);
+        sut.protocol(null);
 
         // Verify
-        assertThat(builder.request.getProtocol(), is(nullValue()));
+        assertThat(sut.request.getProtocol(), is(nullValue()));
     }
 
     @Test
-    public void testProxy() {
+    public void proxyを呼び出すと_HttpRequestにProxyInfoとして保持されること() {
 
         // Setup
-        HttpRequestBuilder builder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
+        HttpRequestBuilder sut = new HttpRequestBuilder("http://www.ambrosoli.jp/");
 
         // Exercise
-        builder.proxy("localhost", 8080);
+        sut.proxy("localhost", 8080);
 
         // Verify
-        ProxyInfo proxyInfo = builder.request.getProxyInfo();
+        ProxyInfo proxyInfo = sut.request.getProxyInfo();
         assertThat(proxyInfo.getHost(), is(equalTo("localhost")));
         assertThat(proxyInfo.getPort(), is(equalTo(8080)));
     }
 
     @Test
-    public void testProxy_Null() {
+    public void proxyの第一引数にnullを渡すと_IllegalArgumentExceptionが発生すること() {
 
         // Setup
         this.expectedException.expect(is(instanceOf(IllegalArgumentException.class)));
         this.expectedException.expectMessage(is(equalTo("hostname may not be null")));
 
         // Exercise
-        HttpRequestBuilder builder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
-        builder.proxy(null, 8080);
+        HttpRequestBuilder sut = new HttpRequestBuilder("http://www.ambrosoli.jp/");
+        sut.proxy(null, 8080);
 
         // Verify
         fail("例外が発生しませんでした");
@@ -410,160 +413,163 @@ public class HttpRequestBuilderTest {
     }
 
     @Test
-    public void testTimeout_PositiveValue() {
+    public void timeoutメソッドを呼び出すと_引数で指定した値がHttpRequestに保持されること() {
 
         // Setup
-        HttpRequestBuilder builder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
+        HttpRequestBuilder sut = new HttpRequestBuilder("http://www.ambrosoli.jp/");
 
         // Exercise
-        builder.timeout(15000);
+        sut.timeout(15000);
 
         // Verify
-        assertThat(builder.request.getTimeout(), is(15000));
+        assertThat(sut.request.getTimeout(), is(15000));
 
     }
 
     @Test
-    public void testTimeout_ZeroValue() {
+    public void timeoutの引数に0を渡すと_HttpReqeustに0が保持されること() {
 
         // Setup
-        HttpRequestBuilder builder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
+        HttpRequestBuilder sut = new HttpRequestBuilder("http://www.ambrosoli.jp/");
 
         // Exercise
-        builder.timeout(0);
+        sut.timeout(0);
 
         // Verify
-        assertThat(builder.request.getTimeout(), is(0));
+        assertThat(sut.request.getTimeout(), is(0));
 
     }
 
     @Test
-    public void testTimeout_NegativeValue() {
+    public void timeoutの引数に負数を渡すと_引数で渡した値がHttpRequestに保持されること() {
 
         // Setup
-        HttpRequestBuilder builder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
+        HttpRequestBuilder sut = new HttpRequestBuilder("http://www.ambrosoli.jp/");
 
         // Exercise
-        builder.timeout(-15000);
+        sut.timeout(-15000);
 
         // Verify
-        assertThat(builder.request.getTimeout(), is(-15000));
+        assertThat(sut.request.getTimeout(), is(-15000));
 
     }
 
     @Test
-    public void testUserAgent() {
+    public void userAgentを呼び出すと_引数に指定した値がHttpRequestに保持されること() {
 
         // Setup
-        HttpRequestBuilder builder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
+        HttpRequestBuilder sut = new HttpRequestBuilder("http://www.ambrosoli.jp/");
 
         // Exercise
-        builder.userAgent("hoge/1.0");
+        sut.userAgent("hoge/1.0");
 
         // Verify
-        List<NameValueObject> headers = builder.request.getHeaders().getHeaders();
+        List<NameValueObject> headers = sut.request.getHeaders().getHeaders();
         assertThat(headers.size(), is(1));
         assertThat(headers.get(0).getName(), is(equalTo("User-Agent")));
         assertThat(headers.get(0).getValue(), is(equalTo("hoge/1.0")));
     }
 
     @Test
-    public void testExecute() {
+    public void executeを呼び出すと_コンストラクタで指定したURLの通信結果がHttpResponseとして返されること() {
 
         // Setup
-        HttpRequestBuilder builder = new HttpRequestBuilder(
+        HttpRequestBuilder sut = new HttpRequestBuilder(
                 "http://www.ambrosoli.jp/test-server/statusCode/ok");
 
         // Exercise
-        HttpResponse response = builder.execute();
+        HttpResponse actual = sut.execute();
 
         // Verify
-        assertThat(response.isSuccess(), is(true));
+        assertThat(actual.isSuccess(), is(true));
     }
 
     @Test
-    public void testSetUserAgent() {
+    public void userAgentを呼び出すと_引数で指定した値がHttpRequestに保持されること() {
 
         // Setup
-        HttpRequestBuilder builder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
+        HttpRequestBuilder sut = new HttpRequestBuilder("http://www.ambrosoli.jp/");
 
         // Exercise
-        builder.userAgent("Mozilla/10.0");
+        sut.userAgent("Mozilla/10.0");
 
         // Verify
-        NameValueObject userAgent = builder.request.getHeaders().getHeaders().get(0);
+        NameValueObject userAgent = sut.request.getHeaders().getHeaders().get(0);
         assertThat(userAgent.getName(), is("User-Agent"));
         assertThat(userAgent.getValue(), is("Mozilla/10.0"));
 
     }
 
     @Test
-    public void testSetUserAgent_Null() {
+    public void userAgentの引数にnullを渡すと_HttpRequestにnullが保持されること() {
 
         // Setup
-        HttpRequestBuilder builder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
+        HttpRequestBuilder sut = new HttpRequestBuilder("http://www.ambrosoli.jp/");
 
         // Exercise
-        builder.userAgent(null);
+        sut.userAgent(null);
 
         // Verify
-        HttpHeaders headers = builder.request.getHeaders();
+        HttpHeaders headers = sut.request.getHeaders();
         assertThat(headers, is(nullValue()));
 
     }
 
     @Test
-    public void testAccept() {
-
-        // Exercise
-        HttpRequestBuilder requestBuilder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
-        requestBuilder.accept(HTML, XHTML, XML, JSON, TEXT);
-
-        // Verify
-        List<NameValueObject> headers = requestBuilder.request.getHeaders().getHeaders();
-        assertThat(headers.size(), is(equalTo(5)));
-
-        for (NameValueObject header : headers) {
-            assertThat(header.getName(), is(equalTo("Accept")));
-            assertThat(
-                    header.getValue(),
-                    anyOf(equalTo(HTML), equalTo(XHTML), equalTo(XML), equalTo(JSON), equalTo(TEXT)));
-        }
-
-    }
-
-    @Test
-    public void testAccept_ContainsNull() throws Exception {
-
-        // Exercise
-        HttpRequestBuilder requestBuilder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
-        requestBuilder.accept(null, HTML, XHTML, XML, null, JSON, TEXT, null);
-
-        // Verify
-        List<NameValueObject> headers = requestBuilder.request.getHeaders().getHeaders();
-        assertThat(headers.size(), is(equalTo(5)));
-
-        for (NameValueObject header : headers) {
-            assertThat(header.getName(), is(equalTo("Accept")));
-            assertThat(
-                    header.getValue(),
-                    anyOf(equalTo(HTML), equalTo(XHTML), equalTo(XML), equalTo(JSON), equalTo(TEXT)));
-        }
-
-    }
-
-    @Test
-    public void testAuth_TypeSafe() {
+    public void acceptを呼び出すと_HttpRequesで保持しているHTTPヘッダーに引数で渡した値のAcceptヘッダーが追加されること() {
 
         // Setup
-        HttpRequestBuilder builder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
+        HttpRequestBuilder sut = new HttpRequestBuilder("http://www.ambrosoli.jp/");
+
+        // Exercise
+        sut.accept(HTML, XHTML, XML, JSON, TEXT);
+
+        // Verify
+        List<NameValueObject> headers = sut.request.getHeaders().getHeaders();
+        assertThat(headers.size(), is(equalTo(5)));
+
+        for (NameValueObject header : headers) {
+            assertThat(header.getName(), is(equalTo("Accept")));
+            assertThat(
+                    header.getValue(),
+                    anyOf(equalTo(HTML), equalTo(XHTML), equalTo(XML), equalTo(JSON), equalTo(TEXT)));
+        }
+
+    }
+
+    @Test
+    public void acceptの引数にnullを渡した場合_HttpRequestのHTTPヘッダーにnullのAcceptヘッダーが追加されないこと()
+            throws Exception {
+
+        // Exercise
+        HttpRequestBuilder sut = new HttpRequestBuilder("http://www.ambrosoli.jp/");
+        sut.accept(null, HTML, XHTML, XML, null, JSON, TEXT, null);
+
+        // Verify
+        List<NameValueObject> headers = sut.request.getHeaders().getHeaders();
+        assertThat(headers.size(), is(equalTo(5)));
+
+        for (NameValueObject header : headers) {
+            assertThat(header.getName(), is(equalTo("Accept")));
+            assertThat(
+                    header.getValue(),
+                    anyOf(equalTo(HTML), equalTo(XHTML), equalTo(XML), equalTo(JSON), equalTo(TEXT)));
+        }
+
+    }
+
+    @Test
+    public void authの引数にAuthInfoを渡した場合_HttpRequestにAuthInfoが保持されること() {
+
+        // Setup
+        HttpRequestBuilder sut = new HttpRequestBuilder("http://www.ambrosoli.jp/");
 
         // Exercise
         AuthInfo auth = Operations.digest("aaa", "bbb");
-        builder.auth(auth);
+        sut.auth(auth);
 
         // Verify
-        AuthInfo authInfo = builder.request.getAuthInfo();
+        AuthInfo authInfo = sut.request.getAuthInfo();
         assertThat(authInfo, is(notNullValue()));
         assertThat(authInfo.type, is(AuthType.DIGEST));
         assertThat(authInfo.username, is(equalTo("aaa")));
@@ -571,16 +577,16 @@ public class HttpRequestBuilderTest {
     }
 
     @Test
-    public void testAuth_String() {
+    public void authの引数に文字列で認証情報を指定した場合_AuthInfoが生成されてHttpRequestに保持されること() {
 
         // Setup
-        HttpRequestBuilder builder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
+        HttpRequestBuilder sut = new HttpRequestBuilder("http://www.ambrosoli.jp/");
 
         // Exercise
-        builder.auth("BASIC", "pppp", "hhhh");
+        sut.auth("BASIC", "pppp", "hhhh");
 
         // Verify
-        AuthInfo authInfo = builder.request.getAuthInfo();
+        AuthInfo authInfo = sut.request.getAuthInfo();
         assertThat(authInfo, is(notNullValue()));
         assertThat(authInfo.type, is(AuthType.BASIC));
         assertThat(authInfo.username, is(equalTo("pppp")));
@@ -588,16 +594,16 @@ public class HttpRequestBuilderTest {
     }
 
     @Test
-    public void testAuth_Enum() {
+    public void authの引数にEnumで認証メソッドを指定した場合_AuthInfoが生成されてHttpRequestに保持されること() {
 
         // Setup
-        HttpRequestBuilder builder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
+        HttpRequestBuilder sut = new HttpRequestBuilder("http://www.ambrosoli.jp/");
 
         // Exercise
-        builder.auth(AuthType.CLIENT_CERT, "abc", "xyz");
+        sut.auth(AuthType.CLIENT_CERT, "abc", "xyz");
 
         // Verify
-        AuthInfo authInfo = builder.request.getAuthInfo();
+        AuthInfo authInfo = sut.request.getAuthInfo();
         assertThat(authInfo, is(notNullValue()));
         assertThat(authInfo.type, is(AuthType.CLIENT_CERT));
         assertThat(authInfo.username, is(equalTo("abc")));
@@ -605,27 +611,29 @@ public class HttpRequestBuilderTest {
     }
 
     @Test
-    public void testAuth_Null() {
+    public void authの引数にnullを渡した場合_HttpRequestにnullが保持されること() {
 
         // Setup
-        HttpRequestBuilder builder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
+        HttpRequestBuilder sut = new HttpRequestBuilder("http://www.ambrosoli.jp/");
 
         // Exercise
-        builder.auth(null);
+        sut.auth(null);
 
         // Verify
-        AuthInfo authInfo = builder.request.getAuthInfo();
+        AuthInfo authInfo = sut.request.getAuthInfo();
         assertThat(authInfo, is(nullValue()));
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testAuth_InvalidAuthType() {
+    @Test
+    public void authの引数に存在しない認証メソッドを指定した場合_IllegalArgumentExceptionが発生すること() {
 
         // Setup
-        HttpRequestBuilder builder = new HttpRequestBuilder("http://www.ambrosoli.jp/");
+        HttpRequestBuilder sut = new HttpRequestBuilder("http://www.ambrosoli.jp/");
+
+        this.expectedException.expect(is(instanceOf(IllegalArgumentException.class)));
 
         // Exercise
-        builder.auth("hoge", "user", "password");
+        sut.auth("hoge", "user", "password");
 
         // Verify
         fail("例外が発生しませんでした。");

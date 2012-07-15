@@ -25,71 +25,461 @@ import org.junit.Test;
 public class URIUtilTest {
 
     @Test
-    public void testIsSSL() {
-        assertThat(URIUtil.isSSL(URI.create("http://www.ambrosoli.jp/")), is(false));
-        assertThat(URIUtil.isSSL(URI.create("https://www.ambrosoli.jp/")), is(true));
-        assertThat(URIUtil.isSSL(URI.create("ftp://www.ambrosoli.jp/")), is(false));
-        assertThat(URIUtil.isSSL(URI.create("willard379")), is(false));
-        assertThat(URIUtil.isSSL((URI) null), is(false));
+    public void isSSLの引数にhttpスキームのURIを渡した場合_falseが返されること() {
+
+        // Setup
+        URI uri = URI.create("http://www.ambrosoli.jp/");
+
+        // Exercise
+        boolean actual = URIUtil.isSSL(uri);
+
+        // Verify
+        assertThat(actual, is(false));
     }
 
     @Test
-    public void testIsSSL_String() {
-        assertThat(URIUtil.isSSL("http://www.ambrosoli.jp/"), is(false));
-        assertThat(URIUtil.isSSL("https://www.ambrosoli.jp/"), is(true));
-        assertThat(URIUtil.isSSL((String) null), is(false));
-        assertThat(URIUtil.isSSL("ftp://www.ambrosoli.jp/"), is(false));
-        assertThat(URIUtil.isSSL("willard379"), is(false));
+    public void isSSLの引数にhttpsスキームのURIを渡した場合_trueが返されること() {
+
+        // Setup
+        URI uri = URI.create("https://www.ambrosoli.jp/");
+
+        // Exercise
+        boolean actual = URIUtil.isSSL(uri);
+
+        // Verify
+        assertThat(actual, is(true));
     }
 
     @Test
-    public void testIsPlain() {
-        assertThat(URIUtil.isPlain(URI.create("http://www.ambrosoli.jp/")), is(true));
-        assertThat(URIUtil.isPlain(URI.create("https://www.ambrosoli.jp/")), is(false));
-        assertThat(URIUtil.isPlain(URI.create("ftp://www.ambrosoli.jp/")), is(false));
-        assertThat(URIUtil.isPlain(URI.create("willard379")), is(false));
-        assertThat(URIUtil.isPlain((URI) null), is(false));
+    public void isSSLの引数にftpスキームのURIを渡した場合_falseが返されること() {
+
+        // Setup
+        URI uri = URI.create("ftp://www.ambrosoli.jp/");
+
+        // Exercise
+        boolean actual = URIUtil.isSSL(uri);
+
+        // Verify
+        assertThat(actual, is(false));
     }
 
     @Test
-    public void testIsPlain_String() {
-        assertThat(URIUtil.isPlain("http://www.ambrosoli.jp/"), is(true));
-        assertThat(URIUtil.isPlain("https://www.ambrosoli.jp/"), is(false));
-        assertThat(URIUtil.isPlain((String) null), is(false));
-        assertThat(URIUtil.isPlain("ftp://www.ambrosoli.jp/"), is(false));
-        assertThat(URIUtil.isPlain("willard379"), is(false));
+    public void isSSLの引数にデタラメなURIを渡した場合_falseが返されること() {
+
+        // Setup
+        URI uri = URI.create("willard379");
+
+        // Exercise
+        boolean actual = URIUtil.isSSL(uri);
+
+        // Verify
+        assertThat(actual, is(false));
     }
 
     @Test
-    public void testToURI() {
-        assertThat(URIUtil.toURI("http://www.ambrosoli.jp/").toString(),
-                is(equalTo("http://www.ambrosoli.jp/")));
-        assertThat(URIUtil.toURI("https://www.ambrosoli.jp/").toString(),
-                is(equalTo("https://www.ambrosoli.jp/")));
-        assertThat(URIUtil.toURI(null), is(nullValue()));
-        assertThat(URIUtil.toURI(""), is(nullValue()));
+    public void isSSLの引数にURI型のnullを渡した場合_falseが返されること() {
+
+        // Setup
+        URI uri = null;
+
+        // Exercise
+        boolean actual = URIUtil.isSSL(uri);
+
+        // Verify
+        assertThat(actual, is(false));
     }
 
     @Test
-    public void testGetPort() {
-        assertThat(URIUtil.getPort(URIUtil.toURI("http://www.ambrosoli.jp:8080/")), is(8080));
-        assertThat(URIUtil.getPort(URIUtil.toURI("http://www.ambrosoli.jp/")), is(80));
-        assertThat(URIUtil.getPort(URIUtil.toURI("https://www.ambrosoli.jp:5432/")), is(5432));
-        assertThat(URIUtil.getPort(URIUtil.toURI("https://www.ambrosoli.jp/")), is(443));
-        assertThat(URIUtil.getPort(null), is(-1));
-        assertThat(URIUtil.getPort(URIUtil.toURI("ftp://www.ambrosoli.jp/")), is(-1));
+    public void isSSLの引数にhttpスキームのURI文字列を渡した場合_falseが返されること() {
+
+        // Setup
+        String uri = "http://www.ambrosoli.jp/";
+
+        // Exercise
+        boolean actual = URIUtil.isSSL(uri);
+
+        // Verify
+        assertThat(actual, is(false));
     }
 
     @Test
-    public void testAddQueryString() {
+    public void isSSLの引数にhttpsスキームのURI文字列を渡した場合_trueが返されること() {
+
+        // Setup
+        String uri = "https://www.ambrosoli.jp/";
+
+        // Exercise
+        boolean actual = URIUtil.isSSL(uri);
+
+        // Verify
+        assertThat(actual, is(true));
+    }
+
+    @Test
+    public void isSSLの引数にftpスキームのURI文字列を渡した場合_falseが返されること() {
+
+        // Setup
+        String uri = null;
+
+        // Exercise
+        boolean actual = URIUtil.isSSL(uri);
+        // Verify
+        assertThat(actual, is(false));
+    }
+
+    @Test
+    public void isSSLの引数にURIでない文字列を渡した場合_falseが返されること() {
+
+        // Setup
+        String uri = "ftp://www.ambrosoli.jp/";
+
+        // Exercise
+        boolean actual = URIUtil.isSSL(uri);
+
+        // Verify
+        assertThat(actual, is(false));
+    }
+
+    @Test
+    public void isSSLの引数にString型のnullを渡した場合_falseが返されること() {
+
+        // Setup
+        String uri = "willard379";
+
+        // Exercise
+        boolean actual = URIUtil.isSSL(uri);
+
+        // Verify
+        assertThat(actual, is(false));
+    }
+
+    @Test
+    public void isPlainの引数にhttpスキームのURIを渡した場合_trueが返されること() {
+
+        // Setup
+        URI uri = URI.create("http://www.ambrosoli.jp/");
+
+        // Exercise
+        boolean actual = URIUtil.isPlain(uri);
+
+        // Verify
+        assertThat(actual, is(true));
+    }
+
+    @Test
+    public void isPlainの引数にhttpsスキームのURIを渡した場合_falseが返されること() {
+
+        // Setup
+        URI uri = URI.create("https://www.ambrosoli.jp/");
+
+        // Exercise
+        boolean actual = URIUtil.isPlain(uri);
+
+        // Verify
+        assertThat(actual, is(false));
+    }
+
+    @Test
+    public void isPlainの引数にftpスキームのURIを渡した場合_falseが返されること() {
+
+        // Setup
+        URI uri = URI.create("ftp://www.ambrosoli.jp/");
+
+        // Exercise
+        boolean actual = URIUtil.isPlain(uri);
+
+        // Verify
+        assertThat(actual, is(false));
+    }
+
+    @Test
+    public void isPlainの引数にデタラメなURIを渡した場合_falseが返されること() {
+
+        // Setup
+        URI uri = URI.create("willard379");
+
+        // Exercise
+        boolean actual = URIUtil.isPlain(uri);
+
+        // Verify
+        assertThat(actual, is(false));
+    }
+
+    @Test
+    public void isPlainの引数にURI型のnullを渡した場合_falseが返されること() {
+
+        // Setup
+        URI uri = null;
+
+        // Exercise
+        boolean actual = URIUtil.isPlain(uri);
+
+        // Verify
+        assertThat(actual, is(false));
+    }
+
+    @Test
+    public void isPlainの引数にhttpスキームのURI文字列を渡した場合_trueが返されること() {
+
+        // Setup
+        String uri = "http://www.ambrosoli.jp/";
+
+        // Exercise
+        boolean actual = URIUtil.isPlain(uri);
+
+        // Verify
+        assertThat(actual, is(true));
+    }
+
+    @Test
+    public void isPlainの引数にhttpsスキームのURI文字列を渡した場合_falseが返されること() {
+
+        // Setup
+        String uri = "https://www.ambrosoli.jp/";
+
+        // Exercise
+        boolean actual = URIUtil.isPlain(uri);
+
+        // Verify
+        assertThat(actual, is(false));
+    }
+
+    @Test
+    public void isPlainの引数にftpスキームのURI文字列を渡した場合_falseが返されること() {
+
+        // Setup
+        String uri = null;
+
+        // Exercise
+        boolean actual = URIUtil.isPlain(uri);
+
+        // Verify
+        assertThat(actual, is(false));
+    }
+
+    @Test
+    public void isPlainの引数にURIでない文字列を渡した場合_falseが返されること() {
+
+        // Setup
+        String uri = "ftp://www.ambrosoli.jp/";
+
+        // Exercise
+        boolean actual = URIUtil.isPlain(uri);
+
+        // Verify
+        assertThat(actual, is(false));
+    }
+
+    @Test
+    public void isPlainの引数に文字列型のnullを渡した場合_falseが返されること() {
+
+        // Setup
+        String uri = "willard379";
+
+        // Exercise
+        boolean actual = URIUtil.isPlain(uri);
+
+        // Verify
+        assertThat(actual, is(false));
+    }
+
+    @Test
+    public void toURIの引数にhttpスキームのURI文字列を渡した場合_URIが生成されること() {
+
+        // Setup
+        String uri = "http://www.ambrosoli.jp/";
+
+        // Exercise
+        URI actual = URIUtil.toURI(uri);
+
+        // Verify
+        assertThat(actual.toString(), is(equalTo(uri)));
+    }
+
+    @Test
+    public void toURIの引数にhttpsスキームのURI文字列を渡した場合_URIが生成されること() {
+
+        // Setup
+        String uri = "https://www.ambrosoli.jp/";
+
+        // Exercise
+        URI actual = URIUtil.toURI(uri);
+
+        // Verify
+        assertThat(actual.toString(), is(equalTo(uri)));
+    }
+
+    @Test
+    public void toURIの引数にnullを渡した場合_nullが返されること() {
+
+        // Setup
+        String uri = null;
+
+        // Exercise
+        URI actual = URIUtil.toURI(uri);
+
+        // Verify
+        assertThat(actual, is(nullValue()));
+    }
+
+    @Test
+    public void toURIの引数に空文字を渡した場合_nullが返されること() {
+
+        // Setup
+        String uri = "";
+
+        // Exercise
+        URI actual = URIUtil.toURI(uri);
+
+        // Verify
+        assertThat(actual, is(nullValue()));
+    }
+
+    @Test
+    public void getPortの引数にポート番号8080を指定したhttpスキームのURIを渡した場合_8080が返されること() {
+
+        // Setup
+        URI uri = URIUtil.toURI("http://www.ambrosoli.jp:8080/");
+
+        // Exercise
+        int actual = URIUtil.getPort(uri);
+
+        // Verify
+        assertThat(actual, is(8080));
+    }
+
+    @Test
+    public void getPortの引数にポート番号を指定しないhttpスキームのURIを渡した場合_80が返されること() {
+
+        // Setup
         URI uri = URIUtil.toURI("http://www.ambrosoli.jp/");
-        assertThat(URIUtil.addQueryString(uri, "?a=A").toString(),
-                is(equalTo("http://www.ambrosoli.jp/?a=A")));
-        assertThat(URIUtil.addQueryString(uri, null).toString(),
-                is(equalTo("http://www.ambrosoli.jp/")));
-        assertThat(URIUtil.addQueryString(uri, "").toString(),
-                is(equalTo("http://www.ambrosoli.jp/")));
-        assertThat(URIUtil.addQueryString(null, "?a=A"), is(nullValue()));
-        assertThat(URIUtil.addQueryString(null, null), is(nullValue()));
+
+        // Exercise
+        int actual = URIUtil.getPort(uri);
+
+        // Verify
+        assertThat(actual, is(80));
+    }
+
+    @Test
+    public void getPortの引数にポート番号5432を指定したhttpsスキームのURIを渡した場合_5432が返されること() {
+
+        // Setup
+        URI uri = URIUtil.toURI("https://www.ambrosoli.jp:5432/");
+
+        // Exercise
+        int actual = URIUtil.getPort(uri);
+
+        // Verify
+        assertThat(actual, is(5432));
+    }
+
+    @Test
+    public void getPortの引数にポート番号を指定しないhttpsスキームのURIを渡した場合_443が返されること() {
+
+        // Setup
+        URI uri = URIUtil.toURI("https://www.ambrosoli.jp/");
+
+        // Exercise
+        int actual = URIUtil.getPort(uri);
+
+        // Verify
+        assertThat(actual, is(443));
+    }
+
+    @Test
+    public void getPortの引数にnullを渡した場合_マイナス1が返されること() {
+
+        // Setup
+        URI uri = null;
+
+        // Exercise
+        int actual = URIUtil.getPort(uri);
+
+        // Verify
+        assertThat(actual, is(-1));
+    }
+
+    @Test
+    public void getPortの引数にftpスキームのURIを渡した場合_マイナス1が返されること() {
+
+        // Setup
+        URI uri = URIUtil.toURI("ftp://www.ambrosoli.jp/");
+
+        // Exercise
+        int actual = URIUtil.getPort(uri);
+
+        // Verify
+        assertThat(actual, is(-1));
+    }
+
+    @Test
+    public void addQueryStringの引数にURIとクエリストリングを渡すと_クエリストリングが追加されたURIが返されること() {
+
+        // Setup
+        URI uri = URIUtil.toURI("http://www.ambrosoli.jp/");
+        String queryString = "?a=A";
+
+        // Exercise
+        URI actual = URIUtil.addQueryString(uri, queryString);
+
+        // Verify
+        assertThat(actual.toString(), is(equalTo("http://www.ambrosoli.jp/?a=A")));
+    }
+
+    @Test
+    public void addQueryStringの引数にURIとnullを渡すと_クエリストリングが追加されないこと() {
+
+        // Setup
+        URI uri = URIUtil.toURI("http://www.ambrosoli.jp/");
+        String queryString = null;
+
+        // Exercise
+        URI actual = URIUtil.addQueryString(uri, queryString);
+
+        // Verify
+        assertThat(actual.toString(), is(equalTo("http://www.ambrosoli.jp/")));
+    }
+
+    @Test
+    public void addQueryStringの引数にURIと空文字を渡すと_クエリストリングが追加されないこと() {
+
+        // Setup
+        URI uri = URIUtil.toURI("http://www.ambrosoli.jp/");
+        String queryString = "";
+
+        // Exercise
+        URI actual = URIUtil.addQueryString(uri, queryString);
+
+        // Verify
+        assertThat(actual.toString(), is(equalTo("http://www.ambrosoli.jp/")));
+    }
+
+    @Test
+    public void addQueryStringの引数にnullとクエリストリングを渡すと_nullが返されること() {
+
+        // Setup
+        URI uri = null;
+        String queryString = "?a=A";
+
+        // Exercise
+        URI actual = URIUtil.addQueryString(uri, queryString);
+
+        // Verify
+        assertThat(actual, is(nullValue()));
+    }
+
+    @Test
+    public void addQueryStringの引数がどちらもnullの場合_nullが返されること() {
+
+        // Setup
+        URI uri = null;
+        String queryString = null;
+
+        // Exercise
+        URI actual = URIUtil.addQueryString(uri, queryString);
+
+        // Verify
+        assertThat(actual, is(nullValue()));
     }
 }

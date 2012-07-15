@@ -42,7 +42,7 @@ public class InputStreamUtilTest {
     public ExpectedException expectedException = ExpectedException.none();
 
     @Test
-    public void testClose() throws Exception {
+    public void closeを呼び出した場合_引数で渡したInputStreamがcloseされること() throws Exception {
 
         // Setup
         InputStream inputStream = mock(InputStream.class);
@@ -55,7 +55,37 @@ public class InputStreamUtilTest {
     }
 
     @Test
-    public void testCloseSilentry() throws Exception {
+    public void closeの引数にnullを渡した場合_例外が発生しないこと() throws Exception {
+
+        // Setup
+        InputStream inputStream = null;
+
+        // Exercise
+        InputStreamUtil.close(inputStream);
+
+        // Verify
+        // 例外が発生しなければOK
+    }
+
+    @Test
+    public void closeの引数で渡したInputStreamで例外が発生した場合_IORuntimeExceptionにラップされてスローされること()
+            throws Exception {
+
+        // Setup
+        InputStream inputStream = mock(InputStream.class);
+        doThrow(new IOException()).when(inputStream).close();
+
+        this.expectedException.expect(is(instanceOf(IORuntimeException.class)));
+
+        // Exercise
+        InputStreamUtil.close(inputStream);
+
+        // Verify
+        fail("IORuntimeExceptionがスローされませんでした。");
+    }
+
+    @Test
+    public void closeSilentryを呼び出した場合_引数で渡したInputStreamがcloseされること() throws Exception {
 
         // Setup
         InputStream inputStream = mock(InputStream.class);
@@ -68,11 +98,41 @@ public class InputStreamUtilTest {
     }
 
     @Test
-    public void testCopy() throws Exception {
+    public void closeSilentryの引数にnullを渡した場合_例外が発生しないこと() throws Exception {
 
         // Setup
-        InputStream inputStream = new ByteArrayInputStream("willard379".getBytes("UTF-8"));
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        InputStream inputStream = null;
+
+        // Exercise
+        InputStreamUtil.closeSilently(inputStream);
+
+        // Verify
+        // 例外が発生しなければOK
+    }
+
+    @Test
+    public void closeSilentryの引数で渡したInputStreamで例外が発生した場合_IORuntimeExceptionにラップされてスローされること()
+            throws Exception {
+
+        // Setup
+        InputStream inputStream = mock(InputStream.class);
+        doThrow(new IOException()).when(inputStream).close();
+
+        this.expectedException.expect(IORuntimeException.class);
+
+        // Exercise
+        InputStreamUtil.closeSilently(inputStream);
+
+        // Verify
+        fail("IORuntimeExceptionが発生しませんでした。");
+    }
+
+    @Test
+    public void copyが呼び出された場合_OutputStreamにデータが書きだされてcloseされること() throws Exception {
+
+        // Setup
+        InputStream inputStream = spy(new ByteArrayInputStream("willard379".getBytes("UTF-8")));
+        ByteArrayOutputStream outputStream = spy(new ByteArrayOutputStream());
 
         // Exercise
         InputStreamUtil.copy(inputStream, outputStream);
@@ -80,10 +140,13 @@ public class InputStreamUtilTest {
         // Verify
         String result = new String(outputStream.toByteArray(), "UTF-8");
         assertThat(result, is(equalTo("willard379")));
+
+        verify(inputStream).close();
+        verify(outputStream).close();
     }
 
     @Test
-    public void testCopy_NullInputStream() throws Exception {
+    public void copyの第一引数にnullを渡した場合_OutputStreamには書き込まれずにcloseされること() throws Exception {
 
         // Setup
         InputStream input = null;
@@ -98,7 +161,7 @@ public class InputStreamUtilTest {
     }
 
     @Test
-    public void testCopy_NullOutputStream() throws Exception {
+    public void copyの第二引数にnullを渡した場合_InputStreamの読み込みはされずにcloseされること() throws Exception {
 
         // Setup
         InputStream input = mock(InputStream.class);
@@ -113,7 +176,8 @@ public class InputStreamUtilTest {
     }
 
     @Test
-    public void testCopy_ExceptionInInputStream() throws Exception {
+    public void copyの第一引数で渡したInputStreamで例外が発生した場合_InputStreamとOutputStreamはcloseされていること()
+            throws Exception {
 
         // Setup
         InputStream input = mock(InputStream.class);
@@ -127,11 +191,13 @@ public class InputStreamUtilTest {
         InputStreamUtil.copy(input, output);
 
         // Verify
+        verify(input).close();
         verify(output).close();
     }
 
     @Test
-    public void testCopy_ExceptionInOutputStream() throws Exception {
+    public void copyの第二引数で渡したOutputStreamで例外が発生した場合_InputStreamとOutputStreamはcloseされていること()
+            throws Exception {
 
         // Setup
         InputStream input = mock(InputStream.class);
@@ -146,5 +212,6 @@ public class InputStreamUtilTest {
 
         // Verify
         verify(input).close();
+        verify(output).close();
     }
 }

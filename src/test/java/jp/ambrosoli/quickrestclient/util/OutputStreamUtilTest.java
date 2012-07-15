@@ -15,11 +15,18 @@
  */
 package jp.ambrosoli.quickrestclient.util;
 
+import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
+import java.io.IOException;
 import java.io.OutputStream;
 
+import jp.ambrosoli.quickrestclient.exception.IORuntimeException;
+
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 /**
  * @author willard379
@@ -27,30 +34,91 @@ import org.junit.Test;
  */
 public class OutputStreamUtilTest {
 
+    @Rule
+    public ExpectedException expectedException = ExpectedException.none();
+
     @Test
-    public void testClose() throws Exception {
+    public void testClose1() throws Exception {
 
         // Setup
-        OutputStream inputStream = mock(OutputStream.class);
+        OutputStream output = mock(OutputStream.class);
 
         // Exercise
-        OutputStreamUtil.close(inputStream);
+        OutputStreamUtil.close(output);
 
         // Verify
-        verify(inputStream).close();
+        verify(output).close();
     }
 
     @Test
-    public void testCloseSilentry() throws Exception {
+    public void testClose2() throws Exception {
 
         // Setup
-        OutputStream inputStream = mock(OutputStream.class);
+        OutputStream output = null;
 
         // Exercise
-        OutputStreamUtil.closeSilently(inputStream);
+        OutputStreamUtil.close(output);
 
         // Verify
-        verify(inputStream).close();
+        // 例外が発生しなければOK
+    }
+
+    @Test
+    public void testClose3() throws Exception {
+
+        // Setup
+        OutputStream output = mock(OutputStream.class);
+        doThrow(new IOException()).when(output).close();
+
+        this.expectedException.expect(is(instanceOf(IORuntimeException.class)));
+
+        // Exercise
+        OutputStreamUtil.close(output);
+
+        // Verify
+        fail("IORuntimeExceptionが発生しませんでした。");
+    }
+
+    @Test
+    public void testCloseSilentry1() throws Exception {
+
+        // Setup
+        OutputStream output = mock(OutputStream.class);
+
+        // Exercise
+        OutputStreamUtil.closeSilently(output);
+
+        // Verify
+        verify(output).close();
+    }
+
+    @Test
+    public void testCloseSilentry2() throws Exception {
+
+        // Setup
+        OutputStream output = null;
+
+        // Exercise
+        OutputStreamUtil.closeSilently(output);
+
+        // Verify
+        // 例外が発生しなければOK
+    }
+
+    @Test
+    public void testCloseSilentry3() throws Exception {
+
+        // Setup
+        OutputStream output = mock(OutputStream.class);
+        doThrow(new IOException()).when(output).close();
+
+        this.expectedException.expect(is(instanceOf(IORuntimeException.class)));
+
+        // Exercise
+        OutputStreamUtil.closeSilently(output);
+
+        // Verify
+        fail("IORuntimeExceptionが発生しませんでした。");
     }
 
 }
