@@ -162,7 +162,8 @@ public class ReflectionToStringBuilderTest {
     public void Map型のフィールドを持つオブジェクトを指定した場合_Mapの内容が波括弧に囲まれてkeyイコールvalue形式で出力されること() {
 
         // Setup
-        Hoge object = new Hoge(new LinkedHashMap<String, String>() {
+        @SuppressWarnings("serial")
+		Hoge object = new Hoge(new LinkedHashMap<String, String>() {
             {
                 this.put("key1", "value1");
                 this.put("key2", "value2");
@@ -181,7 +182,8 @@ public class ReflectionToStringBuilderTest {
     public void nullを含むMap型のフィールドを持つオブジェクトを指定した場合_nullという文字列がそのまま設定されること() {
 
         // Setup
-        Hoge object = new Hoge(new LinkedHashMap<String, String>() {
+        @SuppressWarnings("serial")
+		Hoge object = new Hoge(new LinkedHashMap<String, String>() {
             {
                 this.put("key1", "value1");
                 this.put("key2", "value2");

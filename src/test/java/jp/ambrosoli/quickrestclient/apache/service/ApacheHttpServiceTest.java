@@ -15,8 +15,13 @@
  */
 package jp.ambrosoli.quickrestclient.apache.service;
 
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.*;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.instanceOf;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.nullValue;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
 
 import java.io.IOException;
 import java.net.URI;
@@ -33,6 +38,7 @@ import jp.ambrosoli.quickrestclient.params.ProxyInfo;
 import jp.ambrosoli.quickrestclient.params.RequestParams;
 import jp.ambrosoli.quickrestclient.request.HttpRequest;
 import jp.ambrosoli.quickrestclient.response.HttpResponse;
+import jp.ambrosoli.quickrestclient.unittest.DataSource;
 import jp.ambrosoli.quickrestclient.util.StringUtil;
 import jp.ambrosoli.quickrestclient.util.URIUtil;
 
@@ -79,8 +85,7 @@ public class ApacheHttpServiceTest {
         // Setup
         ApacheHttpService sut = new ApacheHttpService();
 
-        HttpRequest request = new HttpRequest(
-                URIUtil.toURI("http://www.ambrosoli.jp/test-server/statusCode/ok"));
+        HttpRequest request = new HttpRequest(URIUtil.toURI(DataSource.url("statusCode/ok")));
 
         // Exercise
         HttpResponse actual = sut.execute(request);
@@ -102,8 +107,7 @@ public class ApacheHttpServiceTest {
         values.add(new NameValueObject("Pragma", "no-cache"));
         values.add(new NameValueObject("Vary", "Accept-Charset, Accept-Language"));
 
-        HttpRequest request = new HttpRequest(
-                URIUtil.toURI("http://www.ambrosoli.jp/test-server/header/sameAsParams"));
+        HttpRequest request = new HttpRequest(URIUtil.toURI(DataSource.url("header/sameAsParams")));
         request.setMethod(HttpMethod.POST);
         request.setCharset(StringUtil.DEFAULT_ENCODING);
         request.addHeaders(values);

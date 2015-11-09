@@ -15,10 +15,22 @@
  */
 package jp.ambrosoli.quickrestclient;
 
-import static jp.ambrosoli.quickrestclient.HttpConstants.*;
-import static jp.ambrosoli.quickrestclient.Operations.*;
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.*;
+import static jp.ambrosoli.quickrestclient.HttpConstants.HTML;
+import static jp.ambrosoli.quickrestclient.HttpConstants.JSON;
+import static jp.ambrosoli.quickrestclient.HttpConstants.TEXT;
+import static jp.ambrosoli.quickrestclient.HttpConstants.XHTML;
+import static jp.ambrosoli.quickrestclient.HttpConstants.XML;
+import static jp.ambrosoli.quickrestclient.Operations.add;
+import static jp.ambrosoli.quickrestclient.Operations.basic;
+import static jp.ambrosoli.quickrestclient.Operations.digest;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasItems;
+import static org.hamcrest.Matchers.instanceOf;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.nullValue;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -28,6 +40,7 @@ import java.util.Map;
 import jp.ambrosoli.quickrestclient.exception.SocketTimeoutRuntimeException;
 import jp.ambrosoli.quickrestclient.headers.HttpHeader;
 import jp.ambrosoli.quickrestclient.response.HttpResponse;
+import jp.ambrosoli.quickrestclient.unittest.DataSource;
 
 import org.junit.Ignore;
 import org.junit.Rule;
@@ -43,7 +56,7 @@ public class HttpTest {
     public void URLのみ指定して正しく通信が行われること() {
 
         // Exercise
-        HttpResponse response = Http.url("http://www.ambrosoli.jp/test-server/").execute();
+        HttpResponse response = Http.url(DataSource.url()).execute();
 
         // Verify
         assertThat(response.isSuccess(), is(true));
@@ -57,7 +70,7 @@ public class HttpTest {
 
         // このURLにGETメソッドでリクエストした場合、ステータスコード200が返却される。
         // GETメソッド以外でリクエストした場合、ステータスコード405が返却される。
-        HttpResponse sut = Http.url("http://www.ambrosoli.jp/test-server/method/get").execute();
+        HttpResponse sut = Http.url(DataSource.url("method/get")).execute();
 
         // Verify
         assertThat(sut.isSuccess(), is(true));
@@ -67,7 +80,7 @@ public class HttpTest {
     public void GETメソッドを送信する() {
 
         // Exercise
-        HttpResponse response = Http.url("http://www.ambrosoli.jp/test-server/method/get")
+        HttpResponse response = Http.url(DataSource.url("method/get"))
                 .method(Http.GET).execute();
 
         // Verify
@@ -78,7 +91,7 @@ public class HttpTest {
     public void POSTメソッドを送信する() {
 
         // Exercise
-        HttpResponse response = Http.url("http://www.ambrosoli.jp/test-server/method/post")
+        HttpResponse response = Http.url(DataSource.url("method/post"))
                 .method(Http.POST).execute();
 
         // Verify
@@ -89,7 +102,7 @@ public class HttpTest {
     public void PUTメソッドを送信する() {
 
         // Exercise
-        HttpResponse response = Http.url("http://www.ambrosoli.jp/test-server/method/put")
+        HttpResponse response = Http.url(DataSource.url("method/put"))
                 .method(Http.PUT).execute();
 
         // Verify
@@ -100,7 +113,7 @@ public class HttpTest {
     public void DELETEメソッドを送信する() {
 
         // Exercise
-        HttpResponse response = Http.url("http://www.ambrosoli.jp/test-server/method/delete")
+        HttpResponse response = Http.url(DataSource.url("method/delete"))
                 .method(Http.DELETE).execute();
 
         // Verify
@@ -111,7 +124,7 @@ public class HttpTest {
     public void HEADメソッドを送信する() {
 
         // Exercise
-        HttpResponse response = Http.url("http://www.ambrosoli.jp/test-server/method/head")
+        HttpResponse response = Http.url(DataSource.url("method/head"))
                 .method(Http.HEAD).execute();
 
         // Verify
@@ -122,7 +135,7 @@ public class HttpTest {
     public void OPTIONSメソッドを送信する() {
 
         // Exercise
-        HttpResponse response = Http.url("http://www.ambrosoli.jp/test-server/method/options")
+        HttpResponse response = Http.url(DataSource.url("method/options"))
                 .method(Http.OPTIONS).execute();
 
         // Verify
@@ -133,7 +146,7 @@ public class HttpTest {
     public void GETメソッドを文字列で指定して送信する() {
 
         // Exercise
-        HttpResponse response = Http.url("http://www.ambrosoli.jp/test-server/method/get")
+        HttpResponse response = Http.url(DataSource.url("method/get"))
                 .method("GET").execute();
 
         // Verify
@@ -144,7 +157,7 @@ public class HttpTest {
     public void POSTメソッドを文字列で指定して送信する() {
 
         // Exercise
-        HttpResponse response = Http.url("http://www.ambrosoli.jp/test-server/method/post")
+        HttpResponse response = Http.url(DataSource.url("method/post"))
                 .method("post").execute();
 
         // Verify
@@ -156,7 +169,7 @@ public class HttpTest {
 
         // Setup
         // HTTP/1.0のリクエストに対して200 OKを返すURL
-        String url = "http://www.ambrosoli.jp/test-server/httpProtocol/version1_0";
+        String url = DataSource.url("httpProtocol/version1_0");
 
         // Exercise
         HttpResponse response_1_0 = Http.url(url).protocol(Http.HTTP_1_0).execute();
@@ -173,7 +186,7 @@ public class HttpTest {
 
         // Setup
         // HTTP/1.1のリクエストに対して200 OKを返すURL
-        String url = "http://www.ambrosoli.jp/test-server/httpProtocol/version1_1";
+        String url = DataSource.url("httpProtocol/version1_1");
 
         // Exercise
         HttpResponse response_1_1 = Http.url(url).protocol(Http.HTTP_1_1).execute();
@@ -188,7 +201,7 @@ public class HttpTest {
     public void UserAgentを設定して送信する() {
 
         // Exercise
-        HttpResponse response = Http.url("http://www.ambrosoli.jp/test-server/header/userAgent")
+        HttpResponse response = Http.url(DataSource.url("header/userAgent"))
                 .userAgent("Ambrosoli/X.X").execute();
 
         // Verify
@@ -200,7 +213,7 @@ public class HttpTest {
     public void GETリクエストにリクエストパラメータを付与して送信する() {
 
         // Exercise
-        HttpResponse response = Http.url("http://www.ambrosoli.jp/test-server/helloWorld")
+        HttpResponse response = Http.url(DataSource.url("helloWorld"))
                 .method(Http.GET).params(add("name", "willard379")).execute();
 
         // Verify
@@ -211,7 +224,7 @@ public class HttpTest {
     public void POSTリクエストにリクエストパラメータを付与して送信する() {
 
         // Exercise
-        HttpResponse response = Http.url("http://www.ambrosoli.jp/test-server/helloWorld")
+        HttpResponse response = Http.url(DataSource.url("helloWorld"))
                 .method(Http.POST).params(add("name", "willard379")).execute();
 
         // Verify
@@ -226,7 +239,7 @@ public class HttpTest {
         params.put("name", "willard379");
 
         // Exercise
-        HttpResponse response = Http.url("http://www.ambrosoli.jp/test-server/helloWorld")
+        HttpResponse response = Http.url(DataSource.url("helloWorld"))
                 .method(Http.POST).params(params).execute();
 
         // Verify
@@ -237,7 +250,7 @@ public class HttpTest {
     public void charsetを指定して送信する() {
 
         // Exercise
-        HttpResponse response = Http.url("http://www.ambrosoli.jp/test-server/helloWorld")
+        HttpResponse response = Http.url(DataSource.url("helloWorld"))
                 .method(Http.GET).params(add("name", "まぐ☆なむ")).charset("UTF-8").execute();
 
         // Verify
@@ -249,7 +262,7 @@ public class HttpTest {
 
         // Exercise
         HttpResponse res = Http
-                .url("http://www.ambrosoli.jp/test-server/header/sameAsParams")
+                .url(DataSource.url("header/sameAsParams"))
                 .method(Http.POST)
                 .headers(add("Accept", "application/xml"), add("Connection", "Keep-Alive"),
                         add("Accept-Language", "ja"), add("Pragma", "no-cache"))
@@ -273,7 +286,7 @@ public class HttpTest {
         map.put("Pragma", "no-cache");
 
         // Exercise
-        HttpResponse res = Http.url("http://www.ambrosoli.jp/test-server/header/sameAsParams")
+        HttpResponse res = Http.url(DataSource.url("header/sameAsParams"))
                 .method(Http.POST).headers(map).params(map).charset("UTF-8").execute();
 
         // Verify
@@ -284,7 +297,7 @@ public class HttpTest {
     public void ContentTypeを設定する() {
 
         // Exercise
-        HttpResponse response = Http.url("http://www.ambrosoli.jp/test-server/header/setHeaders")
+        HttpResponse response = Http.url(DataSource.url("header/setHeaders"))
                 .params(add("Content-Type", "text/html;charset=Shift_JIS")).execute();
 
         // Verify
@@ -301,7 +314,7 @@ public class HttpTest {
         params.put("Connection", "close");
 
         // Exercise
-        HttpResponse response = Http.url("http://www.ambrosoli.jp/test-server/header/setHeaders")
+        HttpResponse response = Http.url(DataSource.url("header/setHeaders"))
                 .params(params).execute();
         List<HttpHeader> allHeaders = response.getAllHeaders();
 
@@ -333,7 +346,7 @@ public class HttpTest {
         params.put("Connection", "close");
 
         // Exercise
-        HttpResponse response = Http.url("http://www.ambrosoli.jp/test-server/header/setHeaders")
+        HttpResponse response = Http.url(DataSource.url("header/setHeaders"))
                 .params(params).execute();
         List<HttpHeader> headers = response.getHeaders(null);
 
@@ -355,7 +368,7 @@ public class HttpTest {
         params.put("Connection", "close");
 
         // Exercise
-        HttpResponse response = Http.url("http://www.ambrosoli.jp/test-server/header/setHeaders")
+        HttpResponse response = Http.url(DataSource.url("header/setHeaders"))
                 .params(params).execute();
         List<HttpHeader> headers = response.getHeaders("Trailer");
 
@@ -377,7 +390,7 @@ public class HttpTest {
         params.put("Connection", "close");
 
         // Exercise
-        HttpResponse response = Http.url("http://www.ambrosoli.jp/test-server/header/setHeaders")
+        HttpResponse response = Http.url(DataSource.url("header/setHeaders"))
                 .params(params).execute();
         List<HttpHeader> headers = response.getHeaders("Content-Language");
 
@@ -399,7 +412,7 @@ public class HttpTest {
         params.put("Connection", "close");
 
         // Exercise
-        HttpResponse response = Http.url("http://www.ambrosoli.jp/test-server/header/setHeaders")
+        HttpResponse response = Http.url(DataSource.url("header/setHeaders"))
                 .params(params).execute();
         HttpHeader header = response.getHeader(null);
 
@@ -421,7 +434,7 @@ public class HttpTest {
         params.put("Connection", "close");
 
         // Exercise
-        HttpResponse response = Http.url("http://www.ambrosoli.jp/test-server/header/setHeaders")
+        HttpResponse response = Http.url(DataSource.url("header/setHeaders"))
                 .params(params).execute();
         HttpHeader header = response.getHeader("Transfer-Encoding");
 
@@ -443,7 +456,7 @@ public class HttpTest {
         params.put("Connection", "close");
 
         // Exercise
-        HttpResponse response = Http.url("http://www.ambrosoli.jp/test-server/header/setHeaders")
+        HttpResponse response = Http.url(DataSource.url("header/setHeaders"))
                 .params(params).execute();
         HttpHeader header = response.getHeader("Allow");
 
@@ -455,7 +468,7 @@ public class HttpTest {
     public void timeoutメソッドで指定したミリ秒以内にHTTPレスポンスが返却された場合_Exceptionが発生しないこと() {
 
         // Exercise
-        HttpResponse res = Http.url("http://www.ambrosoli.jp/test-server/timeout/100")
+        HttpResponse res = Http.url(DataSource.url("timeout/100"))
                 .timeout(1000).execute();
 
         // Verify
@@ -469,7 +482,7 @@ public class HttpTest {
         this.expectedException.expect(is(instanceOf(SocketTimeoutRuntimeException.class)));
 
         // Exercise
-        Http.url("http://www.ambrosoli.jp/test-server/timeout/500").timeout(500).execute();
+        Http.url(DataSource.url("timeout/500")).timeout(500).execute();
 
         // Verify
         fail("タイムアウトしませんでした");
@@ -479,7 +492,7 @@ public class HttpTest {
     public void Acceptを設定して送信する() {
 
         // Exercise
-        HttpResponse response = Http.url("http://www.ambrosoli.jp/test-server/header/accept")
+        HttpResponse response = Http.url(DataSource.url("header/accept"))
                 .accept(HTML, XHTML, JSON, XML, TEXT).execute();
 
         // Verify

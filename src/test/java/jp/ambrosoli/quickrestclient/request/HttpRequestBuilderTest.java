@@ -15,9 +15,19 @@
  */
 package jp.ambrosoli.quickrestclient.request;
 
-import static jp.ambrosoli.quickrestclient.HttpConstants.*;
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.*;
+import static jp.ambrosoli.quickrestclient.HttpConstants.HTML;
+import static jp.ambrosoli.quickrestclient.HttpConstants.JSON;
+import static jp.ambrosoli.quickrestclient.HttpConstants.TEXT;
+import static jp.ambrosoli.quickrestclient.HttpConstants.XHTML;
+import static jp.ambrosoli.quickrestclient.HttpConstants.XML;
+import static org.hamcrest.Matchers.anyOf;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.instanceOf;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.nullValue;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -34,6 +44,7 @@ import jp.ambrosoli.quickrestclient.params.AuthInfo;
 import jp.ambrosoli.quickrestclient.params.NameValueObject;
 import jp.ambrosoli.quickrestclient.params.ProxyInfo;
 import jp.ambrosoli.quickrestclient.response.HttpResponse;
+import jp.ambrosoli.quickrestclient.unittest.DataSource;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -474,8 +485,7 @@ public class HttpRequestBuilderTest {
     public void executeを呼び出すと_コンストラクタで指定したURLの通信結果がHttpResponseとして返されること() {
 
         // Setup
-        HttpRequestBuilder sut = new HttpRequestBuilder(
-                "http://www.ambrosoli.jp/test-server/statusCode/ok");
+        HttpRequestBuilder sut = new HttpRequestBuilder(DataSource.url("statusCode/ok"));
 
         // Exercise
         HttpResponse actual = sut.execute();
