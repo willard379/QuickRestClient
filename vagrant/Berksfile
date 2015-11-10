@@ -1,0 +1,8 @@
+site :opscode
+
+cookbook 'selinux', '~> 0.9.0'
+cookbook 'locale', '~> 1.0.2'
+cookbook 'git', '~> 4.3.4'
+cookbook 'tomcat', '~> 0.17.3'
+cookbook 'java', '~> 1.36.0'
+cookbook 'maven', '~> 1.3.1'

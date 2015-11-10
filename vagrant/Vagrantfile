@@ -1,10 +1,6 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-# All Vagrant configuration is done below. The "2" in Vagrant.configure
-# configures the configuration version (we support older styles for
-# backwards compatibility). Please don't change it unless you know what
-# you're doing.
 Vagrant.configure(2) do |config|
 
   # Box settings
@@ -19,6 +15,36 @@ Vagrant.configure(2) do |config|
   config.vm.network "private_network", ip: "192.168.33.10"
 
   # Provisioning settings
-  config.vm.provision "shell", path: "provision/provision.sh";
-
+  config.vm.provision :chef_solo do |chef|
+    chef.cookbooks_path = ["./cookbooks", "./site-cookbooks"]
+    chef.json = {
+      locale: {
+        lang: 'ja_JP.utf8',
+        lc_all: 'ja_JP.utf8'
+      },
+      java: {
+        install_flavor: 'openjdk',
+        jdk_version: 8,
+        accept_license_agreement: true 
+      },
+      maven: {
+        version: 3,
+        setup_bin: true
+      },
+      tomcat: {
+        base_version: 7,
+        deploy_manager_apps: false,
+        run_base_instance: false
+      }
+    }
+    chef.run_list = %w[
+      recipe[selinux::disabled]
+      recipe[locale]
+      recipe[git]
+      recipe[tomcat]
+      recipe[java]
+      recipe[maven]
+      recipe[testserver-deploy]
+    ]
+  end
 end
