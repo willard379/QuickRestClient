@@ -22,12 +22,12 @@ import static org.mockito.Mockito.*;
 import java.lang.reflect.Field;
 import java.util.Map;
 
-import jp.ambrosoli.quickrestclient.apache.service.ApacheHttpServiceFactory;
-
 import org.junit.After;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+
+import jp.ambrosoli.quickrestclient.apache.service.ApacheHttpServiceFactory;
 
 public class HttpServiceFactoryTest {
 
@@ -56,8 +56,7 @@ public class HttpServiceFactoryTest {
     }
 
     @Test
-    public void getFactoryの引数にnullを渡すと_デフォルトのHttpServiceFactoryが返されること()
-            throws ClassNotFoundException {
+    public void getFactoryの引数にnullを渡すと_デフォルトのHttpServiceFactoryが返されること() throws ClassNotFoundException {
 
         // Exercise
         HttpServiceFactory actual = HttpServiceFactory.getFactory(null);
@@ -72,8 +71,7 @@ public class HttpServiceFactoryTest {
 
         // Setup
         this.expectedException.expect(is(instanceOf(IllegalStateException.class)));
-        this.expectedException
-                .expectMessage(is(equalTo("HttpServiceFactory {unregistered} is not registerd.")));
+        this.expectedException.expectMessage(is(equalTo("HttpServiceFactory {unregistered} is not registerd.")));
 
         // Exercise
         HttpServiceFactory.getFactory("unregistered");
@@ -113,8 +111,7 @@ public class HttpServiceFactoryTest {
 
         // Setup
         this.expectedException.expect(is(instanceOf(IllegalArgumentException.class)));
-        this.expectedException
-                .expectMessage(is(equalTo("HttpServiceFactory {hoge} could not be registerd.")));
+        this.expectedException.expectMessage(is(equalTo("HttpServiceFactory {hoge} could not be registerd.")));
 
         // Exercise
         HttpServiceFactory.register("hoge", null);

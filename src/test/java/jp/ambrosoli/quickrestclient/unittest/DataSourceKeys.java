@@ -8,16 +8,16 @@ package jp.ambrosoli.quickrestclient.unittest;
  */
 public class DataSourceKeys {
 
-	/** テストサーバのスキーム */
-	public static final String SERVER_SCHEME = "server.scheme";
+    /** テストサーバのスキーム */
+    public static final String SERVER_SCHEME = "server.scheme";
 
-	/** テストサーバのデフォルトホスト */
-	public static final String SERVER_HOST = "server.host";
+    /** テストサーバのデフォルトホスト */
+    public static final String SERVER_HOST = "server.host";
 
-	/** テストサーバのポート番号 */
-	public static final String SERVER_PORT = "server.port";
+    /** テストサーバのポート番号 */
+    public static final String SERVER_PORT = "server.port";
 
-	/** テストサーバのコンテキストパス */
-	public static final String SERVER_CONTEXTPATH = "server.contextpath";
+    /** テストサーバのコンテキストパス */
+    public static final String SERVER_CONTEXTPATH = "server.contextpath";
 
 }

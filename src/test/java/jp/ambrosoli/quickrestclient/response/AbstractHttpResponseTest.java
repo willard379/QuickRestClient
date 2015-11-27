@@ -27,10 +27,10 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.util.List;
 
+import org.junit.Test;
+
 import jp.ambrosoli.quickrestclient.headers.HttpHeader;
 import jp.ambrosoli.quickrestclient.util.StringUtil;
-
-import org.junit.Test;
 
 public class AbstractHttpResponseTest {
 
@@ -139,8 +139,7 @@ public class AbstractHttpResponseTest {
     }
 
     @Test
-    public void HttpResponseにデータがある状態でgetAsInputStreamを呼び出すと_HttpResponseのデータがInputStreamで返されること()
-            throws IOException {
+    public void HttpResponseにデータがある状態でgetAsInputStreamを呼び出すと_HttpResponseのデータがInputStreamで返されること() throws IOException {
 
         // Setup
         String data = "Robinmask";
@@ -208,8 +207,7 @@ public class AbstractHttpResponseTest {
     }
 
     @Test
-    public void HttpResponseにデータがない状態でgetAsStringの引数にエンコーディングを指定して呼び出した場合_nullが返されること()
-            throws IOException {
+    public void HttpResponseにデータがない状態でgetAsStringの引数にエンコーディングを指定して呼び出した場合_nullが返されること() throws IOException {
 
         // Setup
         AbstractHttpResponse sut = new MockAbstractHttpResponseImpl(null);
@@ -241,8 +239,7 @@ public class AbstractHttpResponseTest {
     }
 
     @Test
-    public void HttpResponseにデータがない状態でwriteToを呼び出した場合_OutputStreamに書きだされずにcloseが呼ばれていること()
-            throws Exception {
+    public void HttpResponseにデータがない状態でwriteToを呼び出した場合_OutputStreamに書きだされずにcloseが呼ばれていること() throws Exception {
 
         // Setup
         AbstractHttpResponse sut = new MockAbstractHttpResponseImpl(null);

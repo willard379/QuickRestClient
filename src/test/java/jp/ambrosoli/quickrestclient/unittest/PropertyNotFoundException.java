@@ -8,27 +8,27 @@ package jp.ambrosoli.quickrestclient.unittest;
  */
 public class PropertyNotFoundException extends RuntimeException {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	public PropertyNotFoundException() {
-		super();
-	}
+    public PropertyNotFoundException() {
+        super();
+    }
 
-	public PropertyNotFoundException(String message, Throwable cause,
-			boolean enableSuppression, boolean writableStackTrace) {
-		super(message, cause, enableSuppression, writableStackTrace);
-	}
+    public PropertyNotFoundException(final String message, final Throwable cause, final boolean enableSuppression,
+            final boolean writableStackTrace) {
+        super(message, cause, enableSuppression, writableStackTrace);
+    }
 
-	public PropertyNotFoundException(String message, Throwable cause) {
-		super(message, cause);
-	}
+    public PropertyNotFoundException(final String message, final Throwable cause) {
+        super(message, cause);
+    }
 
-	public PropertyNotFoundException(String message) {
-		super(message);
-	}
+    public PropertyNotFoundException(final String message) {
+        super(message);
+    }
 
-	public PropertyNotFoundException(Throwable cause) {
-		super(cause);
-	}
+    public PropertyNotFoundException(final Throwable cause) {
+        super(cause);
+    }
 
 }

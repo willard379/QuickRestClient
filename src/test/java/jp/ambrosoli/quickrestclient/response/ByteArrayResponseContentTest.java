@@ -70,8 +70,7 @@ public class ByteArrayResponseContentTest {
     }
 
     @Test
-    public void getAsInputStreamを呼び出すと_ResponseContentのデータ内容がInputStreamで返されること()
-            throws IOException {
+    public void getAsInputStreamを呼び出すと_ResponseContentのデータ内容がInputStreamで返されること() throws IOException {
 
         // Setup
         ByteArrayResponseContent sut = new ByteArrayResponseContent();
@@ -132,8 +131,7 @@ public class ByteArrayResponseContentTest {
     }
 
     @Test
-    public void getAsStringの引数にエンコーディングを指定して呼び出すと_ResponseContentのデータが指定したエンコーディングの文字列として返されること()
-            throws IOException {
+    public void getAsStringの引数にエンコーディングを指定して呼び出すと_ResponseContentのデータが指定したエンコーディングの文字列として返されること() throws IOException {
 
         // Setup
         ByteArrayResponseContent sut = new ByteArrayResponseContent();
@@ -147,8 +145,7 @@ public class ByteArrayResponseContentTest {
     }
 
     @Test
-    public void writeToの引数にOutputStreamを渡すと_ResponseContentのデータがOutputStreamに書き出されること()
-            throws Exception {
+    public void writeToの引数にOutputStreamを渡すと_ResponseContentのデータがOutputStreamに書き出されること() throws Exception {
 
         // Setup
         byte[] data = "ABCDEFG".getBytes("UTF-8");

@@ -25,16 +25,16 @@ import jp.ambrosoli.quickrestclient.params.NameValueObject;
  */
 public class HttpHeader extends NameValueObject {
 
-	/**
-	 * HttpHeaderを生成します。
-	 * 
-	 * @param name
-	 *            名前
-	 * @param value
-	 *            値
-	 */
-	public HttpHeader(final String name, final String value) {
-		super(name, value);
-	}
+    /**
+     * HttpHeaderを生成します。
+     * 
+     * @param name
+     *            名前
+     * @param value
+     *            値
+     */
+    public HttpHeader(final String name, final String value) {
+        super(name, value);
+    }
 
 }

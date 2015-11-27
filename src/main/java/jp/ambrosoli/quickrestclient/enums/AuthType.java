@@ -23,13 +23,13 @@ package jp.ambrosoli.quickrestclient.enums;
  */
 public enum AuthType {
 
-	/** Basic認証 */
-	BASIC,
+    /** Basic認証 */
+    BASIC,
 
-	/** Digest認証 */
-	DIGEST,
+    /** Digest認証 */
+    DIGEST,
 
-	/** Client-Cert認証 */
-	CLIENT_CERT;
+    /** Client-Cert認証 */
+    CLIENT_CERT;
 
 }

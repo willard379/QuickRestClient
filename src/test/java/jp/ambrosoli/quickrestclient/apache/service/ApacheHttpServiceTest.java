@@ -15,32 +15,13 @@
  */
 package jp.ambrosoli.quickrestclient.apache.service;
 
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.instanceOf;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.notNullValue;
-import static org.hamcrest.Matchers.nullValue;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
+import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.*;
 
 import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
-
-import jp.ambrosoli.quickrestclient.Http;
-import jp.ambrosoli.quickrestclient.enums.AuthType;
-import jp.ambrosoli.quickrestclient.enums.HttpMethod;
-import jp.ambrosoli.quickrestclient.headers.HttpHeaders;
-import jp.ambrosoli.quickrestclient.params.AuthInfo;
-import jp.ambrosoli.quickrestclient.params.NameValueObject;
-import jp.ambrosoli.quickrestclient.params.ProxyInfo;
-import jp.ambrosoli.quickrestclient.params.RequestParams;
-import jp.ambrosoli.quickrestclient.request.HttpRequest;
-import jp.ambrosoli.quickrestclient.response.HttpResponse;
-import jp.ambrosoli.quickrestclient.unittest.DataSource;
-import jp.ambrosoli.quickrestclient.util.StringUtil;
-import jp.ambrosoli.quickrestclient.util.URIUtil;
 
 import org.apache.http.Header;
 import org.apache.http.HttpHost;
@@ -73,6 +54,20 @@ import org.apache.http.params.HttpParams;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+
+import jp.ambrosoli.quickrestclient.Http;
+import jp.ambrosoli.quickrestclient.enums.AuthType;
+import jp.ambrosoli.quickrestclient.enums.HttpMethod;
+import jp.ambrosoli.quickrestclient.headers.HttpHeaders;
+import jp.ambrosoli.quickrestclient.params.AuthInfo;
+import jp.ambrosoli.quickrestclient.params.NameValueObject;
+import jp.ambrosoli.quickrestclient.params.ProxyInfo;
+import jp.ambrosoli.quickrestclient.params.RequestParams;
+import jp.ambrosoli.quickrestclient.request.HttpRequest;
+import jp.ambrosoli.quickrestclient.response.HttpResponse;
+import jp.ambrosoli.quickrestclient.unittest.DataSource;
+import jp.ambrosoli.quickrestclient.util.StringUtil;
+import jp.ambrosoli.quickrestclient.util.URIUtil;
 
 public class ApacheHttpServiceTest {
 
@@ -129,8 +124,7 @@ public class ApacheHttpServiceTest {
         ApacheHttpService sut = new ApacheHttpService();
 
         // Exercise
-        SocketFactory actual = sut.getSocketFactory(URIUtil
-                .toURI("http://www.ambrosoli.jp/test-server/"));
+        SocketFactory actual = sut.getSocketFactory(URIUtil.toURI("http://www.ambrosoli.jp/test-server/"));
 
         // Verify
         assertThat(actual, is(instanceOf(PlainSocketFactory.class)));
@@ -144,8 +138,7 @@ public class ApacheHttpServiceTest {
         ApacheHttpService sut = new ApacheHttpService();
 
         // Exercise
-        SocketFactory actual = sut.getSocketFactory(URIUtil
-                .toURI("https://www.ambrosoli.jp/test-server/"));
+        SocketFactory actual = sut.getSocketFactory(URIUtil.toURI("https://www.ambrosoli.jp/test-server/"));
 
         // Verify
         assertThat(actual, is(instanceOf(SSLSocketFactory.class)));
@@ -190,8 +183,7 @@ public class ApacheHttpServiceTest {
         ApacheHttpService sut = new ApacheHttpService();
 
         // Exercise
-        SchemeRegistry actual = sut.createSchemeRegistry(URIUtil
-                .toURI("http://www.ambrosoli.jp/test-server/"));
+        SchemeRegistry actual = sut.createSchemeRegistry(URIUtil.toURI("http://www.ambrosoli.jp/test-server/"));
 
         // Verify
         assertThat(actual, is(notNullValue()));
@@ -207,8 +199,7 @@ public class ApacheHttpServiceTest {
         ApacheHttpService sut = new ApacheHttpService();
 
         // Exercise
-        SchemeRegistry actual = sut.createSchemeRegistry(URIUtil
-                .toURI("https://www.ambrosoli.jp/test-server/"));
+        SchemeRegistry actual = sut.createSchemeRegistry(URIUtil.toURI("https://www.ambrosoli.jp/test-server/"));
 
         // Verify
         assertThat(actual, is(notNullValue()));
@@ -398,8 +389,7 @@ public class ApacheHttpServiceTest {
     }
 
     @Test
-    public void createHttpUriRequestの第二引数にPostを指定すると_HttpPostが生成され_リクエストパラメータが設定されること()
-            throws IOException {
+    public void createHttpUriRequestの第二引数にPostを指定すると_HttpPostが生成され_リクエストパラメータが設定されること() throws IOException {
 
         // Setup
         ApacheHttpService sut = new ApacheHttpService();
@@ -429,8 +419,7 @@ public class ApacheHttpServiceTest {
     }
 
     @Test
-    public void createHttpUriRequestの第二引数にPutを指定すると_HttpPutが生成され_リクエストパラメータが設定されること()
-            throws IOException {
+    public void createHttpUriRequestの第二引数にPutを指定すると_HttpPutが生成され_リクエストパラメータが設定されること() throws IOException {
 
         // Setup
         ApacheHttpService sut = new ApacheHttpService();
@@ -460,8 +449,7 @@ public class ApacheHttpServiceTest {
     }
 
     @Test
-    public void createHttpUriRequestの第二引数にPOSTを指定して_第三引数のリクエストパラメータがnullの場合_リクエストパラメータが設定されないこと()
-            throws IOException {
+    public void createHttpUriRequestの第二引数にPOSTを指定して_第三引数のリクエストパラメータがnullの場合_リクエストパラメータが設定されないこと() throws IOException {
 
         // Setup
         ApacheHttpService sut = new ApacheHttpService();
@@ -696,12 +684,10 @@ public class ApacheHttpServiceTest {
         sut.setCharset(httpParams, "UTF-8");
 
         // Verify
-        String httpConnectCharset = (String) httpParams
-                .getParameter(CoreProtocolPNames.HTTP_CONTENT_CHARSET);
+        String httpConnectCharset = (String) httpParams.getParameter(CoreProtocolPNames.HTTP_CONTENT_CHARSET);
         assertThat(httpConnectCharset, is(equalTo("UTF-8")));
 
-        String httpElementCharset = (String) httpParams
-                .getParameter(CoreProtocolPNames.HTTP_ELEMENT_CHARSET);
+        String httpElementCharset = (String) httpParams.getParameter(CoreProtocolPNames.HTTP_ELEMENT_CHARSET);
         assertThat(httpElementCharset, is(equalTo("UTF-8")));
     }
 

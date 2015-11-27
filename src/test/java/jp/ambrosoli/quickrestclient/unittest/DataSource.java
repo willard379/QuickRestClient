@@ -1,10 +1,7 @@
 package jp.ambrosoli.quickrestclient.unittest;
 
-import static jp.ambrosoli.quickrestclient.unittest.DataSourceKeys.SERVER_CONTEXTPATH;
-import static jp.ambrosoli.quickrestclient.unittest.DataSourceKeys.SERVER_HOST;
-import static jp.ambrosoli.quickrestclient.unittest.DataSourceKeys.SERVER_PORT;
-import static jp.ambrosoli.quickrestclient.unittest.DataSourceKeys.SERVER_SCHEME;
-import static jp.ambrosoli.quickrestclient.unittest.DataSourceProperties.getProperty;
+import static jp.ambrosoli.quickrestclient.unittest.DataSourceKeys.*;
+import static jp.ambrosoli.quickrestclient.unittest.DataSourceProperties.*;
 
 import java.net.URI;
 import java.text.MessageFormat;
@@ -20,21 +17,20 @@ import jp.ambrosoli.quickrestclient.util.URIUtil;
  */
 public class DataSource {
 
-	public static String url() {
-		String scheme = getProperty(SERVER_SCHEME);
-		String host = getProperty(SERVER_HOST);
-		String port = getProperty(SERVER_PORT);
-		String contextPath = getProperty(SERVER_CONTEXTPATH);
+    public static String url() {
+        String scheme = getProperty(SERVER_SCHEME);
+        String host = getProperty(SERVER_HOST);
+        String port = getProperty(SERVER_PORT);
+        String contextPath = getProperty(SERVER_CONTEXTPATH);
 
-		return MessageFormat.format("{0}://{1}:{2}/{3}/", scheme,
-				host, port, contextPath);
-	}
+        return MessageFormat.format("{0}://{1}:{2}/{3}/", scheme, host, port, contextPath);
+    }
 
-	public static String url(final String pathInfo) {
-		URI uri = URIUtil.toURI(url());
-		if (StringUtil.isNotEmpty(pathInfo)) {
-			uri = uri.resolve(pathInfo);
-		}
-		return uri.toString();
-	}
+    public static String url(final String pathInfo) {
+        URI uri = URIUtil.toURI(url());
+        if (StringUtil.isNotEmpty(pathInfo)) {
+            uri = uri.resolve(pathInfo);
+        }
+        return uri.toString();
+    }
 }

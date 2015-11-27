@@ -78,8 +78,10 @@ public final class StringUtil {
     /**
      * 配列の要素をseparator文字で連結した１つの文字列にして返します。
      * 
-     * @param array 結合する要素
-     * @param separator 各要素を区切るセパレータ
+     * @param array
+     *            結合する要素
+     * @param separator
+     *            各要素を区切るセパレータ
      * @return separatorで区切られたarrayからなる新しいString
      */
     public static String join(final Object[] array, final CharSequence separator) {
@@ -89,13 +91,13 @@ public final class StringUtil {
 
         StringBuilder buf = new StringBuilder();
         for (Object element : array) {
-			if (buf.length() > 0) {
-				buf.append(separator);
-			}
-			if (element != null) {
-				buf.append(element);
-			}
-		}
+            if (buf.length() > 0) {
+                buf.append(separator);
+            }
+            if (element != null) {
+                buf.append(element);
+            }
+        }
         return buf.toString();
     }
 }

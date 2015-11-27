@@ -22,24 +22,6 @@ import java.io.IOException;
 import java.net.SocketTimeoutException;
 import java.net.URI;
 
-import jp.ambrosoli.quickrestclient.Http;
-import jp.ambrosoli.quickrestclient.apache.headers.ApacheHeaderBuilder;
-import jp.ambrosoli.quickrestclient.apache.params.ApacheEnclosingParamBuilder;
-import jp.ambrosoli.quickrestclient.apache.response.ApacheResponseHandler;
-import jp.ambrosoli.quickrestclient.enums.AuthType;
-import jp.ambrosoli.quickrestclient.enums.HttpMethod;
-import jp.ambrosoli.quickrestclient.exception.IORuntimeException;
-import jp.ambrosoli.quickrestclient.exception.SocketTimeoutRuntimeException;
-import jp.ambrosoli.quickrestclient.headers.HttpHeaders;
-import jp.ambrosoli.quickrestclient.params.AuthInfo;
-import jp.ambrosoli.quickrestclient.params.BasicQueryStringBuilder;
-import jp.ambrosoli.quickrestclient.params.ProxyInfo;
-import jp.ambrosoli.quickrestclient.params.RequestParams;
-import jp.ambrosoli.quickrestclient.request.HttpRequest;
-import jp.ambrosoli.quickrestclient.response.HttpResponse;
-import jp.ambrosoli.quickrestclient.service.HttpService;
-import jp.ambrosoli.quickrestclient.util.URIUtil;
-
 import org.apache.http.Header;
 import org.apache.http.HttpEntityEnclosingRequest;
 import org.apache.http.HttpHost;
@@ -73,6 +55,24 @@ import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 import org.apache.http.params.HttpProtocolParams;
+
+import jp.ambrosoli.quickrestclient.Http;
+import jp.ambrosoli.quickrestclient.apache.headers.ApacheHeaderBuilder;
+import jp.ambrosoli.quickrestclient.apache.params.ApacheEnclosingParamBuilder;
+import jp.ambrosoli.quickrestclient.apache.response.ApacheResponseHandler;
+import jp.ambrosoli.quickrestclient.enums.AuthType;
+import jp.ambrosoli.quickrestclient.enums.HttpMethod;
+import jp.ambrosoli.quickrestclient.exception.IORuntimeException;
+import jp.ambrosoli.quickrestclient.exception.SocketTimeoutRuntimeException;
+import jp.ambrosoli.quickrestclient.headers.HttpHeaders;
+import jp.ambrosoli.quickrestclient.params.AuthInfo;
+import jp.ambrosoli.quickrestclient.params.BasicQueryStringBuilder;
+import jp.ambrosoli.quickrestclient.params.ProxyInfo;
+import jp.ambrosoli.quickrestclient.params.RequestParams;
+import jp.ambrosoli.quickrestclient.request.HttpRequest;
+import jp.ambrosoli.quickrestclient.response.HttpResponse;
+import jp.ambrosoli.quickrestclient.service.HttpService;
+import jp.ambrosoli.quickrestclient.util.URIUtil;
 
 /**
  * Apache HttpComponentsを使用したRESTエンドポイントのサービス呼び出しを行うクラスです。
@@ -378,8 +378,7 @@ public class ApacheHttpService implements HttpService {
         }
 
         AuthScope authscope = new AuthScope(uri.getHost(), URIUtil.getPort(uri));
-        Credentials credentials = new UsernamePasswordCredentials(authInfo.username,
-                authInfo.password);
+        Credentials credentials = new UsernamePasswordCredentials(authInfo.username, authInfo.password);
         provider.setCredentials(authscope, credentials);
     }
 

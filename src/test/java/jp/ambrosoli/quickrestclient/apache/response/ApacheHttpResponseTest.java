@@ -17,7 +17,7 @@ package jp.ambrosoli.quickrestclient.apache.response;
 
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
-import static org.mockito.Matchers.*;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
 import java.io.BufferedReader;
@@ -25,10 +25,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.List;
-
-import jp.ambrosoli.quickrestclient.exception.IORuntimeException;
-import jp.ambrosoli.quickrestclient.headers.HttpHeader;
-import jp.ambrosoli.quickrestclient.util.StringUtil;
 
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
@@ -44,17 +40,19 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import jp.ambrosoli.quickrestclient.exception.IORuntimeException;
+import jp.ambrosoli.quickrestclient.headers.HttpHeader;
+import jp.ambrosoli.quickrestclient.util.StringUtil;
+
 public class ApacheHttpResponseTest {
 
     @Rule
     public ExpectedException expectedException = ExpectedException.none();
 
-    private Header[] SAMPLE_HEADERS = new Header[] {
-            new BasicHeader("Transfer-Encoding", "chunked"),
+    private Header[] SAMPLE_HEADERS = new Header[] { new BasicHeader("Transfer-Encoding", "chunked"),
             new BasicHeader("Upgrade", "HTTP/2.0, SHTTP/1.3"),
             new BasicHeader("Location", "http://www.ambrosoli.jp/test-server/"),
-            new BasicHeader("Set-Cookie", "name=willard379"),
-            new BasicHeader("Set-Cookie", "age=17"), };
+            new BasicHeader("Set-Cookie", "name=willard379"), new BasicHeader("Set-Cookie", "age=17"), };
 
     @Test
     public void ApacheHttpResponseのコンストラクタにorg_apache_http_HttpResponseを渡すと_インスタンスが生成されること() {
@@ -334,8 +332,8 @@ public class ApacheHttpResponseTest {
     public void HTTPステータスコードが200の状態でisSuccessを呼び出すと_trueが返されること() {
 
         // Setup
-        ApacheHttpResponse sut = new ApacheHttpResponse(new BasicHttpResponse(HttpVersion.HTTP_1_1,
-                HttpStatus.SC_OK, "OK"));
+        ApacheHttpResponse sut = new ApacheHttpResponse(
+                new BasicHttpResponse(HttpVersion.HTTP_1_1, HttpStatus.SC_OK, "OK"));
 
         // Exercise
         boolean actual = sut.isSuccess();
@@ -349,8 +347,8 @@ public class ApacheHttpResponseTest {
     public void HTTPステータスコードが201の状態でisSuccessを呼び出すと_trueが返されること() {
 
         // Setup
-        ApacheHttpResponse sut = new ApacheHttpResponse(new BasicHttpResponse(HttpVersion.HTTP_1_1,
-                HttpStatus.SC_CREATED, "OK"));
+        ApacheHttpResponse sut = new ApacheHttpResponse(
+                new BasicHttpResponse(HttpVersion.HTTP_1_1, HttpStatus.SC_CREATED, "OK"));
 
         // Exercise
         boolean actual = sut.isSuccess();

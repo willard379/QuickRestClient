@@ -4,7 +4,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 
 /**
- * 　オブジェクトの文字列表現を生成するユーティリティクラスです。
+ * オブジェクトの文字列表現を生成するユーティリティクラスです。
  * 
  * @author willard379
  * @since 0.2.0
@@ -66,8 +66,7 @@ public class ReflectionToStringBuilder {
      * @param cls
      *            クラス
      */
-    protected static <T> void appendFields(final T object, final StringBuilder sb,
-            final Class<?> cls) {
+    protected static <T> void appendFields(final T object, final StringBuilder sb, final Class<?> cls) {
         Field[] fields = cls.getDeclaredFields();
 
         for (Field field : fields) {

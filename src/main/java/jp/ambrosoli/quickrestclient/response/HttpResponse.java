@@ -77,7 +77,7 @@ public interface HttpResponse {
     /**
      * すべてのHTTPヘッダのリストを返します。何もない場合は空のリストを返します。
      * 
-     * @return　すべてのHTTPヘッダ
+     * @return すべてのHTTPヘッダ
      */
     List<HttpHeader> getAllHeaders();
 
@@ -102,14 +102,14 @@ public interface HttpResponse {
     /**
      * Content-Typeの返します。
      * 
-     * @return　Content-Typeの値
+     * @return Content-Typeの値
      */
     String getContentType();
 
     /**
      * Content-Lengthを返します。
      * 
-     * @return　Content-Lengthの値
+     * @return Content-Lengthの値
      */
     long getContentLength();
 

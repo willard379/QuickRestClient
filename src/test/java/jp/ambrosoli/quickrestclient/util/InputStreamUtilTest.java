@@ -18,6 +18,7 @@ package jp.ambrosoli.quickrestclient.util;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
 import static org.mockito.Matchers.*;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
 import java.io.ByteArrayInputStream;
@@ -26,11 +27,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import jp.ambrosoli.quickrestclient.exception.IORuntimeException;
-
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+
+import jp.ambrosoli.quickrestclient.exception.IORuntimeException;
 
 /**
  * @author willard379
@@ -68,8 +69,7 @@ public class InputStreamUtilTest {
     }
 
     @Test
-    public void closeの引数で渡したInputStreamで例外が発生した場合_IORuntimeExceptionにラップされてスローされること()
-            throws Exception {
+    public void closeの引数で渡したInputStreamで例外が発生した場合_IORuntimeExceptionにラップされてスローされること() throws Exception {
 
         // Setup
         InputStream inputStream = mock(InputStream.class);
@@ -111,8 +111,7 @@ public class InputStreamUtilTest {
     }
 
     @Test
-    public void closeSilentryの引数で渡したInputStreamで例外が発生した場合_IORuntimeExceptionにラップされてスローされること()
-            throws Exception {
+    public void closeSilentryの引数で渡したInputStreamで例外が発生した場合_IORuntimeExceptionにラップされてスローされること() throws Exception {
 
         // Setup
         InputStream inputStream = mock(InputStream.class);
@@ -176,8 +175,7 @@ public class InputStreamUtilTest {
     }
 
     @Test
-    public void copyの第一引数で渡したInputStreamで例外が発生した場合_InputStreamとOutputStreamはcloseされていること()
-            throws Exception {
+    public void copyの第一引数で渡したInputStreamで例外が発生した場合_InputStreamとOutputStreamはcloseされていること() throws Exception {
 
         // Setup
         InputStream input = mock(InputStream.class);
@@ -196,8 +194,7 @@ public class InputStreamUtilTest {
     }
 
     @Test
-    public void copyの第二引数で渡したOutputStreamで例外が発生した場合_InputStreamとOutputStreamはcloseされていること()
-            throws Exception {
+    public void copyの第二引数で渡したOutputStreamで例外が発生した場合_InputStreamとOutputStreamはcloseされていること() throws Exception {
 
         // Setup
         InputStream input = mock(InputStream.class);

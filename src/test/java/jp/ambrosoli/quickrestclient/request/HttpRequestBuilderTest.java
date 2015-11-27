@@ -15,25 +15,19 @@
  */
 package jp.ambrosoli.quickrestclient.request;
 
-import static jp.ambrosoli.quickrestclient.HttpConstants.HTML;
-import static jp.ambrosoli.quickrestclient.HttpConstants.JSON;
-import static jp.ambrosoli.quickrestclient.HttpConstants.TEXT;
-import static jp.ambrosoli.quickrestclient.HttpConstants.XHTML;
-import static jp.ambrosoli.quickrestclient.HttpConstants.XML;
-import static org.hamcrest.Matchers.anyOf;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.instanceOf;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.notNullValue;
-import static org.hamcrest.Matchers.nullValue;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
+import static jp.ambrosoli.quickrestclient.HttpConstants.*;
+import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.*;
 
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import jp.ambrosoli.quickrestclient.Http;
 import jp.ambrosoli.quickrestclient.Operations;
@@ -45,10 +39,6 @@ import jp.ambrosoli.quickrestclient.params.NameValueObject;
 import jp.ambrosoli.quickrestclient.params.ProxyInfo;
 import jp.ambrosoli.quickrestclient.response.HttpResponse;
 import jp.ambrosoli.quickrestclient.unittest.DataSource;
-
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
 public class HttpRequestBuilderTest {
 
@@ -540,16 +530,14 @@ public class HttpRequestBuilderTest {
 
         for (NameValueObject header : headers) {
             assertThat(header.getName(), is(equalTo("Accept")));
-            assertThat(
-                    header.getValue(),
+            assertThat(header.getValue(),
                     anyOf(equalTo(HTML), equalTo(XHTML), equalTo(XML), equalTo(JSON), equalTo(TEXT)));
         }
 
     }
 
     @Test
-    public void acceptの引数にnullを渡した場合_HttpRequestのHTTPヘッダーにnullのAcceptヘッダーが追加されないこと()
-            throws Exception {
+    public void acceptの引数にnullを渡した場合_HttpRequestのHTTPヘッダーにnullのAcceptヘッダーが追加されないこと() throws Exception {
 
         // Exercise
         HttpRequestBuilder sut = new HttpRequestBuilder("http://www.ambrosoli.jp/");
@@ -561,8 +549,7 @@ public class HttpRequestBuilderTest {
 
         for (NameValueObject header : headers) {
             assertThat(header.getName(), is(equalTo("Accept")));
-            assertThat(
-                    header.getValue(),
+            assertThat(header.getValue(),
                     anyOf(equalTo(HTML), equalTo(XHTML), equalTo(XML), equalTo(JSON), equalTo(TEXT)));
         }
 

@@ -15,37 +15,25 @@
  */
 package jp.ambrosoli.quickrestclient;
 
-import static jp.ambrosoli.quickrestclient.HttpConstants.HTML;
-import static jp.ambrosoli.quickrestclient.HttpConstants.JSON;
-import static jp.ambrosoli.quickrestclient.HttpConstants.TEXT;
-import static jp.ambrosoli.quickrestclient.HttpConstants.XHTML;
-import static jp.ambrosoli.quickrestclient.HttpConstants.XML;
-import static jp.ambrosoli.quickrestclient.Operations.add;
-import static jp.ambrosoli.quickrestclient.Operations.basic;
-import static jp.ambrosoli.quickrestclient.Operations.digest;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.hasItems;
-import static org.hamcrest.Matchers.instanceOf;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.notNullValue;
-import static org.hamcrest.Matchers.nullValue;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
+import static jp.ambrosoli.quickrestclient.HttpConstants.*;
+import static jp.ambrosoli.quickrestclient.Operations.*;
+import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.*;
 
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import jp.ambrosoli.quickrestclient.exception.SocketTimeoutRuntimeException;
-import jp.ambrosoli.quickrestclient.headers.HttpHeader;
-import jp.ambrosoli.quickrestclient.response.HttpResponse;
-import jp.ambrosoli.quickrestclient.unittest.DataSource;
-
 import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+
+import jp.ambrosoli.quickrestclient.exception.SocketTimeoutRuntimeException;
+import jp.ambrosoli.quickrestclient.headers.HttpHeader;
+import jp.ambrosoli.quickrestclient.response.HttpResponse;
+import jp.ambrosoli.quickrestclient.unittest.DataSource;
 
 public class HttpTest {
 
@@ -80,8 +68,7 @@ public class HttpTest {
     public void GETメソッドを送信する() {
 
         // Exercise
-        HttpResponse response = Http.url(DataSource.url("method/get"))
-                .method(Http.GET).execute();
+        HttpResponse response = Http.url(DataSource.url("method/get")).method(Http.GET).execute();
 
         // Verify
         assertThat(response.isSuccess(), is(true));
@@ -91,8 +78,7 @@ public class HttpTest {
     public void POSTメソッドを送信する() {
 
         // Exercise
-        HttpResponse response = Http.url(DataSource.url("method/post"))
-                .method(Http.POST).execute();
+        HttpResponse response = Http.url(DataSource.url("method/post")).method(Http.POST).execute();
 
         // Verify
         assertThat(response.isSuccess(), is(true));
@@ -102,8 +88,7 @@ public class HttpTest {
     public void PUTメソッドを送信する() {
 
         // Exercise
-        HttpResponse response = Http.url(DataSource.url("method/put"))
-                .method(Http.PUT).execute();
+        HttpResponse response = Http.url(DataSource.url("method/put")).method(Http.PUT).execute();
 
         // Verify
         assertThat(response.isSuccess(), is(true));
@@ -113,8 +98,7 @@ public class HttpTest {
     public void DELETEメソッドを送信する() {
 
         // Exercise
-        HttpResponse response = Http.url(DataSource.url("method/delete"))
-                .method(Http.DELETE).execute();
+        HttpResponse response = Http.url(DataSource.url("method/delete")).method(Http.DELETE).execute();
 
         // Verify
         assertThat(response.isSuccess(), is(true));
@@ -124,8 +108,7 @@ public class HttpTest {
     public void HEADメソッドを送信する() {
 
         // Exercise
-        HttpResponse response = Http.url(DataSource.url("method/head"))
-                .method(Http.HEAD).execute();
+        HttpResponse response = Http.url(DataSource.url("method/head")).method(Http.HEAD).execute();
 
         // Verify
         assertThat(response.isSuccess(), is(true));
@@ -135,8 +118,7 @@ public class HttpTest {
     public void OPTIONSメソッドを送信する() {
 
         // Exercise
-        HttpResponse response = Http.url(DataSource.url("method/options"))
-                .method(Http.OPTIONS).execute();
+        HttpResponse response = Http.url(DataSource.url("method/options")).method(Http.OPTIONS).execute();
 
         // Verify
         assertThat(response.isSuccess(), is(true));
@@ -146,8 +128,7 @@ public class HttpTest {
     public void GETメソッドを文字列で指定して送信する() {
 
         // Exercise
-        HttpResponse response = Http.url(DataSource.url("method/get"))
-                .method("GET").execute();
+        HttpResponse response = Http.url(DataSource.url("method/get")).method("GET").execute();
 
         // Verify
         assertThat(response.isSuccess(), is(true));
@@ -157,8 +138,7 @@ public class HttpTest {
     public void POSTメソッドを文字列で指定して送信する() {
 
         // Exercise
-        HttpResponse response = Http.url(DataSource.url("method/post"))
-                .method("post").execute();
+        HttpResponse response = Http.url(DataSource.url("method/post")).method("post").execute();
 
         // Verify
         assertThat(response.isSuccess(), is(true));
@@ -201,8 +181,7 @@ public class HttpTest {
     public void UserAgentを設定して送信する() {
 
         // Exercise
-        HttpResponse response = Http.url(DataSource.url("header/userAgent"))
-                .userAgent("Ambrosoli/X.X").execute();
+        HttpResponse response = Http.url(DataSource.url("header/userAgent")).userAgent("Ambrosoli/X.X").execute();
 
         // Verify
         assertThat(response.isSuccess(), is(true));
@@ -213,8 +192,8 @@ public class HttpTest {
     public void GETリクエストにリクエストパラメータを付与して送信する() {
 
         // Exercise
-        HttpResponse response = Http.url(DataSource.url("helloWorld"))
-                .method(Http.GET).params(add("name", "willard379")).execute();
+        HttpResponse response = Http.url(DataSource.url("helloWorld")).method(Http.GET)
+                .params(add("name", "willard379")).execute();
 
         // Verify
         assertThat(response.getAsString(), is(equalTo("Hello, willard379!")));
@@ -224,8 +203,8 @@ public class HttpTest {
     public void POSTリクエストにリクエストパラメータを付与して送信する() {
 
         // Exercise
-        HttpResponse response = Http.url(DataSource.url("helloWorld"))
-                .method(Http.POST).params(add("name", "willard379")).execute();
+        HttpResponse response = Http.url(DataSource.url("helloWorld")).method(Http.POST)
+                .params(add("name", "willard379")).execute();
 
         // Verify
         assertThat(response.getAsString(), is(equalTo("Hello, willard379!")));
@@ -239,8 +218,7 @@ public class HttpTest {
         params.put("name", "willard379");
 
         // Exercise
-        HttpResponse response = Http.url(DataSource.url("helloWorld"))
-                .method(Http.POST).params(params).execute();
+        HttpResponse response = Http.url(DataSource.url("helloWorld")).method(Http.POST).params(params).execute();
 
         // Verify
         assertThat(response.getAsString(), is(equalTo("Hello, willard379!")));
@@ -250,8 +228,8 @@ public class HttpTest {
     public void charsetを指定して送信する() {
 
         // Exercise
-        HttpResponse response = Http.url(DataSource.url("helloWorld"))
-                .method(Http.GET).params(add("name", "まぐ☆なむ")).charset("UTF-8").execute();
+        HttpResponse response = Http.url(DataSource.url("helloWorld")).method(Http.GET).params(add("name", "まぐ☆なむ"))
+                .charset("UTF-8").execute();
 
         // Verify
         assertThat(response.getAsString(), is(equalTo("Hello, まぐ☆なむ!")));
@@ -261,14 +239,12 @@ public class HttpTest {
     public void HTTPヘッダーを付与する() {
 
         // Exercise
-        HttpResponse res = Http
-                .url(DataSource.url("header/sameAsParams"))
-                .method(Http.POST)
+        HttpResponse res = Http.url(DataSource.url("header/sameAsParams")).method(Http.POST)
                 .headers(add("Accept", "application/xml"), add("Connection", "Keep-Alive"),
                         add("Accept-Language", "ja"), add("Pragma", "no-cache"))
-                .params(add("Accept", "application/xml"), add("Connection", "Keep-Alive"),
-                        add("Accept-Language", "ja"), add("Pragma", "no-cache")).charset("UTF-8")
-                .execute();
+                .params(add("Accept", "application/xml"), add("Connection", "Keep-Alive"), add("Accept-Language", "ja"),
+                        add("Pragma", "no-cache"))
+                .charset("UTF-8").execute();
 
         // Verify
         // HTTPヘッダーとリクエストパラメータの内容が同じ場合にのみステータスコード200が返される。
@@ -286,8 +262,8 @@ public class HttpTest {
         map.put("Pragma", "no-cache");
 
         // Exercise
-        HttpResponse res = Http.url(DataSource.url("header/sameAsParams"))
-                .method(Http.POST).headers(map).params(map).charset("UTF-8").execute();
+        HttpResponse res = Http.url(DataSource.url("header/sameAsParams")).method(Http.POST).headers(map).params(map)
+                .charset("UTF-8").execute();
 
         // Verify
         assertThat(res.isSuccess(), is(true));
@@ -314,8 +290,7 @@ public class HttpTest {
         params.put("Connection", "close");
 
         // Exercise
-        HttpResponse response = Http.url(DataSource.url("header/setHeaders"))
-                .params(params).execute();
+        HttpResponse response = Http.url(DataSource.url("header/setHeaders")).params(params).execute();
         List<HttpHeader> allHeaders = response.getAllHeaders();
 
         // Verify
@@ -346,8 +321,7 @@ public class HttpTest {
         params.put("Connection", "close");
 
         // Exercise
-        HttpResponse response = Http.url(DataSource.url("header/setHeaders"))
-                .params(params).execute();
+        HttpResponse response = Http.url(DataSource.url("header/setHeaders")).params(params).execute();
         List<HttpHeader> headers = response.getHeaders(null);
 
         // Verify
@@ -368,8 +342,7 @@ public class HttpTest {
         params.put("Connection", "close");
 
         // Exercise
-        HttpResponse response = Http.url(DataSource.url("header/setHeaders"))
-                .params(params).execute();
+        HttpResponse response = Http.url(DataSource.url("header/setHeaders")).params(params).execute();
         List<HttpHeader> headers = response.getHeaders("Trailer");
 
         // Verify
@@ -390,8 +363,7 @@ public class HttpTest {
         params.put("Connection", "close");
 
         // Exercise
-        HttpResponse response = Http.url(DataSource.url("header/setHeaders"))
-                .params(params).execute();
+        HttpResponse response = Http.url(DataSource.url("header/setHeaders")).params(params).execute();
         List<HttpHeader> headers = response.getHeaders("Content-Language");
 
         // Verify
@@ -412,8 +384,7 @@ public class HttpTest {
         params.put("Connection", "close");
 
         // Exercise
-        HttpResponse response = Http.url(DataSource.url("header/setHeaders"))
-                .params(params).execute();
+        HttpResponse response = Http.url(DataSource.url("header/setHeaders")).params(params).execute();
         HttpHeader header = response.getHeader(null);
 
         // Verify
@@ -434,8 +405,7 @@ public class HttpTest {
         params.put("Connection", "close");
 
         // Exercise
-        HttpResponse response = Http.url(DataSource.url("header/setHeaders"))
-                .params(params).execute();
+        HttpResponse response = Http.url(DataSource.url("header/setHeaders")).params(params).execute();
         HttpHeader header = response.getHeader("Transfer-Encoding");
 
         // Verify
@@ -456,8 +426,7 @@ public class HttpTest {
         params.put("Connection", "close");
 
         // Exercise
-        HttpResponse response = Http.url(DataSource.url("header/setHeaders"))
-                .params(params).execute();
+        HttpResponse response = Http.url(DataSource.url("header/setHeaders")).params(params).execute();
         HttpHeader header = response.getHeader("Allow");
 
         // Verify
@@ -468,8 +437,7 @@ public class HttpTest {
     public void timeoutメソッドで指定したミリ秒以内にHTTPレスポンスが返却された場合_Exceptionが発生しないこと() {
 
         // Exercise
-        HttpResponse res = Http.url(DataSource.url("timeout/100"))
-                .timeout(1000).execute();
+        HttpResponse res = Http.url(DataSource.url("timeout/100")).timeout(1000).execute();
 
         // Verify
         assertThat(res.isSuccess(), is(true));
@@ -492,8 +460,8 @@ public class HttpTest {
     public void Acceptを設定して送信する() {
 
         // Exercise
-        HttpResponse response = Http.url(DataSource.url("header/accept"))
-                .accept(HTML, XHTML, JSON, XML, TEXT).execute();
+        HttpResponse response = Http.url(DataSource.url("header/accept")).accept(HTML, XHTML, JSON, XML, TEXT)
+                .execute();
 
         // Verify
         assertThat(response.isSuccess(), is(true));
@@ -509,8 +477,8 @@ public class HttpTest {
     public void Basic認証を使用する() {
 
         // Exercise
-        HttpResponse response = Http.url("http://www.ambrosoli.jp/auth/basic")
-                .auth(basic("username", "password")).execute();
+        HttpResponse response = Http.url("http://www.ambrosoli.jp/auth/basic").auth(basic("username", "password"))
+                .execute();
 
         // Verify
         assertThat(response.isSuccess(), is(true));
@@ -522,8 +490,8 @@ public class HttpTest {
     public void Digest認証を使用する() {
 
         // Exercise
-        HttpResponse response = Http.url("http://www.ambrosoli.jp/auth/digest")
-                .auth(digest("username", "password")).execute();
+        HttpResponse response = Http.url("http://www.ambrosoli.jp/auth/digest").auth(digest("username", "password"))
+                .execute();
 
         // Verify
         assertThat(response.isSuccess(), is(true));

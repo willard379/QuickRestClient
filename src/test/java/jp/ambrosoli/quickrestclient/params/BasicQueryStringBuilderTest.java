@@ -126,8 +126,7 @@ public class BasicQueryStringBuilderTest {
         String queryString = paramBuilder.createConformedParams(params, "UTF-8");
 
         // Verify
-        assertThat(queryString,
-                is(equalTo("?%E3%81%82=%E3%81%82%E3%81%84%E3%81%86%E3%81%88%E3%81%8A")));
+        assertThat(queryString, is(equalTo("?%E3%81%82=%E3%81%82%E3%81%84%E3%81%86%E3%81%88%E3%81%8A")));
 
     }
 

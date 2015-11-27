@@ -55,7 +55,7 @@ public class HttpHeaders {
     /**
      * ヘッダー名と値のペアのリストを返します。
      * 
-     * @return　ヘッダー名と値のペアのリスト
+     * @return ヘッダー名と値のペアのリスト
      */
     public List<NameValueObject> getHeaders() {
         return this.headers;

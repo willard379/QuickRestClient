@@ -23,9 +23,6 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import jp.ambrosoli.quickrestclient.exception.IORuntimeException;
-import jp.ambrosoli.quickrestclient.response.HttpResponse;
-
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpStatus;
 import org.apache.http.HttpVersion;
@@ -35,6 +32,9 @@ import org.apache.http.message.BasicHttpResponse;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+
+import jp.ambrosoli.quickrestclient.exception.IORuntimeException;
+import jp.ambrosoli.quickrestclient.response.HttpResponse;
 
 public class ApacheResponseHandlerTest {
 
@@ -47,8 +47,7 @@ public class ApacheResponseHandlerTest {
         // Setup
         ApacheResponseHandler sut = new ApacheResponseHandler();
 
-        BasicHttpResponse httpResponse = new BasicHttpResponse(HttpVersion.HTTP_1_1,
-                HttpStatus.SC_OK, "OK");
+        BasicHttpResponse httpResponse = new BasicHttpResponse(HttpVersion.HTTP_1_1, HttpStatus.SC_OK, "OK");
         byte[] data = "Stay here, I'll be back".getBytes();
         ByteArrayInputStream input = new ByteArrayInputStream(data);
         InputStreamEntity inputStreamEntity = new InputStreamEntity(input, data.length);
@@ -124,8 +123,7 @@ public class ApacheResponseHandlerTest {
     }
 
     @Test
-    public void EntityからInputStreamが返されない状態でconsumeEntityを呼び出してもExceptionが発生しないこと()
-            throws Exception {
+    public void EntityからInputStreamが返されない状態でconsumeEntityを呼び出してもExceptionが発生しないこと() throws Exception {
 
         // Setup
         ApacheResponseHandler sut = new ApacheResponseHandler();
@@ -141,8 +139,7 @@ public class ApacheResponseHandlerTest {
     }
 
     @Test
-    public void consumeEntityを呼び出した際にIOExceptionが発生した場合_IORuntimeExcepitonにラップされてスローされること()
-            throws Exception {
+    public void consumeEntityを呼び出した際にIOExceptionが発生した場合_IORuntimeExcepitonにラップされてスローされること() throws Exception {
 
         // Setup
         ApacheResponseHandler sut = new ApacheResponseHandler();

@@ -19,14 +19,14 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.message.BasicNameValuePair;
+
 import jp.ambrosoli.quickrestclient.exception.UnsupportedEncodingRuntimeException;
 import jp.ambrosoli.quickrestclient.params.NameValueObject;
 import jp.ambrosoli.quickrestclient.params.RequestParamBuilder;
 import jp.ambrosoli.quickrestclient.util.StringUtil;
-
-import org.apache.http.NameValuePair;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.message.BasicNameValuePair;
 
 /**
  * Apache HttpComponents用のPOSTリクエストパラメータを生成するクラスです。
@@ -43,12 +43,10 @@ public class ApacheEnclosingParamBuilder implements RequestParamBuilder<UrlEncod
      * jp.ambrosoli.http.client.params.PostParamBuilder#buildPostParams(jp.ambrosoli
      * .http.client.bean.NameValueObject[], java.lang.String)
      */
-    public UrlEncodedFormEntity createConformedParams(final List<NameValueObject> params,
-            final String charset) {
+    public UrlEncodedFormEntity createConformedParams(final List<NameValueObject> params, final String charset) {
         try {
             List<NameValuePair> paramList = this.createNameValuePairList(params);
-            String encoding = StringUtil.isNotEmpty(charset) ? charset
-                    : StringUtil.DEFAULT_ENCODING;
+            String encoding = StringUtil.isNotEmpty(charset) ? charset : StringUtil.DEFAULT_ENCODING;
             return new UrlEncodedFormEntity(paramList, encoding);
         } catch (UnsupportedEncodingException e) {
             throw new UnsupportedEncodingRuntimeException(e);

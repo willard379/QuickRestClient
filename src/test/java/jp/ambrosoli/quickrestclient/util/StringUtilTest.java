@@ -17,11 +17,12 @@ package jp.ambrosoli.quickrestclient.util;
 
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
-import jp.ambrosoli.quickrestclient.exception.UnsupportedEncodingRuntimeException;
 
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+
+import jp.ambrosoli.quickrestclient.exception.UnsupportedEncodingRuntimeException;
 
 public class StringUtilTest {
 
@@ -182,8 +183,7 @@ public class StringUtilTest {
     }
 
     @Test
-    public void toStringの第二引数に存在しないエンコーディングを指定した場合_UnsupportedEncodingRuntimeExcetionが発生すること()
-            throws Exception {
+    public void toStringの第二引数に存在しないエンコーディングを指定した場合_UnsupportedEncodingRuntimeExcetionが発生すること() throws Exception {
 
         // Setup
         byte[] data = "ハネムーン".getBytes("UTF-8");

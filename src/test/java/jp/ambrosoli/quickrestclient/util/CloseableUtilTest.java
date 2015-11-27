@@ -26,11 +26,11 @@ import java.io.OutputStream;
 import java.io.Reader;
 import java.io.Writer;
 
-import jp.ambrosoli.quickrestclient.exception.IORuntimeException;
-
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+
+import jp.ambrosoli.quickrestclient.exception.IORuntimeException;
 
 /**
  * @author willard379
@@ -69,8 +69,7 @@ public class CloseableUtilTest {
     }
 
     @Test
-    public void closeを呼び出した際に引数で渡したCloseableで例外が発生した場合_IORuntimeExceptionにラップされてスローされること()
-            throws Exception {
+    public void closeを呼び出した際に引数で渡したCloseableで例外が発生した場合_IORuntimeExceptionにラップされてスローされること() throws Exception {
 
         // Setup
         Closeable closeable = mock(Closeable.class);
@@ -113,8 +112,7 @@ public class CloseableUtilTest {
     }
 
     @Test
-    public void closeSilentryの引数に渡したCloseableで例外が発生した場合_closeSilentryでは例外がスローされないこと()
-            throws Exception {
+    public void closeSilentryの引数に渡したCloseableで例外が発生した場合_closeSilentryでは例外がスローされないこと() throws Exception {
 
         // Setup
         Closeable closeable = mock(Closeable.class);
@@ -195,8 +193,7 @@ public class CloseableUtilTest {
     }
 
     @Test
-    public void closeAllの引数に渡したCloseableのひとつで例外が発生した場合_それ以外のCloseableはcloseされていること()
-            throws Exception {
+    public void closeAllの引数に渡したCloseableのひとつで例外が発生した場合_それ以外のCloseableはcloseされていること() throws Exception {
 
         // Setup
         Closeable closeable = mock(Closeable.class);

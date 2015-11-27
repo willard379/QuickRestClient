@@ -144,7 +144,7 @@ public final class URIUtil {
      *            URI
      * @param queryString
      *            クエリストリング
-     * @return　クエリストリングを追加した新しいURI
+     * @return クエリストリングを追加した新しいURI
      */
     public static URI addQueryString(final URI uri, final String queryString) {
         if (queryString == null) {

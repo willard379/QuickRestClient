@@ -59,8 +59,7 @@ public class ReflectionToStringBuilderTest {
         String actual = ReflectionToStringBuilder.toString(object);
 
         // Verify
-        assertThat(actual,
-                is(equalTo("MultiFieldHoge[\n  name1=value1\n  name2=value2\n  name3=value3\n]")));
+        assertThat(actual, is(equalTo("MultiFieldHoge[\n  name1=value1\n  name2=value2\n  name3=value3\n]")));
     }
 
     @Test
@@ -163,7 +162,7 @@ public class ReflectionToStringBuilderTest {
 
         // Setup
         @SuppressWarnings("serial")
-		Hoge object = new Hoge(new LinkedHashMap<String, String>() {
+        Hoge object = new Hoge(new LinkedHashMap<String, String>() {
             {
                 this.put("key1", "value1");
                 this.put("key2", "value2");
@@ -183,7 +182,7 @@ public class ReflectionToStringBuilderTest {
 
         // Setup
         @SuppressWarnings("serial")
-		Hoge object = new Hoge(new LinkedHashMap<String, String>() {
+        Hoge object = new Hoge(new LinkedHashMap<String, String>() {
             {
                 this.put("key1", "value1");
                 this.put("key2", "value2");
@@ -196,8 +195,7 @@ public class ReflectionToStringBuilderTest {
         String actual = ReflectionToStringBuilder.toString(object);
 
         // Verify
-        assertThat(actual,
-                is(equalTo("Hoge[\n  name={key1=value1, key2=value2, key3=value3, null=null}\n]")));
+        assertThat(actual, is(equalTo("Hoge[\n  name={key1=value1, key2=value2, key3=value3, null=null}\n]")));
     }
 
     @Test

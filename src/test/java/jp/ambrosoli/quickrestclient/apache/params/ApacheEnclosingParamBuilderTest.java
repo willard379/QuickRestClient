@@ -21,14 +21,14 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import jp.ambrosoli.quickrestclient.params.NameValueObject;
-import jp.ambrosoli.quickrestclient.params.RequestParams;
-
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+
+import jp.ambrosoli.quickrestclient.params.NameValueObject;
+import jp.ambrosoli.quickrestclient.params.RequestParams;
 
 public class ApacheEnclosingParamBuilderTest {
 
@@ -116,8 +116,7 @@ public class ApacheEnclosingParamBuilderTest {
         ApacheEnclosingParamBuilder sut = new ApacheEnclosingParamBuilder();
 
         // Exercise
-        UrlEncodedFormEntity actual = sut.createConformedParams(new ArrayList<NameValueObject>(),
-                "UTF-8");
+        UrlEncodedFormEntity actual = sut.createConformedParams(new ArrayList<NameValueObject>(), "UTF-8");
 
         // Verify
         assertThat(actual, is(notNullValue()));
@@ -144,8 +143,7 @@ public class ApacheEnclosingParamBuilderTest {
     }
 
     @Test
-    public void createConformedParamsの第二引数に存在しないエンコーディングを渡すと_IllegalArgumentExceptionが発生すること()
-            throws Exception {
+    public void createConformedParamsの第二引数に存在しないエンコーディングを渡すと_IllegalArgumentExceptionが発生すること() throws Exception {
 
         // Setup
         ApacheEnclosingParamBuilder sut = new ApacheEnclosingParamBuilder();

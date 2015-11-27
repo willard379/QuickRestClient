@@ -60,8 +60,7 @@ public abstract class HttpServiceFactory {
 
         HttpServiceFactory factory = cache.get(factoryName);
         if (factory == null) {
-            throw new IllegalStateException("HttpServiceFactory {" + factoryName
-                    + "} is not registerd.");
+            throw new IllegalStateException("HttpServiceFactory {" + factoryName + "} is not registerd.");
         }
         return factory;
     }
@@ -76,8 +75,7 @@ public abstract class HttpServiceFactory {
      */
     public static void register(final String factoryName, final HttpServiceFactory factory) {
         if (factory == null) {
-            throw new IllegalArgumentException("HttpServiceFactory {" + factoryName
-                    + "} could not be registerd.");
+            throw new IllegalArgumentException("HttpServiceFactory {" + factoryName + "} could not be registerd.");
         }
         cache.put(factoryName, factory);
     }
