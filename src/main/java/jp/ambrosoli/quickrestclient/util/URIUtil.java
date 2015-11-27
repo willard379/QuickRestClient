@@ -26,10 +26,10 @@ import java.net.URI;
 public final class URIUtil {
 
     /** HTTPスキーム */
-    public static final String SCHEME_NAME_HTTP = "http";
+    public static final String SCHEME_NAME_HTTP = "http"; //$NON-NLS-1$
 
     /** HTTPSスキーム */
-    public static final String SCHEME_NAME_HTTPS = "https";
+    public static final String SCHEME_NAME_HTTPS = "https"; //$NON-NLS-1$
 
     /** HTTPのポート番号 */
     public static final int PORT_HTTP = 80;
@@ -49,7 +49,7 @@ public final class URIUtil {
      */
     public static boolean isSSL(final String url) {
         if (url != null) {
-            return url.startsWith(SCHEME_NAME_HTTPS + ":");
+            return url.startsWith(SCHEME_NAME_HTTPS + ":"); //$NON-NLS-1$
         }
         return false;
     }
@@ -105,7 +105,7 @@ public final class URIUtil {
      */
     public static boolean isPlain(final String url) {
         if (url != null) {
-            return url.startsWith(SCHEME_NAME_HTTP + ":");
+            return url.startsWith(SCHEME_NAME_HTTP + ":"); //$NON-NLS-1$
         }
         return false;
     }

@@ -47,8 +47,8 @@ public class ApacheResponseHandlerTest {
         // Setup
         ApacheResponseHandler sut = new ApacheResponseHandler();
 
-        BasicHttpResponse httpResponse = new BasicHttpResponse(HttpVersion.HTTP_1_1, HttpStatus.SC_OK, "OK");
-        byte[] data = "Stay here, I'll be back".getBytes();
+        BasicHttpResponse httpResponse = new BasicHttpResponse(HttpVersion.HTTP_1_1, HttpStatus.SC_OK, "OK"); //$NON-NLS-1$
+        byte[] data = "Stay here, I'll be back".getBytes(); //$NON-NLS-1$
         ByteArrayInputStream input = new ByteArrayInputStream(data);
         InputStreamEntity inputStreamEntity = new InputStreamEntity(input, data.length);
         httpResponse.setEntity(inputStreamEntity);
@@ -59,7 +59,7 @@ public class ApacheResponseHandlerTest {
         // Verify
         assertThat(actual, is(notNullValue()));
         assertThat(actual.isSuccess(), is(true));
-        assertThat(actual.getAsString(), is(equalTo("Stay here, I'll be back")));
+        assertThat(actual.getAsString(), is(equalTo("Stay here, I'll be back"))); //$NON-NLS-1$
 
     }
 
@@ -75,7 +75,7 @@ public class ApacheResponseHandlerTest {
         sut.handleResponse(null);
 
         // Verify
-        fail("NullPoiinterExceptionが発生しませんでした。");
+        fail("NullPoiinterExceptionが発生しませんでした。"); //$NON-NLS-1$
     }
 
     @Test
@@ -154,6 +154,6 @@ public class ApacheResponseHandlerTest {
         sut.consumeEntity(entity);
 
         // Verify
-        fail("IORuntimeExceptionが発生しませんでした。");
+        fail("IORuntimeExceptionが発生しませんでした。"); //$NON-NLS-1$
     }
 }

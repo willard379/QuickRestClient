@@ -26,46 +26,46 @@ public interface HttpConstants {
     /* ################## HTTP Method ################## */
 
     /** HTTPメソッド "GET"を表す定数です。 */
-    public static final String GET = "GET";
+    public static final String GET = "GET"; //$NON-NLS-1$
 
     /** HTTPメソッド "POST"を表す定数です。 */
-    public static final String POST = "POST";
+    public static final String POST = "POST"; //$NON-NLS-1$
 
     /** HTTPメソッド "PUT"を表す定数です。 */
-    public static final String PUT = "PUT";
+    public static final String PUT = "PUT"; //$NON-NLS-1$
 
     /** HTTPメソッド "DELETE"を表す定数です。 */
-    public static final String DELETE = "DELETE";
+    public static final String DELETE = "DELETE"; //$NON-NLS-1$
 
     /** HTTPメソッド "HEAD"を表す定数です。 */
-    public static final String HEAD = "HEAD";
+    public static final String HEAD = "HEAD"; //$NON-NLS-1$
 
     /** HTTPメソッド "OPTIONS"を表す定数です。 */
-    public static final String OPTIONS = "OPTIONS";
+    public static final String OPTIONS = "OPTIONS"; //$NON-NLS-1$
 
     /* ################## Protocol Version ################## */
 
     /** プロトコルバージョン "HTTP/1.0"を表す定数です。 */
-    public static final String HTTP_1_0 = "HTTP/1.0";
+    public static final String HTTP_1_0 = "HTTP/1.0"; //$NON-NLS-1$
 
     /** プロトコルバージョン "HTTP/1.1"を表す定数です。 */
-    public static final String HTTP_1_1 = "HTTP/1.1";
+    public static final String HTTP_1_1 = "HTTP/1.1"; //$NON-NLS-1$
 
     /* ################## MIME Type ################## */
 
     /** MIME Type "text/html"を表す定数です。 */
-    public static final String HTML = "text/html";
+    public static final String HTML = "text/html"; //$NON-NLS-1$
 
     /** MIME Type "application/xhtml+xml"を表す定数です。 */
-    public static final String XHTML = "application/xhtml+xml";
+    public static final String XHTML = "application/xhtml+xml"; //$NON-NLS-1$
 
     /** MIME Type "application/json"を表す定数です。 */
-    public static final String JSON = "application/json";
+    public static final String JSON = "application/json"; //$NON-NLS-1$
 
     /** MIME Type "application/xml"を表す定数です。 */
-    public static final String XML = "application/xml";
+    public static final String XML = "application/xml"; //$NON-NLS-1$
 
     /** MIME Type "text/plain"を表す定数です。 */
-    public static final String TEXT = "text/plain";
+    public static final String TEXT = "text/plain"; //$NON-NLS-1$
 
 }

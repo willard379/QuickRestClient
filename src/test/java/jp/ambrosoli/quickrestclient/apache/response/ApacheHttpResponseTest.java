@@ -49,10 +49,10 @@ public class ApacheHttpResponseTest {
     @Rule
     public ExpectedException expectedException = ExpectedException.none();
 
-    private Header[] SAMPLE_HEADERS = new Header[] { new BasicHeader("Transfer-Encoding", "chunked"),
-            new BasicHeader("Upgrade", "HTTP/2.0, SHTTP/1.3"),
-            new BasicHeader("Location", "http://www.ambrosoli.jp/test-server/"),
-            new BasicHeader("Set-Cookie", "name=willard379"), new BasicHeader("Set-Cookie", "age=17"), };
+    private Header[] SAMPLE_HEADERS = new Header[] { new BasicHeader("Transfer-Encoding", "chunked"), //$NON-NLS-1$ //$NON-NLS-2$
+            new BasicHeader("Upgrade", "HTTP/2.0, SHTTP/1.3"), //$NON-NLS-1$ //$NON-NLS-2$
+            new BasicHeader("Location", "http://www.ambrosoli.jp/test-server/"), //$NON-NLS-1$ //$NON-NLS-2$
+            new BasicHeader("Set-Cookie", "name=willard379"), new BasicHeader("Set-Cookie", "age=17"), }; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 
     @Test
     public void ApacheHttpResponseのコンストラクタにorg_apache_http_HttpResponseを渡すと_インスタンスが生成されること() {
@@ -78,7 +78,7 @@ public class ApacheHttpResponseTest {
         new ApacheHttpResponse(null);
 
         // Verify
-        fail("NullPointerExceptionが発生しませんでした。");
+        fail("NullPointerExceptionが発生しませんでした。"); //$NON-NLS-1$
     }
 
     @Test
@@ -103,14 +103,14 @@ public class ApacheHttpResponseTest {
 
         // Setup
         HttpResponse response = mock(HttpResponse.class);
-        when(response.getEntity()).thenReturn(new StringEntity("Stay here, I'll be back"));
+        when(response.getEntity()).thenReturn(new StringEntity("Stay here, I'll be back")); //$NON-NLS-1$
 
         // Exercise
         ApacheHttpResponse sut = new ApacheHttpResponse(response);
         byte[] actual = sut.getAsByteArray();
 
         // Verify
-        assertThat(actual, is(equalTo("Stay here, I'll be back".getBytes())));
+        assertThat(actual, is(equalTo("Stay here, I'll be back".getBytes()))); //$NON-NLS-1$
     }
 
     @Test
@@ -121,7 +121,7 @@ public class ApacheHttpResponseTest {
 
             // Setup
             HttpResponse response = mock(HttpResponse.class);
-            when(response.getEntity()).thenReturn(new StringEntity("I am a pen!"));
+            when(response.getEntity()).thenReturn(new StringEntity("I am a pen!")); //$NON-NLS-1$
 
             // Exercise
             ApacheHttpResponse sut = new ApacheHttpResponse(response);
@@ -130,7 +130,7 @@ public class ApacheHttpResponseTest {
             // Verify
             assertThat(actual, is(notNullValue()));
             String actualStr = new BufferedReader(new InputStreamReader(actual)).readLine();
-            assertThat(actualStr, is(equalTo("I am a pen!")));
+            assertThat(actualStr, is(equalTo("I am a pen!"))); //$NON-NLS-1$
 
         } finally {
             if (actual != null) {
@@ -144,14 +144,14 @@ public class ApacheHttpResponseTest {
 
         // Setup
         HttpResponse response = mock(HttpResponse.class);
-        when(response.getEntity()).thenReturn(new StringEntity("There is an apple."));
+        when(response.getEntity()).thenReturn(new StringEntity("There is an apple.")); //$NON-NLS-1$
 
         // Exercise
         ApacheHttpResponse sut = new ApacheHttpResponse(response);
         String actual = sut.getAsString();
 
         // Verify
-        assertThat(actual, is(equalTo("There is an apple.")));
+        assertThat(actual, is(equalTo("There is an apple."))); //$NON-NLS-1$
 
     }
 
@@ -160,14 +160,14 @@ public class ApacheHttpResponseTest {
 
         // Setup
         HttpResponse response = mock(HttpResponse.class);
-        when(response.getEntity()).thenReturn(new StringEntity("There is an apple."));
+        when(response.getEntity()).thenReturn(new StringEntity("There is an apple.")); //$NON-NLS-1$
 
         // Exercise
         ApacheHttpResponse sut = new ApacheHttpResponse(response);
         String actual = sut.getAsString(StringUtil.DEFAULT_ENCODING);
 
         // Verify
-        assertThat(actual, is(equalTo("There is an apple.")));
+        assertThat(actual, is(equalTo("There is an apple."))); //$NON-NLS-1$
 
     }
 
@@ -176,8 +176,8 @@ public class ApacheHttpResponseTest {
 
         // Setup
         HttpResponse response = mock(HttpResponse.class);
-        StringEntity entity = new StringEntity("I am a pen!");
-        entity.setContentType("application/json");
+        StringEntity entity = new StringEntity("I am a pen!"); //$NON-NLS-1$
+        entity.setContentType("application/json"); //$NON-NLS-1$
         when(response.getEntity()).thenReturn(entity);
 
         // Exercise
@@ -185,7 +185,7 @@ public class ApacheHttpResponseTest {
         String actual = sut.getContentType();
 
         // Verify
-        assertThat(actual, is(equalTo("application/json")));
+        assertThat(actual, is(equalTo("application/json"))); //$NON-NLS-1$
     }
 
     @Test
@@ -206,7 +206,7 @@ public class ApacheHttpResponseTest {
     public void HTTPレスポンスヘッダーにContentTypeがない状態でgetContentTypeを呼び出すと_nullが返されること() throws Exception {
 
         // Setup
-        HttpResponse response = new BasicHttpResponse(HttpVersion.HTTP_1_1, HttpStatus.SC_OK, "OK");
+        HttpResponse response = new BasicHttpResponse(HttpVersion.HTTP_1_1, HttpStatus.SC_OK, "OK"); //$NON-NLS-1$
         response.setEntity(new ByteArrayEntity(new byte[0]));
 
         // Exercise
@@ -237,7 +237,7 @@ public class ApacheHttpResponseTest {
     public void HTTPレスポンスのEntityがnullの状態でgetContentLengthを呼び出すと_0が返されること() {
 
         // Setup
-        HttpResponse response = new BasicHttpResponse(HttpVersion.HTTP_1_1, HttpStatus.SC_OK, "OK");
+        HttpResponse response = new BasicHttpResponse(HttpVersion.HTTP_1_1, HttpStatus.SC_OK, "OK"); //$NON-NLS-1$
 
         // Exercise
         ApacheHttpResponse sut = new ApacheHttpResponse(response);
@@ -251,29 +251,29 @@ public class ApacheHttpResponseTest {
     public void getHeaderを呼び出すと_該当するHTTPレスポンスヘッダーの最初の1件が返されること() {
 
         // Setup
-        HttpResponse response = new BasicHttpResponse(HttpVersion.HTTP_1_1, HttpStatus.SC_OK, "OK");
+        HttpResponse response = new BasicHttpResponse(HttpVersion.HTTP_1_1, HttpStatus.SC_OK, "OK"); //$NON-NLS-1$
         response.setHeaders(this.SAMPLE_HEADERS);
 
         // Exercise
         ApacheHttpResponse sut = new ApacheHttpResponse(response);
-        HttpHeader actual = sut.getHeader("Location");
+        HttpHeader actual = sut.getHeader("Location"); //$NON-NLS-1$
 
         // Verify
         assertThat(actual, is(notNullValue()));
-        assertThat(actual.getName(), is(equalTo("Location")));
-        assertThat(actual.getValue(), is(equalTo("http://www.ambrosoli.jp/test-server/")));
+        assertThat(actual.getName(), is(equalTo("Location"))); //$NON-NLS-1$
+        assertThat(actual.getValue(), is(equalTo("http://www.ambrosoli.jp/test-server/"))); //$NON-NLS-1$
     }
 
     @Test
     public void getHeaderの引数にHTTPレスポンスヘッダーに含まれないヘッダー名を指定した場合_nullが返されること() {
 
         // Setup
-        HttpResponse response = new BasicHttpResponse(HttpVersion.HTTP_1_1, HttpStatus.SC_OK, "OK");
+        HttpResponse response = new BasicHttpResponse(HttpVersion.HTTP_1_1, HttpStatus.SC_OK, "OK"); //$NON-NLS-1$
         response.setHeaders(this.SAMPLE_HEADERS);
 
         // Exercise
         ApacheHttpResponse sut = new ApacheHttpResponse(response);
-        HttpHeader actual = sut.getHeader("hoge");
+        HttpHeader actual = sut.getHeader("hoge"); //$NON-NLS-1$
 
         // Verify
         assertThat(actual, is(nullValue()));
@@ -283,32 +283,32 @@ public class ApacheHttpResponseTest {
     public void getHeadersを呼び出すと_該当するHTTPレスポンスヘッダーがすべて返されること() {
 
         // Setup
-        HttpResponse response = new BasicHttpResponse(HttpVersion.HTTP_1_1, HttpStatus.SC_OK, "OK");
+        HttpResponse response = new BasicHttpResponse(HttpVersion.HTTP_1_1, HttpStatus.SC_OK, "OK"); //$NON-NLS-1$
         response.setHeaders(this.SAMPLE_HEADERS);
 
         // Exercise
         ApacheHttpResponse sut = new ApacheHttpResponse(response);
-        List<HttpHeader> actual = sut.getHeaders("Set-Cookie");
+        List<HttpHeader> actual = sut.getHeaders("Set-Cookie"); //$NON-NLS-1$
 
         // Verify
         assertThat(actual, is(notNullValue()));
         assertThat(actual.size(), is(2));
-        assertThat(actual.get(0).getName(), is(equalTo("Set-Cookie")));
-        assertThat(actual.get(0).getValue(), is(equalTo("name=willard379")));
-        assertThat(actual.get(1).getName(), is(equalTo("Set-Cookie")));
-        assertThat(actual.get(1).getValue(), is(equalTo("age=17")));
+        assertThat(actual.get(0).getName(), is(equalTo("Set-Cookie"))); //$NON-NLS-1$
+        assertThat(actual.get(0).getValue(), is(equalTo("name=willard379"))); //$NON-NLS-1$
+        assertThat(actual.get(1).getName(), is(equalTo("Set-Cookie"))); //$NON-NLS-1$
+        assertThat(actual.get(1).getValue(), is(equalTo("age=17"))); //$NON-NLS-1$
     }
 
     @Test
     public void getHeadersの引数にHTTPレスポンスヘッダーに含まれないヘッダー名を指定した場合_空のListが返されること() {
 
         // Setup
-        HttpResponse response = new BasicHttpResponse(HttpVersion.HTTP_1_1, HttpStatus.SC_OK, "OK");
+        HttpResponse response = new BasicHttpResponse(HttpVersion.HTTP_1_1, HttpStatus.SC_OK, "OK"); //$NON-NLS-1$
         response.setHeaders(this.SAMPLE_HEADERS);
 
         // Exercise
         ApacheHttpResponse sut = new ApacheHttpResponse(response);
-        List<HttpHeader> actual = sut.getHeaders("Fizz");
+        List<HttpHeader> actual = sut.getHeaders("Fizz"); //$NON-NLS-1$
 
         // Verify
         assertThat(actual.isEmpty(), is(true));
@@ -318,7 +318,7 @@ public class ApacheHttpResponseTest {
     public void getStatusCodeを呼び出すと_HTTPステータスコードが返されること() {
 
         // Setup
-        HttpResponse response = new BasicHttpResponse(HttpVersion.HTTP_1_1, HttpStatus.SC_OK, "OK");
+        HttpResponse response = new BasicHttpResponse(HttpVersion.HTTP_1_1, HttpStatus.SC_OK, "OK"); //$NON-NLS-1$
 
         // Exercise
         ApacheHttpResponse sut = new ApacheHttpResponse(response);
@@ -333,7 +333,7 @@ public class ApacheHttpResponseTest {
 
         // Setup
         ApacheHttpResponse sut = new ApacheHttpResponse(
-                new BasicHttpResponse(HttpVersion.HTTP_1_1, HttpStatus.SC_OK, "OK"));
+                new BasicHttpResponse(HttpVersion.HTTP_1_1, HttpStatus.SC_OK, "OK")); //$NON-NLS-1$
 
         // Exercise
         boolean actual = sut.isSuccess();
@@ -348,7 +348,7 @@ public class ApacheHttpResponseTest {
 
         // Setup
         ApacheHttpResponse sut = new ApacheHttpResponse(
-                new BasicHttpResponse(HttpVersion.HTTP_1_1, HttpStatus.SC_CREATED, "OK"));
+                new BasicHttpResponse(HttpVersion.HTTP_1_1, HttpStatus.SC_CREATED, "OK")); //$NON-NLS-1$
 
         // Exercise
         boolean actual = sut.isSuccess();
@@ -363,7 +363,7 @@ public class ApacheHttpResponseTest {
 
         // Setup
         ApacheHttpResponse sut = new ApacheHttpResponse(new BasicHttpResponse(HttpVersion.HTTP_1_1,
-                HttpStatus.SC_INTERNAL_SERVER_ERROR, "Internal Server Error"));
+                HttpStatus.SC_INTERNAL_SERVER_ERROR, "Internal Server Error")); //$NON-NLS-1$
 
         // Exercise
         boolean actual = sut.isSuccess();
@@ -381,11 +381,11 @@ public class ApacheHttpResponseTest {
         ApacheHttpResponse sut = new ApacheHttpResponse(response);
 
         Header[] headers = new Header[5];
-        headers[0] = new BasicHeader("Transfer-Encoding", "chunked");
-        headers[1] = new BasicHeader("Upgrade", "HTTP/2.0, SHTTP/1.3");
-        headers[2] = new BasicHeader("Location", "http://www.ambrosoli.jp/test-server/");
-        headers[3] = new BasicHeader("Set-Cookie", "name=willard379");
-        headers[4] = new BasicHeader("Set-Cookie", "age=17");
+        headers[0] = new BasicHeader("Transfer-Encoding", "chunked"); //$NON-NLS-1$ //$NON-NLS-2$
+        headers[1] = new BasicHeader("Upgrade", "HTTP/2.0, SHTTP/1.3"); //$NON-NLS-1$ //$NON-NLS-2$
+        headers[2] = new BasicHeader("Location", "http://www.ambrosoli.jp/test-server/"); //$NON-NLS-1$ //$NON-NLS-2$
+        headers[3] = new BasicHeader("Set-Cookie", "name=willard379"); //$NON-NLS-1$ //$NON-NLS-2$
+        headers[4] = new BasicHeader("Set-Cookie", "age=17"); //$NON-NLS-1$ //$NON-NLS-2$
 
         // Exercise
         List<HttpHeader> actual = sut.convertHttpHeaders(headers);
@@ -436,7 +436,7 @@ public class ApacheHttpResponseTest {
         HttpResponse response = mock(org.apache.http.HttpResponse.class);
         ApacheHttpResponse sut = new ApacheHttpResponse(response);
 
-        Header header = new BasicHeader("Transfer-Encoding", "chunked");
+        Header header = new BasicHeader("Transfer-Encoding", "chunked"); //$NON-NLS-1$ //$NON-NLS-2$
 
         // Exercise
         HttpHeader actual = sut.convertHttpHeader(header);
@@ -469,7 +469,7 @@ public class ApacheHttpResponseTest {
         HttpResponse response = mock(org.apache.http.HttpResponse.class);
         ApacheHttpResponse sut = new ApacheHttpResponse(response);
 
-        String src = "And so, my fellow Americans: ask not what your country can do for you - ask what you can do for your country.";
+        String src = "And so, my fellow Americans: ask not what your country can do for you - ask what you can do for your country."; //$NON-NLS-1$
         HttpEntity entity = new StringEntity(src);
 
         // Exercise
@@ -516,6 +516,6 @@ public class ApacheHttpResponseTest {
         sut.toByteArray(entity);
 
         // Verify
-        fail("IORuntimeExceptionが発生しませんでした。");
+        fail("IORuntimeExceptionが発生しませんでした。"); //$NON-NLS-1$
     }
 }

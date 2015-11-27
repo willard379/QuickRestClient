@@ -39,7 +39,7 @@ public class BasicQueryStringBuilder implements RequestParamBuilder<String> {
      */
     public String createConformedParams(final List<NameValueObject> params, final String encoding) {
         if (params == null || params.isEmpty()) {
-            return "";
+            return ""; //$NON-NLS-1$
         }
 
         String enc = StringUtil.isNotEmpty(encoding) ? encoding : StringUtil.DEFAULT_ENCODING;
@@ -52,13 +52,13 @@ public class BasicQueryStringBuilder implements RequestParamBuilder<String> {
                 }
 
                 if (StringUtil.isEmpty(sb)) {
-                    sb.append("?");
+                    sb.append("?"); //$NON-NLS-1$
                 } else {
-                    sb.append("&");
+                    sb.append("&"); //$NON-NLS-1$
                 }
 
                 sb.append(URLEncoder.encode(param.getName(), enc));
-                sb.append("=");
+                sb.append("="); //$NON-NLS-1$
                 sb.append(URLEncoder.encode(param.getValue(), enc));
             }
             return sb.toString();

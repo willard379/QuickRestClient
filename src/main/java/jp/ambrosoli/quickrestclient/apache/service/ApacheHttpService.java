@@ -14,7 +14,7 @@
  * governing permissions and limitations under the License.
  */
 /**
- * 
+ *
  */
 package jp.ambrosoli.quickrestclient.apache.service;
 
@@ -76,7 +76,7 @@ import jp.ambrosoli.quickrestclient.util.URIUtil;
 
 /**
  * Apache HttpComponentsを使用したRESTエンドポイントのサービス呼び出しを行うクラスです。
- * 
+ *
  * @author willard379
  * @since 0.1.0
  */
@@ -84,7 +84,7 @@ public class ApacheHttpService implements HttpService {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * jp.ambrosoli.http.client.service.HttpService#execute(jp.ambrosoli.http
      * .client.request.HttpRequest)
@@ -120,7 +120,7 @@ public class ApacheHttpService implements HttpService {
 
     /**
      * {@link SchemeRegistry}を生成します。
-     * 
+     *
      * @param uri
      *            リクエストURI
      * @return 生成した{@link SchemeRegistry}のインスタンス
@@ -136,14 +136,14 @@ public class ApacheHttpService implements HttpService {
 
     /**
      * スキームに応じてソケットファクトリを生成して返します。
-     * 
+     *
      * @param uri
      *            URI
      * @return ソケットファクトリ
      */
     protected SocketFactory getSocketFactory(final URI uri) {
         if (uri == null) {
-            throw new NullPointerException("URL is null.");
+            throw new NullPointerException(Messages.getString("message.url.null")); //$NON-NLS-1$
         }
 
         SocketFactory factory;
@@ -152,7 +152,7 @@ public class ApacheHttpService implements HttpService {
         } else if (URIUtil.isSSL(uri)) {
             factory = SSLSocketFactory.getSocketFactory();
         } else {
-            throw new IllegalArgumentException("invalid scheme.");
+            throw new IllegalArgumentException(Messages.getString("message.invalid.scheme")); //$NON-NLS-1$
         }
 
         return factory;
@@ -160,7 +160,7 @@ public class ApacheHttpService implements HttpService {
 
     /**
      * {@link HttpParams}を生成して返します。
-     * 
+     *
      * @return HttpParams実装クラスのインスタンス
      */
     protected HttpParams createHttpParams() {
@@ -169,7 +169,7 @@ public class ApacheHttpService implements HttpService {
 
     /**
      * {@link ClientConnectionManager}を生成して返します。
-     * 
+     *
      * @param schreg
      *            {@link SchemeRegistry}のインスタンス
      * @param params
@@ -183,7 +183,7 @@ public class ApacheHttpService implements HttpService {
 
     /**
      * {@link HttpClient}を生成して返します。
-     * 
+     *
      * @param conman
      *            コネクションマネージャ
      * @param params
@@ -199,7 +199,7 @@ public class ApacheHttpService implements HttpService {
     /**
      * {@link HttpUriRequest}を生成して返します。 {@link HttpUriRequest}
      * にはリクエストパラメータがセットされます。
-     * 
+     *
      * @param uri
      *            リクエストURI
      * @param method
@@ -237,7 +237,7 @@ public class ApacheHttpService implements HttpService {
 
     /**
      * クエリストリングを追加した新しいURIを生成して返します。リクエストパラメータがない場合はURIをそのまま返します。
-     * 
+     *
      * @param uri
      *            URI
      * @param params
@@ -256,7 +256,7 @@ public class ApacheHttpService implements HttpService {
 
     /**
      * プロキシを設定します。
-     * 
+     *
      * @param httpParams
      *            HttpParams
      * @param proxy
@@ -272,7 +272,7 @@ public class ApacheHttpService implements HttpService {
 
     /**
      * プロトコルバージョンを設定します。
-     * 
+     *
      * @param httpParams
      *            HttpParams
      * @param protocol
@@ -288,14 +288,14 @@ public class ApacheHttpService implements HttpService {
         } else if (protocol.equals(Http.HTTP_1_1)) {
             version = HttpVersion.HTTP_1_1;
         } else {
-            throw new IllegalArgumentException("Http protocol version is illegal");
+            throw new IllegalArgumentException(Messages.getString("message.version.illegal")); //$NON-NLS-1$
         }
         HttpProtocolParams.setVersion(httpParams, version);
     }
 
     /**
      * タイムアウト時間を設定します。
-     * 
+     *
      * @param httpParams
      *            HttpParams
      * @param timeout
@@ -309,7 +309,7 @@ public class ApacheHttpService implements HttpService {
     /**
      * charsetフィールド（nullの場合は環境の標準エンコーディング）に基づいて、{@link HttpProtocolParams}
      * に送文字コードとしてを設定します。
-     * 
+     *
      * @param httpUriRequest
      *            HttpUriRequestインスタンス
      */
@@ -320,7 +320,7 @@ public class ApacheHttpService implements HttpService {
 
     /**
      * HTTPヘッダを設定します。
-     * 
+     *
      * @param httpUriRequest
      *            HttpUriRequest
      * @param httpHeaders
@@ -339,7 +339,7 @@ public class ApacheHttpService implements HttpService {
 
     /**
      * POST,PUTメソッドにリクエストパラメータを設定します。
-     * 
+     *
      * @param enclosingRequest
      *            HttpEntityEnclosingRequest
      * @param requestParams
@@ -359,7 +359,7 @@ public class ApacheHttpService implements HttpService {
 
     /**
      * Basic/Digest認証の情報を設定します。
-     * 
+     *
      * @param uri
      *            URI
      * @param authInfo

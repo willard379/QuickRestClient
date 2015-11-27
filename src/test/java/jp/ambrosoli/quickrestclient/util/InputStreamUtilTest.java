@@ -81,7 +81,7 @@ public class InputStreamUtilTest {
         InputStreamUtil.close(inputStream);
 
         // Verify
-        fail("IORuntimeExceptionがスローされませんでした。");
+        fail("IORuntimeExceptionがスローされませんでした。"); //$NON-NLS-1$
     }
 
     @Test
@@ -123,22 +123,22 @@ public class InputStreamUtilTest {
         InputStreamUtil.closeSilently(inputStream);
 
         // Verify
-        fail("IORuntimeExceptionが発生しませんでした。");
+        fail("IORuntimeExceptionが発生しませんでした。"); //$NON-NLS-1$
     }
 
     @Test
     public void copyが呼び出された場合_OutputStreamにデータが書きだされてcloseされること() throws Exception {
 
         // Setup
-        InputStream inputStream = spy(new ByteArrayInputStream("willard379".getBytes("UTF-8")));
+        InputStream inputStream = spy(new ByteArrayInputStream("willard379".getBytes("UTF-8"))); //$NON-NLS-1$ //$NON-NLS-2$
         ByteArrayOutputStream outputStream = spy(new ByteArrayOutputStream());
 
         // Exercise
         InputStreamUtil.copy(inputStream, outputStream);
 
         // Verify
-        String result = new String(outputStream.toByteArray(), "UTF-8");
-        assertThat(result, is(equalTo("willard379")));
+        String result = new String(outputStream.toByteArray(), "UTF-8"); //$NON-NLS-1$
+        assertThat(result, is(equalTo("willard379"))); //$NON-NLS-1$
 
         verify(inputStream).close();
         verify(outputStream).close();
@@ -181,7 +181,7 @@ public class InputStreamUtilTest {
         InputStream input = mock(InputStream.class);
         OutputStream output = mock(OutputStream.class);
 
-        doThrow(new IOException("Read error")).when(input).read((byte[]) any(), eq(0), anyInt());
+        doThrow(new IOException("Read error")).when(input).read((byte[]) any(), eq(0), anyInt()); //$NON-NLS-1$
 
         this.expectedException.expect(is(instanceOf(IORuntimeException.class)));
 
@@ -200,7 +200,7 @@ public class InputStreamUtilTest {
         InputStream input = mock(InputStream.class);
         OutputStream output = mock(OutputStream.class);
 
-        doThrow(new IOException("Write error")).when(output).write((byte[]) any(), eq(0), anyInt());
+        doThrow(new IOException("Write error")).when(output).write((byte[]) any(), eq(0), anyInt()); //$NON-NLS-1$
 
         this.expectedException.expect(is(instanceOf(IORuntimeException.class)));
 

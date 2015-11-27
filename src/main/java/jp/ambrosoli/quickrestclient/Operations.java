@@ -80,7 +80,7 @@ public final class Operations implements HttpConstants {
      * @return 認証情報
      */
     public static AuthInfo clientCert(final String username, final String password) {
-        throw new UnsupportedOperationException("Not yet implemented");
+        throw new UnsupportedOperationException("Not yet implemented"); //$NON-NLS-1$
     }
 
 }

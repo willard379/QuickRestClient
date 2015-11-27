@@ -76,7 +76,7 @@ public class OutputStreamUtilTest {
         OutputStreamUtil.close(output);
 
         // Verify
-        fail("IORuntimeExceptionが発生しませんでした。");
+        fail("IORuntimeExceptionが発生しませんでした。"); //$NON-NLS-1$
     }
 
     @Test
@@ -118,7 +118,7 @@ public class OutputStreamUtilTest {
         OutputStreamUtil.closeSilently(output);
 
         // Verify
-        fail("IORuntimeExceptionが発生しませんでした。");
+        fail("IORuntimeExceptionが発生しませんでした。"); //$NON-NLS-1$
     }
 
 }

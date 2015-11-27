@@ -81,7 +81,7 @@ public class CloseableUtilTest {
         CloseableUtil.close(closeable);
 
         // Verify
-        fail("IORuntimeExceptionが発生しませんでした。");
+        fail("IORuntimeExceptionが発生しませんでした。"); //$NON-NLS-1$
     }
 
     @Test
@@ -174,21 +174,21 @@ public class CloseableUtilTest {
         Reader reader = mock(Reader.class);
         Writer writer = mock(Writer.class);
 
-        doThrow(new RuntimeException("occured in Closeable")).when(closeable).close();
-        doThrow(new RuntimeException("occured in InputStream")).when(inputStream).close();
-        doThrow(new RuntimeException("occured in OutputStream")).when(outputStream).close();
-        doThrow(new RuntimeException("occured in Reader")).when(reader).close();
-        doThrow(new RuntimeException("occured in Writer")).when(writer).close();
+        doThrow(new RuntimeException("occured in Closeable")).when(closeable).close(); //$NON-NLS-1$
+        doThrow(new RuntimeException("occured in InputStream")).when(inputStream).close(); //$NON-NLS-1$
+        doThrow(new RuntimeException("occured in OutputStream")).when(outputStream).close(); //$NON-NLS-1$
+        doThrow(new RuntimeException("occured in Reader")).when(reader).close(); //$NON-NLS-1$
+        doThrow(new RuntimeException("occured in Writer")).when(writer).close(); //$NON-NLS-1$
 
         // 最初に発生した例外がスローされる
         this.expectedException.expect(is(instanceOf(RuntimeException.class)));
-        this.expectedException.expectMessage(is(equalTo("occured in Closeable")));
+        this.expectedException.expectMessage(is(equalTo("occured in Closeable"))); //$NON-NLS-1$
 
         // Exercise
         CloseableUtil.closeAll(closeable, inputStream, outputStream, reader, writer);
 
         // Verify
-        fail("例外が発生しませんでした。");
+        fail("例外が発生しませんでした。"); //$NON-NLS-1$
 
     }
 
@@ -202,11 +202,11 @@ public class CloseableUtilTest {
         Reader reader = mock(Reader.class);
         Writer writer = mock(Writer.class);
 
-        doThrow(new RuntimeException("occured in Closeable")).when(closeable).close();
+        doThrow(new RuntimeException("occured in Closeable")).when(closeable).close(); //$NON-NLS-1$
 
         // 最初に発生した例外がスローされる
         this.expectedException.expect(is(instanceOf(RuntimeException.class)));
-        this.expectedException.expectMessage(is(equalTo("occured in Closeable")));
+        this.expectedException.expectMessage(is(equalTo("occured in Closeable"))); //$NON-NLS-1$
 
         try {
             // Exercise

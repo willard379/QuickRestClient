@@ -9,15 +9,15 @@ package jp.ambrosoli.quickrestclient.unittest;
 public class DataSourceKeys {
 
     /** テストサーバのスキーム */
-    public static final String SERVER_SCHEME = "server.scheme";
+    public static final String SERVER_SCHEME = "server.scheme"; //$NON-NLS-1$
 
     /** テストサーバのデフォルトホスト */
-    public static final String SERVER_HOST = "server.host";
+    public static final String SERVER_HOST = "server.host"; //$NON-NLS-1$
 
     /** テストサーバのポート番号 */
-    public static final String SERVER_PORT = "server.port";
+    public static final String SERVER_PORT = "server.port"; //$NON-NLS-1$
 
     /** テストサーバのコンテキストパス */
-    public static final String SERVER_CONTEXTPATH = "server.contextpath";
+    public static final String SERVER_CONTEXTPATH = "server.contextpath"; //$NON-NLS-1$
 
 }

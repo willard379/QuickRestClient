@@ -80,7 +80,7 @@ public class ApacheHttpServiceTest {
         // Setup
         ApacheHttpService sut = new ApacheHttpService();
 
-        HttpRequest request = new HttpRequest(URIUtil.toURI(DataSource.url("statusCode/ok")));
+        HttpRequest request = new HttpRequest(URIUtil.toURI(DataSource.url("statusCode/ok"))); //$NON-NLS-1$
 
         // Exercise
         HttpResponse actual = sut.execute(request);
@@ -96,13 +96,13 @@ public class ApacheHttpServiceTest {
         ApacheHttpService sut = new ApacheHttpService();
 
         List<NameValueObject> values = new ArrayList<NameValueObject>();
-        values.add(new NameValueObject("Accept", "application/xml"));
-        values.add(new NameValueObject("Connection", "Keep-Alive"));
-        values.add(new NameValueObject("Accept-Language", "ja"));
-        values.add(new NameValueObject("Pragma", "no-cache"));
-        values.add(new NameValueObject("Vary", "Accept-Charset, Accept-Language"));
+        values.add(new NameValueObject("Accept", "application/xml")); //$NON-NLS-1$ //$NON-NLS-2$
+        values.add(new NameValueObject("Connection", "Keep-Alive")); //$NON-NLS-1$ //$NON-NLS-2$
+        values.add(new NameValueObject("Accept-Language", "ja")); //$NON-NLS-1$ //$NON-NLS-2$
+        values.add(new NameValueObject("Pragma", "no-cache")); //$NON-NLS-1$ //$NON-NLS-2$
+        values.add(new NameValueObject("Vary", "Accept-Charset, Accept-Language")); //$NON-NLS-1$ //$NON-NLS-2$
 
-        HttpRequest request = new HttpRequest(URIUtil.toURI(DataSource.url("header/sameAsParams")));
+        HttpRequest request = new HttpRequest(URIUtil.toURI(DataSource.url("header/sameAsParams"))); //$NON-NLS-1$
         request.setMethod(HttpMethod.POST);
         request.setCharset(StringUtil.DEFAULT_ENCODING);
         request.addHeaders(values);
@@ -124,7 +124,7 @@ public class ApacheHttpServiceTest {
         ApacheHttpService sut = new ApacheHttpService();
 
         // Exercise
-        SocketFactory actual = sut.getSocketFactory(URIUtil.toURI("http://www.ambrosoli.jp/test-server/"));
+        SocketFactory actual = sut.getSocketFactory(URIUtil.toURI("http://www.ambrosoli.jp/test-server/")); //$NON-NLS-1$
 
         // Verify
         assertThat(actual, is(instanceOf(PlainSocketFactory.class)));
@@ -138,7 +138,7 @@ public class ApacheHttpServiceTest {
         ApacheHttpService sut = new ApacheHttpService();
 
         // Exercise
-        SocketFactory actual = sut.getSocketFactory(URIUtil.toURI("https://www.ambrosoli.jp/test-server/"));
+        SocketFactory actual = sut.getSocketFactory(URIUtil.toURI("https://www.ambrosoli.jp/test-server/")); //$NON-NLS-1$
 
         // Verify
         assertThat(actual, is(instanceOf(SSLSocketFactory.class)));
@@ -151,13 +151,13 @@ public class ApacheHttpServiceTest {
         ApacheHttpService sut = new ApacheHttpService();
 
         this.exceptionRule.expect(is(instanceOf(NullPointerException.class)));
-        this.exceptionRule.expectMessage(is(equalTo("URL is null.")));
+        this.exceptionRule.expectMessage(is(equalTo("URL is null."))); //$NON-NLS-1$
 
         // Exercise
         sut.getSocketFactory(null);
 
         // Verify
-        fail("例外が発生しませんでした。");
+        fail("例外が発生しませんでした。"); //$NON-NLS-1$
     }
 
     @Test
@@ -167,13 +167,13 @@ public class ApacheHttpServiceTest {
         ApacheHttpService sut = new ApacheHttpService();
 
         this.exceptionRule.expect(is(instanceOf(IllegalArgumentException.class)));
-        this.exceptionRule.expectMessage(is(equalTo("invalid scheme.")));
+        this.exceptionRule.expectMessage(is(equalTo("invalid scheme."))); //$NON-NLS-1$
 
         // Exercise
-        sut.getSocketFactory(URIUtil.toURI("ws://www.ambrosoli.jp/test-server/"));
+        sut.getSocketFactory(URIUtil.toURI("ws://www.ambrosoli.jp/test-server/")); //$NON-NLS-1$
 
         // Verify
-        fail("例外が発生しませんでした。");
+        fail("例外が発生しませんでした。"); //$NON-NLS-1$
     }
 
     @Test
@@ -183,13 +183,13 @@ public class ApacheHttpServiceTest {
         ApacheHttpService sut = new ApacheHttpService();
 
         // Exercise
-        SchemeRegistry actual = sut.createSchemeRegistry(URIUtil.toURI("http://www.ambrosoli.jp/test-server/"));
+        SchemeRegistry actual = sut.createSchemeRegistry(URIUtil.toURI("http://www.ambrosoli.jp/test-server/")); //$NON-NLS-1$
 
         // Verify
         assertThat(actual, is(notNullValue()));
         List<String> schemeNames = actual.getSchemeNames();
         assertThat(schemeNames.size(), is(1));
-        assertThat(schemeNames.get(0), is(equalTo("http")));
+        assertThat(schemeNames.get(0), is(equalTo("http"))); //$NON-NLS-1$
     }
 
     @Test
@@ -199,13 +199,13 @@ public class ApacheHttpServiceTest {
         ApacheHttpService sut = new ApacheHttpService();
 
         // Exercise
-        SchemeRegistry actual = sut.createSchemeRegistry(URIUtil.toURI("https://www.ambrosoli.jp/test-server/"));
+        SchemeRegistry actual = sut.createSchemeRegistry(URIUtil.toURI("https://www.ambrosoli.jp/test-server/")); //$NON-NLS-1$
 
         // Verify
         assertThat(actual, is(notNullValue()));
         List<String> schemeNames = actual.getSchemeNames();
         assertThat(schemeNames.size(), is(1));
-        assertThat(schemeNames.get(0), is(equalTo("https")));
+        assertThat(schemeNames.get(0), is(equalTo("https"))); //$NON-NLS-1$
     }
 
     @Test
@@ -215,13 +215,13 @@ public class ApacheHttpServiceTest {
         ApacheHttpService sut = new ApacheHttpService();
 
         this.exceptionRule.expect(is(instanceOf(NullPointerException.class)));
-        this.exceptionRule.expectMessage(is(equalTo("URL is null.")));
+        this.exceptionRule.expectMessage(is(equalTo("URL is null."))); //$NON-NLS-1$
 
         // Exercise
         sut.createSchemeRegistry(null);
 
         // Verify
-        fail("例外が発生しませんでした。");
+        fail("例外が発生しませんでした。"); //$NON-NLS-1$
     }
 
     @Test
@@ -231,13 +231,13 @@ public class ApacheHttpServiceTest {
         ApacheHttpService sut = new ApacheHttpService();
 
         this.exceptionRule.expect(is(instanceOf(IllegalArgumentException.class)));
-        this.exceptionRule.expectMessage(is(equalTo("invalid scheme.")));
+        this.exceptionRule.expectMessage(is(equalTo("invalid scheme."))); //$NON-NLS-1$
 
         // Exercise
-        sut.createSchemeRegistry(URIUtil.toURI("wss://www.ambrosoli.jp/test-server/"));
+        sut.createSchemeRegistry(URIUtil.toURI("wss://www.ambrosoli.jp/test-server/")); //$NON-NLS-1$
 
         // Verify
-        fail("例外が発生しませんでした。");
+        fail("例外が発生しませんでした。"); //$NON-NLS-1$
     }
 
     @Test
@@ -291,18 +291,18 @@ public class ApacheHttpServiceTest {
         ApacheHttpService sut = new ApacheHttpService();
 
         List<NameValueObject> nvo = new ArrayList<NameValueObject>();
-        nvo.add(new NameValueObject("a", "A"));
-        nvo.add(new NameValueObject("b", "B"));
-        nvo.add(new NameValueObject("c", "C"));
+        nvo.add(new NameValueObject("a", "A")); //$NON-NLS-1$ //$NON-NLS-2$
+        nvo.add(new NameValueObject("b", "B")); //$NON-NLS-1$ //$NON-NLS-2$
+        nvo.add(new NameValueObject("c", "C")); //$NON-NLS-1$ //$NON-NLS-2$
         RequestParams params = new RequestParams(nvo);
 
         // Exercise
-        URI uri = URIUtil.toURI("http://www.ambrosoli.jp/get");
-        HttpUriRequest actual = sut.createHttpUriRequest(uri, HttpMethod.GET, params, "UTF-8");
+        URI uri = URIUtil.toURI("http://www.ambrosoli.jp/get"); //$NON-NLS-1$
+        HttpUriRequest actual = sut.createHttpUriRequest(uri, HttpMethod.GET, params, "UTF-8"); //$NON-NLS-1$
 
         // Verify
         assertThat(actual, is(instanceOf(HttpGet.class)));
-        assertThat(actual.getURI().toString(), is(equalTo(uri.toString() + "?a=A&b=B&c=C")));
+        assertThat(actual.getURI().toString(), is(equalTo(uri.toString() + "?a=A&b=B&c=C"))); //$NON-NLS-1$
 
     }
 
@@ -313,18 +313,18 @@ public class ApacheHttpServiceTest {
         ApacheHttpService sut = new ApacheHttpService();
 
         List<NameValueObject> nvo = new ArrayList<NameValueObject>();
-        nvo.add(new NameValueObject("a", "A"));
-        nvo.add(new NameValueObject("b", "B"));
-        nvo.add(new NameValueObject("c", "C"));
+        nvo.add(new NameValueObject("a", "A")); //$NON-NLS-1$ //$NON-NLS-2$
+        nvo.add(new NameValueObject("b", "B")); //$NON-NLS-1$ //$NON-NLS-2$
+        nvo.add(new NameValueObject("c", "C")); //$NON-NLS-1$ //$NON-NLS-2$
         RequestParams params = new RequestParams(nvo);
 
         // Exercise
-        URI uri = URIUtil.toURI("http://www.ambrosoli.jp/delete");
-        HttpUriRequest actual = sut.createHttpUriRequest(uri, HttpMethod.DELETE, params, "UTF-8");
+        URI uri = URIUtil.toURI("http://www.ambrosoli.jp/delete"); //$NON-NLS-1$
+        HttpUriRequest actual = sut.createHttpUriRequest(uri, HttpMethod.DELETE, params, "UTF-8"); //$NON-NLS-1$
 
         // Verify
         assertThat(actual, is(instanceOf(HttpDelete.class)));
-        assertThat(actual.getURI().toString(), is(equalTo(uri.toString() + "?a=A&b=B&c=C")));
+        assertThat(actual.getURI().toString(), is(equalTo(uri.toString() + "?a=A&b=B&c=C"))); //$NON-NLS-1$
 
     }
 
@@ -335,18 +335,18 @@ public class ApacheHttpServiceTest {
         ApacheHttpService sut = new ApacheHttpService();
 
         List<NameValueObject> nvo = new ArrayList<NameValueObject>();
-        nvo.add(new NameValueObject("a", "A"));
-        nvo.add(new NameValueObject("b", "B"));
-        nvo.add(new NameValueObject("c", "C"));
+        nvo.add(new NameValueObject("a", "A")); //$NON-NLS-1$ //$NON-NLS-2$
+        nvo.add(new NameValueObject("b", "B")); //$NON-NLS-1$ //$NON-NLS-2$
+        nvo.add(new NameValueObject("c", "C")); //$NON-NLS-1$ //$NON-NLS-2$
         RequestParams params = new RequestParams(nvo);
 
         // Exercise
-        URI uri = URIUtil.toURI("http://www.ambrosoli.jp/head");
-        HttpUriRequest actual = sut.createHttpUriRequest(uri, HttpMethod.HEAD, params, "UTF-8");
+        URI uri = URIUtil.toURI("http://www.ambrosoli.jp/head"); //$NON-NLS-1$
+        HttpUriRequest actual = sut.createHttpUriRequest(uri, HttpMethod.HEAD, params, "UTF-8"); //$NON-NLS-1$
 
         // Verify
         assertThat(actual, is(instanceOf(HttpHead.class)));
-        assertThat(actual.getURI().toString(), is(equalTo(uri.toString() + "?a=A&b=B&c=C")));
+        assertThat(actual.getURI().toString(), is(equalTo(uri.toString() + "?a=A&b=B&c=C"))); //$NON-NLS-1$
 
     }
 
@@ -357,18 +357,18 @@ public class ApacheHttpServiceTest {
         ApacheHttpService sut = new ApacheHttpService();
 
         List<NameValueObject> nvo = new ArrayList<NameValueObject>();
-        nvo.add(new NameValueObject("a", "A"));
-        nvo.add(new NameValueObject("b", "B"));
-        nvo.add(new NameValueObject("c", "C"));
+        nvo.add(new NameValueObject("a", "A")); //$NON-NLS-1$ //$NON-NLS-2$
+        nvo.add(new NameValueObject("b", "B")); //$NON-NLS-1$ //$NON-NLS-2$
+        nvo.add(new NameValueObject("c", "C")); //$NON-NLS-1$ //$NON-NLS-2$
         RequestParams params = new RequestParams(nvo);
 
         // Exercise
-        URI uri = URIUtil.toURI("http://www.ambrosoli.jp/options");
-        HttpUriRequest actual = sut.createHttpUriRequest(uri, HttpMethod.OPTIONS, params, "UTF-8");
+        URI uri = URIUtil.toURI("http://www.ambrosoli.jp/options"); //$NON-NLS-1$
+        HttpUriRequest actual = sut.createHttpUriRequest(uri, HttpMethod.OPTIONS, params, "UTF-8"); //$NON-NLS-1$
 
         // Verify
         assertThat(actual, is(instanceOf(HttpOptions.class)));
-        assertThat(actual.getURI().toString(), is(equalTo(uri.toString() + "?a=A&b=B&c=C")));
+        assertThat(actual.getURI().toString(), is(equalTo(uri.toString() + "?a=A&b=B&c=C"))); //$NON-NLS-1$
 
     }
 
@@ -379,8 +379,8 @@ public class ApacheHttpServiceTest {
         ApacheHttpService sut = new ApacheHttpService();
 
         // Exercise
-        URI uri = URIUtil.toURI("http://www.ambrosoli.jp/get");
-        HttpUriRequest actual = sut.createHttpUriRequest(uri, HttpMethod.GET, null, "UTF-8");
+        URI uri = URIUtil.toURI("http://www.ambrosoli.jp/get"); //$NON-NLS-1$
+        HttpUriRequest actual = sut.createHttpUriRequest(uri, HttpMethod.GET, null, "UTF-8"); //$NON-NLS-1$
 
         // Verify
         assertThat(actual, is(instanceOf(HttpGet.class)));
@@ -395,14 +395,14 @@ public class ApacheHttpServiceTest {
         ApacheHttpService sut = new ApacheHttpService();
 
         List<NameValueObject> nvo = new ArrayList<NameValueObject>();
-        nvo.add(new NameValueObject("a", "A"));
-        nvo.add(new NameValueObject("b", "B"));
-        nvo.add(new NameValueObject("c", "C"));
+        nvo.add(new NameValueObject("a", "A")); //$NON-NLS-1$ //$NON-NLS-2$
+        nvo.add(new NameValueObject("b", "B")); //$NON-NLS-1$ //$NON-NLS-2$
+        nvo.add(new NameValueObject("c", "C")); //$NON-NLS-1$ //$NON-NLS-2$
         RequestParams params = new RequestParams(nvo);
 
         // Exercise
-        URI uri = URIUtil.toURI("http://www.ambrosoli.jp/post");
-        HttpUriRequest actual = sut.createHttpUriRequest(uri, HttpMethod.POST, params, "UTF-8");
+        URI uri = URIUtil.toURI("http://www.ambrosoli.jp/post"); //$NON-NLS-1$
+        HttpUriRequest actual = sut.createHttpUriRequest(uri, HttpMethod.POST, params, "UTF-8"); //$NON-NLS-1$
 
         // Verify
         assertThat(actual, is(instanceOf(HttpPost.class)));
@@ -425,14 +425,14 @@ public class ApacheHttpServiceTest {
         ApacheHttpService sut = new ApacheHttpService();
 
         List<NameValueObject> nvo = new ArrayList<NameValueObject>();
-        nvo.add(new NameValueObject("a", "A"));
-        nvo.add(new NameValueObject("b", "B"));
-        nvo.add(new NameValueObject("c", "C"));
+        nvo.add(new NameValueObject("a", "A")); //$NON-NLS-1$ //$NON-NLS-2$
+        nvo.add(new NameValueObject("b", "B")); //$NON-NLS-1$ //$NON-NLS-2$
+        nvo.add(new NameValueObject("c", "C")); //$NON-NLS-1$ //$NON-NLS-2$
         RequestParams params = new RequestParams(nvo);
 
         // Exercise
-        URI uri = URIUtil.toURI("http://www.ambrosoli.jp/put");
-        HttpUriRequest actual = sut.createHttpUriRequest(uri, HttpMethod.PUT, params, "UTF-8");
+        URI uri = URIUtil.toURI("http://www.ambrosoli.jp/put"); //$NON-NLS-1$
+        HttpUriRequest actual = sut.createHttpUriRequest(uri, HttpMethod.PUT, params, "UTF-8"); //$NON-NLS-1$
 
         // Verify
         assertThat(actual, is(instanceOf(HttpPut.class)));
@@ -455,8 +455,8 @@ public class ApacheHttpServiceTest {
         ApacheHttpService sut = new ApacheHttpService();
 
         // Exercise
-        URI uri = URIUtil.toURI("http://www.ambrosoli.jp/post");
-        HttpPost actual = (HttpPost) sut.createHttpUriRequest(uri, HttpMethod.POST, null, "UTF-8");
+        URI uri = URIUtil.toURI("http://www.ambrosoli.jp/post"); //$NON-NLS-1$
+        HttpPost actual = (HttpPost) sut.createHttpUriRequest(uri, HttpMethod.POST, null, "UTF-8"); //$NON-NLS-1$
 
         // Verify
         assertThat(actual, is(instanceOf(HttpPost.class)));
@@ -470,18 +470,18 @@ public class ApacheHttpServiceTest {
         // Setup
         ApacheHttpService sut = new ApacheHttpService();
 
-        URI uri = URIUtil.toURI("http://www.ambrosoli.jp/");
+        URI uri = URIUtil.toURI("http://www.ambrosoli.jp/"); //$NON-NLS-1$
         List<NameValueObject> nvo = new ArrayList<NameValueObject>();
-        nvo.add(new NameValueObject("a", "A"));
-        nvo.add(new NameValueObject("b", "B"));
-        nvo.add(new NameValueObject("c", "C"));
+        nvo.add(new NameValueObject("a", "A")); //$NON-NLS-1$ //$NON-NLS-2$
+        nvo.add(new NameValueObject("b", "B")); //$NON-NLS-1$ //$NON-NLS-2$
+        nvo.add(new NameValueObject("c", "C")); //$NON-NLS-1$ //$NON-NLS-2$
         RequestParams params = new RequestParams(nvo);
 
         // Exercise
-        String actual = sut.addQueryString(uri, params, "UTF-8").toString();
+        String actual = sut.addQueryString(uri, params, "UTF-8").toString(); //$NON-NLS-1$
 
         // Verify
-        assertThat(actual, is(equalTo("http://www.ambrosoli.jp/?a=A&b=B&c=C")));
+        assertThat(actual, is(equalTo("http://www.ambrosoli.jp/?a=A&b=B&c=C"))); //$NON-NLS-1$
 
     }
 
@@ -490,13 +490,13 @@ public class ApacheHttpServiceTest {
 
         // Setup
         ApacheHttpService sut = new ApacheHttpService();
-        URI uri = URIUtil.toURI("http://www.ambrosoli.jp/");
+        URI uri = URIUtil.toURI("http://www.ambrosoli.jp/"); //$NON-NLS-1$
 
         // Exercise
-        String actual = sut.addQueryString(uri, null, "UTF-8").toString();
+        String actual = sut.addQueryString(uri, null, "UTF-8").toString(); //$NON-NLS-1$
 
         // Verify
-        assertThat(actual, is(equalTo("http://www.ambrosoli.jp/")));
+        assertThat(actual, is(equalTo("http://www.ambrosoli.jp/"))); //$NON-NLS-1$
 
     }
 
@@ -505,12 +505,12 @@ public class ApacheHttpServiceTest {
 
         // Setup
         ApacheHttpService sut = new ApacheHttpService();
-        URI uri = URIUtil.toURI("http://www.ambrosoli.jp/");
+        URI uri = URIUtil.toURI("http://www.ambrosoli.jp/"); //$NON-NLS-1$
 
         // Exercise
-        String actual = sut.addQueryString(uri, new RequestParams(null), "UTF-8").toString();
+        String actual = sut.addQueryString(uri, new RequestParams(null), "UTF-8").toString(); //$NON-NLS-1$
         // Verify
-        assertThat(actual, is(equalTo("http://www.ambrosoli.jp/")));
+        assertThat(actual, is(equalTo("http://www.ambrosoli.jp/"))); //$NON-NLS-1$
 
     }
 
@@ -520,18 +520,18 @@ public class ApacheHttpServiceTest {
         // Setup
         ApacheHttpService sut = new ApacheHttpService();
 
-        URI uri = URIUtil.toURI("http://www.ambrosoli.jp/");
+        URI uri = URIUtil.toURI("http://www.ambrosoli.jp/"); //$NON-NLS-1$
         List<NameValueObject> nvo = new ArrayList<NameValueObject>();
-        nvo.add(new NameValueObject("a", "A"));
-        nvo.add(new NameValueObject("b", "B"));
-        nvo.add(new NameValueObject("c", "C"));
+        nvo.add(new NameValueObject("a", "A")); //$NON-NLS-1$ //$NON-NLS-2$
+        nvo.add(new NameValueObject("b", "B")); //$NON-NLS-1$ //$NON-NLS-2$
+        nvo.add(new NameValueObject("c", "C")); //$NON-NLS-1$ //$NON-NLS-2$
         RequestParams params = new RequestParams(nvo);
 
         // Exercise
         String actual = sut.addQueryString(uri, params, null).toString();
 
         // Verify
-        assertThat(actual, is(equalTo("http://www.ambrosoli.jp/?a=A&b=B&c=C")));
+        assertThat(actual, is(equalTo("http://www.ambrosoli.jp/?a=A&b=B&c=C"))); //$NON-NLS-1$
     }
 
     @Test
@@ -540,7 +540,7 @@ public class ApacheHttpServiceTest {
         // Setup
         ApacheHttpService sut = new ApacheHttpService();
         BasicHttpParams httpParams = new BasicHttpParams();
-        ProxyInfo proxy = new ProxyInfo("localhost", 8080);
+        ProxyInfo proxy = new ProxyInfo("localhost", 8080); //$NON-NLS-1$
 
         // Exercise
         sut.setProxy(httpParams, proxy);
@@ -607,13 +607,13 @@ public class ApacheHttpServiceTest {
         ApacheHttpService sut = new ApacheHttpService();
 
         this.exceptionRule.expect(is(instanceOf(IllegalArgumentException.class)));
-        this.exceptionRule.expectMessage(is(equalTo("Http protocol version is illegal")));
+        this.exceptionRule.expectMessage(is(equalTo("Http protocol version is illegal."))); //$NON-NLS-1$
 
         // Exercise
-        sut.setProtocolVersion(new BasicHttpParams(), "HTTP/2.0");
+        sut.setProtocolVersion(new BasicHttpParams(), "HTTP/2.0"); //$NON-NLS-1$
 
         // Verify
-        fail("例外が発生しませんでした。");
+        fail("例外が発生しませんでした。"); //$NON-NLS-1$
     }
 
     @Test
@@ -681,14 +681,14 @@ public class ApacheHttpServiceTest {
         BasicHttpParams httpParams = new BasicHttpParams();
 
         // Exercise
-        sut.setCharset(httpParams, "UTF-8");
+        sut.setCharset(httpParams, "UTF-8"); //$NON-NLS-1$
 
         // Verify
         String httpConnectCharset = (String) httpParams.getParameter(CoreProtocolPNames.HTTP_CONTENT_CHARSET);
-        assertThat(httpConnectCharset, is(equalTo("UTF-8")));
+        assertThat(httpConnectCharset, is(equalTo("UTF-8"))); //$NON-NLS-1$
 
         String httpElementCharset = (String) httpParams.getParameter(CoreProtocolPNames.HTTP_ELEMENT_CHARSET);
-        assertThat(httpElementCharset, is(equalTo("UTF-8")));
+        assertThat(httpElementCharset, is(equalTo("UTF-8"))); //$NON-NLS-1$
     }
 
     @Test
@@ -700,10 +700,10 @@ public class ApacheHttpServiceTest {
         HttpRequestBase httpRequestBase = new HttpGet();
 
         List<NameValueObject> headers = new ArrayList<NameValueObject>();
-        headers.add(new NameValueObject("Accept", "application/xml"));
-        headers.add(new NameValueObject("Connection", "Keep-Alive"));
-        headers.add(new NameValueObject("Accept-Language", "ja"));
-        headers.add(new NameValueObject("Pragma", "no-cache"));
+        headers.add(new NameValueObject("Accept", "application/xml")); //$NON-NLS-1$ //$NON-NLS-2$
+        headers.add(new NameValueObject("Connection", "Keep-Alive")); //$NON-NLS-1$ //$NON-NLS-2$
+        headers.add(new NameValueObject("Accept-Language", "ja")); //$NON-NLS-1$ //$NON-NLS-2$
+        headers.add(new NameValueObject("Pragma", "no-cache")); //$NON-NLS-1$ //$NON-NLS-2$
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.addHeaders(headers);
 
@@ -728,10 +728,10 @@ public class ApacheHttpServiceTest {
         ApacheHttpService sut = new ApacheHttpService();
 
         List<NameValueObject> headers = new ArrayList<NameValueObject>();
-        headers.add(new NameValueObject("Accept", "application/xml"));
-        headers.add(new NameValueObject("Connection", "Keep-Alive"));
-        headers.add(new NameValueObject("Accept-Language", "ja"));
-        headers.add(new NameValueObject("Pragma", "no-cache"));
+        headers.add(new NameValueObject("Accept", "application/xml")); //$NON-NLS-1$ //$NON-NLS-2$
+        headers.add(new NameValueObject("Connection", "Keep-Alive")); //$NON-NLS-1$ //$NON-NLS-2$
+        headers.add(new NameValueObject("Accept-Language", "ja")); //$NON-NLS-1$ //$NON-NLS-2$
+        headers.add(new NameValueObject("Pragma", "no-cache")); //$NON-NLS-1$ //$NON-NLS-2$
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.addHeaders(headers);
 
@@ -753,16 +753,16 @@ public class ApacheHttpServiceTest {
         HttpPost httpPost = new HttpPost();
 
         List<NameValueObject> params = new ArrayList<NameValueObject>();
-        params.add(new NameValueObject("キン肉スグル", "日本"));
-        params.add(new NameValueObject("テリーマン", "アメリカ"));
-        params.add(new NameValueObject("ロビンマスク", "イギリス"));
-        params.add(new NameValueObject("中国", "ラーメンマン"));
-        params.add(new NameValueObject("ウォーズマン", "ソ連"));
+        params.add(new NameValueObject("キン肉スグル", "日本")); //$NON-NLS-1$ //$NON-NLS-2$
+        params.add(new NameValueObject("テリーマン", "アメリカ")); //$NON-NLS-1$ //$NON-NLS-2$
+        params.add(new NameValueObject("ロビンマスク", "イギリス")); //$NON-NLS-1$ //$NON-NLS-2$
+        params.add(new NameValueObject("中国", "ラーメンマン")); //$NON-NLS-1$ //$NON-NLS-2$
+        params.add(new NameValueObject("ウォーズマン", "ソ連")); //$NON-NLS-1$ //$NON-NLS-2$
 
         RequestParams requestParams = new RequestParams(params);
 
         // Exercise
-        sut.setFormEntity(httpPost, requestParams, "UTF-8");
+        sut.setFormEntity(httpPost, requestParams, "UTF-8"); //$NON-NLS-1$
 
         // Verify
         List<NameValuePair> list = URLEncodedUtils.parse(httpPost.getEntity());
@@ -780,18 +780,18 @@ public class ApacheHttpServiceTest {
         // Setup
         ApacheHttpService sut = new ApacheHttpService();
 
-        URI uri = URIUtil.toURI("http://www.ambrosoli.jp/");
-        AuthInfo authInfo = new AuthInfo(AuthType.BASIC, "username", "password");
+        URI uri = URIUtil.toURI("http://www.ambrosoli.jp/"); //$NON-NLS-1$
+        AuthInfo authInfo = new AuthInfo(AuthType.BASIC, "username", "password"); //$NON-NLS-1$ //$NON-NLS-2$
         CredentialsProvider provider = new BasicCredentialsProvider();
 
         // Exercise
         sut.setCredentialsAuthenticate(uri, authInfo, provider);
 
         // Verify
-        Credentials credentials = provider.getCredentials(new AuthScope("www.ambrosoli.jp", 80));
+        Credentials credentials = provider.getCredentials(new AuthScope("www.ambrosoli.jp", 80)); //$NON-NLS-1$
         assertThat(credentials, is(notNullValue()));
-        assertThat(credentials.getUserPrincipal().getName(), is(equalTo("username")));
-        assertThat(credentials.getPassword(), is(equalTo("password")));
+        assertThat(credentials.getUserPrincipal().getName(), is(equalTo("username"))); //$NON-NLS-1$
+        assertThat(credentials.getPassword(), is(equalTo("password"))); //$NON-NLS-1$
     }
 
     @Test
@@ -800,18 +800,18 @@ public class ApacheHttpServiceTest {
         // Setup
         ApacheHttpService sut = new ApacheHttpService();
 
-        URI uri = URIUtil.toURI("https://www.ambrosoli.jp/");
-        AuthInfo authInfo = new AuthInfo(AuthType.DIGEST, "u1", "p1");
+        URI uri = URIUtil.toURI("https://www.ambrosoli.jp/"); //$NON-NLS-1$
+        AuthInfo authInfo = new AuthInfo(AuthType.DIGEST, "u1", "p1"); //$NON-NLS-1$ //$NON-NLS-2$
         CredentialsProvider provider = new BasicCredentialsProvider();
 
         // Exercise
         sut.setCredentialsAuthenticate(uri, authInfo, provider);
 
         // Verify
-        Credentials credentials = provider.getCredentials(new AuthScope("www.ambrosoli.jp", 443));
+        Credentials credentials = provider.getCredentials(new AuthScope("www.ambrosoli.jp", 443)); //$NON-NLS-1$
         assertThat(credentials, is(notNullValue()));
-        assertThat(credentials.getUserPrincipal().getName(), is(equalTo("u1")));
-        assertThat(credentials.getPassword(), is(equalTo("p1")));
+        assertThat(credentials.getUserPrincipal().getName(), is(equalTo("u1"))); //$NON-NLS-1$
+        assertThat(credentials.getPassword(), is(equalTo("p1"))); //$NON-NLS-1$
     }
 
     @Test
@@ -820,15 +820,15 @@ public class ApacheHttpServiceTest {
         // Setup
         ApacheHttpService sut = new ApacheHttpService();
 
-        URI uri = URIUtil.toURI("http://www.ambrosoli.jp");
-        AuthInfo authInfo = new AuthInfo(AuthType.CLIENT_CERT, "u1", "p1");
+        URI uri = URIUtil.toURI("http://www.ambrosoli.jp"); //$NON-NLS-1$
+        AuthInfo authInfo = new AuthInfo(AuthType.CLIENT_CERT, "u1", "p1"); //$NON-NLS-1$ //$NON-NLS-2$
         CredentialsProvider provider = new BasicCredentialsProvider();
 
         // Exercise
         sut.setCredentialsAuthenticate(uri, authInfo, provider);
 
         // Verify
-        Credentials credentials = provider.getCredentials(new AuthScope("www.ambrosoli.jp", 80));
+        Credentials credentials = provider.getCredentials(new AuthScope("www.ambrosoli.jp", 80)); //$NON-NLS-1$
         assertThat(credentials, is(nullValue()));
     }
 
@@ -838,7 +838,7 @@ public class ApacheHttpServiceTest {
         // Setup
         ApacheHttpService sut = new ApacheHttpService();
 
-        URI uri = URIUtil.toURI("http://www.ambrosoli.jp");
+        URI uri = URIUtil.toURI("http://www.ambrosoli.jp"); //$NON-NLS-1$
         AuthInfo authInfo = null;
         CredentialsProvider provider = new BasicCredentialsProvider();
 
@@ -846,7 +846,7 @@ public class ApacheHttpServiceTest {
         sut.setCredentialsAuthenticate(uri, authInfo, provider);
 
         // Verify
-        Credentials credentials = provider.getCredentials(new AuthScope("www.ambrosoli.jp", 80));
+        Credentials credentials = provider.getCredentials(new AuthScope("www.ambrosoli.jp", 80)); //$NON-NLS-1$
         assertThat(credentials, is(nullValue()));
     }
 

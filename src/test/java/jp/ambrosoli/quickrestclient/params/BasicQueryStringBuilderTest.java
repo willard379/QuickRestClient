@@ -32,15 +32,15 @@ public class BasicQueryStringBuilderTest {
         RequestParamBuilder<String> sut = new BasicQueryStringBuilder();
 
         List<NameValueObject> params = new ArrayList<NameValueObject>();
-        params.add(new NameValueObject("a", "A"));
-        params.add(new NameValueObject("b", "B"));
-        params.add(new NameValueObject("c", "C"));
+        params.add(new NameValueObject("a", "A")); //$NON-NLS-1$ //$NON-NLS-2$
+        params.add(new NameValueObject("b", "B")); //$NON-NLS-1$ //$NON-NLS-2$
+        params.add(new NameValueObject("c", "C")); //$NON-NLS-1$ //$NON-NLS-2$
 
         // Exercise
-        String actual = sut.createConformedParams(params, "UTF-8");
+        String actual = sut.createConformedParams(params, "UTF-8"); //$NON-NLS-1$
 
         // Verify
-        assertThat(actual, is(equalTo("?a=A&b=B&c=C")));
+        assertThat(actual, is(equalTo("?a=A&b=B&c=C"))); //$NON-NLS-1$
 
     }
 
@@ -53,10 +53,10 @@ public class BasicQueryStringBuilderTest {
         ArrayList<NameValueObject> params = new ArrayList<NameValueObject>();
 
         // Exercise
-        String actual = sut.createConformedParams(params, "UTF-8");
+        String actual = sut.createConformedParams(params, "UTF-8"); //$NON-NLS-1$
 
         // Verify
-        assertThat(actual, is(equalTo("")));
+        assertThat(actual, is(equalTo(""))); //$NON-NLS-1$
 
     }
 
@@ -67,10 +67,10 @@ public class BasicQueryStringBuilderTest {
         RequestParamBuilder<String> sut = new BasicQueryStringBuilder();
 
         // Exercise
-        String actual = sut.createConformedParams(null, "UTF-8");
+        String actual = sut.createConformedParams(null, "UTF-8"); //$NON-NLS-1$
 
         // Verify
-        assertThat(actual, is(equalTo("")));
+        assertThat(actual, is(equalTo(""))); //$NON-NLS-1$
 
     }
 
@@ -81,15 +81,15 @@ public class BasicQueryStringBuilderTest {
         RequestParamBuilder<String> sut = new BasicQueryStringBuilder();
 
         List<NameValueObject> params = new ArrayList<NameValueObject>();
-        params.add(new NameValueObject("a", "A"));
-        params.add(new NameValueObject("b", "B"));
-        params.add(new NameValueObject("c", "C"));
+        params.add(new NameValueObject("a", "A")); //$NON-NLS-1$ //$NON-NLS-2$
+        params.add(new NameValueObject("b", "B")); //$NON-NLS-1$ //$NON-NLS-2$
+        params.add(new NameValueObject("c", "C")); //$NON-NLS-1$ //$NON-NLS-2$
 
         // Exercise
         String actual = sut.createConformedParams(params, null);
 
         // Verify
-        assertThat(actual, is(equalTo("?a=A&b=B&c=C")));
+        assertThat(actual, is(equalTo("?a=A&b=B&c=C"))); //$NON-NLS-1$
 
     }
 
@@ -106,10 +106,10 @@ public class BasicQueryStringBuilderTest {
         params.add(null);
 
         // Exercise
-        String queryString = paramBuilder.createConformedParams(params, "UTF-8");
+        String queryString = paramBuilder.createConformedParams(params, "UTF-8"); //$NON-NLS-1$
 
         // Verify
-        assertThat(queryString, is(equalTo("")));
+        assertThat(queryString, is(equalTo(""))); //$NON-NLS-1$
 
     }
 
@@ -120,13 +120,13 @@ public class BasicQueryStringBuilderTest {
         RequestParamBuilder<String> paramBuilder = new BasicQueryStringBuilder();
 
         List<NameValueObject> params = new ArrayList<NameValueObject>();
-        params.add(new NameValueObject("あ", "あいうえお"));
+        params.add(new NameValueObject("あ", "あいうえお")); //$NON-NLS-1$ //$NON-NLS-2$
 
         // Exercise
-        String queryString = paramBuilder.createConformedParams(params, "UTF-8");
+        String queryString = paramBuilder.createConformedParams(params, "UTF-8"); //$NON-NLS-1$
 
         // Verify
-        assertThat(queryString, is(equalTo("?%E3%81%82=%E3%81%82%E3%81%84%E3%81%86%E3%81%88%E3%81%8A")));
+        assertThat(queryString, is(equalTo("?%E3%81%82=%E3%81%82%E3%81%84%E3%81%86%E3%81%88%E3%81%8A"))); //$NON-NLS-1$
 
     }
 

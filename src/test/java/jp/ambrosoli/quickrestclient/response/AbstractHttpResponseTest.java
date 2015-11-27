@@ -112,7 +112,7 @@ public class AbstractHttpResponseTest {
     public void HttpResponseにデータがある状態でgetAsByteArrayを呼び出すと_HttpResponseのデータがbyte配列で返されること() {
 
         // Setup
-        byte[] data = "BUILD SUCCESS".getBytes();
+        byte[] data = "BUILD SUCCESS".getBytes(); //$NON-NLS-1$
         ResponseContent content = new ByteArrayResponseContent(data);
         AbstractHttpResponse sut = new MockAbstractHttpResponseImpl(content);
 
@@ -142,7 +142,7 @@ public class AbstractHttpResponseTest {
     public void HttpResponseにデータがある状態でgetAsInputStreamを呼び出すと_HttpResponseのデータがInputStreamで返されること() throws IOException {
 
         // Setup
-        String data = "Robinmask";
+        String data = "Robinmask"; //$NON-NLS-1$
         ResponseContent content = new ByteArrayResponseContent(data.getBytes());
         AbstractHttpResponse sut = new MockAbstractHttpResponseImpl(content);
 
@@ -179,7 +179,7 @@ public class AbstractHttpResponseTest {
     public void HttpResponseにデータがある状態でgetAsStringを呼び出すと_HttpResponseのデータがStringで返されること() {
 
         // Setup
-        String data = "Test";
+        String data = "Test"; //$NON-NLS-1$
         ResponseContent content = new ByteArrayResponseContent(data.getBytes());
         AbstractHttpResponse sut = new MockAbstractHttpResponseImpl(content);
 
@@ -195,12 +195,12 @@ public class AbstractHttpResponseTest {
             throws IOException {
 
         // Setup
-        String data = "𩸽";
-        ResponseContent content = new ByteArrayResponseContent(data.getBytes("UTF-16"));
+        String data = "𩸽"; //$NON-NLS-1$
+        ResponseContent content = new ByteArrayResponseContent(data.getBytes("UTF-16")); //$NON-NLS-1$
         AbstractHttpResponse sut = new MockAbstractHttpResponseImpl(content);
 
         // Exercise
-        String actual = sut.getAsString("UTF-16");
+        String actual = sut.getAsString("UTF-16"); //$NON-NLS-1$
 
         // Verify
         assertThat(actual, is(equalTo(data)));
@@ -213,7 +213,7 @@ public class AbstractHttpResponseTest {
         AbstractHttpResponse sut = new MockAbstractHttpResponseImpl(null);
 
         // Exercise
-        String actual = sut.getAsString("MS932");
+        String actual = sut.getAsString("MS932"); //$NON-NLS-1$
 
         // Verify
         assertThat(actual, is(nullValue()));
@@ -224,7 +224,7 @@ public class AbstractHttpResponseTest {
             throws Exception {
 
         // Setup
-        ResponseContent content = new ByteArrayResponseContent("しめじ".getBytes("UTF-8"));
+        ResponseContent content = new ByteArrayResponseContent("しめじ".getBytes("UTF-8")); //$NON-NLS-1$ //$NON-NLS-2$
         AbstractHttpResponse sut = new MockAbstractHttpResponseImpl(content);
 
         ByteArrayOutputStream output = spy(new ByteArrayOutputStream());
@@ -233,8 +233,8 @@ public class AbstractHttpResponseTest {
         sut.writeTo(output);
 
         // Verify
-        String result = StringUtil.toString(output.toByteArray(), "UTF-8");
-        assertThat(result, is(equalTo("しめじ")));
+        String result = StringUtil.toString(output.toByteArray(), "UTF-8"); //$NON-NLS-1$
+        assertThat(result, is(equalTo("しめじ"))); //$NON-NLS-1$
         verify(output).close();
     }
 

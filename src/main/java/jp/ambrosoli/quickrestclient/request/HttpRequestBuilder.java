@@ -17,6 +17,8 @@ package jp.ambrosoli.quickrestclient.request;
 
 import java.util.Map;
 
+import org.apache.http.protocol.HTTP;
+
 import jp.ambrosoli.quickrestclient.enums.AuthType;
 import jp.ambrosoli.quickrestclient.enums.HttpMethod;
 import jp.ambrosoli.quickrestclient.headers.HttpHeader;
@@ -30,11 +32,9 @@ import jp.ambrosoli.quickrestclient.service.HttpServiceFactory;
 import jp.ambrosoli.quickrestclient.util.StringUtil;
 import jp.ambrosoli.quickrestclient.util.URIUtil;
 
-import org.apache.http.protocol.HTTP;
-
 /**
  * HTTPリクエストの内容を構築するビルダークラスです。
- * 
+ *
  * @author willard379
  * @since 0.1.0
  */
@@ -45,20 +45,20 @@ public class HttpRequestBuilder {
 
     /**
      * HttpBuilderを生成します。
-     * 
+     *
      * @param url
      *            URL
      */
     public HttpRequestBuilder(final String url) {
         if (StringUtil.isEmpty(url)) {
-            throw new IllegalArgumentException("URL may not be null or blank.");
+            throw new IllegalArgumentException(Messages.getString("message.url.null.blank")); //$NON-NLS-1$
         }
         this.request = new HttpRequest(URIUtil.toURI(url));
     }
 
     /**
      * HTTPリクエストを送信し、通信結果を返します。
-     * 
+     *
      * @return 通信結果
      */
     public HttpResponse execute() {
@@ -68,14 +68,14 @@ public class HttpRequestBuilder {
 
     /**
      * HTTPメソッドを設定します。
-     * 
+     *
      * @param method
      *            HTTPメソッド
      * @return HttpBuilderオブジェクト
      */
     public HttpRequestBuilder method(final String method) {
         if (method == null) {
-            throw new NullPointerException("method may not to be null.");
+            throw new NullPointerException(Messages.getString("message.method.null")); //$NON-NLS-1$
         }
         this.request.setMethod(HttpMethod.valueOf(method.toUpperCase()));
         return this;
@@ -83,7 +83,7 @@ public class HttpRequestBuilder {
 
     /**
      * プロキシを設定します。
-     * 
+     *
      * @param hostname
      *            プロキシサーバのホスト名
      * @param port
@@ -92,7 +92,7 @@ public class HttpRequestBuilder {
      */
     public HttpRequestBuilder proxy(final String hostname, final int port) {
         if (hostname == null) {
-            throw new IllegalArgumentException("hostname may not be null");
+            throw new IllegalArgumentException(Messages.getString("message.hostname.null")); //$NON-NLS-1$
         }
         ProxyInfo proxyInfo = new ProxyInfo(hostname, port);
         this.request.setProxyInfo(proxyInfo);
@@ -101,7 +101,7 @@ public class HttpRequestBuilder {
 
     /**
      * HTTPプロトコルバージョンを設定します。
-     * 
+     *
      * @param protocolVersion
      *            HTTPプロトコルバージョン(例： "HTTP/1.1")
      * @return HttpBuilderオブジェクト
@@ -113,7 +113,7 @@ public class HttpRequestBuilder {
 
     /**
      * User-Agentを設定します。
-     * 
+     *
      * @param userAgent
      * @return HttpBuilderオブジェクト
      */
@@ -126,7 +126,7 @@ public class HttpRequestBuilder {
 
     /**
      * 送信するパラメータを設定します。
-     * 
+     *
      * @param params
      *            Operations.add()で生成された名前と値のセット
      * @return HttpBuilderオブジェクト
@@ -139,7 +139,7 @@ public class HttpRequestBuilder {
 
     /**
      * 送信するパラメータを設定します。
-     * 
+     *
      * @param paramMap
      *            Mapオブジェクト
      * @return HttpBuilderオブジェクト
@@ -152,7 +152,7 @@ public class HttpRequestBuilder {
 
     /**
      * 文字コードを設定します。
-     * 
+     *
      * @param charset
      *            文字コード
      * @return HttpBuilderオブジェクト
@@ -164,7 +164,7 @@ public class HttpRequestBuilder {
 
     /**
      * HTTPヘッダーを設定します。
-     * 
+     *
      * @param headers
      *            設定するHTTPヘッダー
      * @return HttpBuilderオブジェクト
@@ -176,7 +176,7 @@ public class HttpRequestBuilder {
 
     /**
      * HTTPヘッダーを設定します。
-     * 
+     *
      * @param headerMap
      *            設定するHTTPヘッダー
      * @return HttpBuilderオブジェクト
@@ -188,7 +188,7 @@ public class HttpRequestBuilder {
 
     /**
      * タイムアウト（SO_TIMEOUT）をミリ秒単位で設定します。
-     * 
+     *
      * @param timeout
      *            タイムアウト（ミリ秒）
      * @return HttpBuilderオブジェクト
@@ -200,7 +200,7 @@ public class HttpRequestBuilder {
 
     /**
      * ACCEPTヘッダを設定します。
-     * 
+     *
      * @param mediaType
      *            メディアタイプ
      * @return HttpBuilderオブジェクト
@@ -208,7 +208,7 @@ public class HttpRequestBuilder {
     public HttpRequestBuilder accept(final String... mediaTypes) {
         for (String type : mediaTypes) {
             if (StringUtil.isNotEmpty(type)) {
-                HttpHeader header = new HttpHeader("Accept", type);
+                HttpHeader header = new HttpHeader("Accept", type); //$NON-NLS-1$
                 this.request.addHeader(header);
             }
         }
@@ -217,7 +217,7 @@ public class HttpRequestBuilder {
 
     /**
      * Digest,BasicなどのHTTP認証の情報を設定します.
-     * 
+     *
      * @param authInfo
      *            Opertaionsクラスのメソッドを使って生成された認証情報
      * @return HttpBuilderオブジェクト
@@ -229,7 +229,7 @@ public class HttpRequestBuilder {
 
     /**
      * Digest,BasicなどのHTTP認証の情報を設定します.
-     * 
+     *
      * @param authType
      *            認証の種類(設定可能な値は{@link AuthType}を参照)
      * @param user
@@ -245,7 +245,7 @@ public class HttpRequestBuilder {
 
     /**
      * Digest,BasicなどのHTTP認証の情報を設定します.
-     * 
+     *
      * @param type
      *            認証の種類(設定可能な値は{@link AuthType}を参照)
      * @param user

@@ -28,7 +28,7 @@ public class URIUtilTest {
     public void isSSLの引数にhttpスキームのURIを渡した場合_falseが返されること() {
 
         // Setup
-        URI uri = URI.create("http://www.ambrosoli.jp/");
+        URI uri = URI.create("http://www.ambrosoli.jp/"); //$NON-NLS-1$
 
         // Exercise
         boolean actual = URIUtil.isSSL(uri);
@@ -41,7 +41,7 @@ public class URIUtilTest {
     public void isSSLの引数にhttpsスキームのURIを渡した場合_trueが返されること() {
 
         // Setup
-        URI uri = URI.create("https://www.ambrosoli.jp/");
+        URI uri = URI.create("https://www.ambrosoli.jp/"); //$NON-NLS-1$
 
         // Exercise
         boolean actual = URIUtil.isSSL(uri);
@@ -54,7 +54,7 @@ public class URIUtilTest {
     public void isSSLの引数にftpスキームのURIを渡した場合_falseが返されること() {
 
         // Setup
-        URI uri = URI.create("ftp://www.ambrosoli.jp/");
+        URI uri = URI.create("ftp://www.ambrosoli.jp/"); //$NON-NLS-1$
 
         // Exercise
         boolean actual = URIUtil.isSSL(uri);
@@ -67,7 +67,7 @@ public class URIUtilTest {
     public void isSSLの引数にデタラメなURIを渡した場合_falseが返されること() {
 
         // Setup
-        URI uri = URI.create("willard379");
+        URI uri = URI.create("willard379"); //$NON-NLS-1$
 
         // Exercise
         boolean actual = URIUtil.isSSL(uri);
@@ -93,7 +93,7 @@ public class URIUtilTest {
     public void isSSLの引数にhttpスキームのURI文字列を渡した場合_falseが返されること() {
 
         // Setup
-        String uri = "http://www.ambrosoli.jp/";
+        String uri = "http://www.ambrosoli.jp/"; //$NON-NLS-1$
 
         // Exercise
         boolean actual = URIUtil.isSSL(uri);
@@ -106,7 +106,7 @@ public class URIUtilTest {
     public void isSSLの引数にhttpsスキームのURI文字列を渡した場合_trueが返されること() {
 
         // Setup
-        String uri = "https://www.ambrosoli.jp/";
+        String uri = "https://www.ambrosoli.jp/"; //$NON-NLS-1$
 
         // Exercise
         boolean actual = URIUtil.isSSL(uri);
@@ -131,7 +131,7 @@ public class URIUtilTest {
     public void isSSLの引数にURIでない文字列を渡した場合_falseが返されること() {
 
         // Setup
-        String uri = "ftp://www.ambrosoli.jp/";
+        String uri = "ftp://www.ambrosoli.jp/"; //$NON-NLS-1$
 
         // Exercise
         boolean actual = URIUtil.isSSL(uri);
@@ -144,7 +144,7 @@ public class URIUtilTest {
     public void isSSLの引数にString型のnullを渡した場合_falseが返されること() {
 
         // Setup
-        String uri = "willard379";
+        String uri = "willard379"; //$NON-NLS-1$
 
         // Exercise
         boolean actual = URIUtil.isSSL(uri);
@@ -157,7 +157,7 @@ public class URIUtilTest {
     public void isPlainの引数にhttpスキームのURIを渡した場合_trueが返されること() {
 
         // Setup
-        URI uri = URI.create("http://www.ambrosoli.jp/");
+        URI uri = URI.create("http://www.ambrosoli.jp/"); //$NON-NLS-1$
 
         // Exercise
         boolean actual = URIUtil.isPlain(uri);
@@ -170,7 +170,7 @@ public class URIUtilTest {
     public void isPlainの引数にhttpsスキームのURIを渡した場合_falseが返されること() {
 
         // Setup
-        URI uri = URI.create("https://www.ambrosoli.jp/");
+        URI uri = URI.create("https://www.ambrosoli.jp/"); //$NON-NLS-1$
 
         // Exercise
         boolean actual = URIUtil.isPlain(uri);
@@ -183,7 +183,7 @@ public class URIUtilTest {
     public void isPlainの引数にftpスキームのURIを渡した場合_falseが返されること() {
 
         // Setup
-        URI uri = URI.create("ftp://www.ambrosoli.jp/");
+        URI uri = URI.create("ftp://www.ambrosoli.jp/"); //$NON-NLS-1$
 
         // Exercise
         boolean actual = URIUtil.isPlain(uri);
@@ -196,7 +196,7 @@ public class URIUtilTest {
     public void isPlainの引数にデタラメなURIを渡した場合_falseが返されること() {
 
         // Setup
-        URI uri = URI.create("willard379");
+        URI uri = URI.create("willard379"); //$NON-NLS-1$
 
         // Exercise
         boolean actual = URIUtil.isPlain(uri);
@@ -222,7 +222,7 @@ public class URIUtilTest {
     public void isPlainの引数にhttpスキームのURI文字列を渡した場合_trueが返されること() {
 
         // Setup
-        String uri = "http://www.ambrosoli.jp/";
+        String uri = "http://www.ambrosoli.jp/"; //$NON-NLS-1$
 
         // Exercise
         boolean actual = URIUtil.isPlain(uri);
@@ -235,7 +235,7 @@ public class URIUtilTest {
     public void isPlainの引数にhttpsスキームのURI文字列を渡した場合_falseが返されること() {
 
         // Setup
-        String uri = "https://www.ambrosoli.jp/";
+        String uri = "https://www.ambrosoli.jp/"; //$NON-NLS-1$
 
         // Exercise
         boolean actual = URIUtil.isPlain(uri);
@@ -261,7 +261,7 @@ public class URIUtilTest {
     public void isPlainの引数にURIでない文字列を渡した場合_falseが返されること() {
 
         // Setup
-        String uri = "ftp://www.ambrosoli.jp/";
+        String uri = "ftp://www.ambrosoli.jp/"; //$NON-NLS-1$
 
         // Exercise
         boolean actual = URIUtil.isPlain(uri);
@@ -274,7 +274,7 @@ public class URIUtilTest {
     public void isPlainの引数に文字列型のnullを渡した場合_falseが返されること() {
 
         // Setup
-        String uri = "willard379";
+        String uri = "willard379"; //$NON-NLS-1$
 
         // Exercise
         boolean actual = URIUtil.isPlain(uri);
@@ -287,7 +287,7 @@ public class URIUtilTest {
     public void toURIの引数にhttpスキームのURI文字列を渡した場合_URIが生成されること() {
 
         // Setup
-        String uri = "http://www.ambrosoli.jp/";
+        String uri = "http://www.ambrosoli.jp/"; //$NON-NLS-1$
 
         // Exercise
         URI actual = URIUtil.toURI(uri);
@@ -300,7 +300,7 @@ public class URIUtilTest {
     public void toURIの引数にhttpsスキームのURI文字列を渡した場合_URIが生成されること() {
 
         // Setup
-        String uri = "https://www.ambrosoli.jp/";
+        String uri = "https://www.ambrosoli.jp/"; //$NON-NLS-1$
 
         // Exercise
         URI actual = URIUtil.toURI(uri);
@@ -326,7 +326,7 @@ public class URIUtilTest {
     public void toURIの引数に空文字を渡した場合_nullが返されること() {
 
         // Setup
-        String uri = "";
+        String uri = ""; //$NON-NLS-1$
 
         // Exercise
         URI actual = URIUtil.toURI(uri);
@@ -339,7 +339,7 @@ public class URIUtilTest {
     public void getPortの引数にポート番号8080を指定したhttpスキームのURIを渡した場合_8080が返されること() {
 
         // Setup
-        URI uri = URIUtil.toURI("http://www.ambrosoli.jp:8080/");
+        URI uri = URIUtil.toURI("http://www.ambrosoli.jp:8080/"); //$NON-NLS-1$
 
         // Exercise
         int actual = URIUtil.getPort(uri);
@@ -352,7 +352,7 @@ public class URIUtilTest {
     public void getPortの引数にポート番号を指定しないhttpスキームのURIを渡した場合_80が返されること() {
 
         // Setup
-        URI uri = URIUtil.toURI("http://www.ambrosoli.jp/");
+        URI uri = URIUtil.toURI("http://www.ambrosoli.jp/"); //$NON-NLS-1$
 
         // Exercise
         int actual = URIUtil.getPort(uri);
@@ -365,7 +365,7 @@ public class URIUtilTest {
     public void getPortの引数にポート番号5432を指定したhttpsスキームのURIを渡した場合_5432が返されること() {
 
         // Setup
-        URI uri = URIUtil.toURI("https://www.ambrosoli.jp:5432/");
+        URI uri = URIUtil.toURI("https://www.ambrosoli.jp:5432/"); //$NON-NLS-1$
 
         // Exercise
         int actual = URIUtil.getPort(uri);
@@ -378,7 +378,7 @@ public class URIUtilTest {
     public void getPortの引数にポート番号を指定しないhttpsスキームのURIを渡した場合_443が返されること() {
 
         // Setup
-        URI uri = URIUtil.toURI("https://www.ambrosoli.jp/");
+        URI uri = URIUtil.toURI("https://www.ambrosoli.jp/"); //$NON-NLS-1$
 
         // Exercise
         int actual = URIUtil.getPort(uri);
@@ -404,7 +404,7 @@ public class URIUtilTest {
     public void getPortの引数にftpスキームのURIを渡した場合_マイナス1が返されること() {
 
         // Setup
-        URI uri = URIUtil.toURI("ftp://www.ambrosoli.jp/");
+        URI uri = URIUtil.toURI("ftp://www.ambrosoli.jp/"); //$NON-NLS-1$
 
         // Exercise
         int actual = URIUtil.getPort(uri);
@@ -417,42 +417,42 @@ public class URIUtilTest {
     public void addQueryStringの引数にURIとクエリストリングを渡すと_クエリストリングが追加されたURIが返されること() {
 
         // Setup
-        URI uri = URIUtil.toURI("http://www.ambrosoli.jp/");
-        String queryString = "?a=A";
+        URI uri = URIUtil.toURI("http://www.ambrosoli.jp/"); //$NON-NLS-1$
+        String queryString = "?a=A"; //$NON-NLS-1$
 
         // Exercise
         URI actual = URIUtil.addQueryString(uri, queryString);
 
         // Verify
-        assertThat(actual.toString(), is(equalTo("http://www.ambrosoli.jp/?a=A")));
+        assertThat(actual.toString(), is(equalTo("http://www.ambrosoli.jp/?a=A"))); //$NON-NLS-1$
     }
 
     @Test
     public void addQueryStringの引数にURIとnullを渡すと_クエリストリングが追加されないこと() {
 
         // Setup
-        URI uri = URIUtil.toURI("http://www.ambrosoli.jp/");
+        URI uri = URIUtil.toURI("http://www.ambrosoli.jp/"); //$NON-NLS-1$
         String queryString = null;
 
         // Exercise
         URI actual = URIUtil.addQueryString(uri, queryString);
 
         // Verify
-        assertThat(actual.toString(), is(equalTo("http://www.ambrosoli.jp/")));
+        assertThat(actual.toString(), is(equalTo("http://www.ambrosoli.jp/"))); //$NON-NLS-1$
     }
 
     @Test
     public void addQueryStringの引数にURIと空文字を渡すと_クエリストリングが追加されないこと() {
 
         // Setup
-        URI uri = URIUtil.toURI("http://www.ambrosoli.jp/");
-        String queryString = "";
+        URI uri = URIUtil.toURI("http://www.ambrosoli.jp/"); //$NON-NLS-1$
+        String queryString = ""; //$NON-NLS-1$
 
         // Exercise
         URI actual = URIUtil.addQueryString(uri, queryString);
 
         // Verify
-        assertThat(actual.toString(), is(equalTo("http://www.ambrosoli.jp/")));
+        assertThat(actual.toString(), is(equalTo("http://www.ambrosoli.jp/"))); //$NON-NLS-1$
     }
 
     @Test
@@ -460,7 +460,7 @@ public class URIUtilTest {
 
         // Setup
         URI uri = null;
-        String queryString = "?a=A";
+        String queryString = "?a=A"; //$NON-NLS-1$
 
         // Exercise
         URI actual = URIUtil.addQueryString(uri, queryString);

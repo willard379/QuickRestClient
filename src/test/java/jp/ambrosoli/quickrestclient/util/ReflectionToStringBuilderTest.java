@@ -3,6 +3,7 @@ package jp.ambrosoli.quickrestclient.util;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 
@@ -20,7 +21,7 @@ public class ReflectionToStringBuilderTest {
         String actual = ReflectionToStringBuilder.toString(obj);
 
         // Verify
-        assertThat(actual, is(equalTo("<null>")));
+        assertThat(actual, is(equalTo("<null>"))); //$NON-NLS-1$
     }
 
     @Test
@@ -33,33 +34,34 @@ public class ReflectionToStringBuilderTest {
         String actual = ReflectionToStringBuilder.toString(obj);
 
         // Verify
-        assertThat(actual, is(equalTo("Object[\n]")));
+        assertThat(actual, is(equalTo("Object[" + File.separator + "]"))); //$NON-NLS-1$
     }
 
     @Test
     public void 引数にフィールドを持つオブジェクトを渡した場合_ブラケットの中にフィールド名と値が設定されること() {
 
         // Setup
-        Hoge object = new Hoge("value");
+        Hoge object = new Hoge("value"); //$NON-NLS-1$
 
         // Exercise
         String actual = ReflectionToStringBuilder.toString(object);
 
         // Verify
-        assertThat(actual, is(equalTo("Hoge[\n  name=value\n]")));
+        assertThat(actual, is(equalTo("Hoge[" + File.separator + "  name=value" + File.separator + "]"))); //$NON-NLS-1$
     }
 
     @Test
     public void 引数に複数のフィールドを持つオブジェクトを渡した場合_各フィールド名と値が改行で区切られて設定されること() {
 
         // Setup
-        MultiFieldHoge object = new MultiFieldHoge("value1", "value2", "value3");
+        MultiFieldHoge object = new MultiFieldHoge("value1", "value2", "value3"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
         // Exercise
         String actual = ReflectionToStringBuilder.toString(object);
 
         // Verify
-        assertThat(actual, is(equalTo("MultiFieldHoge[\n  name1=value1\n  name2=value2\n  name3=value3\n]")));
+        assertThat(actual, is(equalTo("MultiFieldHoge[" + File.separator + "  name1=value1" + File.separator //$NON-NLS-1$
+                + "  name2=value2" + File.separator + "  name3=value3" + File.separator + "]")));
     }
 
     @Test
@@ -72,20 +74,21 @@ public class ReflectionToStringBuilderTest {
         String actual = ReflectionToStringBuilder.toString(object);
 
         // Verify
-        assertThat(actual, is(equalTo("Hoge[\n  name=<null>\n]")));
+        assertThat(actual, is(equalTo("Hoge[" + File.separator + "  name=<null>" + File.separator + "]"))); //$NON-NLS-1$
     }
 
     @Test
     public void スーパークラスから継承したフィールドの情報も設定されること() {
 
         // Setup
-        Foo object = new Foo("fooValue", "hogeValue");
+        Foo object = new Foo("fooValue", "hogeValue"); //$NON-NLS-1$ //$NON-NLS-2$
 
         // Exercise
         String actual = ReflectionToStringBuilder.toString(object);
 
         // Verify
-        assertThat(actual, is(equalTo("Foo[\n  name=fooValue\n  name=hogeValue\n]")));
+        assertThat(actual, is(equalTo("Foo[" + File.separator + "  name=fooValue" + File.separator + "  name=hogeValue" //$NON-NLS-1$
+                + File.separator + "]")));
     }
 
     @Test
@@ -98,63 +101,67 @@ public class ReflectionToStringBuilderTest {
         String actual = ReflectionToStringBuilder.toString(object);
 
         // Verify
-        assertThat(actual, is(equalTo("Hoge[\n  name=1\n]")));
+        assertThat(actual, is(equalTo("Hoge[" + File.separator + "  name=1" + File.separator + "]"))); //$NON-NLS-1$
     }
 
     @Test
     public void 配列型のフィールドを持つオブジェクトを指定した場合_配列の内容が波括弧に囲まれて設定されること() {
 
         // Setup
-        Hoge object = new Hoge(new String[] { "value1", "value2", "value3", });
+        Hoge object = new Hoge(new String[] { "value1", "value2", "value3", }); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
         // Exercise
         String actual = ReflectionToStringBuilder.toString(object);
 
         // Verify
         // commons-langのToStringBuilderの仕様に基づき、値同士の間にスペースを挿入しない
-        assertThat(actual, is(equalTo("Hoge[\n  name={value1,value2,value3}\n]")));
+        assertThat(actual,
+                is(equalTo("Hoge[" + File.separator + "  name={value1,value2,value3}" + File.separator + "]"))); //$NON-NLS-1$
     }
 
     @Test
     public void nullを含む配列型のフィールドを持つオブジェクトを指定した場合_nullという文字列が不等号に囲まれて設定されること() {
 
         // Setup
-        Hoge object = new Hoge(new String[] { "value1", "value2", "value3", null, });
+        Hoge object = new Hoge(new String[] { "value1", "value2", "value3", null, }); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
         // Exercise
         String actual = ReflectionToStringBuilder.toString(object);
 
         // Verify
         // commons-langのToStringBuilderの仕様に基づき、値同士の間にスペースを挿入しない
-        assertThat(actual, is(equalTo("Hoge[\n  name={value1,value2,value3,<null>}\n]")));
+        assertThat(actual,
+                is(equalTo("Hoge[" + File.separator + "  name={value1,value2,value3,<null>}" + File.separator + "]"))); //$NON-NLS-1$
     }
 
     @Test
     public void List型のフィールドを持つオブジェクトを指定した場合_Listの内容がブラケットに囲まれて設定されること() {
 
         // Setup
-        Hoge object = new Hoge(Arrays.asList("value1", "value2", "value3"));
+        Hoge object = new Hoge(Arrays.asList("value1", "value2", "value3")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
         // Exercise
         String actual = ReflectionToStringBuilder.toString(object);
 
         // Verify
         // commons-langのToStringBuilderの仕様に基づき、値同士の間にスペースを挿入する。
-        assertThat(actual, is(equalTo("Hoge[\n  name=[value1, value2, value3]\n]")));
+        assertThat(actual,
+                is(equalTo("Hoge[" + File.separator + "  name=[value1, value2, value3]" + File.separator + "]"))); //$NON-NLS-1$
     }
 
     @Test
     public void nullを含むList型のフィールドを持つオブジェクトを指定した場合_nullという文字列がそのまま設定されること() {
 
         // Setup
-        Hoge object = new Hoge(Arrays.asList("value1", "value2", "value3", null));
+        Hoge object = new Hoge(Arrays.asList("value1", "value2", "value3", null)); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
         // Exercise
         String actual = ReflectionToStringBuilder.toString(object);
 
         // Verify
         // commons-langのToStringBuilderの仕様に基づき、値同士の間にスペースを挿入する。
-        assertThat(actual, is(equalTo("Hoge[\n  name=[value1, value2, value3, null]\n]")));
+        assertThat(actual,
+                is(equalTo("Hoge[" + File.separator + "  name=[value1, value2, value3, null]" + File.separator + "]"))); //$NON-NLS-1$
     }
 
     @Test
@@ -164,9 +171,9 @@ public class ReflectionToStringBuilderTest {
         @SuppressWarnings("serial")
         Hoge object = new Hoge(new LinkedHashMap<String, String>() {
             {
-                this.put("key1", "value1");
-                this.put("key2", "value2");
-                this.put("key3", "value3");
+                this.put("key1", "value1"); //$NON-NLS-1$ //$NON-NLS-2$
+                this.put("key2", "value2"); //$NON-NLS-1$ //$NON-NLS-2$
+                this.put("key3", "value3"); //$NON-NLS-1$ //$NON-NLS-2$
             }
         });
 
@@ -174,7 +181,8 @@ public class ReflectionToStringBuilderTest {
         String actual = ReflectionToStringBuilder.toString(object);
 
         // Verify
-        assertThat(actual, is(equalTo("Hoge[\n  name={key1=value1, key2=value2, key3=value3}\n]")));
+        assertThat(actual, is(equalTo(
+                "Hoge[" + File.separator + "  name={key1=value1, key2=value2, key3=value3}" + File.separator + "]"))); //$NON-NLS-1$
     }
 
     @Test
@@ -184,9 +192,9 @@ public class ReflectionToStringBuilderTest {
         @SuppressWarnings("serial")
         Hoge object = new Hoge(new LinkedHashMap<String, String>() {
             {
-                this.put("key1", "value1");
-                this.put("key2", "value2");
-                this.put("key3", "value3");
+                this.put("key1", "value1"); //$NON-NLS-1$ //$NON-NLS-2$
+                this.put("key2", "value2"); //$NON-NLS-1$ //$NON-NLS-2$
+                this.put("key3", "value3"); //$NON-NLS-1$ //$NON-NLS-2$
                 this.put(null, null);
             }
         });
@@ -195,7 +203,8 @@ public class ReflectionToStringBuilderTest {
         String actual = ReflectionToStringBuilder.toString(object);
 
         // Verify
-        assertThat(actual, is(equalTo("Hoge[\n  name={key1=value1, key2=value2, key3=value3, null=null}\n]")));
+        assertThat(actual, is(equalTo("Hoge[" + File.separator //$NON-NLS-1$
+                + "  name={key1=value1, key2=value2, key3=value3, null=null}" + File.separator + "]")));
     }
 
     @Test
@@ -209,7 +218,8 @@ public class ReflectionToStringBuilderTest {
         String actual = ReflectionToStringBuilder.toString(hoge);
 
         // Verify
-        assertThat(actual, is(equalTo("Hoge[\n  name=" + obj.toString() + "\n]")));
+        assertThat(actual,
+                is(equalTo("Hoge[" + File.separator + "  name=" + obj.toString() + "" + File.separator + "]"))); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     @Test
@@ -222,7 +232,7 @@ public class ReflectionToStringBuilderTest {
         String actual = ReflectionToStringBuilder.toString(bar);
 
         // Verify
-        assertThat(actual, is(equalTo("Bar[\n  memberName=memberValue\n]")));
+        assertThat(actual, is(equalTo("Bar[" + File.separator + "  memberName=memberValue" + File.separator + "]"))); //$NON-NLS-1$
     }
 
 }
@@ -257,7 +267,7 @@ class Foo extends Hoge {
 }
 
 class Bar {
-    public static String staticName = "staticValue";
-    public String memberName = "memberValue";
+    public static String staticName = "staticValue"; //$NON-NLS-1$
+    public String memberName = "memberValue"; //$NON-NLS-1$
 
 }

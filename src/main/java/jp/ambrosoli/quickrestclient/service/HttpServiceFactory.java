@@ -22,7 +22,7 @@ import jp.ambrosoli.quickrestclient.apache.service.ApacheHttpServiceFactory;
 
 /**
  * {@link HttpService}のファクトリクラスです。
- * 
+ *
  * @author willard379
  * @since 0.1.0
  */
@@ -33,7 +33,7 @@ public abstract class HttpServiceFactory {
 
     /**
      * デフォルトのファクトリーのインスタンスを返します。
-     * 
+     *
      * @return デフォルトのファクトリー
      */
     public static HttpServiceFactory getFactory() {
@@ -47,7 +47,7 @@ public abstract class HttpServiceFactory {
 
     /**
      * factoryNameで指定されたファクトリーのインスタンスを返します。
-     * 
+     *
      * @param factoryName
      *            ファクトリーの識別子
      * @return 指定されたファクトリー
@@ -60,14 +60,14 @@ public abstract class HttpServiceFactory {
 
         HttpServiceFactory factory = cache.get(factoryName);
         if (factory == null) {
-            throw new IllegalStateException("HttpServiceFactory {" + factoryName + "} is not registerd.");
+            throw new IllegalStateException(Messages.getString("message.factory.not.registerd", factoryName)); //$NON-NLS-1$
         }
         return factory;
     }
 
     /**
      * ファクトリーを登録します。
-     * 
+     *
      * @param factoryName
      *            ファクトリーの識別子
      * @param factory
@@ -75,14 +75,14 @@ public abstract class HttpServiceFactory {
      */
     public static void register(final String factoryName, final HttpServiceFactory factory) {
         if (factory == null) {
-            throw new IllegalArgumentException("HttpServiceFactory {" + factoryName + "} could not be registerd.");
+            throw new IllegalArgumentException(Messages.getString("message.factory.null", factoryName)); //$NON-NLS-1$
         }
         cache.put(factoryName, factory);
     }
 
     /**
      * {@link HttpService}を生成します。
-     * 
+     *
      * @return HttpService
      */
     public abstract HttpService create();

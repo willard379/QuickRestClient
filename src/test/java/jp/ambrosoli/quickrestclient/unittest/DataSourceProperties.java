@@ -21,7 +21,7 @@ public class DataSourceProperties {
 
     static {
         try {
-            testProperty.load(DataSourceProperties.class.getClassLoader().getResourceAsStream("datasource.properties"));
+            testProperty.load(DataSourceProperties.class.getClassLoader().getResourceAsStream("datasource.properties")); //$NON-NLS-1$
         } catch (IOException e) {
             throw new IORuntimeException(e);
         }
@@ -82,7 +82,7 @@ public class DataSourceProperties {
         String property = System.getProperty(key);
         if (StringUtil.isEmpty(property)) {
             throw new PropertyNotFoundException(
-                    MessageFormat.format("Property not found on system property. key:[{0}]", key));
+                    MessageFormat.format("Property not found on system property. key:[{0}]", key)); //$NON-NLS-1$
         }
         return property;
     }
@@ -98,7 +98,7 @@ public class DataSourceProperties {
         String property = testProperty.getProperty(key);
         if (StringUtil.isEmpty(property)) {
             throw new PropertyNotFoundException(
-                    MessageFormat.format("Property not found  datasource.property. key:[{0}]", key));
+                    MessageFormat.format("Property not found  datasource.property. key:[{0}]", key)); //$NON-NLS-1$
         }
         return property;
     }

@@ -38,7 +38,7 @@ public class HttpServiceFactoryTest {
 
     @After
     public void tearDown() throws Exception {
-        Field cacheField = HttpServiceFactory.class.getDeclaredField("cache");
+        Field cacheField = HttpServiceFactory.class.getDeclaredField("cache"); //$NON-NLS-1$
         cacheField.setAccessible(true);
         Map<?, ?> cache = (Map<?, ?>) cacheField.get(null);
         cache.clear();
@@ -71,13 +71,13 @@ public class HttpServiceFactoryTest {
 
         // Setup
         this.expectedException.expect(is(instanceOf(IllegalStateException.class)));
-        this.expectedException.expectMessage(is(equalTo("HttpServiceFactory {unregistered} is not registerd.")));
+        this.expectedException.expectMessage(is(equalTo("HttpServiceFactory \"unregistered\" is not registerd."))); //$NON-NLS-1$
 
         // Exercise
-        HttpServiceFactory.getFactory("unregistered");
+        HttpServiceFactory.getFactory("unregistered"); //$NON-NLS-1$
 
         // Verify
-        fail("例外が発生しませんでした");
+        fail("例外が発生しませんでした"); //$NON-NLS-1$
     }
 
     @Test
@@ -87,10 +87,10 @@ public class HttpServiceFactoryTest {
         HttpServiceFactory factory = mock(HttpServiceFactory.class);
 
         // Exercise
-        HttpServiceFactory.register("test_factory", factory);
+        HttpServiceFactory.register("test_factory", factory); //$NON-NLS-1$
 
         // Verify
-        assertThat(HttpServiceFactory.getFactory("test_factory"), is(sameInstance(factory)));
+        assertThat(HttpServiceFactory.getFactory("test_factory"), is(sameInstance(factory))); //$NON-NLS-1$
     }
 
     @Test
@@ -111,13 +111,13 @@ public class HttpServiceFactoryTest {
 
         // Setup
         this.expectedException.expect(is(instanceOf(IllegalArgumentException.class)));
-        this.expectedException.expectMessage(is(equalTo("HttpServiceFactory {hoge} could not be registerd.")));
+        this.expectedException.expectMessage(is(equalTo("HttpServiceFactory \"hoge\" could not be registerd."))); //$NON-NLS-1$
 
         // Exercise
-        HttpServiceFactory.register("hoge", null);
+        HttpServiceFactory.register("hoge", null); //$NON-NLS-1$
 
         // Verify
-        fail("例外が発生しませんでした");
+        fail("例外が発生しませんでした"); //$NON-NLS-1$
     }
 
 }

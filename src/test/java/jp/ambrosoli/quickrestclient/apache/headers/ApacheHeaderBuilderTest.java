@@ -36,9 +36,9 @@ public class ApacheHeaderBuilderTest {
         ApacheHeaderBuilder sut = new ApacheHeaderBuilder();
 
         List<NameValueObject> values = new ArrayList<NameValueObject>();
-        values.add(new NameValueObject("Name1", "Value1"));
-        values.add(new NameValueObject("Name2", "Value2"));
-        values.add(new NameValueObject("Name3", "Value3"));
+        values.add(new NameValueObject("Name1", "Value1")); //$NON-NLS-1$ //$NON-NLS-2$
+        values.add(new NameValueObject("Name2", "Value2")); //$NON-NLS-1$ //$NON-NLS-2$
+        values.add(new NameValueObject("Name3", "Value3")); //$NON-NLS-1$ //$NON-NLS-2$
 
         // Exercise
         Header[] actual = sut.createConformedHeaders(values);
@@ -84,9 +84,9 @@ public class ApacheHeaderBuilderTest {
 
         List<NameValueObject> values = new ArrayList<NameValueObject>();
         values.add(null);
-        values.add(new NameValueObject("Name1", "Value1"));
+        values.add(new NameValueObject("Name1", "Value1")); //$NON-NLS-1$ //$NON-NLS-2$
         values.add(null);
-        values.add(new NameValueObject("Name2", "Value2"));
+        values.add(new NameValueObject("Name2", "Value2")); //$NON-NLS-1$ //$NON-NLS-2$
         values.add(null);
 
         // Exercise

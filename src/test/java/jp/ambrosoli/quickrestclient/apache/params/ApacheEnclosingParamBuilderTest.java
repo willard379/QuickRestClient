@@ -42,9 +42,9 @@ public class ApacheEnclosingParamBuilderTest {
         ApacheEnclosingParamBuilder sut = new ApacheEnclosingParamBuilder();
 
         List<NameValueObject> params = new ArrayList<NameValueObject>();
-        params.add(new NameValueObject("Name1", "Value1"));
-        params.add(new NameValueObject("Name2", "Value2"));
-        params.add(new NameValueObject("Name3", "Value3"));
+        params.add(new NameValueObject("Name1", "Value1")); //$NON-NLS-1$ //$NON-NLS-2$
+        params.add(new NameValueObject("Name2", "Value2")); //$NON-NLS-1$ //$NON-NLS-2$
+        params.add(new NameValueObject("Name3", "Value3")); //$NON-NLS-1$ //$NON-NLS-2$
         RequestParams reqParams = new RequestParams(params);
 
         // Exercise
@@ -63,13 +63,13 @@ public class ApacheEnclosingParamBuilderTest {
         ApacheEnclosingParamBuilder sut = new ApacheEnclosingParamBuilder();
 
         List<NameValueObject> params = new ArrayList<NameValueObject>();
-        params.add(new NameValueObject("Name1", "Value1"));
-        params.add(new NameValueObject("Name2", "Value2"));
-        params.add(new NameValueObject("Name3", "Value3"));
+        params.add(new NameValueObject("Name1", "Value1")); //$NON-NLS-1$ //$NON-NLS-2$
+        params.add(new NameValueObject("Name2", "Value2")); //$NON-NLS-1$ //$NON-NLS-2$
+        params.add(new NameValueObject("Name3", "Value3")); //$NON-NLS-1$ //$NON-NLS-2$
         RequestParams reqParams = new RequestParams(params);
 
         // Exercise
-        UrlEncodedFormEntity actual = reqParams.getConformedParams(sut, "UTF-8");
+        UrlEncodedFormEntity actual = reqParams.getConformedParams(sut, "UTF-8"); //$NON-NLS-1$
 
         // Verify
         assertThat(actual, is(notNullValue()));
@@ -83,12 +83,12 @@ public class ApacheEnclosingParamBuilderTest {
         ApacheEnclosingParamBuilder sut = new ApacheEnclosingParamBuilder();
 
         List<NameValueObject> params = new ArrayList<NameValueObject>();
-        params.add(new NameValueObject("Name1", "Value1"));
-        params.add(new NameValueObject("Name2", "Value2"));
-        params.add(new NameValueObject("Name3", "Value3"));
+        params.add(new NameValueObject("Name1", "Value1")); //$NON-NLS-1$ //$NON-NLS-2$
+        params.add(new NameValueObject("Name2", "Value2")); //$NON-NLS-1$ //$NON-NLS-2$
+        params.add(new NameValueObject("Name3", "Value3")); //$NON-NLS-1$ //$NON-NLS-2$
 
         // Exercise
-        UrlEncodedFormEntity actual = sut.createConformedParams(params, "UTF-8");
+        UrlEncodedFormEntity actual = sut.createConformedParams(params, "UTF-8"); //$NON-NLS-1$
 
         // Verify
         assertThat(actual, is(notNullValue()));
@@ -102,7 +102,7 @@ public class ApacheEnclosingParamBuilderTest {
         ApacheEnclosingParamBuilder sut = new ApacheEnclosingParamBuilder();
 
         // Exercise
-        UrlEncodedFormEntity actual = sut.createConformedParams(null, "UTF-8");
+        UrlEncodedFormEntity actual = sut.createConformedParams(null, "UTF-8"); //$NON-NLS-1$
 
         // Verify
         assertThat(actual, is(notNullValue()));
@@ -116,7 +116,7 @@ public class ApacheEnclosingParamBuilderTest {
         ApacheEnclosingParamBuilder sut = new ApacheEnclosingParamBuilder();
 
         // Exercise
-        UrlEncodedFormEntity actual = sut.createConformedParams(new ArrayList<NameValueObject>(), "UTF-8");
+        UrlEncodedFormEntity actual = sut.createConformedParams(new ArrayList<NameValueObject>(), "UTF-8"); //$NON-NLS-1$
 
         // Verify
         assertThat(actual, is(notNullValue()));
@@ -130,9 +130,9 @@ public class ApacheEnclosingParamBuilderTest {
         ApacheEnclosingParamBuilder sut = new ApacheEnclosingParamBuilder();
 
         List<NameValueObject> params = new ArrayList<NameValueObject>();
-        params.add(new NameValueObject("Name1", "Value1"));
-        params.add(new NameValueObject("Name2", "Value2"));
-        params.add(new NameValueObject("Name3", "Value3"));
+        params.add(new NameValueObject("Name1", "Value1")); //$NON-NLS-1$ //$NON-NLS-2$
+        params.add(new NameValueObject("Name2", "Value2")); //$NON-NLS-1$ //$NON-NLS-2$
+        params.add(new NameValueObject("Name3", "Value3")); //$NON-NLS-1$ //$NON-NLS-2$
 
         // Exercise
         UrlEncodedFormEntity actual = sut.createConformedParams(params, null);
@@ -151,17 +151,17 @@ public class ApacheEnclosingParamBuilderTest {
         this.expectedException.expect(is(instanceOf(IllegalArgumentException.class)));
 
         List<NameValueObject> params = new ArrayList<NameValueObject>();
-        params.add(new NameValueObject("Name1", "Value1"));
-        params.add(new NameValueObject("Name2", "Value2"));
-        params.add(new NameValueObject("Name3", "Value3"));
+        params.add(new NameValueObject("Name1", "Value1")); //$NON-NLS-1$ //$NON-NLS-2$
+        params.add(new NameValueObject("Name2", "Value2")); //$NON-NLS-1$ //$NON-NLS-2$
+        params.add(new NameValueObject("Name3", "Value3")); //$NON-NLS-1$ //$NON-NLS-2$
 
-        String charset = "UTF-48";
+        String charset = "UTF-48"; //$NON-NLS-1$
 
         // Exercise
         sut.createConformedParams(params, charset);
 
         // Verify
-        fail("IllegalArgumentExceptionが発生しませんでした。");
+        fail("IllegalArgumentExceptionが発生しませんでした。"); //$NON-NLS-1$
     }
 
     @Test
@@ -171,9 +171,9 @@ public class ApacheEnclosingParamBuilderTest {
         ApacheEnclosingParamBuilder sut = new ApacheEnclosingParamBuilder();
 
         List<NameValueObject> params = new ArrayList<NameValueObject>();
-        params.add(new NameValueObject("Name1", "Value1"));
-        params.add(new NameValueObject("Name2", "Value2"));
-        params.add(new NameValueObject("Name3", "Value3"));
+        params.add(new NameValueObject("Name1", "Value1")); //$NON-NLS-1$ //$NON-NLS-2$
+        params.add(new NameValueObject("Name2", "Value2")); //$NON-NLS-1$ //$NON-NLS-2$
+        params.add(new NameValueObject("Name3", "Value3")); //$NON-NLS-1$ //$NON-NLS-2$
 
         // Exercise
         List<NameValuePair> actual = sut.createNameValuePairList(params);
@@ -224,7 +224,7 @@ public class ApacheEnclosingParamBuilderTest {
 
         List<NameValueObject> params = new ArrayList<NameValueObject>();
         params.add(null);
-        params.add(new NameValueObject("name", "value"));
+        params.add(new NameValueObject("name", "value")); //$NON-NLS-1$ //$NON-NLS-2$
         params.add(null);
 
         // Exercise
@@ -262,7 +262,7 @@ public class ApacheEnclosingParamBuilderTest {
         // Setup
         ApacheEnclosingParamBuilder sut = new ApacheEnclosingParamBuilder();
 
-        NameValueObject nvo = new NameValueObject("name", "value");
+        NameValueObject nvo = new NameValueObject("name", "value"); //$NON-NLS-1$ //$NON-NLS-2$
 
         // Exercise
         NameValuePair actual = sut.toNameValuePair(nvo);

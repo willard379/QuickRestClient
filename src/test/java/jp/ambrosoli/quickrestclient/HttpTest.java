@@ -58,7 +58,7 @@ public class HttpTest {
 
         // このURLにGETメソッドでリクエストした場合、ステータスコード200が返却される。
         // GETメソッド以外でリクエストした場合、ステータスコード405が返却される。
-        HttpResponse sut = Http.url(DataSource.url("method/get")).execute();
+        HttpResponse sut = Http.url(DataSource.url("method/get")).execute(); //$NON-NLS-1$
 
         // Verify
         assertThat(sut.isSuccess(), is(true));
@@ -68,7 +68,7 @@ public class HttpTest {
     public void GETメソッドを送信する() {
 
         // Exercise
-        HttpResponse response = Http.url(DataSource.url("method/get")).method(Http.GET).execute();
+        HttpResponse response = Http.url(DataSource.url("method/get")).method(Http.GET).execute(); //$NON-NLS-1$
 
         // Verify
         assertThat(response.isSuccess(), is(true));
@@ -78,7 +78,7 @@ public class HttpTest {
     public void POSTメソッドを送信する() {
 
         // Exercise
-        HttpResponse response = Http.url(DataSource.url("method/post")).method(Http.POST).execute();
+        HttpResponse response = Http.url(DataSource.url("method/post")).method(Http.POST).execute(); //$NON-NLS-1$
 
         // Verify
         assertThat(response.isSuccess(), is(true));
@@ -88,7 +88,7 @@ public class HttpTest {
     public void PUTメソッドを送信する() {
 
         // Exercise
-        HttpResponse response = Http.url(DataSource.url("method/put")).method(Http.PUT).execute();
+        HttpResponse response = Http.url(DataSource.url("method/put")).method(Http.PUT).execute(); //$NON-NLS-1$
 
         // Verify
         assertThat(response.isSuccess(), is(true));
@@ -98,7 +98,7 @@ public class HttpTest {
     public void DELETEメソッドを送信する() {
 
         // Exercise
-        HttpResponse response = Http.url(DataSource.url("method/delete")).method(Http.DELETE).execute();
+        HttpResponse response = Http.url(DataSource.url("method/delete")).method(Http.DELETE).execute(); //$NON-NLS-1$
 
         // Verify
         assertThat(response.isSuccess(), is(true));
@@ -108,7 +108,7 @@ public class HttpTest {
     public void HEADメソッドを送信する() {
 
         // Exercise
-        HttpResponse response = Http.url(DataSource.url("method/head")).method(Http.HEAD).execute();
+        HttpResponse response = Http.url(DataSource.url("method/head")).method(Http.HEAD).execute(); //$NON-NLS-1$
 
         // Verify
         assertThat(response.isSuccess(), is(true));
@@ -118,7 +118,7 @@ public class HttpTest {
     public void OPTIONSメソッドを送信する() {
 
         // Exercise
-        HttpResponse response = Http.url(DataSource.url("method/options")).method(Http.OPTIONS).execute();
+        HttpResponse response = Http.url(DataSource.url("method/options")).method(Http.OPTIONS).execute(); //$NON-NLS-1$
 
         // Verify
         assertThat(response.isSuccess(), is(true));
@@ -128,7 +128,7 @@ public class HttpTest {
     public void GETメソッドを文字列で指定して送信する() {
 
         // Exercise
-        HttpResponse response = Http.url(DataSource.url("method/get")).method("GET").execute();
+        HttpResponse response = Http.url(DataSource.url("method/get")).method("GET").execute(); //$NON-NLS-1$ //$NON-NLS-2$
 
         // Verify
         assertThat(response.isSuccess(), is(true));
@@ -138,7 +138,7 @@ public class HttpTest {
     public void POSTメソッドを文字列で指定して送信する() {
 
         // Exercise
-        HttpResponse response = Http.url(DataSource.url("method/post")).method("post").execute();
+        HttpResponse response = Http.url(DataSource.url("method/post")).method("post").execute(); //$NON-NLS-1$ //$NON-NLS-2$
 
         // Verify
         assertThat(response.isSuccess(), is(true));
@@ -149,7 +149,7 @@ public class HttpTest {
 
         // Setup
         // HTTP/1.0のリクエストに対して200 OKを返すURL
-        String url = DataSource.url("httpProtocol/version1_0");
+        String url = DataSource.url("httpProtocol/version1_0"); //$NON-NLS-1$
 
         // Exercise
         HttpResponse response_1_0 = Http.url(url).protocol(Http.HTTP_1_0).execute();
@@ -166,7 +166,7 @@ public class HttpTest {
 
         // Setup
         // HTTP/1.1のリクエストに対して200 OKを返すURL
-        String url = DataSource.url("httpProtocol/version1_1");
+        String url = DataSource.url("httpProtocol/version1_1"); //$NON-NLS-1$
 
         // Exercise
         HttpResponse response_1_1 = Http.url(url).protocol(Http.HTTP_1_1).execute();
@@ -181,33 +181,33 @@ public class HttpTest {
     public void UserAgentを設定して送信する() {
 
         // Exercise
-        HttpResponse response = Http.url(DataSource.url("header/userAgent")).userAgent("Ambrosoli/X.X").execute();
+        HttpResponse response = Http.url(DataSource.url("header/userAgent")).userAgent("Ambrosoli/X.X").execute(); //$NON-NLS-1$ //$NON-NLS-2$
 
         // Verify
         assertThat(response.isSuccess(), is(true));
-        assertThat(response.getAsString(), is(equalTo("Ambrosoli/X.X")));
+        assertThat(response.getAsString(), is(equalTo("Ambrosoli/X.X"))); //$NON-NLS-1$
     }
 
     @Test
     public void GETリクエストにリクエストパラメータを付与して送信する() {
 
         // Exercise
-        HttpResponse response = Http.url(DataSource.url("helloWorld")).method(Http.GET)
-                .params(add("name", "willard379")).execute();
+        HttpResponse response = Http.url(DataSource.url("helloWorld")).method(Http.GET) //$NON-NLS-1$
+                .params(add("name", "willard379")).execute(); //$NON-NLS-1$ //$NON-NLS-2$
 
         // Verify
-        assertThat(response.getAsString(), is(equalTo("Hello, willard379!")));
+        assertThat(response.getAsString(), is(equalTo("Hello, willard379!"))); //$NON-NLS-1$
     }
 
     @Test
     public void POSTリクエストにリクエストパラメータを付与して送信する() {
 
         // Exercise
-        HttpResponse response = Http.url(DataSource.url("helloWorld")).method(Http.POST)
-                .params(add("name", "willard379")).execute();
+        HttpResponse response = Http.url(DataSource.url("helloWorld")).method(Http.POST) //$NON-NLS-1$
+                .params(add("name", "willard379")).execute(); //$NON-NLS-1$ //$NON-NLS-2$
 
         // Verify
-        assertThat(response.getAsString(), is(equalTo("Hello, willard379!")));
+        assertThat(response.getAsString(), is(equalTo("Hello, willard379!"))); //$NON-NLS-1$
     }
 
     @Test
@@ -215,36 +215,36 @@ public class HttpTest {
 
         // Setup
         Map<String, String> params = new HashMap<String, String>();
-        params.put("name", "willard379");
+        params.put("name", "willard379"); //$NON-NLS-1$ //$NON-NLS-2$
 
         // Exercise
-        HttpResponse response = Http.url(DataSource.url("helloWorld")).method(Http.POST).params(params).execute();
+        HttpResponse response = Http.url(DataSource.url("helloWorld")).method(Http.POST).params(params).execute(); //$NON-NLS-1$
 
         // Verify
-        assertThat(response.getAsString(), is(equalTo("Hello, willard379!")));
+        assertThat(response.getAsString(), is(equalTo("Hello, willard379!"))); //$NON-NLS-1$
     }
 
     @Test
     public void charsetを指定して送信する() {
 
         // Exercise
-        HttpResponse response = Http.url(DataSource.url("helloWorld")).method(Http.GET).params(add("name", "まぐ☆なむ"))
-                .charset("UTF-8").execute();
+        HttpResponse response = Http.url(DataSource.url("helloWorld")).method(Http.GET).params(add("name", "まぐ☆なむ")) //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                .charset("UTF-8").execute(); //$NON-NLS-1$
 
         // Verify
-        assertThat(response.getAsString(), is(equalTo("Hello, まぐ☆なむ!")));
+        assertThat(response.getAsString(), is(equalTo("Hello, まぐ☆なむ!"))); //$NON-NLS-1$
     }
 
     @Test
     public void HTTPヘッダーを付与する() {
 
         // Exercise
-        HttpResponse res = Http.url(DataSource.url("header/sameAsParams")).method(Http.POST)
-                .headers(add("Accept", "application/xml"), add("Connection", "Keep-Alive"),
-                        add("Accept-Language", "ja"), add("Pragma", "no-cache"))
-                .params(add("Accept", "application/xml"), add("Connection", "Keep-Alive"), add("Accept-Language", "ja"),
-                        add("Pragma", "no-cache"))
-                .charset("UTF-8").execute();
+        HttpResponse res = Http.url(DataSource.url("header/sameAsParams")).method(Http.POST) //$NON-NLS-1$
+                .headers(add("Accept", "application/xml"), add("Connection", "Keep-Alive"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+                        add("Accept-Language", "ja"), add("Pragma", "no-cache")) //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+                .params(add("Accept", "application/xml"), add("Connection", "Keep-Alive"), add("Accept-Language", "ja"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$
+                        add("Pragma", "no-cache")) //$NON-NLS-1$ //$NON-NLS-2$
+                .charset("UTF-8").execute(); //$NON-NLS-1$
 
         // Verify
         // HTTPヘッダーとリクエストパラメータの内容が同じ場合にのみステータスコード200が返される。
@@ -256,14 +256,14 @@ public class HttpTest {
 
         // Setup
         Map<String, String> map = new HashMap<String, String>();
-        map.put("Accept", "application/xml");
-        map.put("Connection", "Keep-Alive");
-        map.put("Accept-Language", "ja");
-        map.put("Pragma", "no-cache");
+        map.put("Accept", "application/xml"); //$NON-NLS-1$ //$NON-NLS-2$
+        map.put("Connection", "Keep-Alive"); //$NON-NLS-1$ //$NON-NLS-2$
+        map.put("Accept-Language", "ja"); //$NON-NLS-1$ //$NON-NLS-2$
+        map.put("Pragma", "no-cache"); //$NON-NLS-1$ //$NON-NLS-2$
 
         // Exercise
-        HttpResponse res = Http.url(DataSource.url("header/sameAsParams")).method(Http.POST).headers(map).params(map)
-                .charset("UTF-8").execute();
+        HttpResponse res = Http.url(DataSource.url("header/sameAsParams")).method(Http.POST).headers(map).params(map) //$NON-NLS-1$
+                .charset("UTF-8").execute(); //$NON-NLS-1$
 
         // Verify
         assertThat(res.isSuccess(), is(true));
@@ -273,11 +273,11 @@ public class HttpTest {
     public void ContentTypeを設定する() {
 
         // Exercise
-        HttpResponse response = Http.url(DataSource.url("header/setHeaders"))
-                .params(add("Content-Type", "text/html;charset=Shift_JIS")).execute();
+        HttpResponse response = Http.url(DataSource.url("header/setHeaders")) //$NON-NLS-1$
+                .params(add("Content-Type", "text/html;charset=Shift_JIS")).execute(); //$NON-NLS-1$ //$NON-NLS-2$
 
         // Verify
-        assertThat(response.getContentType(), is(equalTo("text/html;charset=Shift_JIS")));
+        assertThat(response.getContentType(), is(equalTo("text/html;charset=Shift_JIS"))); //$NON-NLS-1$
     }
 
     @Test
@@ -285,12 +285,12 @@ public class HttpTest {
 
         // Setup
         Map<String, String> params = new HashMap<String, String>();
-        params.put("Allow", "GET, POST, PUT, DELETE");
-        params.put("Content-Language", "ja");
-        params.put("Connection", "close");
+        params.put("Allow", "GET, POST, PUT, DELETE"); //$NON-NLS-1$ //$NON-NLS-2$
+        params.put("Content-Language", "ja"); //$NON-NLS-1$ //$NON-NLS-2$
+        params.put("Connection", "close"); //$NON-NLS-1$ //$NON-NLS-2$
 
         // Exercise
-        HttpResponse response = Http.url(DataSource.url("header/setHeaders")).params(params).execute();
+        HttpResponse response = Http.url(DataSource.url("header/setHeaders")).params(params).execute(); //$NON-NLS-1$
         List<HttpHeader> allHeaders = response.getAllHeaders();
 
         // Verify
@@ -316,12 +316,12 @@ public class HttpTest {
 
         // Setup
         Map<String, String> params = new HashMap<String, String>();
-        params.put("Allow", "GET, POST, PUT, DELETE");
-        params.put("Content-Language", "ja");
-        params.put("Connection", "close");
+        params.put("Allow", "GET, POST, PUT, DELETE"); //$NON-NLS-1$ //$NON-NLS-2$
+        params.put("Content-Language", "ja"); //$NON-NLS-1$ //$NON-NLS-2$
+        params.put("Connection", "close"); //$NON-NLS-1$ //$NON-NLS-2$
 
         // Exercise
-        HttpResponse response = Http.url(DataSource.url("header/setHeaders")).params(params).execute();
+        HttpResponse response = Http.url(DataSource.url("header/setHeaders")).params(params).execute(); //$NON-NLS-1$
         List<HttpHeader> headers = response.getHeaders(null);
 
         // Verify
@@ -337,13 +337,13 @@ public class HttpTest {
 
         // Setup
         Map<String, String> params = new HashMap<String, String>();
-        params.put("Allow", "GET, POST, PUT, DELETE");
-        params.put("Content-Language", "ja");
-        params.put("Connection", "close");
+        params.put("Allow", "GET, POST, PUT, DELETE"); //$NON-NLS-1$ //$NON-NLS-2$
+        params.put("Content-Language", "ja"); //$NON-NLS-1$ //$NON-NLS-2$
+        params.put("Connection", "close"); //$NON-NLS-1$ //$NON-NLS-2$
 
         // Exercise
-        HttpResponse response = Http.url(DataSource.url("header/setHeaders")).params(params).execute();
-        List<HttpHeader> headers = response.getHeaders("Trailer");
+        HttpResponse response = Http.url(DataSource.url("header/setHeaders")).params(params).execute(); //$NON-NLS-1$
+        List<HttpHeader> headers = response.getHeaders("Trailer"); //$NON-NLS-1$
 
         // Verify
         assertThat(headers.isEmpty(), is(true));
@@ -358,16 +358,16 @@ public class HttpTest {
 
         // Setup
         Map<String, String> params = new HashMap<String, String>();
-        params.put("Allow", "GET, POST, PUT, DELETE");
-        params.put("Content-Language", "ja");
-        params.put("Connection", "close");
+        params.put("Allow", "GET, POST, PUT, DELETE"); //$NON-NLS-1$ //$NON-NLS-2$
+        params.put("Content-Language", "ja"); //$NON-NLS-1$ //$NON-NLS-2$
+        params.put("Connection", "close"); //$NON-NLS-1$ //$NON-NLS-2$
 
         // Exercise
-        HttpResponse response = Http.url(DataSource.url("header/setHeaders")).params(params).execute();
-        List<HttpHeader> headers = response.getHeaders("Content-Language");
+        HttpResponse response = Http.url(DataSource.url("header/setHeaders")).params(params).execute(); //$NON-NLS-1$
+        List<HttpHeader> headers = response.getHeaders("Content-Language"); //$NON-NLS-1$
 
         // Verify
-        assertThat(headers.get(0).getValue(), is(equalTo("ja")));
+        assertThat(headers.get(0).getValue(), is(equalTo("ja"))); //$NON-NLS-1$
     }
 
     @Test
@@ -379,12 +379,12 @@ public class HttpTest {
 
         // Setup
         Map<String, String> params = new HashMap<String, String>();
-        params.put("Allow", "GET, POST, PUT, DELETE");
-        params.put("Content-Language", "ja");
-        params.put("Connection", "close");
+        params.put("Allow", "GET, POST, PUT, DELETE"); //$NON-NLS-1$ //$NON-NLS-2$
+        params.put("Content-Language", "ja"); //$NON-NLS-1$ //$NON-NLS-2$
+        params.put("Connection", "close"); //$NON-NLS-1$ //$NON-NLS-2$
 
         // Exercise
-        HttpResponse response = Http.url(DataSource.url("header/setHeaders")).params(params).execute();
+        HttpResponse response = Http.url(DataSource.url("header/setHeaders")).params(params).execute(); //$NON-NLS-1$
         HttpHeader header = response.getHeader(null);
 
         // Verify
@@ -400,13 +400,13 @@ public class HttpTest {
 
         // Setup
         Map<String, String> params = new HashMap<String, String>();
-        params.put("Allow", "GET, POST, PUT, DELETE");
-        params.put("Content-Language", "ja");
-        params.put("Connection", "close");
+        params.put("Allow", "GET, POST, PUT, DELETE"); //$NON-NLS-1$ //$NON-NLS-2$
+        params.put("Content-Language", "ja"); //$NON-NLS-1$ //$NON-NLS-2$
+        params.put("Connection", "close"); //$NON-NLS-1$ //$NON-NLS-2$
 
         // Exercise
-        HttpResponse response = Http.url(DataSource.url("header/setHeaders")).params(params).execute();
-        HttpHeader header = response.getHeader("Transfer-Encoding");
+        HttpResponse response = Http.url(DataSource.url("header/setHeaders")).params(params).execute(); //$NON-NLS-1$
+        HttpHeader header = response.getHeader("Transfer-Encoding"); //$NON-NLS-1$
 
         // Verify
         assertThat(header, is(nullValue()));
@@ -421,23 +421,23 @@ public class HttpTest {
 
         // Setup
         Map<String, String> params = new HashMap<String, String>();
-        params.put("Allow", "GET, POST, PUT, DELETE");
-        params.put("Content-Language", "ja");
-        params.put("Connection", "close");
+        params.put("Allow", "GET, POST, PUT, DELETE"); //$NON-NLS-1$ //$NON-NLS-2$
+        params.put("Content-Language", "ja"); //$NON-NLS-1$ //$NON-NLS-2$
+        params.put("Connection", "close"); //$NON-NLS-1$ //$NON-NLS-2$
 
         // Exercise
-        HttpResponse response = Http.url(DataSource.url("header/setHeaders")).params(params).execute();
-        HttpHeader header = response.getHeader("Allow");
+        HttpResponse response = Http.url(DataSource.url("header/setHeaders")).params(params).execute(); //$NON-NLS-1$
+        HttpHeader header = response.getHeader("Allow"); //$NON-NLS-1$
 
         // Verify
-        assertThat(header.getValue(), is(equalTo("GET, POST, PUT, DELETE")));
+        assertThat(header.getValue(), is(equalTo("GET, POST, PUT, DELETE"))); //$NON-NLS-1$
     }
 
     @Test
     public void timeoutメソッドで指定したミリ秒以内にHTTPレスポンスが返却された場合_Exceptionが発生しないこと() {
 
         // Exercise
-        HttpResponse res = Http.url(DataSource.url("timeout/100")).timeout(1000).execute();
+        HttpResponse res = Http.url(DataSource.url("timeout/100")).timeout(1000).execute(); //$NON-NLS-1$
 
         // Verify
         assertThat(res.isSuccess(), is(true));
@@ -450,17 +450,17 @@ public class HttpTest {
         this.expectedException.expect(is(instanceOf(SocketTimeoutRuntimeException.class)));
 
         // Exercise
-        Http.url(DataSource.url("timeout/500")).timeout(500).execute();
+        Http.url(DataSource.url("timeout/500")).timeout(500).execute(); //$NON-NLS-1$
 
         // Verify
-        fail("タイムアウトしませんでした");
+        fail("タイムアウトしませんでした"); //$NON-NLS-1$
     }
 
     @Test
     public void Acceptを設定して送信する() {
 
         // Exercise
-        HttpResponse response = Http.url(DataSource.url("header/accept")).accept(HTML, XHTML, JSON, XML, TEXT)
+        HttpResponse response = Http.url(DataSource.url("header/accept")).accept(HTML, XHTML, JSON, XML, TEXT) //$NON-NLS-1$
                 .execute();
 
         // Verify
@@ -468,7 +468,7 @@ public class HttpTest {
 
         // Acceptヘッダーに設定した値がレスポンスボディにCSV形式で設定される
         String responseBody = response.getAsString();
-        List<String> accepts = Arrays.asList(responseBody.split(", *"));
+        List<String> accepts = Arrays.asList(responseBody.split(", *")); //$NON-NLS-1$
         assertThat(accepts, hasItems(HTML, XHTML, JSON, XML, TEXT));
     }
 
@@ -477,7 +477,7 @@ public class HttpTest {
     public void Basic認証を使用する() {
 
         // Exercise
-        HttpResponse response = Http.url("http://www.ambrosoli.jp/auth/basic").auth(basic("username", "password"))
+        HttpResponse response = Http.url("http://www.ambrosoli.jp/auth/basic").auth(basic("username", "password")) //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
                 .execute();
 
         // Verify
@@ -490,7 +490,7 @@ public class HttpTest {
     public void Digest認証を使用する() {
 
         // Exercise
-        HttpResponse response = Http.url("http://www.ambrosoli.jp/auth/digest").auth(digest("username", "password"))
+        HttpResponse response = Http.url("http://www.ambrosoli.jp/auth/digest").auth(digest("username", "password")) //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
                 .execute();
 
         // Verify

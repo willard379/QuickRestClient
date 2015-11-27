@@ -21,18 +21,18 @@ import jp.ambrosoli.quickrestclient.exception.UnsupportedEncodingRuntimeExceptio
 
 /**
  * 文字列に対するユーティリティクラスです。
- * 
+ *
  * @author willard379
  * @since 0.1.0
  */
 public final class StringUtil {
 
     /** デフォルト文字コード */
-    public static final String DEFAULT_ENCODING = "UTF-8";
+    public static final String DEFAULT_ENCODING = "UTF-8"; //$NON-NLS-1$
 
     /**
      * 文字列がnullもしくは空か判定します。
-     * 
+     *
      * @param str
      *            文字列
      * @return nullもしくは空文字の場合true、その他の場合false
@@ -43,7 +43,7 @@ public final class StringUtil {
 
     /**
      * 文字列がnullでも空でもないか判定します。
-     * 
+     *
      * @param str
      *            文字列
      * @return nullでも空文字でもない場合true、その他の場合false
@@ -54,7 +54,7 @@ public final class StringUtil {
 
     /**
      * バイト配列から文字列へ変換して返します。
-     * 
+     *
      * @param data
      *            バイト配列
      * @param encoding
@@ -77,7 +77,7 @@ public final class StringUtil {
 
     /**
      * 配列の要素をseparator文字で連結した１つの文字列にして返します。
-     * 
+     *
      * @param array
      *            結合する要素
      * @param separator

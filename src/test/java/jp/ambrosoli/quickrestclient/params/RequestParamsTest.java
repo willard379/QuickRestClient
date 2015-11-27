@@ -30,7 +30,7 @@ public class RequestParamsTest {
 
         // Setup
         List<NameValueObject> params = new ArrayList<NameValueObject>();
-        params.add(new NameValueObject("a", "b"));
+        params.add(new NameValueObject("a", "b")); //$NON-NLS-1$ //$NON-NLS-2$
 
         // Exercise
         RequestParams actual = new RequestParams(params);
@@ -38,8 +38,8 @@ public class RequestParamsTest {
         // Verify
         assertThat(actual.params, is(params));
         assertThat(actual.isEmpty(), is(false));
-        assertThat(actual.params.get(0).getName(), is(equalTo("a")));
-        assertThat(actual.params.get(0).getValue(), is(equalTo("b")));
+        assertThat(actual.params.get(0).getName(), is(equalTo("a"))); //$NON-NLS-1$
+        assertThat(actual.params.get(0).getValue(), is(equalTo("b"))); //$NON-NLS-1$
     }
 
     @Test
@@ -75,7 +75,7 @@ public class RequestParamsTest {
 
         // Setup
         List<NameValueObject> params = new ArrayList<NameValueObject>();
-        params.add(new NameValueObject("a", "a"));
+        params.add(new NameValueObject("a", "a")); //$NON-NLS-1$ //$NON-NLS-2$
 
         RequestParams sut = new RequestParams(params);
 
@@ -96,7 +96,7 @@ public class RequestParamsTest {
         String actual = sut.getConformedParams(new BasicQueryStringBuilder());
 
         // Verify
-        assertThat(actual, is(equalTo("")));
+        assertThat(actual, is(equalTo(""))); //$NON-NLS-1$
 
     }
 
@@ -105,9 +105,9 @@ public class RequestParamsTest {
 
         // Setup
         List<NameValueObject> params = new ArrayList<NameValueObject>();
-        params.add(new NameValueObject("a", "A"));
-        params.add(new NameValueObject("b", "B"));
-        params.add(new NameValueObject("c", "C"));
+        params.add(new NameValueObject("a", "A")); //$NON-NLS-1$ //$NON-NLS-2$
+        params.add(new NameValueObject("b", "B")); //$NON-NLS-1$ //$NON-NLS-2$
+        params.add(new NameValueObject("c", "C")); //$NON-NLS-1$ //$NON-NLS-2$
 
         RequestParams sut = new RequestParams(params);
 
@@ -115,7 +115,7 @@ public class RequestParamsTest {
         String actual = sut.getConformedParams(new BasicQueryStringBuilder());
 
         // Verify
-        assertThat(actual, is(equalTo("?a=A&b=B&c=C")));
+        assertThat(actual, is(equalTo("?a=A&b=B&c=C"))); //$NON-NLS-1$
 
     }
 
@@ -124,16 +124,16 @@ public class RequestParamsTest {
 
         // Setup
         List<NameValueObject> params = new ArrayList<NameValueObject>();
-        params.add(new NameValueObject("a", "A"));
-        params.add(new NameValueObject("b", "B"));
-        params.add(new NameValueObject("c", "C"));
+        params.add(new NameValueObject("a", "A")); //$NON-NLS-1$ //$NON-NLS-2$
+        params.add(new NameValueObject("b", "B")); //$NON-NLS-1$ //$NON-NLS-2$
+        params.add(new NameValueObject("c", "C")); //$NON-NLS-1$ //$NON-NLS-2$
         RequestParams sut = new RequestParams(params);
 
         // Exercise
         String actual = sut.getConformedParams(new BasicQueryStringBuilder(), null);
 
         // Verify
-        assertThat(actual, is(equalTo("?a=A&b=B&c=C")));
+        assertThat(actual, is(equalTo("?a=A&b=B&c=C"))); //$NON-NLS-1$
 
     }
 
@@ -152,7 +152,7 @@ public class RequestParamsTest {
         String actual = sut.getConformedParams(new BasicQueryStringBuilder());
 
         // Verify
-        assertThat(actual, is(equalTo("")));
+        assertThat(actual, is(equalTo(""))); //$NON-NLS-1$
 
     }
 
@@ -161,9 +161,9 @@ public class RequestParamsTest {
 
         // Setup
         List<NameValueObject> params = new ArrayList<NameValueObject>();
-        params.add(new NameValueObject("a", "A"));
-        params.add(new NameValueObject("b", "B"));
-        params.add(new NameValueObject("c", "C"));
+        params.add(new NameValueObject("a", "A")); //$NON-NLS-1$ //$NON-NLS-2$
+        params.add(new NameValueObject("b", "B")); //$NON-NLS-1$ //$NON-NLS-2$
+        params.add(new NameValueObject("c", "C")); //$NON-NLS-1$ //$NON-NLS-2$
         RequestParams sut = new RequestParams(params);
 
         // Exercise

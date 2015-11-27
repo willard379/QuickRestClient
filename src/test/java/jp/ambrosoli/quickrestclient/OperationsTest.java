@@ -31,37 +31,37 @@ public class OperationsTest {
     public void addメソッドを呼び出すとNameValueObjectが生成されること() {
 
         // Exercise
-        NameValueObject actual = add("name", "value");
+        NameValueObject actual = add("name", "value"); //$NON-NLS-1$ //$NON-NLS-2$
 
         // Verify
-        assertThat(actual.getName(), is(equalTo("name")));
-        assertThat(actual.getValue(), is(equalTo("value")));
+        assertThat(actual.getName(), is(equalTo("name"))); //$NON-NLS-1$
+        assertThat(actual.getValue(), is(equalTo("value"))); //$NON-NLS-1$
     }
 
     @Test
     public void digestメソッドを呼び出すとAuthInfoが生成されること() {
 
         // Exercise
-        AuthInfo actual = digest("user", "password");
+        AuthInfo actual = digest("user", "password"); //$NON-NLS-1$ //$NON-NLS-2$
 
         // Verify
         assertThat(actual, is(notNullValue()));
         assertThat(actual.type, is(AuthType.DIGEST));
-        assertThat(actual.username, is(equalTo("user")));
-        assertThat(actual.password, is(equalTo("password")));
+        assertThat(actual.username, is(equalTo("user"))); //$NON-NLS-1$
+        assertThat(actual.password, is(equalTo("password"))); //$NON-NLS-1$
     }
 
     @Test
     public void basicメソッドを呼び出すとAuthInfoが生成されること() {
 
         // Exercise
-        AuthInfo actual = basic("user", "password");
+        AuthInfo actual = basic("user", "password"); //$NON-NLS-1$ //$NON-NLS-2$
 
         // Verify
         assertThat(actual, is(notNullValue()));
         assertThat(actual.type, is(AuthType.BASIC));
-        assertThat(actual.username, is(equalTo("user")));
-        assertThat(actual.password, is(equalTo("password")));
+        assertThat(actual.username, is(equalTo("user"))); //$NON-NLS-1$
+        assertThat(actual.password, is(equalTo("password"))); //$NON-NLS-1$
     }
 
     @Ignore

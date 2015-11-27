@@ -36,22 +36,22 @@ public class StringUtilTest {
 
     @Test
     public void isEmptyの引数に空文字を渡した場合_trueが返されること() {
-        assertThat(StringUtil.isEmpty(""), is(true));
+        assertThat(StringUtil.isEmpty(""), is(true)); //$NON-NLS-1$
     }
 
     @Test
     public void isEmptyの引数にホワイトスペースを渡した場合_falseが返されること() {
-        assertThat(StringUtil.isEmpty(" "), is(false));
+        assertThat(StringUtil.isEmpty(" "), is(false)); //$NON-NLS-1$
     }
 
     @Test
     public void isEmptyの引数にブランクでない文字列を渡した場合_falseが返されること() {
-        assertThat(StringUtil.isEmpty("bob"), is(false));
+        assertThat(StringUtil.isEmpty("bob"), is(false)); //$NON-NLS-1$
     }
 
     @Test
     public void isEmptyの引数に前後にホワイトスペースを含むブランクでない文字列を渡した場合_falseが返されること() {
-        assertThat(StringUtil.isEmpty("  bob  "), is(false));
+        assertThat(StringUtil.isEmpty("  bob  "), is(false)); //$NON-NLS-1$
     }
 
     @Test
@@ -66,17 +66,17 @@ public class StringUtilTest {
 
     @Test
     public void isEmptyの引数にホワイトスペースの文字列を持つStringBuilderを渡した場合_falseが返されること() {
-        assertThat(StringUtil.isEmpty(new StringBuilder(" ")), is(false));
+        assertThat(StringUtil.isEmpty(new StringBuilder(" ")), is(false)); //$NON-NLS-1$
     }
 
     @Test
     public void isEmptyの引数にブランクでない文字列を持つStringBuilderを渡した場合_falseが返されること() {
-        assertThat(StringUtil.isEmpty(new StringBuilder("bob")), is(false));
+        assertThat(StringUtil.isEmpty(new StringBuilder("bob")), is(false)); //$NON-NLS-1$
     }
 
     @Test
     public void isEmptyの引数に前後にホワイトスペースを含むブランクでない文字列を持つStringBuilderを渡した場合_falseが返されること() {
-        assertThat(StringUtil.isEmpty(new StringBuilder("  bob  ")), is(false));
+        assertThat(StringUtil.isEmpty(new StringBuilder("  bob  ")), is(false)); //$NON-NLS-1$
     }
 
     @Test
@@ -86,22 +86,22 @@ public class StringUtilTest {
 
     @Test
     public void isNotEmptyの引数に空文字を渡した場合_falseが返されること() {
-        assertThat(StringUtil.isNotEmpty(""), is(false));
+        assertThat(StringUtil.isNotEmpty(""), is(false)); //$NON-NLS-1$
     }
 
     @Test
     public void isNotEmptyの引数にホワイトスペースを渡した場合_trueが返されること() {
-        assertThat(StringUtil.isNotEmpty(" "), is(true));
+        assertThat(StringUtil.isNotEmpty(" "), is(true)); //$NON-NLS-1$
     }
 
     @Test
     public void isNotEmptyの引数にブランクでない文字列を渡した場合_trueが返されること() {
-        assertThat(StringUtil.isNotEmpty("bob"), is(true));
+        assertThat(StringUtil.isNotEmpty("bob"), is(true)); //$NON-NLS-1$
     }
 
     @Test
     public void isNotEmptyの引数に前後にホワイトスペースを含むブランクでない文字列を渡した場合_trueが返されること() {
-        assertThat(StringUtil.isNotEmpty("  bob  "), is(true));
+        assertThat(StringUtil.isNotEmpty("  bob  "), is(true)); //$NON-NLS-1$
     }
 
     @Test
@@ -111,22 +111,22 @@ public class StringUtilTest {
 
     @Test
     public void isNotEmptyに空のStringBuilderを渡した場合_falseが返されること() {
-        assertThat(StringUtil.isNotEmpty(new StringBuilder("")), is(false));
+        assertThat(StringUtil.isNotEmpty(new StringBuilder("")), is(false)); //$NON-NLS-1$
     }
 
     @Test
     public void isNotEmptyの引数にホワイトスペースの文字列を持つStringBuilderを渡した場合_trueが返されること() {
-        assertThat(StringUtil.isNotEmpty(new StringBuilder(" ")), is(true));
+        assertThat(StringUtil.isNotEmpty(new StringBuilder(" ")), is(true)); //$NON-NLS-1$
     }
 
     @Test
     public void isNotEmptyの引数にブランクでない文字列を持つStringBuilderを渡した場合_trueが返されること() {
-        assertThat(StringUtil.isNotEmpty(new StringBuilder("bob")), is(true));
+        assertThat(StringUtil.isNotEmpty(new StringBuilder("bob")), is(true)); //$NON-NLS-1$
     }
 
     @Test
     public void isNotEmptyの引数に前後にホワイトスペースを含むブランクでない文字列を持つStringBuilderを渡した場合_trueが返されること() {
-        assertThat(StringUtil.isNotEmpty(new StringBuilder("  bob  ")), is(true));
+        assertThat(StringUtil.isNotEmpty(new StringBuilder("  bob  ")), is(true)); //$NON-NLS-1$
     }
 
     @Test
@@ -134,13 +134,13 @@ public class StringUtilTest {
 
         // Setup
         // ↓全部サロゲートペア
-        byte[] data = "𠀋𡈽𡌛𡑮𡢽𠮟𡚴𡸴𣇄𣗄".getBytes("UTF-16");
+        byte[] data = "𠀋𡈽𡌛𡑮𡢽𠮟𡚴𡸴𣇄𣗄".getBytes("UTF-16"); //$NON-NLS-1$ //$NON-NLS-2$
 
         // Exercise
-        String result = StringUtil.toString(data, "UTF-16");
+        String result = StringUtil.toString(data, "UTF-16"); //$NON-NLS-1$
 
         // Verify
-        assertThat(result, is(equalTo("𠀋𡈽𡌛𡑮𡢽𠮟𡚴𡸴𣇄𣗄")));
+        assertThat(result, is(equalTo("𠀋𡈽𡌛𡑮𡢽𠮟𡚴𡸴𣇄𣗄"))); //$NON-NLS-1$
     }
 
     @Test
@@ -150,10 +150,10 @@ public class StringUtilTest {
         byte[] data = new byte[0];
 
         // Exercise
-        String result = StringUtil.toString(data, "UTF-8");
+        String result = StringUtil.toString(data, "UTF-8"); //$NON-NLS-1$
 
         // Verify
-        assertThat(result, is(equalTo("")));
+        assertThat(result, is(equalTo(""))); //$NON-NLS-1$
     }
 
     @Test
@@ -163,7 +163,7 @@ public class StringUtilTest {
         byte[] data = null;
 
         // Exercise
-        String result = StringUtil.toString(data, "UTF-8");
+        String result = StringUtil.toString(data, "UTF-8"); //$NON-NLS-1$
 
         // Verify
         assertThat(result, is(nullValue()));
@@ -173,27 +173,27 @@ public class StringUtilTest {
     public void toStringの第二引数にnullを渡した場合_第一引数で渡されたbyte配列がUTF8の文字列に変換されて返されること() throws Exception {
 
         // Setup
-        byte[] data = "ロマンス".getBytes("UTF-8");
+        byte[] data = "ロマンス".getBytes("UTF-8"); //$NON-NLS-1$ //$NON-NLS-2$
 
         // Exercise
         String result = StringUtil.toString(data, null);
 
         // Verify
-        assertThat(result, is(equalTo("ロマンス")));
+        assertThat(result, is(equalTo("ロマンス"))); //$NON-NLS-1$
     }
 
     @Test
     public void toStringの第二引数に存在しないエンコーディングを指定した場合_UnsupportedEncodingRuntimeExcetionが発生すること() throws Exception {
 
         // Setup
-        byte[] data = "ハネムーン".getBytes("UTF-8");
+        byte[] data = "ハネムーン".getBytes("UTF-8"); //$NON-NLS-1$ //$NON-NLS-2$
 
         this.expectedException.expect(is(instanceOf(UnsupportedEncodingRuntimeException.class)));
 
         // Exercise
-        StringUtil.toString(data, "UTF-48");
+        StringUtil.toString(data, "UTF-48"); //$NON-NLS-1$
 
         // Verify
-        fail("UnsupportedEncodingRuntimeExceptionが発生しませんでした。");
+        fail("UnsupportedEncodingRuntimeExceptionが発生しませんでした。"); //$NON-NLS-1$
     }
 }

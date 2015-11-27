@@ -32,7 +32,7 @@ public class ByteArrayResponseContentTest {
         // Setup
         ByteArrayResponseContent sut = new ByteArrayResponseContent();
 
-        String content = "abcdefg";
+        String content = "abcdefg"; //$NON-NLS-1$
 
         // Exercise
         sut.setData(content.getBytes());
@@ -46,7 +46,7 @@ public class ByteArrayResponseContentTest {
 
         // Setup
         ByteArrayResponseContent sut = new ByteArrayResponseContent();
-        sut.setData("あいうえお".getBytes());
+        sut.setData("あいうえお".getBytes()); //$NON-NLS-1$
 
         // Exercise
         byte[] actual = sut.getAsByteArray();
@@ -74,7 +74,7 @@ public class ByteArrayResponseContentTest {
 
         // Setup
         ByteArrayResponseContent sut = new ByteArrayResponseContent();
-        sut.setData("OPQRSTUVWXYZ".getBytes());
+        sut.setData("OPQRSTUVWXYZ".getBytes()); //$NON-NLS-1$
 
         // Exercise
         InputStream actual = sut.getAsInputStream();
@@ -107,13 +107,13 @@ public class ByteArrayResponseContentTest {
 
         // Setup
         ByteArrayResponseContent sut = new ByteArrayResponseContent();
-        sut.setData("willard379".getBytes());
+        sut.setData("willard379".getBytes()); //$NON-NLS-1$
 
         // Exercise
         String actual = sut.getAsString();
 
         // Verify
-        assertThat(actual, is(equalTo("willard379")));
+        assertThat(actual, is(equalTo("willard379"))); //$NON-NLS-1$
     }
 
     @Test
@@ -135,20 +135,20 @@ public class ByteArrayResponseContentTest {
 
         // Setup
         ByteArrayResponseContent sut = new ByteArrayResponseContent();
-        sut.setData("𩸽".getBytes("UTF-16"));
+        sut.setData("𩸽".getBytes("UTF-16")); //$NON-NLS-1$ //$NON-NLS-2$
 
         // Exercise
-        String actual = sut.getAsString("UTF-16");
+        String actual = sut.getAsString("UTF-16"); //$NON-NLS-1$
 
         // Verify
-        assertThat(actual, is(equalTo("𩸽")));
+        assertThat(actual, is(equalTo("𩸽"))); //$NON-NLS-1$
     }
 
     @Test
     public void writeToの引数にOutputStreamを渡すと_ResponseContentのデータがOutputStreamに書き出されること() throws Exception {
 
         // Setup
-        byte[] data = "ABCDEFG".getBytes("UTF-8");
+        byte[] data = "ABCDEFG".getBytes("UTF-8"); //$NON-NLS-1$ //$NON-NLS-2$
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
         ResponseContent sut = new ByteArrayResponseContent(data);
@@ -157,8 +157,8 @@ public class ByteArrayResponseContentTest {
         sut.writeTo(outputStream);
 
         // Verify
-        String result = new String(outputStream.toByteArray(), "UTF-8");
-        assertThat(result, is(equalTo("ABCDEFG")));
+        String result = new String(outputStream.toByteArray(), "UTF-8"); //$NON-NLS-1$
+        assertThat(result, is(equalTo("ABCDEFG"))); //$NON-NLS-1$
     }
 
 }

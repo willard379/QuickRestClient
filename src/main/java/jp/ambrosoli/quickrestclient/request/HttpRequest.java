@@ -28,10 +28,10 @@ import jp.ambrosoli.quickrestclient.util.StringUtil;
 
 /**
  * HTTPリクエストの内容を保持するクラスです。
- * 
+ *
  * @author willard379
  * @since 0.1.0
- * 
+ *
  */
 public class HttpRequest {
 
@@ -67,20 +67,20 @@ public class HttpRequest {
 
     /**
      * HttpRequestを生成します。
-     * 
+     *
      * @param uri
      *            リクエストURI
      */
     public HttpRequest(final URI uri) {
         if (uri == null) {
-            throw new IllegalArgumentException("URI mey not to be null");
+            throw new IllegalArgumentException(Messages.getString("message.uri.null")); //$NON-NLS-1$
         }
         this.uri = uri;
     }
 
     /**
      * HTTPメソッドをかえします。
-     * 
+     *
      * @return HTTPメソッド
      */
     public HttpMethod getMethod() {
@@ -89,7 +89,7 @@ public class HttpRequest {
 
     /**
      * HTTPメソッドを設定します。
-     * 
+     *
      * @param method
      *            HTTPメソッド
      */
@@ -99,7 +99,7 @@ public class HttpRequest {
 
     /**
      * リクエストパラメータを返します。
-     * 
+     *
      * @return リクエストパラメータ
      */
     public RequestParams getParams() {
@@ -108,7 +108,7 @@ public class HttpRequest {
 
     /**
      * リクエストパラメータを設定します。
-     * 
+     *
      * @param params
      *            リクエストパラメータ
      */
@@ -118,7 +118,7 @@ public class HttpRequest {
 
     /**
      * HTTPヘッダーを返します。
-     * 
+     *
      * @return HTTPヘッダー
      */
     public HttpHeaders getHeaders() {
@@ -127,7 +127,7 @@ public class HttpRequest {
 
     /**
      * HTTPヘッダーを追加します。
-     * 
+     *
      * @param headers
      *            HTTPヘッダー
      */
@@ -140,7 +140,7 @@ public class HttpRequest {
 
     /**
      * HTTPヘッダーを追加します。
-     * 
+     *
      * @param headers
      *            HTTPヘッダー
      */
@@ -153,7 +153,7 @@ public class HttpRequest {
 
     /**
      * プロキシーの情報を返します。
-     * 
+     *
      * @return プロキシーの情報
      */
     public ProxyInfo getProxyInfo() {
@@ -162,7 +162,7 @@ public class HttpRequest {
 
     /**
      * プロキシーの情報を設定します。
-     * 
+     *
      * @param proxyInfo
      *            プロキシーの情報
      */
@@ -172,7 +172,7 @@ public class HttpRequest {
 
     /**
      * HTTP認証の情報を返します。
-     * 
+     *
      * @return 認証情報
      */
     public AuthInfo getAuthInfo() {
@@ -181,7 +181,7 @@ public class HttpRequest {
 
     /**
      * HTTP認証の情報を設定します。
-     * 
+     *
      * @param authInfo
      *            認証情報
      */
@@ -191,7 +191,7 @@ public class HttpRequest {
 
     /**
      * リクエストURIを返します。
-     * 
+     *
      * @return リクエストURI
      */
     public URI getUri() {
@@ -200,7 +200,7 @@ public class HttpRequest {
 
     /**
      * 文字コードを返します。
-     * 
+     *
      * @return 文字コード
      */
     public String getCharset() {
@@ -209,7 +209,7 @@ public class HttpRequest {
 
     /**
      * 文字コードを設定します。
-     * 
+     *
      * @param charset
      *            文字コード
      */
@@ -219,7 +219,7 @@ public class HttpRequest {
 
     /**
      * プロトコルバージョンを返します。
-     * 
+     *
      * @return プロトコルバージョン
      */
     public String getProtocol() {
@@ -228,7 +228,7 @@ public class HttpRequest {
 
     /**
      * プロトコルバージョンを設定します。
-     * 
+     *
      * @param protocol
      *            プロトコルバージョン
      */
@@ -238,7 +238,7 @@ public class HttpRequest {
 
     /**
      * タイムアウト時間を返します。
-     * 
+     *
      * @return タイムアウト時間
      */
     public int getTimeout() {
@@ -247,7 +247,7 @@ public class HttpRequest {
 
     /**
      * タイムアウト時間を設定します。
-     * 
+     *
      * @param timeout
      *            タイムアウト時間
      */

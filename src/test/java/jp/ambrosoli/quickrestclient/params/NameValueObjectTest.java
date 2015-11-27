@@ -18,6 +18,7 @@ package jp.ambrosoli.quickrestclient.params;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,10 +32,10 @@ public class NameValueObjectTest {
 
         // Setup
         Map<String, String> src = new HashMap<String, String>();
-        src.put("param1", "value1");
-        src.put("param2", "value2");
-        src.put("param3", "value3");
-        src.put("param4", "value4");
+        src.put("param1", "value1"); //$NON-NLS-1$ //$NON-NLS-2$
+        src.put("param2", "value2"); //$NON-NLS-1$ //$NON-NLS-2$
+        src.put("param3", "value3"); //$NON-NLS-1$ //$NON-NLS-2$
+        src.put("param4", "value4"); //$NON-NLS-1$ //$NON-NLS-2$
 
         // Exercise
         List<NameValueObject> actual = NameValueObject.asList(src);
@@ -76,11 +77,11 @@ public class NameValueObjectTest {
 
         // Setup
         NameValueObject[] ary = new NameValueObject[5];
-        ary[0] = new NameValueObject("Name1", "Value1");
-        ary[1] = new NameValueObject("Name2", "Value2");
-        ary[2] = new NameValueObject("Name3", "Value3");
-        ary[3] = new NameValueObject("Name4", "Value4");
-        ary[4] = new NameValueObject("Name5", "Value5");
+        ary[0] = new NameValueObject("Name1", "Value1"); //$NON-NLS-1$ //$NON-NLS-2$
+        ary[1] = new NameValueObject("Name2", "Value2"); //$NON-NLS-1$ //$NON-NLS-2$
+        ary[2] = new NameValueObject("Name3", "Value3"); //$NON-NLS-1$ //$NON-NLS-2$
+        ary[3] = new NameValueObject("Name4", "Value4"); //$NON-NLS-1$ //$NON-NLS-2$
+        ary[4] = new NameValueObject("Name5", "Value5"); //$NON-NLS-1$ //$NON-NLS-2$
 
         // Exercise
         List<NameValueObject> actual = NameValueObject.asList(ary);
@@ -113,12 +114,13 @@ public class NameValueObjectTest {
     public void toStringを呼び出すと文字列表現が返されること() {
 
         // Setup
-        NameValueObject sut = new NameValueObject("name", "value");
+        NameValueObject sut = new NameValueObject("name", "value"); //$NON-NLS-1$ //$NON-NLS-2$
 
         // Exercise
         String actual = sut.toString();
 
         // Verify
-        assertThat(actual, is(equalTo("NameValueObject[\n  name=name\n  value=value\n]")));
+        assertThat(actual, is(equalTo("NameValueObject[" + File.separator + "  name=name" + File.separator //$NON-NLS-1$
+                + "  value=value" + File.separator + "]")));
     }
 }

@@ -34,7 +34,7 @@ public class HttpHeadersTest {
 
         // Setup
         HttpHeaders sut = new HttpHeaders();
-        sut.addHeader(new NameValueObject("a", "a"));
+        sut.addHeader(new NameValueObject("a", "a")); //$NON-NLS-1$ //$NON-NLS-2$
 
         // Exercise
         boolean actual = sut.isEmpty();
@@ -138,9 +138,9 @@ public class HttpHeadersTest {
         HttpHeaders sut = new HttpHeaders();
 
         List<NameValueObject> values = new ArrayList<NameValueObject>();
-        values.add(new NameValueObject("Name1", "Value1"));
-        values.add(new NameValueObject("Name2", "Value2"));
-        values.add(new NameValueObject("Name3", "Value3"));
+        values.add(new NameValueObject("Name1", "Value1")); //$NON-NLS-1$ //$NON-NLS-2$
+        values.add(new NameValueObject("Name2", "Value2")); //$NON-NLS-1$ //$NON-NLS-2$
+        values.add(new NameValueObject("Name3", "Value3")); //$NON-NLS-1$ //$NON-NLS-2$
         sut.addHeaders(values);
 
         // Exercise
@@ -159,15 +159,15 @@ public class HttpHeadersTest {
         HttpHeaders sut = new HttpHeaders();
 
         // Exercise
-        sut.addHeader(new NameValueObject("Name3", "Value3-2"));
+        sut.addHeader(new NameValueObject("Name3", "Value3-2")); //$NON-NLS-1$ //$NON-NLS-2$
 
         // Verify
         List<NameValueObject> headers = sut.getHeaders();
         assertThat(headers.size(), is(1));
 
         NameValueObject nvo = headers.get(0);
-        assertThat(nvo.getName(), is(equalTo("Name3")));
-        assertThat(nvo.getValue(), is(equalTo("Value3-2")));
+        assertThat(nvo.getName(), is(equalTo("Name3"))); //$NON-NLS-1$
+        assertThat(nvo.getValue(), is(equalTo("Value3-2"))); //$NON-NLS-1$
 
     }
 
@@ -192,9 +192,9 @@ public class HttpHeadersTest {
         HttpHeaders sut = new HttpHeaders();
 
         List<NameValueObject> values = new ArrayList<NameValueObject>();
-        values.add(new NameValueObject("Name1", "Value1"));
-        values.add(new NameValueObject("Name2", "Value2"));
-        values.add(new NameValueObject("Name3", "Value3"));
+        values.add(new NameValueObject("Name1", "Value1")); //$NON-NLS-1$ //$NON-NLS-2$
+        values.add(new NameValueObject("Name2", "Value2")); //$NON-NLS-1$ //$NON-NLS-2$
+        values.add(new NameValueObject("Name3", "Value3")); //$NON-NLS-1$ //$NON-NLS-2$
 
         // Exercise
         sut.addHeaders(values);
@@ -231,16 +231,16 @@ public class HttpHeadersTest {
 
         // あらかじめ2件分のヘッダーをセットしておく
         List<NameValueObject> values1 = new ArrayList<NameValueObject>();
-        values1.add(new NameValueObject("Name1", "Value1"));
-        values1.add(new NameValueObject("Name2", "Value2"));
+        values1.add(new NameValueObject("Name1", "Value1")); //$NON-NLS-1$ //$NON-NLS-2$
+        values1.add(new NameValueObject("Name2", "Value2")); //$NON-NLS-1$ //$NON-NLS-2$
         sut.addHeaders(values1);
 
         // Exercise
         // 3件分のヘッダーを追加する
         List<NameValueObject> values2 = new ArrayList<NameValueObject>();
-        values2.add(new NameValueObject("Name3", "Value3"));
-        values2.add(new NameValueObject("Name4", "Value4"));
-        values2.add(new NameValueObject("Name5", "Value5"));
+        values2.add(new NameValueObject("Name3", "Value3")); //$NON-NLS-1$ //$NON-NLS-2$
+        values2.add(new NameValueObject("Name4", "Value4")); //$NON-NLS-1$ //$NON-NLS-2$
+        values2.add(new NameValueObject("Name5", "Value5")); //$NON-NLS-1$ //$NON-NLS-2$
 
         sut.addHeaders(values2);
 
@@ -260,8 +260,8 @@ public class HttpHeadersTest {
         HttpHeaders sut = new HttpHeaders();
 
         List<NameValueObject> values1 = new ArrayList<NameValueObject>();
-        values1.add(new NameValueObject("Name1", "Value1"));
-        values1.add(new NameValueObject("Name2", "Value2"));
+        values1.add(new NameValueObject("Name1", "Value1")); //$NON-NLS-1$ //$NON-NLS-2$
+        values1.add(new NameValueObject("Name2", "Value2")); //$NON-NLS-1$ //$NON-NLS-2$
         sut.addHeaders(values1);
 
         // Exercise
@@ -294,9 +294,9 @@ public class HttpHeadersTest {
         HttpHeaders sut = new HttpHeaders();
 
         List<NameValueObject> values = new ArrayList<NameValueObject>();
-        values.add(new NameValueObject("Name1", "Value1"));
-        values.add(new NameValueObject("Name2", "Value2"));
-        values.add(new NameValueObject("Name3", "Value3"));
+        values.add(new NameValueObject("Name1", "Value1")); //$NON-NLS-1$ //$NON-NLS-2$
+        values.add(new NameValueObject("Name2", "Value2")); //$NON-NLS-1$ //$NON-NLS-2$
+        values.add(new NameValueObject("Name3", "Value3")); //$NON-NLS-1$ //$NON-NLS-2$
         sut.addHeaders(values);
 
         // Exercise

@@ -23,7 +23,7 @@ public class DataSource {
         String port = getProperty(SERVER_PORT);
         String contextPath = getProperty(SERVER_CONTEXTPATH);
 
-        return MessageFormat.format("{0}://{1}:{2}/{3}/", scheme, host, port, contextPath);
+        return MessageFormat.format("{0}://{1}:{2}/{3}/", scheme, host, port, contextPath); //$NON-NLS-1$
     }
 
     public static String url(final String pathInfo) {

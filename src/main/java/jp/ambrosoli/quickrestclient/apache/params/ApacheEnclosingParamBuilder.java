@@ -16,6 +16,7 @@
 package jp.ambrosoli.quickrestclient.apache.params;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +31,7 @@ import jp.ambrosoli.quickrestclient.util.StringUtil;
 
 /**
  * Apache HttpComponents用のPOSTリクエストパラメータを生成するクラスです。
- * 
+ *
  * @author willard379
  * @since 0.1.0
  */
@@ -38,7 +39,7 @@ public class ApacheEnclosingParamBuilder implements RequestParamBuilder<UrlEncod
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * jp.ambrosoli.http.client.params.PostParamBuilder#buildPostParams(jp.ambrosoli
      * .http.client.bean.NameValueObject[], java.lang.String)
@@ -46,7 +47,7 @@ public class ApacheEnclosingParamBuilder implements RequestParamBuilder<UrlEncod
     public UrlEncodedFormEntity createConformedParams(final List<NameValueObject> params, final String charset) {
         try {
             List<NameValuePair> paramList = this.createNameValuePairList(params);
-            String encoding = StringUtil.isNotEmpty(charset) ? charset : StringUtil.DEFAULT_ENCODING;
+            String encoding = StringUtil.isNotEmpty(charset) ? charset : Charset.defaultCharset().toString();
             return new UrlEncodedFormEntity(paramList, encoding);
         } catch (UnsupportedEncodingException e) {
             throw new UnsupportedEncodingRuntimeException(e);
@@ -55,7 +56,7 @@ public class ApacheEnclosingParamBuilder implements RequestParamBuilder<UrlEncod
 
     /**
      * {@link NameValueObject}のリストから{@link NameValuePair}のリストへ変換します。
-     * 
+     *
      * @param params
      *            変換元のリスト
      * @return 変換後のリスト
@@ -76,7 +77,7 @@ public class ApacheEnclosingParamBuilder implements RequestParamBuilder<UrlEncod
 
     /**
      * {@link NameValueObject}から{@link BasicNameValuePair}に変換します。
-     * 
+     *
      * @param nvo
      *            {@link NameValueObject}オブジェクト
      * @return {@link BasicNameValuePair}オブジェクト
